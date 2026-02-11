@@ -3,7 +3,7 @@ package com.example.multimediaapp.data.repository
 import com.example.multimediaapp.data.model.BandDTO
 import com.example.multimediaapp.data.model.TagsDTO
 
-data class TagsRepo{
+class TagsRepo{
     companion object {
         val tags = ArrayList<TagsDTO>(
             listOf(
@@ -18,13 +18,13 @@ data class TagsRepo{
 
     //crud
 
-    fun readAll(onSuccess: (List<BandDTO>) -> Unit, onError: () -> Unit) {
+    fun readAll(onSuccess: (List<TagsDTO>) -> Unit, onError: () -> Unit) {
         onSuccess(tags)
     }
 
     fun crear(
-        est: BandDTO,
-        onSuccess: (bandCreado: BandDTO) -> Unit,
+        est: TagsDTO,
+        onSuccess: (bandCreado: TagsDTO) -> Unit,
         onError: () -> Unit
     ) {
 
@@ -37,7 +37,7 @@ data class TagsRepo{
 
     fun read(
         id: Int,
-        onSuccess: (createdBand: BandDTO?) -> Unit,
+        onSuccess: (createdBand: TagsDTO?) -> Unit,
         onError: () -> Unit
     ) {
         val tag = tags.find { it.id == id }
