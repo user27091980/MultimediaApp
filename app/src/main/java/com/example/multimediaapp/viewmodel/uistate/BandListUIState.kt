@@ -7,6 +7,5 @@ data class BandListUIState(val bands: List<BandUIState> =emptyList())
 data class BandUIState(
     var id: Int,
     var name: String,
-    var style: String,
-    var discography: String
+
 )

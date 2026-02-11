@@ -27,7 +27,10 @@ class BandListPageVM : ViewModel() {
         repo.readAll({
             _uiState.value = BandListUIState(
                 it.map
-                { BandUIState(it.id, it.name, it.style, it.discography) }.toList()
+                { BandUIState(
+                    it.id, it.name,
+
+                ) }.toList()
             )
         }) {
 

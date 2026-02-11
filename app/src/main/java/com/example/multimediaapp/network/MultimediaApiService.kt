@@ -16,15 +16,8 @@ interface MultimediaApiService {
     @GET("json/band/{id}")
     suspend fun getBandById(@Path("id") id: Int): Response<BandDTO>
 
-    // Obtener banda por nombre
-    @GET("json/nombre/{nombre}")
-    suspend fun getBandName(@Path("nombre") name: String): Response<BandDTO>
-
-    @GET("json/nombre/{}")
-    suspend fun getBandName(@Path("nombre") name: String): Response<BandDTO>
 
 
-//crearemos un dataclass con el nombre del nombreREsponse
 
 
 
