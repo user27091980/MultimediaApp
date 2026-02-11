@@ -1,13 +1,12 @@
 package com.example.multimediaapp.viewmodel.vm
 
 import androidx.lifecycle.ViewModel
-import com.example.multimediaapp.data.repositorio.BandRepo
+import com.example.multimediaapp.data.repository.BandsRepo
 import com.example.multimediaapp.viewmodel.uistate.BandListUIState
 import com.example.multimediaapp.viewmodel.uistate.BandUIState
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
-import kotlinx.coroutines.flow.update
 
 class BandListPageVM : ViewModel() {
 
@@ -17,7 +16,7 @@ class BandListPageVM : ViewModel() {
     val uiState: StateFlow<BandListUIState> = _uiState.asStateFlow()
 
     //inyección de dependencias.
-    val repo: BandRepo = BandRepo()
+    val repo: BandsRepo = BandsRepo()
 
     fun load() {
         _uiState.value = BandListUIState()

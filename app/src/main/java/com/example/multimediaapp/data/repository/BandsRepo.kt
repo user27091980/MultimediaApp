@@ -1,21 +1,20 @@
-package com.example.multimediaapp.data.repositorio
+package com.example.multimediaapp.data.repository
 
-import com.example.multimediaapp.model.BandDTO
+import com.example.multimediaapp.data.model.BandDTO
 
-class BandRepo {
+class BandsRepo {
 
     companion object {
         val bands = ArrayList<BandDTO>(
             listOf(
-                BandDTO(0, "Tool", "Metal", "bgm"),
-                BandDTO(1, "Aphex Twin", "idm", "Warp Records"),
-                BandDTO(2, "NIN", "industrial", "null corp"),
-                BandDTO(3, "Autechre", "idm", "Warp Records")
+                BandDTO(0, "Tool"),
+                BandDTO(1, "Aphex Twin"),
+                BandDTO(2, "NIN"),
+                BandDTO(3, "Autechre")
             )
         )
         var currId = 4
     }
-
 
     //crud
 
@@ -25,12 +24,14 @@ class BandRepo {
 
     fun crear(
         est: BandDTO,
-        onSuccess: (estudianteCreado: BandDTO) -> Unit,
+        onSuccess: (bandCreado: BandDTO) -> Unit,
         onError: () -> Unit
     ) {
 
-        bands.add(est.copy(id = currId++))
-        onSuccess(bands.last())
+        if (bands.add(est.copy(id = currId++)))
+            onSuccess(bands.last())
+        else
+            onError()
 
     }
 
@@ -39,8 +40,11 @@ class BandRepo {
         onSuccess: (createdBand: BandDTO?) -> Unit,
         onError: () -> Unit
     ) {
-
-        onSuccess(bands.find { it.id == id })
+        val band = bands.find { it.id == id }
+        if (band != null)
+            onSuccess(band)
+        else
+            onError()
     }
 
     fun delete(
@@ -54,3 +58,6 @@ class BandRepo {
             onError()
     }
 }
+
+
+
