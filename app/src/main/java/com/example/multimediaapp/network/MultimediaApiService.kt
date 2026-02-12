@@ -23,28 +23,28 @@ interface MultimediaApiService {
     suspend fun getBandTextInfo(@Path("texto") textInfo: String): Response<BandDTO>
 
     @GET("json/imagenes/{id}")
-    suspend fun getBandPic(@Path("cabecera") headerImage: String): Response<BandDTO>
+    suspend fun getHeaderPic(@Path("cabecera") headerImage: String): Response<BandDTO>
 
     //para tags
     @GET("json/estilo/{estilo}")
     suspend fun getStyle(@Path("estilo") style: String): Response<BandDTO>
 
     @GET("json/discografica/{discografica}")
-    suspend fun getDiscog(@Path("discografica") recordLabel: String): Response<BandDTO>
+    suspend fun getDiscography(@Path("discografica") recordLabel: String): Response<BandDTO>
 
     @GET("json/componentes/{componentes}")
-    suspend fun getComponentes(@Path("componentes") components: String): Response<BandDTO>
+    suspend fun getComponents(@Path("componentes") components: String): Response<BandDTO>
 
     @GET("json/discografia/{discografia}")
     suspend fun getDiscography(@Path("discografia") discography: List<String>): Response<BandDTO>
 
     //cabecera foto página de los grupos
     @GET("json/cabecera/{cabecera}")
-    suspend fun getPicHead(@Path("cabecera") picHead: String): Response<BandDTO>
+    suspend fun getHeaderImage(@Path("cabecera") headerImage: String): Response<BandDTO>
 
     //para el lazy row de las imágenes de la página de cada grupo
     @GET("json/discos/{discos}")
-    suspend fun getDiscograph   (@Path("discos") imageAlbums: List<String>): Response<BandDTO>
+    suspend fun getAlbumImages  (@Path("discos") albumImages: List<String>): Response<BandDTO>
 
 
 }

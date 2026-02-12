@@ -1,6 +1,6 @@
 package com.example.multimediaapp.data.entity
 
-import android.media.Image
+import com.example.multimediaapp.data.model.BandDTO
 import com.google.gson.annotations.SerializedName
 
 
@@ -13,13 +13,25 @@ Ideal para JSON, RecyclerView, Room, etc.
 data class BandEntity(
 
     val id: Int,
-    @SerializedName("nombre") val name: List<String>,
+    @SerializedName("nombre") val name: String,
     @SerializedName("texto") val textInfo: String,
-    @SerializedName("cabecera") val picHead: String,
+    @SerializedName("cabecera") val headerImage: String,
     @SerializedName ("estilo") val style: String,
-    @SerializedName ("discográfica") val discog: String,
+    @SerializedName ("discográfica") val recordLabel: String,
     @SerializedName ("componentes") val components: String,
     @SerializedName ("discografía") val discography: List<String>,
-    @SerializedName("discos") val imageAlbums: List<String>
+    @SerializedName("discos") val albumImages: List<String>
 
+)
+//mapper para convertir en BanDTO
+fun BandEntity.toDTO(): BandDTO = BandDTO(
+    id = id,
+    name = name,
+    textInfo = textInfo,
+    headerImage = headerImage,
+    albumImages = albumImages,
+    style = style,
+    recordLabel = recordLabel,
+    components = components,
+    discography = discography
 )

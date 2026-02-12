@@ -6,10 +6,10 @@ class UsersRepo {
     companion object {
         val users = ArrayList<UsersDTO>(
             listOf(
-                UsersDTO(0, "user1", "1234"),
-                UsersDTO(1,"user2","1234"),
-                UsersDTO(2,"user3","1234"),
-                UsersDTO(3,"user4","1234")
+                UsersDTO(0, "aaaa@gmail.com", "user1","1234"),
+                UsersDTO(1,"bbbb@gmail.com","user2","1234"),
+                UsersDTO(2,"cccc@gmail.com","user3","1234"),
+                UsersDTO(3,"dddd@gmail.com","user4","1234")
             )
         )
         var currId = 4
