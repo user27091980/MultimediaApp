@@ -1,8 +1,8 @@
-package com.example.multimediaapp.data.model
+package com.example.multimediaapp.model
 
 data class BandDTO(
 
-    val id: Int,
+    val id: String,
     val name: String,
     val textInfo: String,
     val headerImage: String,

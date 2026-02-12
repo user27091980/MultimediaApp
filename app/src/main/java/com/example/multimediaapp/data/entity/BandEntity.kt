@@ -1,6 +1,6 @@
 package com.example.multimediaapp.data.entity
 
-import com.example.multimediaapp.data.model.BandDTO
+import com.example.multimediaapp.model.BandDTO
 import com.google.gson.annotations.SerializedName
 
 
@@ -12,7 +12,7 @@ Ideal para JSON, RecyclerView, Room, etc.
 
 data class BandEntity(
 
-    val id: Int,
+    val id: String,
     @SerializedName("nombre") val name: String,
     @SerializedName("texto") val textInfo: String,
     @SerializedName("cabecera") val headerImage: String,
