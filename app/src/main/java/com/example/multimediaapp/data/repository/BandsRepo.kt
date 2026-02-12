@@ -5,7 +5,7 @@ import com.example.multimediaapp.model.BandDTO
 class BandsRepo {
 
     companion object {
-
+    //crear 1 json por banda que cuyon nombre sea bandId.json
         private var currId = 5
         private val bands = ArrayList<BandDTO>(
             listOf(
