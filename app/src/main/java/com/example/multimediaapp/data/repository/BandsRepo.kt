@@ -1,6 +1,7 @@
 package com.example.multimediaapp.data.repository
 
 import com.example.multimediaapp.data.model.BandDTO
+import com.example.multimediaapp.data.repository.UsersRepo.Companion.users
 
 class BandsRepo {
 
@@ -11,7 +12,7 @@ class BandsRepo {
             listOf(
                 BandDTO(
                     0, "Tool", "", "",
-                    imageAlbums = emptyList(),
+                    albumImages = emptyList(),
                     style = "metal progresivo",
                     recordLabel = "BGM",
                     components = "Maynard James Keenan, Danny Carey, Justin Chancellor, Adam Jones",
@@ -27,7 +28,7 @@ class BandsRepo {
                     ),
                 BandDTO(
                     1, "Aphex Twin", "", "",
-                    imageAlbums = emptyList(),
+                    albumImages = emptyList(),
                     style = "idm",
                     recordLabel = "Warp Records",
                     components = "Richard D. James",
@@ -39,7 +40,7 @@ class BandsRepo {
                 ),
                 BandDTO(
                     2, "NIN", "", "",
-                    imageAlbums = emptyList(),
+                    albumImages = emptyList(),
                     style = "industrial, alternative",
                     recordLabel = "nothing records, null corp",
                     components = "Trent Reznor",
@@ -52,7 +53,7 @@ class BandsRepo {
                 ),
                 BandDTO(
                     3, "Autechre", "", "",
-                    imageAlbums = emptyList(),
+                    albumImages = emptyList(),
                     style = "experimental",
                     recordLabel = "Warp Records",
                     components = "Sean Booth,Robert Brown",
@@ -66,7 +67,7 @@ class BandsRepo {
                 BandDTO(
                     4,
                     "Boards of Canada", "", "",
-                    imageAlbums = emptyList(),
+                    albumImages = emptyList(),
                     style = "idm, downtempo",
                     recordLabel = "Warp records, Skam Records",
                     components = "Marcus Eoin, Mike Sandison",
@@ -93,9 +94,10 @@ class BandsRepo {
         onSuccess: (createdBand: BandDTO) -> Unit,
         onError: () -> Unit
     ) {
-
-        bands.add(band.copy(id = currId++))
-        onSuccess(bands.last())
+        if(bands.add(band.copy(id = currId++)))
+            onSuccess(bands.last())
+        else
+            onError()
 
     }
 
@@ -104,8 +106,12 @@ class BandsRepo {
         onSuccess: (band: BandDTO?) -> Unit,
         onError: () -> Unit
     ) {
+        val band = bands.find { it.id == id }
 
-        onSuccess(bands.find { it.id == id })
+        if (band != null)
+            onSuccess(band)
+        else
+            onError()
     }
 
     fun delete(

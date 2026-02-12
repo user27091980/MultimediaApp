@@ -1,7 +1,9 @@
 package com.example.multimediaapp.data.model
 
+//usar val para evitar mutabilidad
 data class UsersDTO(
-    var id: Int,
-    var user: String,
-    var pass: String
+    val id: Int,
+    val email: String,
+    val user: String,
+    val pass: String
 )

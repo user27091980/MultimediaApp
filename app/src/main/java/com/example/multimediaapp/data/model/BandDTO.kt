@@ -2,15 +2,15 @@ package com.example.multimediaapp.data.model
 
 data class BandDTO(
 
-    var id: Int,
-    var name: String,
-    var textInfo: String,
-    var headerImage: String,
-    var imageAlbums: List<String>,
-    var style: String,
-    var recordLabel: String,
-    var components: String,
-    var discography: List<String>
+    val id: Int,
+    val name: String,
+    val textInfo: String,
+    val headerImage: String,
+    val albumImages: List<String>,
+    val style: String,
+    val recordLabel: String,
+    val components: String,
+    val discography: List<String>
 
 )
 
