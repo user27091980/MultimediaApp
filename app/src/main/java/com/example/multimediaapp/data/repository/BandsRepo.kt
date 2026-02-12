@@ -5,7 +5,7 @@ import com.example.multimediaapp.model.BandDTO
 class BandsRepo {
 
     companion object {
-
+    //crear 1 json por banda que cuyon nombre sea bandId.json
         private var currId = 5
         private val bands = ArrayList<BandDTO>(
             listOf(
@@ -28,7 +28,9 @@ class BandsRepo {
                             " Antes de su lanzamiento, la banda había vendido más de 13 millones de álbumes solo en Estados Unidos.",
 
                     "ApiGenerica/data/resources/tool.jpg",
-                    albumImages = listOf(),
+                    albumImages = listOf("data/resources/tool3.jpg","data/resources/tool4.JPG",
+                        "data/resources/tool5.jpg","data/resources/tool6.jpg","data/resources/tool7.jpeg",
+                        "data/resources/tool8.jpg"),
                     style = "metal progresivo",
                     recordLabel = "BGM",
                     components = "Maynard James Keenan, Danny Carey, Justin Chancellor, Adam Jones",
@@ -40,6 +42,7 @@ class BandsRepo {
                         "10000 days",
                         "fear inoculum"
                     ),
+                    imageBand = "data/resources/tool1.jpg"
 
                     ),
                 BandDTO(
@@ -53,15 +56,21 @@ class BandsRepo {
                             " En 2021, la publicación Pitchfork lo incluyó en su lista de los 200 artistas\n" +
                             " más influyentes de los últimos 25 años.",
                     "ApiGenerica/data/resources/aphx.png",
-                    albumImages = listOf(),
+                    albumImages = listOf("data/resources/aphx1.jpg","data/resources/aphx2.jpg",
+                        "data/resources/aphx3.jpg","data/resources/aphx4.jpg","data/resources/aphx6.jpg",
+                        "data/resources/aphx7.jpg","data/resources/aphx8.jpg"),
                     style = "idm",
                     recordLabel = "Warp Records",
                     components = "Richard D. James",
                     discography = listOf(
                         "Selected Ambient Works",
                         "Come to daddy",
-                        "Drukqs"
+                        "Drukqs",
+                        "Hangable Auto Bulb",
+                        "...i care because you do"
+
                     ),
+                    imageBand = "data/resources/aphx5.jpg"
                 ),
                 BandDTO(
                     "2", "NIN",
@@ -77,7 +86,8 @@ class BandsRepo {
                             "Ganador de varios premios por sus bandas sonoras dos Oscars, tres premios Emmy y 1 Bafta ",
 
                     "ApiGenerica/data/resources/nin.jpg",
-                    albumImages = emptyList(),
+                    albumImages = listOf("data/resources/nin2.jpeg","data/resources/nin3.jpeg",
+                        "data/resources/nin4.jpeg","data/resources/nin5.jpeg","data/resources/nin6.jpeg"),
                     style = "industrial, alternative",
                     recordLabel = "nothing records, null corp",
                     components = "Trent Reznor",
@@ -85,8 +95,10 @@ class BandsRepo {
                         "pretty hate machine",
                         "broken",
                         "the downward spiral",
-                        "the fragile"
+                        "the fragile",
+                        "with teeth"
                     ),
+                    imageBand = "data/resources/nin1.jpg"
                 ),
                 BandDTO(
                     "3", "Autechre",
@@ -102,7 +114,8 @@ class BandsRepo {
                             " hasta álbumes que a menudo son considerados de naturaleza experimental,\n" +
                             "incluyendo complejos patrones de ritmo y melodías tenues.",
                     "ApiGenerica/data/resources/ae0.jpg",
-                    albumImages = listOf(),
+                    albumImages = listOf("data/resources/ae2.jpg","data/resources/ae3.jpg",
+                        "data/resources/ae4.jpg","data/resources/ae5.jpg","data/resources/ae6.jpg"),
                     style = "experimental",
                     recordLabel = "Warp Records",
                     components = "Sean Booth,Robert Brown",
@@ -110,8 +123,10 @@ class BandsRepo {
                         "Chiastic Slide",
                         "Exai",
                         "Incunabula",
-                        "NTS Sessions"
+                        "NTS Sessions",
+                        "AE_2022"
                     ),
+                    imageBand = "data/resources/ae1.jpg"
                 ),
                 BandDTO(
                     "4",
@@ -144,7 +159,8 @@ class BandsRepo {
                             "siendo considerado por muchos como uno de los mejores discos de IDM de la historia\n" +
                             " y convirtiéndose inmediatamente en un clásico de culto. ",
                     "ApiGenerica/data/resources/boc1.jpg",
-                    albumImages = emptyList(),
+                    albumImages = listOf("data/resources/boc2.jpeg","data/resources/boc3.jpeg",
+                        "data/resources/boc4.jpg","data/resources/boc5.jpg","data/resources/boc6.jpg"),
                     style = "idm, downtempo",
                     recordLabel = "Warp records, Skam Records",
                     components = "Marcus Eoin, Mike Sandison",
@@ -152,8 +168,11 @@ class BandsRepo {
                         "High Scores",
                         "Music has the right to Children",
                         "Geogaddi",
-                        "Tomorrow´s harvest"
+                        "Tomorrow´s harvest",
+                        "The Campfire headphase"
+
                     ),
+                    imageBand = "data/resources/boc0.jpg"
                 )
 
             )

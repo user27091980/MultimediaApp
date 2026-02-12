@@ -10,7 +10,8 @@ data class BandDTO(
     val style: String,
     val recordLabel: String,
     val components: String,
-    val discography: List<String>
+    val discography: List<String>,
+    val imageBand: String
 
 )
 

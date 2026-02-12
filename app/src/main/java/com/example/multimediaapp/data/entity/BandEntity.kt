@@ -20,7 +20,8 @@ data class BandEntity(
     @SerializedName ("discográfica") val recordLabel: String,
     @SerializedName ("componentes") val components: String,
     @SerializedName ("discografía") val discography: List<String>,
-    @SerializedName("discos") val albumImages: List<String>
+    @SerializedName("discos") val albumImages: List<String>,
+    @SerializedName("imagen") val imageBand: String
 
 )
 //mapper para convertir en BanDTO
@@ -33,5 +34,6 @@ fun BandEntity.toDTO(): BandDTO = BandDTO(
     style = style,
     recordLabel = recordLabel,
     components = components,
-    discography = discography
+    discography = discography,
+    imageBand=imageBand
 )
