@@ -37,7 +37,8 @@ class BandVM : ViewModel() {
                     it.style,
                     it.recordLabel,
                     it.components,
-                    it.discography
+                    it.discography,
+                    it.imageBand
                 )
             }.toList())
         }) {
