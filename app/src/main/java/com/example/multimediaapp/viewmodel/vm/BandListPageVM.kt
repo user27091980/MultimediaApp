@@ -10,38 +10,42 @@ import kotlinx.coroutines.flow.asStateFlow
 
 class BandListPageVM : ViewModel() {
 
-    private val _uiState = MutableStateFlow(BandListUIState())
+    class PaginaListaClaseVM : ViewModel() {
 
-    //
-    val uiState: StateFlow<BandListUIState> = _uiState.asStateFlow()
+        private val _uIState = MutableStateFlow(BandListUIState())
+        val uiState: StateFlow<BandListUIState> = _uIState.asStateFlow()
+        val repo: BandsRepo = BandsRepo()
 
-    //inyección de dependencias.
-    val repo: BandsRepo = BandsRepo()
-
-    fun load() {
-        _uiState.value = BandListUIState()
-
-    }
-
-    fun loadData() {
-        repo.readAll({
-            _uiState.value = BandListUIState(
-                it.map
-                { BandUIState(
-                    it.id, it.name,
-
-                ) }.toList()
-            )
-        }) {
-
+        fun loadDatos() {
+            _uIState.value = BandListUIState()
         }
-    }
 
-    fun delete(id: Int) {
-        repo.delete(id, onSuccess = {
-            loadData()
-        }) {
+        fun del(id: Int) {
+            repo.delete(id, onSuccess = {
+                loadData()
+            }) {
+                //DELETE ON ERROR
+            }
+        }
 
+        fun loadData() {
+            repo.readAll({
+                _uIState.value = BandListUIState(it.map {
+                    BandUIState(
+                        it.id,
+                        it.name,
+                        it.textInfo,
+                        it.headerImage,
+                        it.imageAlbums,
+                        it.style,
+                        it.recordLabel,
+                        it.components,
+                        it.discography
+                    )
+                }.toList())
+            }) {
+                //READLL ON ERROR
+            }
         }
     }
 }
