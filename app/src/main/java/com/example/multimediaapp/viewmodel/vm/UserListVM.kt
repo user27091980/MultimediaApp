@@ -17,7 +17,7 @@ class UserListVM : ViewModel(){
         _uiState.value = UserListUiState()
     }
 
-    fun del(id: Int) {
+    fun del(id: String) {
         repo.delete(id, onSuccess = {
             loadData()
         }) {
