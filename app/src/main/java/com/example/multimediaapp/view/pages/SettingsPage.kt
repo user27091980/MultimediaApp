@@ -20,41 +20,50 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 
+/**
+ * Pantalla de configuración de la app.
+ * Permite cambiar preferencias como el modo oscuro y mostrar información básica de la app.
+ */
 @Composable
 fun SettingsScreen() {
-
+    // Estado local para el switch de modo oscuro
     var darkMode by remember { mutableStateOf(false) }
-
+// Columna principal que organiza todos los elementos de la pantalla
     Column(
         modifier = Modifier
-            .fillMaxSize()
-            .padding(16.dp)
+            .fillMaxSize()// Ocupa todo el espacio disponible
+            .padding(16.dp)// Margen interno de 16dp en todos los lados
     ) {
-
+        // Título de la pantalla
         Text(
             text = "configuración",
-            style = MaterialTheme.typography.headlineMedium
+            style = MaterialTheme.typography.headlineMedium// Estilo de título principal de Material3
         )
 
-        Spacer(modifier = Modifier.height(24.dp))
+        Spacer(modifier = Modifier.height(24.dp))// Separación vertical de 24dp
 
-        // Appearance
-        Text("Apariencia", style = MaterialTheme.typography.titleMedium)
-
+        // Sección de apariencia
+        Text("Apariencia", style = MaterialTheme.typography.titleMedium)// Subtítulo
+// Switch para el modo oscuro
         SettingSwitch(
-            title = "Modo óscuro",
-            checked = darkMode,
+            title = "Modo óscuro",// Texto del switch
+            checked = darkMode,// Estado del switch
             onCheckedChange = { darkMode = it },
         )
+        Spacer(modifier = Modifier.height(24.dp))// Separación vertical de 24dp
 
-        // About
-
+        // Información sobre la versión de la app
         Text("App Version: 1.0", style = MaterialTheme.typography.titleMedium)
 
     }
 }
 
-
+/**
+ * Componente genérico para un switch con título.
+ * @param title Texto que aparece a la izquierda del switch
+ * @param checked Estado del switch (true = activado)
+ * @param onCheckedChange Callback que se ejecuta al cambiar el estado
+ */
 @Composable
 fun SettingSwitch(
     title: String,
@@ -63,15 +72,19 @@ fun SettingSwitch(
 ) {
     Row(
         modifier = Modifier.fillMaxWidth(),
-        horizontalArrangement = Arrangement.SpaceBetween
+        horizontalArrangement = Arrangement.SpaceBetween// Distribuye el texto y el switch a los extremos
     ) {
-        Text(title)
+        Text(title)// Título a la izquierda
         Switch(
-            checked = checked,
-            onCheckedChange = onCheckedChange
+            checked = checked,// Estado actual
+            onCheckedChange = onCheckedChange// Callback al cambiar
         )
     }
 }
+/**
+ * Preview de la pantalla de configuración.
+ * Permite ver cómo se renderiza en el editor de Compose sin ejecutar la app.
+ */
 @Preview(showBackground = true)
 @Composable
 fun SettingsPreview() {

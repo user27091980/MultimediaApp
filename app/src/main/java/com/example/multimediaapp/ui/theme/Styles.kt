@@ -1,12 +1,10 @@
 package com.example.multimediaapp.ui.theme
 
-import android.graphics.Color
-import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
@@ -17,38 +15,27 @@ import androidx.compose.ui.unit.sp
  * elementos para aplicar estilo de forma reutilizable
  */
 //value para el estilo de texto
-val styleText = TextStyle(
 
-    fontSize = 18.sp,
-    textAlign = TextAlign.Center,
-
-    )
+val bandColumnModifier = Modifier
+    .padding(16.dp)//internal padding
+val cardColumnModifier = Modifier
+    .padding(8.dp)//internal padding
 
 //value para el etilo de texto en los botones
 val styleButtonText = TextStyle(
 
     fontSize = 15.sp,
-    textAlign = TextAlign.Center
-
-)
-val styleTextCards = TextStyle(
-
-    fontSize = 45.sp,
-    textAlign = TextAlign.Center
+    textAlign = TextAlign.Center,
+    color = Color.White
 
 )
 
-//modificador para boton
-val button = Modifier
-    .size(width = 100.dp, height = 100.dp)
+val styleText = TextStyle(
+    fontSize = 15.sp,
+    textAlign = TextAlign.Center,
+    color = Color.White
+)
 
-//modificador para imagéns
-val imageModifier = Modifier
-    .fillMaxHeight()
-    .fillMaxWidth()
-    .size(100.dp)
-
-//modificadores para elementos box, column y row empleados para manejar los padding
 val colModifier = Modifier
     .padding(20.dp, 130.dp, 20.dp, 110.dp)
 val boxModifier = Modifier
