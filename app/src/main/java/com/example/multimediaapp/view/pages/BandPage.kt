@@ -22,7 +22,7 @@ import androidx.lifecycle.viewmodel.compose.viewModel
 import com.example.multimediaapp.ui.theme.bandColumnModifier
 import com.example.multimediaapp.view.components.BandHeader
 import com.example.multimediaapp.view.components.BandTags
-import com.example.multimediaapp.view.components.CardColumnComponent
+import com.example.multimediaapp.view.components.CardRowComponent
 import com.example.multimediaapp.view.components.ImagesRowList
 import com.example.multimediaapp.viewmodel.uistate.BandUiState
 import com.example.multimediaapp.viewmodel.vm.BandVM
@@ -64,7 +64,7 @@ fun Band(
         {
             BandHeader(band = bd) // Banner principal de la banda
             Spacer(modifier = Modifier.height(6.dp))// Separador vertical
-            CardColumnComponent(band = bd)// Card con info detallada de la banda
+            CardRowComponent(band = bd)// Card con info detallada de la banda
             Spacer(modifier = Modifier.height(6.dp))
             BandTags(band = bd)// Etiquetas de estilo, discografía, etc.
             Spacer(modifier = Modifier.height(6.dp))

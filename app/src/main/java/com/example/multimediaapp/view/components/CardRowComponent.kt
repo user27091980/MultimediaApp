@@ -1,6 +1,8 @@
 package com.example.multimediaapp.view.components
 
-import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.FlowRow
+import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.material3.Card
 import androidx.compose.material3.Text
@@ -16,24 +18,26 @@ import com.example.multimediaapp.viewmodel.uistate.BandUiState
  * @param band Objeto BandUiState con toda la información de la banda
  */
 @Composable
-fun CardColumnComponent(
+fun CardRowComponent(
     band: BandUiState
 ) {
 
     //Columna que organiza las cards verticalmente
-
-    Column(
-        modifier = Modifier.fillMaxWidth()// Ocupa todo el ancho disponible
-    ) {
-        // Tarjeta principal con la información de la banda
-        Card(
-            cardColumnModifier// Modifier personalizado desde el tema, puede incluir padding, shape, elevation
+    Box {
+        FlowRow(
+            modifier = Modifier
+                .fillMaxWidth()
+                .fillMaxHeight()// Ocupa todo el ancho disponible
         ) {
+            // Tarjeta principal con la información de la banda
+            Card(
+                cardColumnModifier// Modifier personalizado desde el tema, puede incluir padding, shape, elevation
+            ) {
 // Texto dentro de la tarjeta que muestra la descripción de la banda
-            Text(text = band.textInfo)
+                Text(text = band.textInfo)
 
+            }
         }
     }
 }
-
 
