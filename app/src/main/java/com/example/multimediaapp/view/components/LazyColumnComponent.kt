@@ -4,7 +4,7 @@ import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.width
-import androidx.compose.foundation.lazy.LazyRow
+import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
@@ -13,22 +13,18 @@ import androidx.compose.ui.unit.dp
 import coil.compose.rememberAsyncImagePainter
 import com.example.multimediaapp.viewmodel.uistate.BandUiState
 
-// Componente Jetpack Compose que muestra las imágenes de los álbumes de una banda en una fila horizontal.
-// Recibe:
-// - 'band': el objeto BandUiState con los datos de la banda, incluyendo la lista de imágenes de álbumes.
-// - 'modifier': un Modifier opcional para personalizar el estilo desde fuera del componente.
 @Composable
-fun ImagesRowList(band: BandUiState, modifier: Modifier = Modifier) {
-    // LazyRow permite crear listas horizontales "perezosas", cargando solo los elementos visibles.
+fun CardList(bands: List<BandUiState>) {
+    // LazyColumn permite crear listas verticales "perezosas", cargando solo los elementos visibles.
     // Es útil para listas grandes, para optimizar rendimiento.
-    LazyRow(modifier = modifier) {
+    LazyColumn() {
         // Itera sobre la lista de URLs de imágenes de los álbumes.
-        // 'albumImage' es cada URL de la lista.
-        items(band.albumImages) { albumImage ->
+        // 'imageBand' es cada URL de la lista.
 
+        items(bands) { band ->
             Image(
                 // Cargamos la imagen desde la URL usando Coil y rememberAsyncImagePainter
-                painter = rememberAsyncImagePainter(albumImage),
+                painter = rememberAsyncImagePainter(band.imageBand),
                 // Descripción para accesibilidad
                 contentDescription = "album image",
                 // Modificadores de la imagen
@@ -39,10 +35,7 @@ fun ImagesRowList(band: BandUiState, modifier: Modifier = Modifier) {
                 // Escala de la imagen para que llene su contenedor y recorte lo sobrante
                 contentScale = ContentScale.Crop,
             )
-
         }
     }
 }
-
-
 

@@ -2,7 +2,11 @@ package com.example.multimediaapp.ui.theme
 
 import androidx.compose.foundation.layout.padding
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.text.TextStyle
+import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.sp
 
 /**
  * @author="Andrés"
@@ -15,3 +19,11 @@ val bandColumnModifier = Modifier
 val cardColumnModifier = Modifier
     .padding(8.dp)//internal padding
 
+//value para el etilo de texto en los botones
+val styleButtonText = TextStyle(
+
+    fontSize = 15.sp,
+    textAlign = TextAlign.Center,
+    color = Color.White
+
+)

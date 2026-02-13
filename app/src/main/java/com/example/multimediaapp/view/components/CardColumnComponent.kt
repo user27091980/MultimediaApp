@@ -9,21 +9,27 @@ import androidx.compose.ui.Modifier
 import com.example.multimediaapp.ui.theme.cardColumnModifier
 import com.example.multimediaapp.viewmodel.uistate.BandUiState
 
+/**
+ * Componente de UI para mostrar información de la banda en una tarjeta (Card).
+ * Esta columna puede contener múltiples cards si se quisiera expandir.
+ *
+ * @param band Objeto BandUiState con toda la información de la banda
+ */
 @Composable
 fun CardColumnComponent(
     band: BandUiState
 ) {
 
-    //Column for organice cards
+    //Columna que organiza las cards verticalmente
 
     Column(
-        modifier = Modifier.fillMaxWidth()
+        modifier = Modifier.fillMaxWidth()// Ocupa todo el ancho disponible
     ) {
-        //main card with band text
+        // Tarjeta principal con la información de la banda
         Card(
-            cardColumnModifier
+            cardColumnModifier// Modifier personalizado desde el tema, puede incluir padding, shape, elevation
         ) {
-
+// Texto dentro de la tarjeta que muestra la descripción de la banda
             Text(text = band.textInfo)
 
         }
