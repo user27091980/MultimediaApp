@@ -289,6 +289,7 @@ class BandsRepo {
             onError()
         }
     }
+
 }
 
 /**EXPLICACIÓN ARQUITECTURA
