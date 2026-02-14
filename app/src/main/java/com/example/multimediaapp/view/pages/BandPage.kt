@@ -73,6 +73,7 @@ fun Band(
         }
     }
 }
+
 /**
  * Preview de la página Band con datos de prueba
  */

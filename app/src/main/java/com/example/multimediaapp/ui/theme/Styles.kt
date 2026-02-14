@@ -1,6 +1,7 @@
 package com.example.multimediaapp.ui.theme
 
 import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.ui.Modifier
@@ -43,8 +44,9 @@ val boxModifier = Modifier
     .padding(5.dp, 30.dp, 5.dp, 90.dp)
 
 //row para la imagen de cabecera
-val rowModifier = Modifier
-    .padding(1.dp, 20.dp, 1.dp, 20.dp)
+val rowModifier =Modifier
+    .fillMaxWidth()
+    .padding(horizontal = 16.dp, vertical = 8.dp)
 
 //row para las cards de info
 val rowCardModifier = Modifier

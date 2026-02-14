@@ -5,7 +5,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
 import androidx.lifecycle.viewmodel.compose.viewModel
-import com.example.multimediaapp.view.components.UserCardsComponent
+import com.example.multimediaapp.view.components.UserCardComponent
 import com.example.multimediaapp.viewmodel.vm.UserInfoVM
 
 
@@ -26,11 +26,11 @@ fun UserInfoScreenPage(
     // Observar el estado del ViewModel
     val uiState = vm.uiState.collectAsState()
 
-   /* Column() {
-        UserCardsComponent(
+    Column() {
+        UserCardComponent(
 
 
         )
-    }*/
+    }
 
 }

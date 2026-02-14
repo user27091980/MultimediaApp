@@ -12,7 +12,7 @@ import com.example.multimediaapp.ui.theme.styleText
 import com.example.multimediaapp.viewmodel.uistate.UserInfoUiState
 
 @Composable
-fun UserCardsComponent(userInfoId: UserInfoUiState) {
+fun UserCardComponent(userInfoId: UserInfoUiState) {
 
     Box(boxModifier) {
         Column(colModifier) {

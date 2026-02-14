@@ -25,7 +25,7 @@ fun BandHeader(band: BandUiState) {
         // Modificadores para definir el tamaño y comportamiento de la imagen.
         modifier = Modifier
             .fillMaxWidth()// Ocupa todo el ancho disponible
-            .height(200.dp),// Altura fija de 200dp
+            .height(100.dp),// Altura fija de 100dp
         // Escala de la imagen dentro del espacio definido:
         // 'Crop' recorta la imagen si no coincide exactamente con el tamaño del contenedor.
         contentScale = ContentScale.Crop

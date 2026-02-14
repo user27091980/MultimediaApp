@@ -19,13 +19,14 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import androidx.lifecycle.viewmodel.compose.viewModel
 
 /**
  * Pantalla de configuración de la app.
  * Permite cambiar preferencias como el modo oscuro y mostrar información básica de la app.
  */
 @Composable
-fun SettingsScreen() {
+fun SettingsScreen( vm: SettingsVM = viewModel()) {
     // Estado local para el switch de modo oscuro
     var darkMode by remember { mutableStateOf(false) }
 // Columna principal que organiza todos los elementos de la pantalla
@@ -54,6 +55,12 @@ fun SettingsScreen() {
 
         // Información sobre la versión de la app
         Text("App Version: 1.0", style = MaterialTheme.typography.titleMedium)
+
+        Spacer(modifier = Modifier.height(24.dp))
+
+        Text("Agradecimientos: 10% a chatGpt,\n 70% a Pedro que le debo unos porteos" +
+                "\ny 5% a mí mismo por no desquiciarme",
+            style = MaterialTheme.typography.titleMedium)
 
     }
 }

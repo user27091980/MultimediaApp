@@ -9,5 +9,8 @@
     <string name="usuario">usuario</string>
     <string name="configuración">configuración</string>
     <string name="búsqueda">búsqueda</string>
-
+    <string name="link_last">lastFm</string>
+    <string name="link_disc">discogs</string>
+    <string name="salir">salir</string>
+    <string name="correo">email</string>
 </resources>
