@@ -12,7 +12,7 @@ import kotlinx.coroutines.flow.asStateFlow
  * - Mantiene el estado de las opciones de usuario.
  * - Ideal para MVVM limpio y reactivo.
  */
-class SettingsViewModel : ViewModel() {
+class SettingsVM : ViewModel() {
 
     /** Estado interno mutable */
     private val _uiState = MutableStateFlow(SettingsUiState())
