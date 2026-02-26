@@ -1,0 +1,16 @@
+<resources>
+    <string name="app_name">MultimediaApp</string>
+    <string name="registro">Registro</string>
+    <string name="aceptar">Aceptar</string>
+    <string name="login">Acceder</string>
+    <string name="contraseña">password</string>
+    <string name="cancelar">cancelar</string>
+    <string name="inicio">inicio</string>
+    <string name="usuario">usuario</string>
+    <string name="configuración">configuración</string>
+    <string name="búsqueda">búsqueda</string>
+    <string name="link_last">lastFm</string>
+    <string name="link_disc">discogs</string>
+    <string name="salir">salir</string>
+    <string name="correo">email</string>
+</resources>
