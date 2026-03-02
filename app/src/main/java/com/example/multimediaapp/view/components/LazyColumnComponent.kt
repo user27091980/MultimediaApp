@@ -1,6 +1,7 @@
 package com.example.multimediaapp.view.components
 
 import androidx.compose.foundation.Image
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.width
@@ -14,7 +15,8 @@ import coil.compose.rememberAsyncImagePainter
 import com.example.multimediaapp.viewmodel.uistate.BandUiState
 
 @Composable
-fun CardList(bands: List<BandUiState>) {
+fun CardList(bands: List<BandUiState>, onImageClick: (BandUiState) -> Unit // Lambda que recibe la banda clicada
+) {
     // LazyColumn permite crear listas verticales "perezosas", cargando solo los elementos visibles.
     // Es útil para listas grandes, para optimizar rendimiento.
     LazyColumn() {
@@ -31,7 +33,8 @@ fun CardList(bands: List<BandUiState>) {
                 modifier = Modifier
                     .height(120.dp)// Altura fija de cada imagen
                     .width(120.dp)// Ancho fijo de cada imagen
-                    .padding(end = 8.dp),// Espacio entre imágenes horizontales
+                    .padding(end = 8.dp)
+                    .clickable { onImageClick(band) },
                 // Escala de la imagen para que llene su contenedor y recorte lo sobrante
                 contentScale = ContentScale.Crop,
             )

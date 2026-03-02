@@ -16,6 +16,7 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
+import androidx.navigation.compose.rememberNavController
 import com.example.multimediaapp.navigation.ObjRoutes
 import com.example.multimediaapp.viewmodel.vm.LoginRegVM
 
@@ -59,5 +60,15 @@ fun LoginRegScreen(navController: NavController, vm: LoginRegVM) {
         }
 
     }
+}
+@Preview()
+@Composable
+fun LoginRegScreenPreview() {
+    val navController = rememberNavController()
+
+    LoginRegScreen(
+        navController = navController,
+        vm = LoginRegVM() // ⚠️ solo si tu VM tiene constructor vacío
+    )
 }
 

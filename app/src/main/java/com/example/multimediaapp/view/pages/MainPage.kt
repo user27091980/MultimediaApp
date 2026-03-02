@@ -3,12 +3,17 @@ package com.example.multimediaapp.view.pages
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
+import androidx.compose.ui.tooling.preview.Preview
 import androidx.lifecycle.viewmodel.compose.viewModel
+import androidx.navigation.NavController
+import androidx.navigation.compose.rememberNavController
+import com.example.multimediaapp.navigation.ObjRoutes
 import com.example.multimediaapp.view.components.CardList
+import com.example.multimediaapp.viewmodel.uistate.BandUiState
 import com.example.multimediaapp.viewmodel.vm.BandVM
 
 @Composable
-fun MainScreen(vm: BandVM = viewModel()) {
+fun MainScreen(navController: NavController, vm: BandVM = viewModel()) {
 
     // LaunchedEffect se ejecuta cuando el Composable entra en composición.
     // Unit como clave significa que se ejecutará solo una vez.
@@ -22,10 +27,48 @@ fun MainScreen(vm: BandVM = viewModel()) {
     // Llamamos al componente que muestra la lista de bandas.
     // Accedemos a .value porque collectAsState() devuelve un State<T>.
     CardList(
-        bands = uiState.value.bands
+        bands = uiState.value.bands,
+        onImageClick = { clickedBand ->
+            // Aquí puedes navegar o mostrar detalles
+            navController.navigate(ObjRoutes.BAND)
+        }
     )
 }
 
+@Preview
+@Composable
+fun MainScreenPreview() {
+
+    val navController = rememberNavController()
+
+    // Lista mock de bandas, usando el campo exacto 'imageBand'
+    val bandList = listOf(
+        BandUiState(
+            id = "1",
+            name = "Linkin Park",
+            textInfo = "Banda de rock alternativo formada en 1996.",
+            headerImage = "https://upload.wikimedia.org/wikipedia/en/5/5f/MeteoraLP.jpg",
+            albumImages = listOf(
+                "https://upload.wikimedia.org/wikipedia/en/2/2f/Hybrid_Theory.jpg",
+                "https://upload.wikimedia.org/wikipedia/en/5/5f/MeteoraLP.jpg"
+            ),
+            style = "Rock",
+            recordLabel = "Alternative",
+            components = "",
+            discography = TODO(),
+            imageBand = TODO(),
+        )
+    )
+
+    // Renderizamos la lista usando CardList
+    CardList(
+        bands = bandList,
+        onImageClick = { clickedBand ->
+            // Preview: solo mostramos en consola
+            println("Clic en: ${clickedBand.name}")
+        }
+    )
+}
 /**
  * 🔎 Explicación conceptual
  * 🔹 viewModel()

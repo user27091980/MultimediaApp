@@ -46,13 +46,13 @@ fun BandScreen(
     LaunchedEffect(key1 = bandId) {
         vm.loadData() // Llama al ViewModel para cargar todas las bandas
         // Buscar la banda por ID
-        val bandState = vm.uiState.value.bands.find { it.id == bandId }// Busca la banda por ID
-        band = bandState
+        band= vm.uiState.value.bands.find { it.id == bandId }// Busca la banda por ID
+
     }
 
 
     // Renderizamos la UI solo si hay datos de banda
-    bandToShow?.let { bd ->
+    band?.let { bd ->
         Column(
             bandColumnModifier
                 .verticalScroll(rememberScrollState())// Scroll vertical para contenido
@@ -75,6 +75,8 @@ fun BandScreen(
         }
     }
 }
+
+
 
 
 

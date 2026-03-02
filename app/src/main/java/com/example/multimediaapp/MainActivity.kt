@@ -76,17 +76,11 @@ class MainActivity : ComponentActivity() {
 
                             ) {
                                 composable(ObjRoutes.LOGINREG){
-                                    LoginRegScreen(
-                                        vm = TODO()
-                                    )
+                                    LoginRegScreen()
                                 }
                                 composable(ObjRoutes.LOGIN) {
                                     LoginScreen(
-                                        uiState = TODO(),
-                                        onEmailChange = TODO(),
-                                        onPasswordChange = TODO(),
-                                        onTogglePassword = TODO(),
-                                        onLoginClick = TODO()
+
                                     )
                                 }
                                 composable(ObjRoutes.REGISTER) {
@@ -107,7 +101,6 @@ class MainActivity : ComponentActivity() {
                                 composable(ObjRoutes.SETTINGS) {
                                     SettingsScreen()
                                 }
-
                             }
                         }
                     }
