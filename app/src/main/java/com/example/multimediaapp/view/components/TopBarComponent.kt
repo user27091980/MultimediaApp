@@ -23,11 +23,12 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
 import androidx.core.net.toUri
+import androidx.navigation.NavHostController
 import com.example.multimediaapp.R
 import com.example.multimediaapp.ui.theme.rowModifier
 
 @Composable
-fun TopBar() {
+fun TopBar(navController: NavHostController) {
     //manages if dropdown menu it´s open or close
     var isExpanded by remember { mutableStateOf(false) }
     //Context and activity for open links or close the app
