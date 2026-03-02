@@ -39,21 +39,19 @@ fun LoginRegScreen(vm: LoginRegVM) {
             modifier = Modifier
                 .padding(horizontal = 32.dp)
 
-        ){
+        ) {
 
 
             ButtonLogin(
 
 
-                )
+            )
             // Botón Registro con estilo tonal
 
             ButtonRegister(
 
 
-
-
-                )
+            )
 
 
         }
@@ -63,7 +61,7 @@ fun LoginRegScreen(vm: LoginRegVM) {
 
 @Preview
 @Composable
-fun LoginRegPrev() {
+fun LoginRegScreenPrev() {
 
     LoginRegScreen()
 

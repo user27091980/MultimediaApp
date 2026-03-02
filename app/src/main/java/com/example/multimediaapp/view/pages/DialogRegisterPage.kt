@@ -18,7 +18,7 @@ import com.example.multimediaapp.viewmodel.vm.DialogVM
 //ejemplo dialog
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun DialogPage(
+fun DialogRegisterScreen(
     onConfirm: () -> Unit,
     onCancel: () -> Unit,
     vm: DialogVM = viewModel()
@@ -52,6 +52,6 @@ fun DialogPage(
 @Composable
 fun PreviewDialog(){
 
-    DialogPage(onConfirm = { },
+    DialogRegisterScreen(onConfirm = { },
         onCancel = { })
 }
