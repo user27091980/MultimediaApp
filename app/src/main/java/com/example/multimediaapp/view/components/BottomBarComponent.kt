@@ -17,6 +17,7 @@ import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.res.stringResource
 import androidx.navigation.NavHostController
 import com.example.multimediaapp.R
+import com.example.multimediaapp.navigation.ObjRoutes
 
 
 /**
@@ -37,7 +38,7 @@ fun BottomBar(navController: NavHostController) {
         BottomItems.BottomBarItem(
             label = stringResource(R.string.inicio),
             Icons.Default.Home,
-            route = ""//navController.navigate(ObjRoutes.MAINSCREEN)
+            route = navController.navigate(ObjRoutes.MAIN)
         ),
         /*BottomItems.TopButtonItems(
             label = stringResource(R.string.buscar),
@@ -48,7 +49,7 @@ fun BottomBar(navController: NavHostController) {
         BottomItems.BottomBarItem(
             label = stringResource(R.string.usuario),
             Icons.Default.Person,
-            route =""
+            route =navController.navigate(ObjRoutes.INFOUSER)
         )
     )
 

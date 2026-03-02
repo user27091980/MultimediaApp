@@ -1,5 +1,7 @@
 package com.example.multimediaapp.view.pages
 
+import com.example.multimediaapp.view.components.ButtonAcept
+import com.example.multimediaapp.view.components.ButtonCancel
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
@@ -27,9 +29,9 @@ import androidx.compose.ui.text.input.VisualTransformation
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
+import androidx.navigation.NavController
 import androidx.navigation.NavHostController
 import com.example.multimediaapp.navigation.ObjRoutes
-import com.example.multimediaapp.view.components.ButtonAcept
 import com.example.multimediaapp.viewmodel.events.LoginEvent
 import com.example.multimediaapp.viewmodel.uistate.LoginUiState
 import com.example.multimediaapp.viewmodel.vm.LoginVM
@@ -40,7 +42,7 @@ import com.example.multimediaapp.viewmodel.vm.LoginVM
  */
 @Composable
 fun LoginScreen(
-
+    navController: NavController,
     uiState: LoginUiState,
     onEmailChange: (String) -> Unit,
     onPasswordChange: (String) -> Unit,
@@ -92,22 +94,27 @@ fun LoginScreen(
                     TextButton(onClick = onTogglePassword) {
                         Text(if (uiState.passwordVisible) "Hide" else "Show")
                     }
-
-
                 }
             )
             Spacer(modifier = Modifier.height(16.dp))
 
-            ButtonAcept(onClick = onLoginClick)
+            ButtonAcept(
+                onClick = { navController.navigate(ObjRoutes.MAIN) }
+            )
+
+            ButtonCancel(
+                onClick = { navController.navigate(ObjRoutes.LOGIN) }
+            )
 
         }
     }
 }
+
 //creamos el route
 @Composable
 fun LoginRoute(
-    navController: NavHostController,
-    viewModel: LoginVM = viewModel()
+
+    viewModel: LoginVM = viewModel(), navController: NavHostController
 ) {
     val uiState by viewModel.uiState.collectAsState()
 
@@ -131,7 +138,8 @@ fun LoginRoute(
         onEmailChange = viewModel::onEmailChange,
         onPasswordChange = viewModel::onPasswordChange,
         onTogglePassword = viewModel::togglePasswordVisibility,
-        onLoginClick = { viewModel.login() }
+        onLoginClick = { viewModel.login() },
+        navController =
     )
 }
 

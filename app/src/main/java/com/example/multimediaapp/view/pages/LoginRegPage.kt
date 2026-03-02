@@ -1,5 +1,7 @@
 package com.example.multimediaapp.view.pages
 
+import com.example.multimediaapp.view.components.ButtonLogin
+import com.example.multimediaapp.view.components.ButtonRegister
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
@@ -13,15 +15,15 @@ import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import com.example.multimediaapp.view.components.ButtonLogin
-import com.example.multimediaapp.view.components.ButtonRegister
+import androidx.navigation.NavController
+import com.example.multimediaapp.navigation.ObjRoutes
 import com.example.multimediaapp.viewmodel.vm.LoginRegVM
 
 /**
  * @author Andrés
  */
 @Composable
-fun LoginRegScreen(vm: LoginRegVM) {
+fun LoginRegScreen(navController: NavController, vm: LoginRegVM) {
 
     Box(
         modifier = Modifier
@@ -43,13 +45,13 @@ fun LoginRegScreen(vm: LoginRegVM) {
 
 
             ButtonLogin(
-
-
+                onClick = { navController.navigate(ObjRoutes.LOGIN) }
             )
             // Botón Registro con estilo tonal
 
             ButtonRegister(
 
+                onClick = { navController.navigate(ObjRoutes.REGISTER) }
 
             )
 
@@ -59,12 +61,3 @@ fun LoginRegScreen(vm: LoginRegVM) {
     }
 }
 
-@Preview
-@Composable
-fun LoginRegScreenPrev() {
-
-    LoginRegScreen(
-        vm = TODO()
-    )
-
-}

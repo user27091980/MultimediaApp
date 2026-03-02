@@ -32,13 +32,12 @@ import com.example.multimediaapp.viewmodel.vm.BandVM
  * @author Andrés Canabal Poncela
  * @param bandId: ID de la banda para buscar en el ViewModel
  * @param vm: instancia del ViewModel que maneja los datos de bandas
- * @param bandMock: opción para pasar datos de prueba (útil para previews)
  */
 @Composable
 fun BandScreen(
     bandId: String = "", // Por defecto vacío, útil para previews
     vm: BandVM = viewModel(),// ViewModel por defecto
-    bandMock: BandUiState? = null///Datos de prueba para preview
+
 ) {
     // Estado local que guardará la banda que se debe mostrar
     var band by remember { mutableStateOf<BandUiState?>(null) }
@@ -51,8 +50,7 @@ fun BandScreen(
         band = bandState
     }
 
-    // Usamos el bandMock si existe, sino usamos la banda cargada del ViewModel
-    val bandToShow = bandMock ?: band
+
     // Renderizamos la UI solo si hay datos de banda
     bandToShow?.let { bd ->
         Column(
@@ -68,43 +66,18 @@ fun BandScreen(
             Spacer(modifier = Modifier.height(6.dp))
             BandTags(band = bd)// Etiquetas de estilo, discografía, etc.
             Spacer(modifier = Modifier.height(6.dp))
-            ImagesRowList(band = bd)// Fila horizontal con imágenes de álbumes
+            ImagesRowList(
+                band = bd,
+                modifier = TODO(),
+                onImageClick = TODO()
+            )// Fila horizontal con imágenes de álbumes
 
         }
     }
 }
 
-/**
- * Preview de la página Band con datos de prueba
- */
 
-@Preview(showBackground = true) // Muestra fondo en el preview
-@Composable
-fun BandScreenPrev() {
 
-    val sampleBand = BandUiState(
-        id = "0",
-        name = "Tool",
-        textInfo = "Banda de metal progresivo estadounidense",
-        headerImage = "ApiGenerica/data/resources/tool.jpg",
-        albumImages = listOf(
-            "data/resources/tool3.jpg",
-            "data/resources/tool4.jpg",
-            "data/resources/tool5.jpg",
-            "data/resources/tool6.jpg",
-            "data/resources/tool7.jpg",
-            "data/resources/tool8.jpg"
-        ),
-        style = "Metal progresivo",
-        recordLabel = "BGM",
-        components = "Maynard, Danny, Adam, Justin",
-        discography = listOf("Opiate", "Undertow", "Ænima"),
-        imageBand = "data/resources/tool1.jpg"
-    )
 
-    BandScreen(
-        bandMock = sampleBand,
-    )
-}
 
 

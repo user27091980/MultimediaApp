@@ -50,15 +50,3 @@ fun DialogRegisterScreen(
         }
     )
 }
-
-
-@Preview
-@Composable
-fun PreviewDialog(){
-
-    DialogRegisterScreen(
-        navController = TODO(),
-        vm = TODO(),
-        onConfirm = TODO()
-    ) { }
-}
