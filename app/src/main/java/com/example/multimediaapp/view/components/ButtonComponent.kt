@@ -13,13 +13,15 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import com.example.multimediaapp.R
+import com.example.multimediaapp.navigation.ObjRoutes
 import com.example.multimediaapp.ui.theme.styleButtonText
+import com.example.multimediaapp.view.pages.DialogRegisterScreen
 
 /**
-* Componente de botones personalizados para toda la app
-* usando Material3 FilledTonalButton.
-* Permite reutilizar botones de login, registro, aceptar y cancelar.
-*/
+ * Componente de botones personalizados para toda la app
+ * usando Material3 FilledTonalButton.
+ * Permite reutilizar botones de login, registro, aceptar y cancelar.
+ */
 /**
  * @author Andres
  * @param onClick Función que se ejecuta al presionar el botón
@@ -59,17 +61,19 @@ fun ButtonRegister(onClick: () -> Unit = {}, modifier: Modifier = Modifier) {
     ) {
         Text(text = stringResource(R.string.registro))
     }
-    /*if (showDialog) {
-        DialogPage(
+    if (showDialog) {
+        DialogRegisterScreen(
             onConfirm = {
                 navController.navigate(ObjRoutes.REGISTER) // navega al registro
                 showDialog = true
             },
             onCancel = {
                 showDialog = false // cierra el diálogo
-            }
+            },
+            navController = TODO(),
+            vm = TODO()
         )
-    }*/
+    }
 
 }
 

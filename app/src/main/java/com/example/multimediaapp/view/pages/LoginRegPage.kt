@@ -63,6 +63,8 @@ fun LoginRegScreen(vm: LoginRegVM) {
 @Composable
 fun LoginRegScreenPrev() {
 
-    LoginRegScreen()
+    LoginRegScreen(
+        vm = TODO()
+    )
 
 }

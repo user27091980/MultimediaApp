@@ -21,7 +21,9 @@ import com.example.multimediaapp.viewmodel.vm.DialogVM
 @Composable
 fun DialogRegisterScreen(
     navController: NavController,
-    vm: DialogVM = viewModel()
+    vm: DialogVM = viewModel(),
+    onConfirm: () -> Unit,
+    onCancel: () -> Unit
 ) {
 
     val uiState by vm.uiState.collectAsState()
@@ -56,6 +58,6 @@ fun PreviewDialog(){
 
     DialogRegisterScreen(
         navController = TODO(),
-        vm = TODO()
+        vm = TODO(),
     )
 }
