@@ -19,6 +19,7 @@ import com.example.multimediaapp.ui.theme.MultimediaAppTheme
 import com.example.multimediaapp.view.components.BottomBar
 import com.example.multimediaapp.view.components.TopBar
 import com.example.multimediaapp.view.pages.BandScreen
+import com.example.multimediaapp.view.pages.LoginRegScreen
 import com.example.multimediaapp.view.pages.LoginScreen
 import com.example.multimediaapp.view.pages.MainScreen
 import com.example.multimediaapp.view.pages.RegisterScreen
@@ -71,11 +72,22 @@ class MainActivity : ComponentActivity() {
                         ) {
                             NavHost(
                                 navController = navController,
-                                starDestination = ObjRoutes.LOGINREG,
+                                startDestination = ObjRoutes.LOGINREG,
 
                             ) {
+                                composable(ObjRoutes.LOGINREG){
+                                    LoginRegScreen(
+                                        vm = TODO()
+                                    )
+                                }
                                 composable(ObjRoutes.LOGIN) {
-                                    LoginScreen()
+                                    LoginScreen(
+                                        uiState = TODO(),
+                                        onEmailChange = TODO(),
+                                        onPasswordChange = TODO(),
+                                        onTogglePassword = TODO(),
+                                        onLoginClick = TODO()
+                                    )
                                 }
                                 composable(ObjRoutes.REGISTER) {
                                     RegisterScreen()
@@ -95,6 +107,7 @@ class MainActivity : ComponentActivity() {
                                 composable(ObjRoutes.SETTINGS) {
                                     SettingsScreen()
                                 }
+
                             }
                         }
                     }
