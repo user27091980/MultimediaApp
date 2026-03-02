@@ -15,10 +15,10 @@ data class RegisterRoute(val email: String, val user: String) : NavRoute
 object LoginRegRoute : NavRoute
 
 @Serializable
-object MainPageRoute : NavRoute
+object MainRoute : NavRoute
 
 @Serializable
-object BandPageRoute : NavRoute
+object BandRoute : NavRoute
 
 @Serializable
 object UserInfoRoute : NavRoute
@@ -28,6 +28,8 @@ object DialogPageRoute : NavRoute
 
 @Serializable
 object SettingsRoute : NavRoute
+
+
 
 /**
  * ===APUNTES====

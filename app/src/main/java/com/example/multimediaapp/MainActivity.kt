@@ -11,14 +11,20 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.Scaffold
 import androidx.compose.ui.Modifier
 import androidx.navigation.compose.NavHost
+import androidx.navigation.compose.composable
 import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.rememberNavController
-import androidx.navigation.compose.composable
 import com.example.multimediaapp.navigation.ObjRoutes
 import com.example.multimediaapp.ui.theme.MultimediaAppTheme
 import com.example.multimediaapp.view.components.BottomBar
 import com.example.multimediaapp.view.components.TopBar
-import com.example.multimediaapp.view.pages.LoginRoute
+import com.example.multimediaapp.view.pages.BandScreen
+import com.example.multimediaapp.view.pages.LoginScreen
+import com.example.multimediaapp.view.pages.MainScreen
+import com.example.multimediaapp.view.pages.RegisterScreen
+import com.example.multimediaapp.view.pages.SettingsScreen
+import com.example.multimediaapp.view.pages.UserInfoScreen
+
 
 class MainActivity : ComponentActivity() {
     @SuppressLint("UnusedMaterial3ScaffoldPaddingParameter")
@@ -45,9 +51,10 @@ class MainActivity : ComponentActivity() {
                     //personalized bottombar
                     bottomBar = {
                         if (currentRoute in listOf(
-                                ObjRoutes.MAINSCREEN,
-                                //ObjRoutes.SEARCH,
-                                ObjRoutes.INFOUSER
+                                ObjRoutes.LOGINREG,
+                                ObjRoutes.REGISTER,
+                                ObjRoutes.LOGIN
+
                             )
                         ) {
                             BottomBar(navController)
@@ -66,8 +73,33 @@ class MainActivity : ComponentActivity() {
                                 starDestination = ObjRoutes.LOGINREG,
                             ) {
                                 composable(ObjRoutes.LOGIN) {
-                                    LoginRoute(navController)
+                                    LoginScreen(
+                                        uiState = TODO(),
+                                        onEmailChange = TODO(),
+                                        onPasswordChange = TODO(),
+                                        onTogglePassword = TODO(),
+                                        onLoginClick = TODO()
+                                    )
                                 }
+                                composable(ObjRoutes.REGISTER){
+                                    RegisterScreen()
+                                }
+                                composable(ObjRoutes.MAIN){
+                                    MainScreen()
+                                }
+                                composable(ObjRoutes.BAND){
+                                    BandScreen()
+                                }
+                                composable(ObjRoutes.INFOUSER){
+                                    UserInfoScreen(
+                                        userInfoId = TODO(),
+                                        vm = TODO()
+                                    )
+                                }
+                                composable(ObjRoutes.SETTINGS){
+                                    SettingsScreen()
+                                }
+
                             }
                         }
                     }
@@ -203,7 +235,7 @@ class MainActivity : ComponentActivity() {
  *  ├── SplashRoute → SplashScreen
  *  ├── LoginRoute → LoginScreen
  *  ├── MainScreenRoute → MainScreen
- *  ├── BandAeRoute → BandAe
+ *  ├── BandRoute → Band
  *  ├── SettingsRoute → Settings
  *
  *  Errores comunes (para que no caigas 😅)

@@ -9,6 +9,7 @@ import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.lifecycle.viewmodel.compose.viewModel
+import androidx.navigation.NavController
 import com.example.multimediaapp.viewmodel.vm.DialogVM
 
 /**
@@ -19,8 +20,7 @@ import com.example.multimediaapp.viewmodel.vm.DialogVM
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun DialogRegisterScreen(
-    onConfirm: () -> Unit,
-    onCancel: () -> Unit,
+    navController: NavController,
     vm: DialogVM = viewModel()
 ) {
 
@@ -33,14 +33,16 @@ fun DialogRegisterScreen(
         },
         confirmButton = {
 
-            TextButton(onClick = { vm.confirmAction() }) {
+            TextButton(onClick = { vm.confirmAction()
+            navController.navigate("RegisterRoute")}) {
 
                 Text("sí")
             }
 
         },
         dismissButton = {
-            TextButton(onClick = {vm.hideDialog()}) {
+            TextButton(onClick = {vm.hideDialog()
+            navController.navigate("LoginRegRoute")}) {
                 Text("no")
             }
         }
@@ -52,6 +54,8 @@ fun DialogRegisterScreen(
 @Composable
 fun PreviewDialog(){
 
-    DialogRegisterScreen(onConfirm = { },
-        onCancel = { })
+    DialogRegisterScreen(
+        navController = TODO(),
+        vm = TODO()
+    )
 }
