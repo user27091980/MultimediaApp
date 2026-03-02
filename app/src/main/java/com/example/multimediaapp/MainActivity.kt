@@ -65,17 +65,18 @@ class MainActivity : ComponentActivity() {
                                 navController = navController,
                                 starDestination = ObjRoutes.LOGINREG,
                             ) {
-                                composable(ObjRoutes.LOGIN){
+                                composable(ObjRoutes.LOGIN) {
                                     LoginRoute(navController)
                                 }
-
                             }
                         }
                     }
+                )
             }
         }
-
     }
+}
+
 /**
  * Notas apuntes:
  *NavHost es el contenedor de navegación en Jetpack Compose.

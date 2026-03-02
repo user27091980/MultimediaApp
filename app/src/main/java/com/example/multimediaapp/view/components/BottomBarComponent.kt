@@ -15,6 +15,7 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.res.stringResource
+import androidx.navigation.NavHostController
 import com.example.multimediaapp.R
 
 
@@ -28,7 +29,7 @@ guardados en una lista denominada como items.
  */
 
 @Composable
-fun BottomBar() {
+fun BottomBar(navController: NavHostController) {
 
     var selectedItem by remember { mutableStateOf(0) }
 
