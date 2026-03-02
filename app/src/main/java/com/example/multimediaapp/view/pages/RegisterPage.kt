@@ -64,7 +64,7 @@ fun RegisterScreen(vm: RegisterVM = viewModel()) {
 
 @Preview
 @Composable
-fun RegScreenPrev() {
+fun RegPrev() {
 
     RegisterScreen()
 

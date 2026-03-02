@@ -8,7 +8,7 @@ import com.example.multimediaapp.view.components.CardList
 import com.example.multimediaapp.viewmodel.vm.BandVM
 
 @Composable
-fun MainPage(vm: BandVM = viewModel()) {
+fun MainScreen(vm: BandVM = viewModel()) {
 
     // LaunchedEffect se ejecuta cuando el Composable entra en composición.
     // Unit como clave significa que se ejecutará solo una vez.

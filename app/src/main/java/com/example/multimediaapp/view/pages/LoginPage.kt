@@ -39,7 +39,7 @@ import com.example.multimediaapp.viewmodel.vm.LoginVM
  * @author Andrés
  */
 @Composable
-fun Login(
+fun LoginScreen(
 
     uiState: LoginUiState,
     onEmailChange: (String) -> Unit,
@@ -125,7 +125,7 @@ fun LoginRoute(
             }
         }
     }
-    Login(
+    LoginScreen(
 
         uiState = uiState,
         onEmailChange = viewModel::onEmailChange,
@@ -137,9 +137,9 @@ fun LoginRoute(
 
 @Preview(showBackground = true)
 @Composable
-fun LoginPreview() {
+fun LoginScreenPreview() {
 
-    Login(
+    LoginScreen(
 
         uiState = LoginUiState(
             email = "andresico@mail.com",

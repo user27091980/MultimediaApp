@@ -35,7 +35,7 @@ import com.example.multimediaapp.viewmodel.vm.BandVM
  * @param bandMock: opción para pasar datos de prueba (útil para previews)
  */
 @Composable
-fun Band(
+fun BandScreen(
     bandId: String = "", // Por defecto vacío, útil para previews
     vm: BandVM = viewModel(),// ViewModel por defecto
     bandMock: BandUiState? = null///Datos de prueba para preview
@@ -80,7 +80,7 @@ fun Band(
 
 @Preview(showBackground = true) // Muestra fondo en el preview
 @Composable
-fun BandPrev() {
+fun BandScreenPrev() {
 
     val sampleBand = BandUiState(
         id = "0",
@@ -102,7 +102,7 @@ fun BandPrev() {
         imageBand = "data/resources/tool1.jpg"
     )
 
-    Band(
+    BandScreen(
         bandMock = sampleBand,
     )
 }

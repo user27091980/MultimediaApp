@@ -3,7 +3,6 @@ package com.example.multimediaapp.view.pages
 import androidx.compose.foundation.layout.Column
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
-import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.lifecycle.viewmodel.compose.viewModel
@@ -17,7 +16,7 @@ import com.example.multimediaapp.viewmodel.vm.UserInfoVM
  *
  */
 @Composable
-fun UserInfoScreenPage(
+fun UserInfoScreen(
     userInfoId: String,
     vm: UserInfoVM = viewModel()
 ) {
