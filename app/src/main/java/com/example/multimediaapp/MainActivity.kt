@@ -72,15 +72,10 @@ class MainActivity : ComponentActivity() {
                             NavHost(
                                 navController = navController,
                                 starDestination = ObjRoutes.LOGINREG,
+
                             ) {
                                 composable(ObjRoutes.LOGIN) {
-                                    LoginScreen(
-                                        uiState = TODO(),
-                                        onEmailChange = TODO(),
-                                        onPasswordChange = TODO(),
-                                        onTogglePassword = TODO(),
-                                        onLoginClick = TODO()
-                                    )
+                                    LoginScreen()
                                 }
                                 composable(ObjRoutes.REGISTER) {
                                     RegisterScreen()
@@ -100,7 +95,6 @@ class MainActivity : ComponentActivity() {
                                 composable(ObjRoutes.SETTINGS) {
                                     SettingsScreen()
                                 }
-
                             }
                         }
                     }
