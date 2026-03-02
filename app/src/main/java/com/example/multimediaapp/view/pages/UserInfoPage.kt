@@ -3,6 +3,7 @@ package com.example.multimediaapp.view.pages
 import androidx.compose.foundation.layout.Column
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.lifecycle.viewmodel.compose.viewModel
@@ -12,7 +13,7 @@ import com.example.multimediaapp.viewmodel.vm.UserInfoVM
 
 /**
  * @author Andrés
- * @param optional modifier Modifier for the external layout customization
+ * @param external layout customization
  *
  */
 @Composable
@@ -21,7 +22,7 @@ fun UserInfoScreen(
     vm: UserInfoVM = viewModel()
 ) {
     // Observar estado con lifecycle awareness
-    val uiState by vm.uiState.collectAsStateWithLifecycle()
+    val uiState = vm.uiState.collectAsState()
 
 
     // Cargar datos cuando cambie el userInfoId
@@ -32,7 +33,8 @@ fun UserInfoScreen(
 
     Column {
         UserCardComponent(
-            user = uiState.user // Ajusta según tu modelo
+
+            name = uiState.name
         )
     }
 
