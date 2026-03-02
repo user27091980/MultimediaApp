@@ -51,9 +51,10 @@ class MainActivity : ComponentActivity() {
                     //personalized bottombar
                     bottomBar = {
                         if (currentRoute in listOf(
-                                ObjRoutes.LOGINREG,
-                                ObjRoutes.REGISTER,
-                                ObjRoutes.LOGIN
+                                ObjRoutes.MAIN,
+                                ObjRoutes.BAND,
+                                ObjRoutes.SETTINGS,
+                                ObjRoutes.INFOUSER
 
                             )
                         ) {
@@ -81,22 +82,22 @@ class MainActivity : ComponentActivity() {
                                         onLoginClick = TODO()
                                     )
                                 }
-                                composable(ObjRoutes.REGISTER){
+                                composable(ObjRoutes.REGISTER) {
                                     RegisterScreen()
                                 }
-                                composable(ObjRoutes.MAIN){
+                                composable(ObjRoutes.MAIN) {
                                     MainScreen()
                                 }
-                                composable(ObjRoutes.BAND){
+                                composable(ObjRoutes.BAND) {
                                     BandScreen()
                                 }
-                                composable(ObjRoutes.INFOUSER){
+                                composable(ObjRoutes.INFOUSER) {
                                     UserInfoScreen(
                                         userInfoId = TODO(),
                                         vm = TODO()
                                     )
                                 }
-                                composable(ObjRoutes.SETTINGS){
+                                composable(ObjRoutes.SETTINGS) {
                                     SettingsScreen()
                                 }
 
