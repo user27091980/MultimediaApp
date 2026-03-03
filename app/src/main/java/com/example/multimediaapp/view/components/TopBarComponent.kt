@@ -1,18 +1,24 @@
 package com.example.multimediaapp.view.components
 
+// Permite acceder a la Activity actual
 import android.app.Activity
+// Permite lanzar otras aplicaciones o abrir enlaces
 import android.content.Intent
+// Layout horizontal
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxWidth
+// Iconos de Material
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Menu
 import androidx.compose.material.icons.filled.Settings
+// Componentes Material 3
 import androidx.compose.material3.DropdownMenu
 import androidx.compose.material3.DropdownMenuItem
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
+// Compose runtime
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
@@ -20,28 +26,44 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+// Permite acceder al contexto actual (Activity, etc.)
 import androidx.compose.ui.platform.LocalContext
+// Permite usar strings.xml
 import androidx.compose.ui.res.stringResource
+// Convierte String en Uri
 import androidx.core.net.toUri
+// Controlador de navegación
 import androidx.navigation.NavHostController
 import com.example.multimediaapp.R
+import com.example.multimediaapp.navigation.ObjRoutes
 import com.example.multimediaapp.ui.theme.rowModifier
 
+/**
+ * 🔹 TopBar personalizada
+ *
+ * Contiene:
+ * - Botón menú
+ * - Botón ajustes
+ * - Dropdown con opciones externas
+ */
+/**
+ * @param navController
+ */
 @Composable
 fun TopBar(navController: NavHostController) {
-    //manages if dropdown menu it´s open or close
+    // 🔹 Controla si el menú desplegable está abierto o cerrado
     var isExpanded by remember { mutableStateOf(false) }
-    //Context and activity for open links or close the app
+    // 🔹 Obtiene el contexto actual
     val context = LocalContext.current
-    //it tries to obtain the Activity for can close the app
+    // 🔹 Intenta obtener la Activity actual para poder cerrar la app
     val activity = context as? Activity
-    //Row for icons and topBar
+    // 🔹 Fila que contiene los botonesr
     Row(
-        rowModifier,
+        rowModifier,// Modifier personalizado
         verticalAlignment = Alignment.CenterVertically
     )
     {
-        //Menu button
+        //Botón del menú
         IconButton(onClick = { isExpanded = true }) {
 
             Icon(
@@ -53,8 +75,10 @@ fun TopBar(navController: NavHostController) {
                 )
 
         }
-        //Settings button
-        IconButton(onClick = {  }) {
+        //Configuración botón
+        IconButton(onClick = {
+            navController.navigate(ObjRoutes.SETTINGS)
+        }) {
 
             Icon(
                 imageVector = Icons.Default.Settings,
@@ -64,13 +88,13 @@ fun TopBar(navController: NavHostController) {
 
                 )
         }
-        //Dropdown menu, it shows on top leff corner
+        // 🔹 Botón de menú (abre el Dropdown)
         DropdownMenu(
             expanded = isExpanded,
             onDismissRequest = { isExpanded = false },
             modifier = Modifier.fillMaxWidth()
         ) {
-            //Option for open last.fm web
+            //Opción abrir last.fm web
             DropdownMenuItem(
                 text = { Text(text = stringResource(R.string.link_last)) },
                 onClick = {
@@ -85,7 +109,7 @@ fun TopBar(navController: NavHostController) {
                     }
                 }
             )
-            //option for open discogs web
+            //opción discogs web
             DropdownMenuItem(
                 text = { Text(text = stringResource(R.string.link_disc)) },
                 onClick = {
@@ -99,11 +123,12 @@ fun TopBar(navController: NavHostController) {
                     }
                 }
             )
-            //option for closed the app
+            //opción cerrar la app
             DropdownMenuItem(
                 text = { Text(text = stringResource(R.string.salir)) },
                 onClick = {
                     isExpanded = false
+                    // Cierra todas las Activities y finaliza la app
                     activity?.finishAffinity() // cerrar app
                 }
             )
