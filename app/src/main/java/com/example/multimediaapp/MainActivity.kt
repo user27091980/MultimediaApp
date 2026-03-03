@@ -77,13 +77,13 @@ class MainActivity : ComponentActivity() {
                             ) {
                                 composable(ObjRoutes.LOGINREG){
                                     LoginRegScreen(
-                                        navController = TODO(),
+                                        navController = navController,
                                         vm = TODO()
                                     )
                                 }
                                 composable(ObjRoutes.LOGIN) {
                                     LoginScreen(
-                                        navController = TODO(),
+                                        navController = navController,
                                         uiState = TODO(),
                                         onEmailChange = TODO(),
                                         onPasswordChange = TODO(),
@@ -93,13 +93,13 @@ class MainActivity : ComponentActivity() {
                                 }
                                 composable(ObjRoutes.REGISTER) {
                                     RegisterScreen(
-                                        navController = TODO(),
+                                        navController = navController,
                                         vm = TODO()
                                     )
                                 }
                                 composable(ObjRoutes.MAIN) {
                                     MainScreen(
-                                        navController = TODO(),
+                                        navController = navController,
                                         vm = TODO()
                                     )
                                 }
