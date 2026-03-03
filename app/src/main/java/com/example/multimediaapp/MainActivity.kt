@@ -14,6 +14,7 @@ import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.rememberNavController
+import com.example.multimediaapp.navigation.NavGraph
 import com.example.multimediaapp.navigation.ObjRoutes
 import com.example.multimediaapp.ui.theme.MultimediaAppTheme
 import com.example.multimediaapp.view.components.BottomBar
@@ -70,45 +71,16 @@ class MainActivity : ComponentActivity() {
                                 .fillMaxSize()
                                 .padding(innerPadding)
                         ) {
-                            NavHost(
-                                navController = navController,
-                                startDestination = ObjRoutes.LOGINREG,
-
-                            ) {
-                                composable(ObjRoutes.LOGINREG){
-                                    LoginRegScreen()
-                                }
-                                composable(ObjRoutes.LOGIN) {
-                                    LoginScreen(
-
-                                    )
-                                }
-                                composable(ObjRoutes.REGISTER) {
-                                    RegisterScreen()
-                                }
-                                composable(ObjRoutes.MAIN) {
-                                    MainScreen()
-                                }
-                                composable(ObjRoutes.BAND) {
-                                    BandScreen()
-                                }
-                                composable(ObjRoutes.INFOUSER) {
-                                    UserInfoScreen(
-                                        userInfoId = TODO(),
-                                        vm = TODO()
-                                    )
-                                }
-                                composable(ObjRoutes.SETTINGS) {
-                                    SettingsScreen()
-                                }
-                            }
+                            NavGraph(navController)
                         }
+
                     }
                 )
             }
         }
     }
 }
+
 
 /**
  * Notas apuntes:

@@ -50,7 +50,6 @@ fun BandScreen(
 
     }
 
-
     // Renderizamos la UI solo si hay datos de banda
     band?.let { bd ->
         Column(
