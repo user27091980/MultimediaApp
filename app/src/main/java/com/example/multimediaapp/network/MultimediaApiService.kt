@@ -31,7 +31,7 @@ interface MultimediaApiService {
     suspend fun getBandTextInfo(@Query("texto") textInfo: String): Response<BandDTO>
 
     //obtener imagen cabecera
-    @GET("json/imagenes/headers/{id}")
+    @GET("json/imagenes/{id}")
     suspend fun getHeaderPic(@Query("cabecera") headerImage: String): Response<BandDTO>
 
     //para tags
