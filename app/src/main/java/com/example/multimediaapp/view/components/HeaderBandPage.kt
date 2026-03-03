@@ -21,7 +21,7 @@ fun BandHeader(band: BandUiState) {
         // `rememberAsyncImagePainter` de Coil permite cargar imágenes desde URLs de forma asíncrona.
         painter = rememberAsyncImagePainter(band.headerImage),
         // Descripción de la imagen para accesibilidad (lectores de pantalla).
-        contentDescription = "Banner de ${band.name}",
+        contentDescription = band.name,
         // Modificadores para definir el tamaño y comportamiento de la imagen.
         modifier = Modifier
             .fillMaxWidth()// Ocupa todo el ancho disponible

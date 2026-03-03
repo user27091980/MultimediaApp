@@ -35,40 +35,7 @@ fun MainScreen(navController: NavController, vm: BandVM = viewModel()) {
     )
 }
 
-@Preview
-@Composable
-fun MainScreenPreview() {
 
-    val navController = rememberNavController()
-
-    // Lista mock de bandas, usando el campo exacto 'imageBand'
-    val bandList = listOf(
-        BandUiState(
-            id = "1",
-            name = "Linkin Park",
-            textInfo = "Banda de rock alternativo formada en 1996.",
-            headerImage = "https://upload.wikimedia.org/wikipedia/en/5/5f/MeteoraLP.jpg",
-            albumImages = listOf(
-                "https://upload.wikimedia.org/wikipedia/en/2/2f/Hybrid_Theory.jpg",
-                "https://upload.wikimedia.org/wikipedia/en/5/5f/MeteoraLP.jpg"
-            ),
-            style = "Rock",
-            recordLabel = "Alternative",
-            components = "",
-            discography = TODO(),
-            imageBand = TODO(),
-        )
-    )
-
-    // Renderizamos la lista usando CardList
-    CardList(
-        bands = bandList,
-        onImageClick = { clickedBand ->
-            // Preview: solo mostramos en consola
-            println("Clic en: ${clickedBand.name}")
-        }
-    )
-}
 /**
  * 🔎 Explicación conceptual
  * 🔹 viewModel()
