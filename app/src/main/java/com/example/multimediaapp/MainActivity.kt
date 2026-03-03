@@ -76,18 +76,32 @@ class MainActivity : ComponentActivity() {
 
                             ) {
                                 composable(ObjRoutes.LOGINREG){
-                                    LoginRegScreen()
+                                    LoginRegScreen(
+                                        navController = TODO(),
+                                        vm = TODO()
+                                    )
                                 }
                                 composable(ObjRoutes.LOGIN) {
                                     LoginScreen(
-
+                                        navController = TODO(),
+                                        uiState = TODO(),
+                                        onEmailChange = TODO(),
+                                        onPasswordChange = TODO(),
+                                        onTogglePassword = TODO(),
+                                        onLoginClick = TODO()
                                     )
                                 }
                                 composable(ObjRoutes.REGISTER) {
-                                    RegisterScreen()
+                                    RegisterScreen(
+                                        navController = TODO(),
+                                        vm = TODO()
+                                    )
                                 }
                                 composable(ObjRoutes.MAIN) {
-                                    MainScreen()
+                                    MainScreen(
+                                        navController = TODO(),
+                                        vm = TODO()
+                                    )
                                 }
                                 composable(ObjRoutes.BAND) {
                                     BandScreen()

@@ -22,7 +22,7 @@ fun UserInfoScreen(
     vm: UserInfoVM = viewModel()
 ) {
     // Observar estado con lifecycle awareness
-    val uiState = vm.uiState.collectAsState()
+    val uiState by vm.uiState.collectAsStateWithLifecycle()
 
 
     // Cargar datos cuando cambie el userInfoId
@@ -34,8 +34,14 @@ fun UserInfoScreen(
     Column {
         UserCardComponent(
 
-            name = uiState.name
-        )
+            id = userInfoId,
+            email = userInfoId,
+            country = userInfoId,
+            user = userInfoId,
+            name = userInfoId,
+            surname = userInfoId,
+
+            )
     }
 
 }

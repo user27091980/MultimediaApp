@@ -98,6 +98,6 @@ class BottomItems {
     data class BottomBarItem(
         val label: String,
         val icon: ImageVector,
-        val route: String
+        val route: Unit
     )
 }

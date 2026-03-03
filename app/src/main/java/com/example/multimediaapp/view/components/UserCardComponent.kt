@@ -12,19 +12,24 @@ import com.example.multimediaapp.ui.theme.styleText
 import com.example.multimediaapp.viewmodel.uistate.UserInfoUiState
 
 @Composable
-fun UserCardComponent(userInfoId: UserInfoUiState) {
+fun UserCardComponent(id: String,
+                      email: String,
+                      country: String,
+                      user: String,
+                      name: String,
+                      surname: String) {
 
     Box(boxModifier) {
         Column(colModifier) {
 
             Text(
-                text = userInfoId.name, style = styleText
+                text = id, style = styleText
             )
 
             //fila priemra
             Card(cardModifier) {
                 Text(
-                    text = userInfoId.surname, style = styleText
+                    text = email, style = styleText
                 )
             }
             //fila priemra
@@ -33,7 +38,7 @@ fun UserCardComponent(userInfoId: UserInfoUiState) {
             ) {
 
                 Text(
-                    text = userInfoId.email,
+                    text = country,
                     style = styleText
                 )
 
@@ -43,7 +48,7 @@ fun UserCardComponent(userInfoId: UserInfoUiState) {
             Card(cardModifier) {
 
                 Text(
-                    text = userInfoId.user,
+                    text = user,
                     style = styleText,
                 )
             }
@@ -52,7 +57,7 @@ fun UserCardComponent(userInfoId: UserInfoUiState) {
             Card(cardModifier) {
 
                 Text(
-                    text = userInfoId.country,
+                    text = name,
                     style = styleText,
                 )
             }
@@ -60,7 +65,7 @@ fun UserCardComponent(userInfoId: UserInfoUiState) {
             Card(cardModifier) {
 
                 Text(
-                    text = userInfoId.email,
+                    text = surname,
                     style = styleText,
                 )
             }
