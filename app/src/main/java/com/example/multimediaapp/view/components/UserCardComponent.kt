@@ -9,7 +9,6 @@ import com.example.multimediaapp.ui.theme.boxModifier
 import com.example.multimediaapp.ui.theme.cardModifier
 import com.example.multimediaapp.ui.theme.colModifier
 import com.example.multimediaapp.ui.theme.styleText
-import com.example.multimediaapp.viewmodel.uistate.UserInfoUiState
 
 @Composable
 fun UserCardComponent(id: String,

@@ -1,6 +1,7 @@
 package com.example.multimediaapp.view.pages
 
 // Importaciones necesarias de Compose
+// Componentes y utilidades de tu proyecto
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
@@ -12,20 +13,14 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.remember
-import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
-// Componentes y utilidades de tu proyecto
 import com.example.multimediaapp.ui.theme.bandColumnModifier
 import com.example.multimediaapp.view.components.BandHeader
 import com.example.multimediaapp.view.components.BandTags
 import com.example.multimediaapp.view.components.CardRowComponent
 import com.example.multimediaapp.view.components.ImagesRowList
-import com.example.multimediaapp.viewmodel.uistate.BandUiState
 import com.example.multimediaapp.viewmodel.vm.BandVM
 
 /**

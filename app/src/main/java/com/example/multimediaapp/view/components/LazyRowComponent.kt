@@ -1,6 +1,5 @@
 package com.example.multimediaapp.view.components
 
-import android.R.attr.onClick
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Box
@@ -12,7 +11,6 @@ import androidx.compose.foundation.lazy.items
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.layout.ContentScale
-import androidx.compose.ui.text.LinkAnnotation
 import androidx.compose.ui.unit.dp
 import coil.compose.rememberAsyncImagePainter
 import com.example.multimediaapp.viewmodel.uistate.BandUiState
