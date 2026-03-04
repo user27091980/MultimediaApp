@@ -18,6 +18,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavController
+import androidx.navigation.compose.rememberNavController
 import com.example.multimediaapp.navigation.ObjRoutes
 import com.example.multimediaapp.ui.theme.boxModifier
 import com.example.multimediaapp.view.components.TextFieldsComponent
@@ -65,3 +66,16 @@ fun RegisterScreen(navController: NavController, vm: RegisterVM = viewModel()) {
     }
 
 }
+
+@Preview
+@Composable
+fun RegisterScreenPreview() {
+
+    val navController = rememberNavController()
+
+    RegisterScreen(
+        navController = navController
+    )
+}
+
+

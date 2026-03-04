@@ -31,6 +31,7 @@ import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavController
 import androidx.navigation.NavHostController
+import androidx.navigation.compose.rememberNavController
 import com.example.multimediaapp.navigation.ObjRoutes
 import com.example.multimediaapp.viewmodel.events.LoginEvent
 import com.example.multimediaapp.viewmodel.uistate.LoginUiState
@@ -50,7 +51,6 @@ fun LoginScreen(
     onLoginClick: () -> Unit
 
 ) {
-
 
     Box(
         modifier = Modifier
@@ -108,4 +108,24 @@ fun LoginScreen(
 
         }
     }
+}
+
+@Preview(showBackground = true)
+@Composable
+fun LoginScreenPreview() {
+
+    val navController = rememberNavController()
+
+    LoginScreen(
+        navController = navController,
+        uiState = LoginUiState(
+            email = "andresico@email.com",
+            password = "123456",
+            passwordVisible = false
+        ),
+        onEmailChange = {},
+        onPasswordChange = {},
+        onTogglePassword = {},
+        onLoginClick = {}
+    )
 }
