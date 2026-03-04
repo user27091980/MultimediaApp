@@ -10,6 +10,7 @@ import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
@@ -35,42 +36,46 @@ import com.example.multimediaapp.viewmodel.vm.BandVM
  */
 @Composable
 fun BandScreen(
-    bandId: String = "", // Por defecto vacío, útil para previews
-    vm: BandVM = viewModel(),// ViewModel por defecto
-
+    bandId: String,
+    vm: BandVM = viewModel()
 ) {
-    // Estado local que guardará la banda que se debe mostrar
-    var band by remember { mutableStateOf<BandUiState?>(null) }
 
-    // Si no hay bandMock, cargamos los datos reales desde el ViewModel
-    LaunchedEffect(key1 = bandId) {
-        vm.loadData() // Llama al ViewModel para cargar todas las bandas
-        // Buscar la banda por ID
-        band= vm.uiState.value.bands.find { it.id == bandId }// Busca la banda por ID
+    // Observa el estado del ViewModel
+    val uiState by vm.uiState.collectAsState()
 
+    // Cargar datos una sola vez
+    LaunchedEffect(Unit) {
+        vm.loadData()
     }
 
-    // Renderizamos la UI solo si hay datos de banda
+    // Buscar banda actual
+    val band = uiState.bands.find { it.id == bandId }
+
     band?.let { bd ->
         Column(
             bandColumnModifier
-                .verticalScroll(rememberScrollState())// Scroll vertical para contenido
-                .heightIn(min = 400.dp),// Altura mínima de la columna
-            verticalArrangement = Arrangement.spacedBy(10.dp)// Espacio entre elementos
-        )//separation between elements
-        {
-            BandHeader(band = bd) // Banner principal de la banda
-            Spacer(modifier = Modifier.height(6.dp))// Separador vertical
-            CardRowComponent(band = bd)// Card con info detallada de la banda
+                .verticalScroll(rememberScrollState())
+                .heightIn(min = 400.dp),
+            verticalArrangement = Arrangement.spacedBy(10.dp)
+        ) {
+
+            BandHeader(band = bd)
+
             Spacer(modifier = Modifier.height(6.dp))
-            BandTags(band = bd)// Etiquetas de estilo, discografía, etc.
+
+            CardRowComponent(band = bd)
+
             Spacer(modifier = Modifier.height(6.dp))
+
+            BandTags(band = bd)
+
+            Spacer(modifier = Modifier.height(6.dp))
+
             ImagesRowList(
                 band = bd,
-                modifier = TODO(),
-                onImageClick = TODO()
-            )// Fila horizontal con imágenes de álbumes
-
+                modifier = Modifier,
+                onImageClick = { /* TODO navegación */ }
+            )
         }
     }
 }

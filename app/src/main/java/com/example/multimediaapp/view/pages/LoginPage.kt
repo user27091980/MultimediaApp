@@ -1,5 +1,7 @@
 package com.example.multimediaapp.view.pages
 
+import com.example.multimediaapp.view.components.ButtonAcept
+import com.example.multimediaapp.view.components.ButtonCancel
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
@@ -14,6 +16,9 @@ import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextButton
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.collectAsState
+import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Brush
@@ -23,12 +28,14 @@ import androidx.compose.ui.text.input.PasswordVisualTransformation
 import androidx.compose.ui.text.input.VisualTransformation
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavController
+import androidx.navigation.NavHostController
 import androidx.navigation.compose.rememberNavController
 import com.example.multimediaapp.navigation.ObjRoutes
-import com.example.multimediaapp.view.components.ButtonAcept
-import com.example.multimediaapp.view.components.ButtonCancel
+import com.example.multimediaapp.viewmodel.events.LoginEvent
 import com.example.multimediaapp.viewmodel.uistate.LoginUiState
+import com.example.multimediaapp.viewmodel.vm.LoginVM
 
 
 /**
