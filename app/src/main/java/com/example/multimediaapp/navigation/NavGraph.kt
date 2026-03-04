@@ -8,6 +8,8 @@ package com.example.multimediaapp.navigation
 // Importación de todas las pantallas (Screens)
 // Importación de los ViewModels (lógica de negocio - MVVM)
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.collectAsState
+import androidx.compose.runtime.getValue
 import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
@@ -51,15 +53,16 @@ fun NavGraph(navController: NavHostController) {
         composable(ObjRoutes.LOGIN) {
             // ViewModel del login
             val vm: LoginVM = viewModel()
+            val loginUiState by vm.uiState.collectAsState()
 
             LoginScreen(
                 navController = navController,
                 // Estado de la UI que vive en el ViewModel
-                uiState = vm.,
+                uiState = loginUiState,
                 // Referencias a funciones del ViewModel
                 onEmailChange = vm::onEmailChange,
                 onPasswordChange = vm::onPasswordChange,
-                onTogglePassword = vm::onTogglePassword,
+                onTogglePassword = vm::togglePasswordVisibility,
                 // Acción cuando el usuario hace login
                 onLoginClick = {
                     // Ejecuta lógica de autenticación
@@ -93,7 +96,11 @@ fun NavGraph(navController: NavHostController) {
         }
         //ruta bandas
         composable(ObjRoutes.BAND) {
-            BandScreen()
+            val vm: BandVM = viewModel()
+            BandScreen(
+                bandId = "Default",
+                vm = vm
+            )
         }
 
         //ruta información de usuario

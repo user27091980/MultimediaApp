@@ -10,8 +10,6 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.Scaffold
 import androidx.compose.ui.Modifier
-import androidx.navigation.compose.NavHost
-import androidx.navigation.compose.composable
 import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.rememberNavController
 import com.example.multimediaapp.navigation.NavGraph
@@ -19,13 +17,6 @@ import com.example.multimediaapp.navigation.ObjRoutes
 import com.example.multimediaapp.ui.theme.MultimediaAppTheme
 import com.example.multimediaapp.view.components.BottomBar
 import com.example.multimediaapp.view.components.TopBar
-import com.example.multimediaapp.view.pages.BandScreen
-import com.example.multimediaapp.view.pages.LoginRegScreen
-import com.example.multimediaapp.view.pages.LoginScreen
-import com.example.multimediaapp.view.pages.MainScreen
-import com.example.multimediaapp.view.pages.RegisterScreen
-import com.example.multimediaapp.view.pages.SettingsScreen
-import com.example.multimediaapp.view.pages.UserInfoScreen
 
 
 class MainActivity : ComponentActivity() {
