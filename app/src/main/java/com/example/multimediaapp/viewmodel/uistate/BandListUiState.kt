@@ -34,8 +34,7 @@ data class BandUiState(
     val components: String,
     /** Discografía de la banda (lista de álbumes) */
     val discography: List<String>,
-    /** Imagen principal de la banda, usada en listas o detalles */
-    val imageBand: String
+
 
 )
 

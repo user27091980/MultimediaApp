@@ -9,8 +9,6 @@ import androidx.navigation.NavController
 import androidx.navigation.compose.rememberNavController
 import com.example.multimediaapp.navigation.ObjRoutes
 import com.example.multimediaapp.view.components.CardList
-import com.example.multimediaapp.viewmodel.uistate.BandUiState
-import com.example.multimediaapp.viewmodel.vm.BandVM
 import com.example.multimediaapp.viewmodel.vm.MainVM
 
 @Composable
@@ -28,7 +26,7 @@ fun MainScreen(navController: NavController, vm: MainVM = viewModel()) {
     // Llamamos al componente que muestra la lista de bandas.
     // Accedemos a .value porque collectAsState() devuelve un State<T>.
     CardList(
-        bands = uiState.value.bands,
+        bands = uiState.value.mainBands,
         onImageClick = {
             // Aquí puedes navegar o mostrar detalles
             ObjRoutes.BAND

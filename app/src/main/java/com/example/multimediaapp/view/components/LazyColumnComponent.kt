@@ -10,9 +10,12 @@ import androidx.compose.foundation.lazy.items
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.layout.ContentScale
+import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import coil.compose.rememberAsyncImagePainter
+import com.example.multimediaapp.model.MainDTO
 import com.example.multimediaapp.viewmodel.uistate.BandUiState
+import com.example.multimediaapp.viewmodel.uistate.MainUiState
 
 /**
  * @author andrés
@@ -20,7 +23,8 @@ import com.example.multimediaapp.viewmodel.uistate.BandUiState
  * @param onImageClick
  */
 @Composable
-fun CardList(bands: List<BandUiState>, onImageClick: (BandUiState) -> Unit // Lambda que recibe la banda clicada
+fun CardList(
+    bands: List<MainDTO>, onImageClick: (MainDTO) -> Unit // Lambda que recibe la banda clicada
 ) {
     // LazyColumn permite crear listas verticales, cargando solo los elementos visibles.
     // Es útil para listas grandes, para optimizar rendimiento.
@@ -28,10 +32,10 @@ fun CardList(bands: List<BandUiState>, onImageClick: (BandUiState) -> Unit // La
         // Itera sobre la lista de URLs de imágenes de los álbumes.
         // 'imageBand' es cada URL de la lista.
 
-        items(bands) { band ->
+        items(bands) { mainBand ->
             Image(
                 // Cargamos la imagen desde la URL usando Coil y rememberAsyncImagePainter
-                painter = rememberAsyncImagePainter(band.imageBand),
+                painter = rememberAsyncImagePainter(mainBand.imageBand),
                 // Descripción para accesibilidad
                 contentDescription = "album image",
                 // Modificadores de la imagen
@@ -39,7 +43,7 @@ fun CardList(bands: List<BandUiState>, onImageClick: (BandUiState) -> Unit // La
                     .height(120.dp)// Altura fija de cada imagen
                     .width(120.dp)// Ancho fijo de cada imagen
                     .padding(end = 8.dp)
-                    .clickable { onImageClick(band) },
+                    .clickable { onImageClick(mainBand) },
                 // Escala de la imagen para que llene su contenedor y recorte lo sobrante
                 contentScale = ContentScale.Crop,
             )
@@ -47,3 +51,17 @@ fun CardList(bands: List<BandUiState>, onImageClick: (BandUiState) -> Unit // La
     }
 }
 
+val previewBands = listOf(
+    MainDTO("Metallica", "https://via.placeholder.com/300x150.png?text=Metallica"),
+    MainDTO("Iron Maiden", "https://via.placeholder.com/300x150.png?text=Iron+Maiden"),
+    MainDTO("AC/DC", "https://via.placeholder.com/300x150.png?text=ACDC")
+)
+
+@Preview
+@Composable
+fun CardListPreview() {
+    CardList(
+        bands = previewBands,
+        onImageClick = {}
+    )
+}

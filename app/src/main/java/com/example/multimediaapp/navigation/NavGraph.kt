@@ -25,6 +25,7 @@ import com.example.multimediaapp.viewmodel.uistate.LoginUiState
 import com.example.multimediaapp.viewmodel.vm.BandVM
 import com.example.multimediaapp.viewmodel.vm.LoginRegVM
 import com.example.multimediaapp.viewmodel.vm.LoginVM
+import com.example.multimediaapp.viewmodel.vm.MainVM
 import com.example.multimediaapp.viewmodel.vm.RegisterVM
 import com.example.multimediaapp.viewmodel.vm.UserInfoVM
 
@@ -87,7 +88,7 @@ fun NavGraph(navController: NavHostController) {
         //ruta pantalla principal
         composable(ObjRoutes.MAIN) {
             //pasamos el viewModel de las bandas ya que queremos que las muestre(view model asociado)
-            val vm: BandVM = viewModel()
+            val vm: MainVM = viewModel()
 
             MainScreen(
                 navController = navController,
