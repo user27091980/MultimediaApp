@@ -44,9 +44,9 @@ class UserListVM : ViewModel(){
     /**
      * Elimina un usuario por ID.
      *
-     * 1️⃣ Llama al repositorio
-     * 2️⃣ Si tiene éxito → recarga la lista
-     * 3️⃣ Si falla → se podría manejar error
+     * Llama al repositorio
+     * Si tiene éxito → recarga la lista
+     * Si falla → se podría manejar error
      */
     fun deleteUser(id: String) {
         repo.delete(id, onSuccess = {

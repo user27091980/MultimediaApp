@@ -18,9 +18,8 @@ class LoginRegVM : ViewModel() {
     private val _events = MutableSharedFlow<LoginRegEvent>()
     val events = _events.asSharedFlow()
 
-    // -------------------------------------------------
     // EVENTOS
-    // -------------------------------------------------
+
 
     fun onLoginClick() {
         viewModelScope.launch {

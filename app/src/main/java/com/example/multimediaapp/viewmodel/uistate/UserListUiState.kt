@@ -20,7 +20,7 @@ data class UserListUiState(
 /**
  * Representa la información de un usuario individual en la UI.
  *
- * - Se crea a partir de datos del repositorio o de una base de datos.
+ * - Se crea a partir de los datos del repositorio o de una base de datos.
  * - Puede usarse directamente para mostrar información en la pantalla.
  */
 data class UserUIState(

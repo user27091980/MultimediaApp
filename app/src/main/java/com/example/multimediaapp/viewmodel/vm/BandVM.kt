@@ -45,9 +45,9 @@ class BandVM : ViewModel() {
     /**
      * Elimina una banda por su ID.
      *
-     * 1️⃣ Llama al repositorio.
-     * 2️⃣ Si tiene éxito → recarga la lista con `loadData()`.
-     * 3️⃣ Si falla → se podría manejar error (comentado actualmente).
+     * Llama al repositorio.
+     * Si tiene éxito → recarga la lista con `loadData()`.
+     * Si falla → se podría manejar error.
      *
      * @param id ID de la banda a eliminar
      */

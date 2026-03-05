@@ -25,8 +25,8 @@ data class LoginUiState(
      * Computed property para habilitar o deshabilitar el botón de login.
      *
      * - El botón solo está habilitado si:
-     *   1️⃣ Email y password no están vacíos
-     *   2️⃣ No hay un proceso de login en curso (`isLoading == false`)
+     *   Email y password no están vacíos
+     *   No hay un proceso de login en curso (`isLoading == false`)
      */
     val isLoginButtonEnabled: Boolean
         get() = email.isNotBlank() && password.isNotBlank() && !isLoading

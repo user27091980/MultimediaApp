@@ -37,10 +37,10 @@ class MainVM (
      * Carga los datos de las bandas desde el repositorio.
      *
      * Flujo:
-     * 1️⃣ Activa estado de carga (isLoading = true)
-     * 2️⃣ Llama al repositorio
-     * 3️⃣ Si éxito → actualiza lista
-     * 4️⃣ Si error → muestra mensaje
+     * Activa estado de carga (isLoading = true)
+     * Llama al repositorio
+     * Si éxito → actualiza lista
+     * Si error → muestra mensaje
      */
     fun loadData() {
         // Activamos estado de carga y limpiamos errores previos
@@ -69,7 +69,7 @@ class MainVM (
         )
     }
 }
-/**
+/** Teoría:
  * flujo de la Arquitectura aplicada:
 UI (Activity/Compose)
 ↓

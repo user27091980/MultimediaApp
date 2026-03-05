@@ -121,23 +121,23 @@ fun NavGraph(navController: NavHostController) {
 }
 
 /**
- * Notas apuntes:
+ * Teoría:
  *NavHost es el contenedor de navegación en Jetpack Compose.
  * Su trabajo es:
  *
  * Decidir qué pantalla (Composable) se muestra según la ruta actual
  *
- * 1️⃣ navController
+ * navController
  * val navController = rememberNavController()
  * Es el cerebro de la navegación
  * Guarda:
  * Pantalla actualHistorial (back stack)
  * Se usa para navegar
 
- * 2️⃣ startDestination:
+ * startDestination:
  * Es la primera pantalla que se muestra al abrir la app
  *
- * 3️⃣ El bloque {} de NavHost
+ * El bloque {} de NavHost
  *Aquí defines todas las rutas posibles:
  *{
  *  composable<SplashRoute> { ... }
@@ -154,7 +154,7 @@ fun NavGraph(navController: NavHostController) {
  *Esto significa:
  *Cuando la ruta actual es SplashRoute
  *NavHost muestra:
- *👉 SplashScreen
+ *SplashScreen
  * ¿Cómo funciona la navegación en tiempo real?
  * Ejemplo real: Splash → Login
  *
@@ -196,10 +196,10 @@ fun NavGraph(navController: NavHostController) {
  *
  *
  * Vuelves a:
- * 👉 Login
+ * Login
  *
  * Rutas tipadas vs rutas String
- * 🟢 Rutas tipadas (las que usas)
+ * Estamos empleando Rutas tipadas
  * composable<MainScreenRoute> { ... }
  *
  *
@@ -211,7 +211,7 @@ fun NavGraph(navController: NavHostController) {
  *
  * Mejor escalabilidad
  *
- * 🔵 Rutas String (las del BottomBar)
+ * Rutas String (las del BottomBar)
  * composable("home") { ... }
  *
  *
@@ -223,7 +223,7 @@ fun NavGraph(navController: NavHostController) {
  *
  * No necesitas argumentos complejos
  *
- * ⚠️ En tu app tienes ambas mezcladas, lo cual funciona, pero conviene unificarlas.
+ * Conviene unificarlas no usar ambas.
  * ¿Cómo encaja con Scaffold?
  *
  * Tu estructura real es:
@@ -232,7 +232,7 @@ fun NavGraph(navController: NavHostController) {
  *  └── Scaffold
  *      ├── TopBar
  *      ├── BottomBar
- *      └── NavHost  👈 aquí cambia el contenido
+ *      └── NavHost  (aquí cambia el contenido)
  *
  *
  * TopBar y BottomBar NO cambian
@@ -249,11 +249,11 @@ fun NavGraph(navController: NavHostController) {
  *  ├── BandRoute → Band
  *  ├── SettingsRoute → Settings
  *
- *  Errores comunes (para que no caigas 😅)
+ *  Errores comunes:
  *
- * ❌ Olvidar pasar navController a la pantalla
- * ❌ Tener dos rutas distintas para la misma pantalla
- * ❌ No limpiar el back stack al hacer login
+ *  Olvidar pasar navController a la pantalla
+ *  Tener dos rutas distintas para la misma pantalla
+ *  No limpiar el back stack al hacer login
  *
  * Términos:
  * NavHost = mapa de navegación
