@@ -15,18 +15,26 @@ import androidx.compose.ui.unit.dp
 import coil.compose.rememberAsyncImagePainter
 import com.example.multimediaapp.viewmodel.uistate.BandUiState
 
-// Componente Jetpack Compose que muestra las imágenes de los álbumes de una banda en una fila horizontal.
-// Recibe:
-// - 'band': el objeto BandUiState con los datos de la banda, incluyendo la lista de imágenes de álbumes.
-// - 'modifier': un Modifier opcional para personalizar el estilo desde fuera del componente.
+/* Componente Jetpack Compose que muestra las imágenes de los álbumes de una banda en una fila horizontal.
+*Recibe:
+ - 'band': el objeto BandUiState con los datos de la banda, incluyendo la lista de imágenes de álbumes.
+ - 'modifier': un Modifier opcional para personalizar el estilo desde fuera del componente.
+
+ */
+/**
+ * @author andrés
+ * @param band
+ * @param modifier
+ * @param onImageClick
+ */
 @Composable
 fun ImagesRowList(
     band: BandUiState,
     modifier: Modifier = Modifier,
     onImageClick: (String) -> Unit
 ) {
-    // LazyRow permite crear listas horizontales "perezosas", cargando solo los elementos visibles.
-    // Es útil para listas grandes, para optimizar rendimiento.
+    // LazyRow permite crear listas horizontales, cargando solo los elementos visibles.
+    // Útil para listas grandes, para optimizar rendimiento.
     Box {
         LazyRow(modifier = modifier) {
             // Itera sobre la lista de URLs de imágenes de los álbumes.

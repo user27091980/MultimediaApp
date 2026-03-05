@@ -14,10 +14,15 @@ import androidx.compose.ui.unit.dp
 import coil.compose.rememberAsyncImagePainter
 import com.example.multimediaapp.viewmodel.uistate.BandUiState
 
+/**
+ * @author andrés
+ * @param bands
+ * @param onImageClick
+ */
 @Composable
 fun CardList(bands: List<BandUiState>, onImageClick: (BandUiState) -> Unit // Lambda que recibe la banda clicada
 ) {
-    // LazyColumn permite crear listas verticales "perezosas", cargando solo los elementos visibles.
+    // LazyColumn permite crear listas verticales, cargando solo los elementos visibles.
     // Es útil para listas grandes, para optimizar rendimiento.
     LazyColumn() {
         // Itera sobre la lista de URLs de imágenes de los álbumes.

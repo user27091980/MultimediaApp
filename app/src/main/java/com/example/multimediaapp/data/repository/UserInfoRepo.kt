@@ -27,11 +27,12 @@ class UsersInfoRepo {
 
     }
 
-    // -------------------------------------------------
-    // CRUD
-    // -------------------------------------------------
-    // READ ALL
-    // Devuelve todos los usuarios.
+    //CRUD
+
+    /*READ ALL
+    Devuelve todos los usuarios.
+
+     */
     fun readAll(onSuccess: (List<UsersInfoDTO>) -> Unit, onError: () -> Unit) {
         onSuccess(usersInfo.toList())//evitamos que se pueda modificar desde fuera
     }

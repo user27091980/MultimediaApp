@@ -3,6 +3,7 @@ package com.example.multimediaapp.data.entity
 import com.example.multimediaapp.model.UsersDTO
 import com.google.gson.annotations.SerializedName
 
+//para comentario ver BandEntity
 data class UsersEntity (
     val id: String,
     @SerializedName("email") val email:String,

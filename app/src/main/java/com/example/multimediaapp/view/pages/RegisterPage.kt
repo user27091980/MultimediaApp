@@ -37,7 +37,7 @@ fun RegisterScreen(navController: NavController, vm: RegisterVM = viewModel()) {
         Column(
             Modifier
                 .fillMaxSize()
-                .padding(32.dp, 60.dp),
+                .padding(32.dp, 40.dp),
             verticalArrangement = Arrangement.SpaceBetween
 
         ) {
@@ -47,19 +47,14 @@ fun RegisterScreen(navController: NavController, vm: RegisterVM = viewModel()) {
             ) {
                 TextFieldsComponent()
             }
-            Row(
-                modifier = Modifier.fillMaxWidth(),
-                horizontalArrangement = Arrangement.SpaceEvenly
-            )
-            {
 
-                ButtonAcept(
-                    onClick = { navController.navigate(ObjRoutes.INFOUSER) }
-                )
-                ButtonCancel(
-                    onClick = { navController.navigate(ObjRoutes.LOGIN) }
-                )
-            }
+            ButtonAcept(
+                onClick = { navController.navigate(ObjRoutes.INFOUSER) }
+            )
+            ButtonCancel(
+                onClick = { navController.navigate(ObjRoutes.LOGIN) }
+            )
+
 
         }
 

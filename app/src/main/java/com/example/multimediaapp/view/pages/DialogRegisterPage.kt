@@ -23,8 +23,7 @@ import com.example.multimediaapp.viewmodel.vm.DialogVM
 fun DialogRegisterScreen(
     navController: NavController,
     vm: DialogVM = viewModel(),
-    onConfirm: () -> Unit,
-    onCancel: () -> Unit
+
 ) {
 
     val uiState by vm.uiState.collectAsState()
@@ -59,7 +58,5 @@ fun DialogPrev() {
     DialogRegisterScreen(
         navController = rememberNavController(),
         vm = DialogVM(),
-        onConfirm = {},
-        onCancel = {}
     )
 }
