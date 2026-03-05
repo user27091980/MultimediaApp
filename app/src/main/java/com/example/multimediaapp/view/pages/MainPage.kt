@@ -28,9 +28,9 @@ fun MainScreen(navController: NavController, vm: BandVM = viewModel()) {
     // Accedemos a .value porque collectAsState() devuelve un State<T>.
     CardList(
         bands = uiState.value.bands,
-        onImageClick = { clickedBand ->
+        onImageClick = {
             // Aquí puedes navegar o mostrar detalles
-            navController.navigate(ObjRoutes.BAND)
+            ObjRoutes.BAND
         }
     )
 }
