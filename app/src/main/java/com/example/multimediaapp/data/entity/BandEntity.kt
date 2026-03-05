@@ -7,7 +7,6 @@ import com.example.multimediaapp.model.BandDTO
 // que permite mapear nombres del JSON a propiedades Kotlin.
 import com.google.gson.annotations.SerializedName
 
-
 /*
 Representa un modelo de datos simple.
 Kotlin generará automáticamente:
@@ -47,9 +46,8 @@ data class BandEntity(
 
 )
 
-// ---------------------------------------------------------
+
 // FUNCIÓN DE EXTENSIÓN (Mapper)
-// ---------------------------------------------------------
 
 // Convierte un BandEntity (capa data)
 // en un BandDTO (capa dominio o presentación).
@@ -83,7 +81,7 @@ fun BandEntity.toDTO(): BandDTO = BandDTO(
  *
  * Lo que significa que pertenece a la capa de datos (Data Layer).
  * ¿Qué significa cada parte?
- * 1️⃣ data class
+ * data class
  *
  * Al usar data class, Kotlin genera automáticamente:
  *
@@ -105,7 +103,7 @@ fun BandEntity.toDTO(): BandDTO = BandDTO(
  *
  * Transferencia de datos
  *
- * 2️⃣ @SerializedName
+ * @SerializedName
  *
  * Ejemplo:
  *
@@ -126,11 +124,11 @@ fun BandEntity.toDTO(): BandDTO = BandDTO(
  * name = "Tool"
  *
  *
- * 👉 Sirve para mapear nombres del JSON (en español) a propiedades Kotlin (en inglés).
+ * Sirve para mapear nombres del JSON (en español) a propiedades Kotlin (en inglés).
  *
  * Se usa con Gson.
  *
- * 📦 ¿Qué representa cada propiedad?
+ * ¿Qué representa cada propiedad?
  * Propiedad	Qué representa
  * id	Identificador único
  * name	Nombre de la banda
@@ -142,21 +140,21 @@ fun BandEntity.toDTO(): BandDTO = BandDTO(
  * discography	Lista de discos
  * albumImages	Imágenes de los álbumes
  * imageBand	Imagen principal
- * 🧠 ¿Por qué existe BandEntity si ya tienes BandDTO?
+ * ¿Por qué existe BandEntity si ya tienes BandDTO?
  *
  * Porque en arquitectura moderna se separan capas:
  *
  * DATA (Entity)  →  DOMAIN (DTO)  →  UI
  *
- * 📌 BandEntity
+ *BandEntity
  *
  * Representa cómo vienen los datos desde la API.
  *
- * 📌 BandDTO
+ * BandDTO
  *
  * Es el modelo que usa la app internamente.
  *
- * 🔄 Conversión a DTO (Mapper)
+ * Conversión a DTO (Mapper)
  * fun BandEntity.toDTO(): BandDTO
  *
  *
@@ -168,7 +166,7 @@ fun BandEntity.toDTO(): BandDTO = BandDTO(
  *
  * Mantener Clean Architecture
  *
- * 🏗 Arquitectura visual
+ * Arquitectura visual
  * API (JSON)
  *    ↓
  * BandEntity  ← Gson
@@ -181,7 +179,7 @@ fun BandEntity.toDTO(): BandDTO = BandDTO(
  *    ↓
  * UI
  *
- * 🎯 En resumen
+ * En resumen
  *
  * BandEntity:
  *
