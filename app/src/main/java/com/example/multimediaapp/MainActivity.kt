@@ -49,11 +49,10 @@ class MainActivity : ComponentActivity() {
                     },
                     //personalized bottombar
                     bottomBar = {
-                        if (currentRoute in listOf(
-                                ObjRoutes.MAIN,
-                                ObjRoutes.BAND,
-                                ObjRoutes.SETTINGS,
-                                ObjRoutes.INFOUSER
+                        if (currentRoute !in listOf(
+                                ObjRoutes.LOGINREG,
+                                ObjRoutes.REGISTER,
+                                ObjRoutes.LOGIN
 
                             )
                         ) {
