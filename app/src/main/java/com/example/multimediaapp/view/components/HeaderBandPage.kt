@@ -33,7 +33,7 @@ fun BandHeader(band: BandUiState) {
 }
 
 /**
- * 🔹 Comentarios clave
+ * Teoría.
  *
  * @Composable: Permite usar esta función dentro de otros componentes de Compose y renderizar UI declarativa.
  *

@@ -37,12 +37,13 @@ fun MainScreen(navController: NavController, vm: BandVM = viewModel()) {
 
 
 /**
- * 🔎 Explicación conceptual
- * 🔹 viewModel()
+ * Teoría:
+ *
+ * viewModel()
  *
  * Obtiene la instancia del BandVM asociada al ciclo de vida actual (Activity o NavGraph).
  *
- * 🔹 LaunchedEffect(Unit)
+ * LaunchedEffect(Unit)
  *
  * Se ejecuta una sola vez.
  *
@@ -50,12 +51,12 @@ fun MainScreen(navController: NavController, vm: BandVM = viewModel()) {
  *
  * Evita que loadData() se llame en cada recomposición.
  *
- * 🔹 collectAsState()
+ * collectAsState()
  *
  * Convierte un StateFlow en un estado observable por Compose.
  * Cada vez que cambie uiState, la pantalla se vuelve a dibujar automáticamente.
  *
- * 🔹 CardList
+ * CardList
  *
  * Recibe la lista bands y muestra cada banda (según lo implementado en tu componente).
  */

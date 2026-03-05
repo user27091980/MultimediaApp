@@ -29,7 +29,7 @@ import com.example.multimediaapp.ui.theme.rowModifier
 
 @Composable
 fun TopBar(navController: NavHostController) {
-    //manages if dropdown menu it´s open or close
+    //
     var isExpanded by remember { mutableStateOf(false) }
     //Context and activity for open links or close the app
     val context = LocalContext.current
