@@ -1,6 +1,7 @@
 package com.example.multimediaapp.viewmodel.uistate
 
 import com.example.multimediaapp.model.BandDTO
+import com.example.multimediaapp.model.MainDTO
 
 /**
  * Estado de la pantalla principal.
@@ -8,12 +9,8 @@ import com.example.multimediaapp.model.BandDTO
  */
 data class MainUiState(
 
-    // Lista de bandas que se mostrarán en la pantalla
-    val bands: List<BandDTO> = emptyList(),
-
-    // Indica si los datos están cargando
+    val mainBands: List<MainDTO> = emptyList(),
     val isLoading: Boolean = false,
-
-    // Mensaje de error en caso de fallo
     val error: String? = null
 )
+

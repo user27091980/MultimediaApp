@@ -57,8 +57,7 @@ class BandsRepo {
                         "lateralus",
                         "10000 days",
                         "fear inoculum"
-                    ),
-                    imageBand = "data/resources/tool1.jpg"
+                    )
 
                 ),
                 BandDTO(
@@ -91,8 +90,8 @@ class BandsRepo {
                         "Hangable Auto Bulb",
                         "...i care because you do"
 
-                    ),
-                    imageBand = "data/resources/aphx5.jpg"
+                    )
+                    //imageBand = "data/resources/aphx5.jpg"
                 ),
                 BandDTO(
                     "2", "NIN",
@@ -124,8 +123,8 @@ class BandsRepo {
                         "the downward spiral",
                         "the fragile",
                         "with teeth"
-                    ),
-                    imageBand = "data/resources/nin1.jpg"
+                    )
+
                 ),
                 BandDTO(
                     "3", "Autechre",
@@ -154,8 +153,8 @@ class BandsRepo {
                         "Incunabula",
                         "NTS Sessions",
                         "AE_2022"
-                    ),
-                    imageBand = "data/resources/ae1.jpg"
+                    )
+
                 ),
                 BandDTO(
                     "4",
@@ -205,8 +204,8 @@ class BandsRepo {
                         "Tomorrow´s harvest",
                         "The Campfire headphase"
 
-                    ),
-                    imageBand = "data/resources/boc0.jpg"
+                    )
+
                 )
 
             )
@@ -244,6 +243,7 @@ class BandsRepo {
             onError()
 
     }
+
     // READ (por ID)
     // Busca una banda concreta por su ID.
     fun read(
@@ -259,6 +259,7 @@ class BandsRepo {
         else
             onError()
     }
+
     // DELETE
     // Elimina una banda por ID.
     fun delete(
@@ -277,7 +278,7 @@ class BandsRepo {
         updateBand: BandDTO,
         onSuccess: (BandDTO) -> Unit,
         onError: () -> Unit
-    ){
+    ) {
         // Buscamos el índice de la banda con el mismo ID
         val index = bands.indexOfFirst { it.id == updateBand.id }
 

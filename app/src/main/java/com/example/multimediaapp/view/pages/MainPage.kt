@@ -11,9 +11,10 @@ import com.example.multimediaapp.navigation.ObjRoutes
 import com.example.multimediaapp.view.components.CardList
 import com.example.multimediaapp.viewmodel.uistate.BandUiState
 import com.example.multimediaapp.viewmodel.vm.BandVM
+import com.example.multimediaapp.viewmodel.vm.MainVM
 
 @Composable
-fun MainScreen(navController: NavController, vm: BandVM = viewModel()) {
+fun MainScreen(navController: NavController, vm: MainVM = viewModel()) {
 
     // LaunchedEffect se ejecuta cuando el Composable entra en composición.
     // Unit como clave significa que se ejecutará solo una vez.
@@ -35,6 +36,16 @@ fun MainScreen(navController: NavController, vm: BandVM = viewModel()) {
     )
 }
 
+@Preview(showBackground = true)
+@Composable
+fun MainScreenPreview() {
+
+    val navController = rememberNavController()
+
+    MainScreen(
+        navController = navController
+    )
+}
 
 /**
  * Teoría:

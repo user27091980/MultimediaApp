@@ -1,11 +1,15 @@
 package com.example.multimediaapp.viewmodel.vm
 
 import androidx.lifecycle.ViewModel
+import androidx.lifecycle.viewModelScope
 import com.example.multimediaapp.data.repository.BandsRepo
+import com.example.multimediaapp.data.repository.MainRepo
+import com.example.multimediaapp.model.MainDTO
 import com.example.multimediaapp.viewmodel.uistate.MainUiState
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
+import kotlinx.coroutines.launch
 
 /**
  * ViewModel encargado de manejar la lógica de la pantalla principal.
@@ -16,57 +20,26 @@ import kotlinx.coroutines.flow.asStateFlow
  * - Se comunica con el Repository.
  * - Expone un StateFlow que la UI observa.
  */
-class MainVM (
-    // El repositorio se inyecta por constructor.
-    // Es la capa encargada de acceder a los datos.
-    private val repository: BandsRepo)
-    : ViewModel() {
-    /**
-    * Estado interno mutable.
-    * Solo el ViewModel puede modificarlo.
-    */
+data class MainUiState(
+    val imageBands: List<MainDTO> = emptyList()
+)
+
+class MainVM : ViewModel() {
+
     private val _uiState = MutableStateFlow(MainUiState())
+    val uiState: StateFlow<MainUiState> = _uiState
 
-    /**
-     * Estado expuesto como solo lectura.
-     * La UI puede observarlo pero no modificarlo.
-     */
-    val uiState: StateFlow<MainUiState> = _uiState.asStateFlow()
-
-    /**
-     * Carga los datos de las bandas desde el repositorio.
-     *
-     * Flujo:
-     * Activa estado de carga (isLoading = true)
-     * Llama al repositorio
-     * Si éxito → actualiza lista
-     * Si error → muestra mensaje
-     */
+    // Función para cargar datos (fake para preview y pruebas)
     fun loadData() {
-        // Activamos estado de carga y limpiamos errores previos
-        _uiState.value = _uiState.value.copy(
-            isLoading = true,
-            error = null
-        )
-        // Llamada al repositorio usando callbacks
-        repository.readAll(
-            // Se ejecuta si la operación fue exitosa
-            onSuccess = { bands ->
-                // Actualizamos el estado con la lista recibida
-                _uiState.value = _uiState.value.copy(
-                    bands = bands,
-                    isLoading = false
-                )
-            },
-            // Se ejecuta si ocurre un error
-            onError = {
-                // Actualizamos el estado indicando error
-                _uiState.value = _uiState.value.copy(
-                    isLoading = false,
-                    error = "Error cargando bandas"
-                )
-            }
-        )
+        viewModelScope.launch {
+            // Aquí simulas obtener datos del repositorio
+            val fakeBands = listOf(
+                MainDTO(id = "1", imageBand = "https://via.placeholder.com/150"),
+                MainDTO(id = "2", imageBand = "https://via.placeholder.com/150"),
+                MainDTO(id = "3", imageBand = "https://via.placeholder.com/150")
+            )
+            _uiState.value = MainUiState(mainBands =  fakeBands)
+        }
     }
 }
 /** Teoría:

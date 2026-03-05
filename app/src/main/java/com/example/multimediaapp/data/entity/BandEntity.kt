@@ -41,8 +41,7 @@ data class BandEntity(
     @SerializedName("discografía") val discography: List<String>,
     // Lista con las URLs o rutas de las imágenes de los discos
     @SerializedName("discos") val albumImages: List<String>,
-    // Imagen principal de la banda
-    @SerializedName("imagen") val imageBand: String
+
 
 )
 
@@ -63,8 +62,8 @@ fun BandEntity.toDTO(): BandDTO = BandDTO(
     style = style,
     recordLabel = recordLabel,
     components = components,
-    discography = discography,
-    imageBand = imageBand
+    discography = discography
+
 )
 
 /**

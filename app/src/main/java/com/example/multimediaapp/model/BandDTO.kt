@@ -22,8 +22,7 @@ data class BandDTO(
     val components: String,
     // Lista de nombres de discos publicados
     val discography: List<String>,
-    // Imagen representativa de la banda
-    val imageBand: String
+
 
 )
 
