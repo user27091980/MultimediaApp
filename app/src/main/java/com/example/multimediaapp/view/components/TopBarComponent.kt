@@ -25,6 +25,7 @@ import androidx.compose.ui.res.stringResource
 import androidx.core.net.toUri
 import androidx.navigation.NavHostController
 import com.example.multimediaapp.R
+import com.example.multimediaapp.navigation.ObjRoutes
 import com.example.multimediaapp.ui.theme.rowModifier
 
 @Composable
@@ -54,7 +55,7 @@ fun TopBar(navController: NavHostController) {
 
         }
         //Settings button
-        IconButton(onClick = {  }) {
+        IconButton(onClick = { navController.navigate(ObjRoutes.SETTINGS) }) {
 
             Icon(
                 imageVector = Icons.Default.Settings,

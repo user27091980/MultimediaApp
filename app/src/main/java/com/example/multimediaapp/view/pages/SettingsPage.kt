@@ -12,6 +12,7 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Switch
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
@@ -78,14 +79,19 @@ fun SettingSwitch(
     checked: Boolean,
     onCheckedChange: (Boolean) -> Unit
 ) {
+    val settingsVM: SettingsVM = viewModel()
+    val uiState by settingsVM.uiState.collectAsState()
+
     Row(
         modifier = Modifier.fillMaxWidth(),
         horizontalArrangement = Arrangement.SpaceBetween// Distribuye el texto y el switch a los extremos
     ) {
         Text(title)// Título a la izquierda
         Switch(
-            checked = checked,// Estado actual
-            onCheckedChange = onCheckedChange// Callback al cambiar
+            checked = uiState.darkMode,
+                onCheckedChange = {
+                    settingsVM.onDarkModeChange(it)
+                }
         )
     }
 }

@@ -3,12 +3,13 @@ package com.example.multimediaapp.view.components
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.material3.Card
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import com.example.multimediaapp.ui.theme.boxModifier
 import com.example.multimediaapp.ui.theme.cardModifier
 import com.example.multimediaapp.ui.theme.colModifier
-import com.example.multimediaapp.ui.theme.styleText
+
 
 @Composable
 fun UserCardComponent(id: String,
@@ -22,13 +23,17 @@ fun UserCardComponent(id: String,
         Column(colModifier) {
 
             Text(
-                text = id, style = styleText
+                text = id,
+                style = MaterialTheme.typography.titleMedium,
+                color = MaterialTheme.colorScheme.primary
             )
 
             //fila priemra
             Card(cardModifier) {
                 Text(
-                    text = email, style = styleText
+                    text = email,
+                    style = MaterialTheme.typography.titleMedium,
+                    color = MaterialTheme.colorScheme.primary
                 )
             }
             //fila priemra
@@ -38,7 +43,8 @@ fun UserCardComponent(id: String,
 
                 Text(
                     text = country,
-                    style = styleText
+                    style = MaterialTheme.typography.titleMedium,
+                    color = MaterialTheme.colorScheme.primary
                 )
 
             }
@@ -48,7 +54,8 @@ fun UserCardComponent(id: String,
 
                 Text(
                     text = user,
-                    style = styleText,
+                    style = MaterialTheme.typography.titleMedium,
+                    color = MaterialTheme.colorScheme.primary
                 )
             }
 
@@ -57,7 +64,8 @@ fun UserCardComponent(id: String,
 
                 Text(
                     text = name,
-                    style = styleText,
+                    style = MaterialTheme.typography.titleMedium,
+                    color = MaterialTheme.colorScheme.primary
                 )
             }
 
@@ -65,7 +73,8 @@ fun UserCardComponent(id: String,
 
                 Text(
                     text = surname,
-                    style = styleText,
+                    style = MaterialTheme.typography.titleMedium,
+                    color = MaterialTheme.colorScheme.primary
                 )
             }
         }

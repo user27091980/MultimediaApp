@@ -4,6 +4,7 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.TextStyle
@@ -21,22 +22,6 @@ val bandColumnModifier = Modifier
     .padding(16.dp)//internal padding
 val cardColumnModifier = Modifier
     .padding(8.dp)//internal padding
-
-//value para el etilo de texto en los botones
-val styleButtonText = TextStyle(
-
-    fontSize = 15.sp,
-    textAlign = TextAlign.Center,
-    color = Color.White
-
-)
-
-val styleText = TextStyle(
-    fontSize = 15.sp,
-    textAlign = TextAlign.Center,
-    color = Color.White
-)
-
 val colModifier = Modifier
     .padding(20.dp, 130.dp, 20.dp, 110.dp)
 val boxModifier = Modifier
@@ -61,9 +46,3 @@ val cardModifier = Modifier
     .size(width = 300.dp, height = 100.dp)
     .padding(15.dp)
 
-//modificador para las cards del mainScreen.
-val lazyColumnCardModifier = Modifier
-    .padding(5.dp, 10.dp, 5.dp, 10.dp)
-
-//value para el posicionamiento del icono de la cámara.
-val cameraMod = Modifier.padding(300.dp, 720.dp, 10.dp, 10.dp)

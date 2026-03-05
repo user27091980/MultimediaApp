@@ -2,12 +2,13 @@ package com.example.multimediaapp.view.components
 
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.FilledTonalButton
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
-import com.example.multimediaapp.ui.theme.styleButtonText
 
 
 @Composable
@@ -17,15 +18,20 @@ fun BaseButton(
     modifier: Modifier = Modifier,
     enabled: Boolean = true
 ) {
+
     FilledTonalButton(
         onClick = onClick,
         modifier = modifier.fillMaxWidth(),
         shape = RoundedCornerShape(20.dp),
-        enabled = enabled
+        enabled = enabled,
+        colors = ButtonDefaults.filledTonalButtonColors(
+            containerColor = MaterialTheme.colorScheme.primary,
+            contentColor = MaterialTheme.colorScheme.onPrimary
+        )
     ) {
         Text(
             text = text,
-            style = styleButtonText
+
         )
     }
 }
@@ -34,6 +40,7 @@ fun ButtonLogin(
     onClick: () -> Unit,
     modifier: Modifier = Modifier
 ) {
+
     BaseButton(
         text = "Login",
         onClick = onClick,

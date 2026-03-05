@@ -3,6 +3,7 @@ package com.example.multimediaapp.view.components
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Home
 import androidx.compose.material.icons.filled.Person
+import androidx.compose.material.icons.filled.Search
 import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.NavigationBar
@@ -38,10 +39,11 @@ fun BottomBar(navController: NavHostController) {
         BottomItems.BottomBarItem(
             label = stringResource(R.string.inicio),
             Icons.Default.Home,
-            route = navController.navigate(ObjRoutes.MAIN)
+            route = ObjRoutes.MAIN
         ),
-        /*BottomItems.TopButtonItems(
-            label = stringResource(R.string.buscar),
+        /*
+        BottomItems.BottomBarItem(
+            label = stringResource(R.string.búsqueda),
             Icons.Default.Search,
 
 
@@ -49,7 +51,7 @@ fun BottomBar(navController: NavHostController) {
         BottomItems.BottomBarItem(
             label = stringResource(R.string.usuario),
             Icons.Default.Person,
-            route =navController.navigate(ObjRoutes.INFOUSER)
+            route = ObjRoutes.INFOUSER
         )
     )
 
@@ -86,18 +88,20 @@ fun BottomBar(navController: NavHostController) {
                 selected = selectedItem == index,
                 onClick = {
                     selectedItem = index
+                    navController.navigate(item.route)
 
-                    //{ launchSingleTop = true }
+                    { launchSingleTop = true }
                 }
             )
         }
     }
 
 }
+
 class BottomItems {
     data class BottomBarItem(
         val label: String,
         val icon: ImageVector,
-        val route: Unit
+        val route: String
     )
 }
