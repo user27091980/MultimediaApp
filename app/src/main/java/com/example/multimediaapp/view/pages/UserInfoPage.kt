@@ -38,7 +38,9 @@ fun UserInfoScreen(
     // Observar el estado del ViewModel
 
     Box(modifier = Modifier.fillMaxSize()) {
-        Column {
+        Column(
+
+        ) {
             UserCardComponent(
 
                 id = userInfoId,

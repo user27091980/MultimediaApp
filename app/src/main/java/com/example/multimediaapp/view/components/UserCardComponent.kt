@@ -2,10 +2,14 @@ package com.example.multimediaapp.view.components
 
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.Card
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.ui.Alignment
+import androidx.compose.ui.Modifier
+import androidx.compose.ui.unit.dp
 import com.example.multimediaapp.ui.theme.boxModifier
 import com.example.multimediaapp.ui.theme.cardModifier
 import com.example.multimediaapp.ui.theme.colModifier
@@ -20,7 +24,8 @@ fun UserCardComponent(id: String,
                       surname: String) {
 
     Box(boxModifier) {
-        Column(colModifier) {
+        Column(modifier = Modifier.align(Alignment.Center),
+            horizontalAlignment = Alignment.CenterHorizontally) {
 
             Text(
                 text = id,
@@ -29,7 +34,7 @@ fun UserCardComponent(id: String,
             )
 
             //fila priemra
-            Card(cardModifier) {
+            Card (cardModifier){
                 Text(
                     text = email,
                     style = MaterialTheme.typography.titleMedium,
@@ -37,9 +42,7 @@ fun UserCardComponent(id: String,
                 )
             }
             //fila priemra
-            Card(
-                cardModifier
-            ) {
+            Card (cardModifier) {
 
                 Text(
                     text = country,
@@ -50,7 +53,7 @@ fun UserCardComponent(id: String,
             }
 
             //fila priemra
-            Card(cardModifier) {
+            Card (cardModifier) {
 
                 Text(
                     text = user,
@@ -60,7 +63,7 @@ fun UserCardComponent(id: String,
             }
 
             //fila priemra
-            Card(cardModifier) {
+            Card (cardModifier) {
 
                 Text(
                     text = name,
@@ -69,7 +72,7 @@ fun UserCardComponent(id: String,
                 )
             }
 
-            Card(cardModifier) {
+            Card (cardModifier) {
 
                 Text(
                     text = surname,

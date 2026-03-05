@@ -21,7 +21,8 @@ import androidx.compose.ui.unit.sp
 val bandColumnModifier = Modifier
     .padding(16.dp)//internal padding
 val cardColumnModifier = Modifier
-    .padding(8.dp)//internal padding
+    .fillMaxWidth()
+    .padding(10.dp)//internal padding
 val colModifier = Modifier
     .padding(20.dp, 130.dp, 20.dp, 110.dp)
 val boxModifier = Modifier
