@@ -11,7 +11,7 @@ import com.example.multimediaapp.navigation.ObjRoutes
 import com.example.multimediaapp.view.components.CardList
 import com.example.multimediaapp.viewmodel.uistate.MainUiState
 import com.example.multimediaapp.viewmodel.vm.MainVM
-import perfetto.protos.UiState
+
 
 @Composable
 fun MainScreen(navController: NavController, vm: MainVM = viewModel()) {
