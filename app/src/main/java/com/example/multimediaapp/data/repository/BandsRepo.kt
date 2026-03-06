@@ -313,7 +313,7 @@ MongoDB
 
 etc.
 
-🔹 ¿Por qué usar companion object?
+¿Por qué usar companion object?
 
 Porque:
 
@@ -321,7 +321,7 @@ La lista bands se comparte entre todas las instancias.
 
 Simula un almacenamiento estático.
 
-🔹 ¿Por qué usar copy() en create?
+¿Por qué usar copy() en create?
 band.copy(id = newId)
 
 
@@ -333,7 +333,7 @@ Cambiar solo algunos campos
 
 Mantener inmutabilidad
 
-🔹 ¿Por qué devolver bands.toList()?
+¿Por qué devolver bands.toList()?
 
 Para evitar que desde fuera puedan hacer:
 
@@ -351,7 +351,7 @@ C	Create	Crear datos
 R	Read	Leer datos
 U	Update	Actualizar datos
 D	Delete	Eliminar datos
-🔹 1️⃣ Create (Crear)
+ Create (Crear)
 
 Permite agregar un nuevo registro.
 
@@ -367,7 +367,7 @@ En Kotlin podría verse así:
 
 fun create(band: BandDTO)
 
-🔹 2️⃣ Read (Leer)
+ Read (Leer)
 
 Permite consultar datos existentes.
 
@@ -382,7 +382,7 @@ Ejemplo:
 fun readAll()
 fun read(id: String)
 
-🔹 3️⃣ Update (Actualizar)
+Update (Actualizar)
 
 Permite modificar un registro existente.
 
@@ -394,7 +394,7 @@ Actualizar el email de un usuario.
 
 fun update(band: BandDTO)
 
-🔹 4️⃣ Delete (Eliminar)
+Delete (Eliminar)
 
 Permite borrar un registro.
 
@@ -402,21 +402,21 @@ Ejemplo:
 
 fun delete(id: String)
 
-🧠 ¿Dónde se usa CRUD?
+¿Dónde se usa CRUD?
 
 CRUD se usa en:
 
-📱 Aplicaciones móviles (Android/iOS)
+Aplicaciones móviles (Android/iOS)
 
-🌐 APIs REST
+APIs REST
 
-🗄 Bases de datos (MySQL, SQLite, MongoDB)
+Bases de datos (MySQL, SQLite, MongoDB)
 
-🔥 Firebase
+Firebase
 
-🧾 Sistemas de gestión (ERP, CRM)
+Sistemas de gestión (ERP, CRM)
 
-🌍 CRUD en una API REST
+CRUD en una API REST
 
 En desarrollo web normalmente se asocia a métodos HTTP:
 
