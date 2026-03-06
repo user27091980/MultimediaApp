@@ -12,22 +12,22 @@ class MainRepo(private val api: MultimediaApiService) {
         } catch (e: Exception) {
             // fallback a datos locales
             listOf(
-                MainDTO("0","Aphex Twin","http://10.0.2.2:5097/ApiGenerica/data/resources/aphx5.jpg"),
-                MainDTO("1","Auterchre","http://10.0.2.2:5097/ApiGenerica/data/resources/ae1.jpg"),
+                MainDTO("0","Autechre","http://localhost:5131/images/ae1"),
+                MainDTO("1","Aphex Twin","http://localhost:5131/images/aphx5"),
                 MainDTO(
                     "2",
                     "Boards of Canada",
-                    imageBand = "http://10.0.2.2:5097/ApiGenerica/data/resources/boc0.jpg"
+                    imageBand = "http://localhost:5131/images/boc0"
                 ),
                 MainDTO(
                     "3",
                     "Nine inch Nails",
-                    imageBand = "http://10.0.2.2:5097/ApiGenerica/data/resources/nin1.jpg"
+                    imageBand = "http://localhost:5131/images/nin1"
                 ),
                 MainDTO(
                     "4",
                     "Tool",
-                    imageBand = "http://10.0.2.2:5097/ApiGenerica/data/resources/tool1.jpg"
+                    imageBand = "http://localhost:5131/images/tool1.jpg"
                 ),
             )
         }

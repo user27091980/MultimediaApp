@@ -40,12 +40,12 @@ class BandsRepo {
 
                     "ApiGenerica/data/resources/tool.jpg",
                     albumImages = listOf(
-                        "ApiGenerica/data/resources/tool3.jpg",
-                        "ApiGenerica/data/resources/tool4.JPG",
-                        "ApiGenerica/data/resources/tool5.jpg",
-                        "ApiGenerica/data/resources/tool6.jpg",
-                        "ApiGenerica/data/resources/tool7.jpeg",
-                        "ApiGenerica/data/resources/tool8.jpg"
+                        "http://localhost:5131/images/tool3.jpg",
+                        "http://localhost:5131/images/tool4.JPG",
+                        "http://localhost:5131/images/tool5.jpg",
+                        "http://localhost:5131/images/tool6.jpg",
+                        "http://localhost:5131/images/tool7.jpeg",
+                        "http://localhost:5131/images/tool8.jpg"
                     ),
                     style = "metal progresivo",
                     recordLabel = "BGM",
@@ -72,13 +72,13 @@ class BandsRepo {
                             " más influyentes de los últimos 25 años.",
                     "ApiGenerica/data/resources/aphx.png",
                     albumImages = listOf(
-                        "ApiGenerica/data/resources/aphx1.jpg",
-                        "ApiGenerica/data/resources/aphx2.jpg",
-                        "ApiGenerica/data/resources/aphx3.jpg",
-                        "ApiGenerica/data/resources/aphx4.jpg",
-                        "ApiGenerica/data/resources/aphx6.jpg",
-                        "ApiGenerica/data/resources/aphx7.jpg",
-                        "ApiGenerica/data/resources/aphx8.jpg"
+                        "http://localhost:5131/images/aphx1.jpg",
+                        "http://localhost:5131/images/aphx2.jpg",
+                        "http://localhost:5131/images/aphx3.jpg",
+                        "http://localhost:5131/images/aphx4.jpg",
+                        "http://localhost:5131/images/aphx6.jpg",
+                        "http://localhost:5131/images/aphx7.jpg",
+                        "http://localhost:5131/images/aphx8.jpg"
                     ),
                     style = "idm",
                     recordLabel = "Warp Records",
@@ -108,11 +108,11 @@ class BandsRepo {
 
                     "ApiGenerica/data/resources/nin.jpg",
                     albumImages = listOf(
-                        "ApiGenerica/data/resources/nin2.jpeg",
-                        "ApiGenerica/data/resources/nin3.jpeg",
-                        "ApiGenerica/data/resources/nin4.jpeg",
-                        "ApiGenerica/data/resources/nin5.jpeg",
-                        "ApiGenerica/data/resources/nin6.jpeg"
+                        "http://localhost:5131/images/nin2.jpeg",
+                        "http://localhost:5131/images/nin3.jpeg",
+                        "http://localhost:5131/images/nin4.jpeg",
+                        "http://localhost:5131/images/nin5.jpeg",
+                        "http://localhost:5131/images/nin6.jpeg"
                     ),
                     style = "industrial, alternative",
                     recordLabel = "nothing records, null corp",

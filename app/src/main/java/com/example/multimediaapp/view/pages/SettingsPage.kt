@@ -60,8 +60,8 @@ fun SettingsScreen( vm: SettingsVM = viewModel()) {
 
         Spacer(modifier = Modifier.height(24.dp))
 
-        Text("Agradecimientos: 10% a chatGpt,\n 70% a Pedro que le debo unos porteos" +
-                "\ny 5% a mí mismo por no desquiciarme",
+        Text("Agradecimientos: 5% a chatGpt,\n 70% a Pedro que le debo unos porteos" +
+                "\ny 25% a mí mismo por no desquiciarme",
             style = MaterialTheme.typography.titleMedium)
 
     }
