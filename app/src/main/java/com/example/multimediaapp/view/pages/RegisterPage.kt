@@ -38,7 +38,7 @@ fun RegisterScreen(navController: NavController, vm: RegisterVM = viewModel()) {
         Column(
             Modifier
                 .fillMaxSize()
-                .padding(32.dp, 40.dp),
+                .padding(40.dp, 40.dp),
             verticalArrangement = Arrangement.SpaceBetween
 
         ) {

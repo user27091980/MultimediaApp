@@ -68,7 +68,7 @@ fun LoginRegScreenPreview() {
 
     LoginRegScreen(
         navController = navController,
-        vm = LoginRegVM() // ⚠️ solo si tu VM tiene constructor vacío
+        vm = LoginRegVM() //solo si tu VM tiene constructor vacío
     )
 }
 

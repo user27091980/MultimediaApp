@@ -11,6 +11,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavController
 import androidx.navigation.compose.rememberNavController
+import com.example.multimediaapp.navigation.ObjRoutes
 import com.example.multimediaapp.viewmodel.vm.DialogVM
 
 /**
@@ -36,7 +37,7 @@ fun DialogRegisterScreen(
         confirmButton = {
 
             TextButton(onClick = { vm.confirmAction()
-            navController.navigate("RegisterRoute")}) {
+            navController.navigate(ObjRoutes.INFOUSER)}) {
 
                 Text("sí")
             }
@@ -44,7 +45,7 @@ fun DialogRegisterScreen(
         },
         dismissButton = {
             TextButton(onClick = {vm.hideDialog()
-            navController.navigate("LoginRegRoute")}) {
+            navController.navigate(ObjRoutes.LOGINREG)}) {
                 Text("no")
             }
         }
