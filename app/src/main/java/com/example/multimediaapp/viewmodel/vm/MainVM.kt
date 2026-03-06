@@ -3,6 +3,7 @@ package com.example.multimediaapp.viewmodel.vm
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.multimediaapp.data.repository.MainRepo
+import com.example.multimediaapp.network.MultimediaApiService
 import com.example.multimediaapp.viewmodel.uistate.MainUiState
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
@@ -18,9 +19,10 @@ import kotlinx.coroutines.launch
  * - Expone un StateFlow que la UI observa.
  */
 
-class MainVM : ViewModel() {
+class MainVM (private val api: MultimediaApiService) : ViewModel() {
 
-    private val repo = MainRepo
+    // instancia real del repositorio
+    private val repo = MainRepo(api)
     private val _uiState = MutableStateFlow(MainUiState(isLoading = true))
     val uiState: StateFlow<MainUiState> = _uiState
 
@@ -31,12 +33,23 @@ class MainVM : ViewModel() {
 
     // Función para cargar datos (fake para preview y pruebas)
     fun loadData() {
-
-        val bands = MainRepo.getBands()
-        _uiState.value = MainUiState(mainBands = bands)
+        viewModelScope.launch {
+            try {
+                val bands = repo.getBands() // aquí luego será suspend si usas Retrofit
+                _uiState.value = _uiState.value.copy(
+                    mainBands = bands,
+                    isLoading = false,
+                    error = null
+                )
+            } catch (e: Exception) {
+                _uiState.value = _uiState.value.copy(
+                    isLoading = false,
+                    error = e.message ?: "Error desconocido"
+                )
+            }
+        }
     }
 }
-
 /** Teoría:
  * flujo de la Arquitectura aplicada:
 UI (Activity/Compose)

@@ -31,10 +31,8 @@ class BandVM : ViewModel() {
      * Actualmente simula almacenamiento en memoria.
      */
     val repo: BandsRepo = BandsRepo()
-    // -------------------------------------------------
-    // MÉTODOS DE MANEJO DE DATOS
-    // -------------------------------------------------
 
+    // MÉTODOS DE MANEJO DE DATOS
     /**
      * Reinicia el estado de la UI a vacío.
      * Útil para limpiar la lista o reiniciar la pantalla.

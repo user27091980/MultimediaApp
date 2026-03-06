@@ -25,15 +25,15 @@ interface MultimediaApiService {
 
     //obtener banda por nombre
     @GET("json/nombre/{nombre}")
-    suspend fun getBandName(@Query("nombre") name: String): Response<BandDTO>
+    suspend fun getBandName(@Path("nombre") name: String): Response<BandDTO>
 
     //obtener información de la banda
     @GET("json/texto/{texto}")
-    suspend fun getBandTextInfo(@Query("texto") textInfo: String): Response<BandDTO>
+    suspend fun getBandTextInfo(@Path("texto") textInfo: String): Response<BandDTO>
 
     //obtener imagen cabecera
     @GET("json/imagenes/{id}")
-    suspend fun getHeaderPic(@Query("cabecera") headerImage: String): Response<BandDTO>
+    suspend fun getHeaderPic(@Path("id") headerImage: String): Response<BandDTO>
 
     //para tags
     @GET("json/estilo/{estilo}")
@@ -48,7 +48,7 @@ interface MultimediaApiService {
     @GET("json/discografia/{discografia}")
     suspend fun getDiscography(@Path("discografia") discography: List<String>): Response<BandDTO>
 
-    @GET("json/imagenes/{id}")
+    @GET("json/imagenes/main")
     suspend fun getImagesMain(): List<MainDTO>
 
     //para el lazy row de las imágenes de la página de cada grupo
