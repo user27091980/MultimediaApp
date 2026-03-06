@@ -9,7 +9,9 @@ import androidx.navigation.NavController
 import androidx.navigation.compose.rememberNavController
 import com.example.multimediaapp.navigation.ObjRoutes
 import com.example.multimediaapp.view.components.CardList
+import com.example.multimediaapp.viewmodel.uistate.MainUiState
 import com.example.multimediaapp.viewmodel.vm.MainVM
+import perfetto.protos.UiState
 
 @Composable
 fun MainScreen(navController: NavController, vm: MainVM = viewModel()) {
@@ -22,14 +24,16 @@ fun MainScreen(navController: NavController, vm: MainVM = viewModel()) {
     }
     // collectAsState() convierte el StateFlow del ViewModel en un State observable por Compose.
     // Cuando uiState cambie, la UI se recompondrá automáticamente.
-    val uiState = vm.uiState.collectAsState()
+    // Observamos el StateFlow con valor inicial para evitar errores
+    val uiState = vm.uiState.collectAsState(initial = MainUiState())
     // Llamamos al componente que muestra la lista de bandas.
     // Accedemos a .value porque collectAsState() devuelve un State<T>.
     CardList(
         bands = uiState.value.mainBands,
         onImageClick = {
             // Aquí puedes navegar o mostrar detalles
-            ObjRoutes.BAND
+                bandId ->
+                navController.navigate("${ObjRoutes.BAND}/$bandId")
         }
     )
 }

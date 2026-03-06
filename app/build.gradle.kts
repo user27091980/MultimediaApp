@@ -81,6 +81,7 @@ dependencies {
     // DataStore
     implementation("androidx.datastore:datastore-preferences:1.2.0")
     implementation(libs.androidx.material3)
+    implementation(libs.androidx.benchmark.common)
 
     // Testing
     testImplementation(libs.junit)
