@@ -57,6 +57,6 @@ fun DialogPrev() {
 
     DialogRegisterScreen(
         navController = rememberNavController(),
-        vm = DialogVM(),
+
     )
 }

@@ -2,13 +2,10 @@ package com.example.multimediaapp.viewmodel.vm
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.example.multimediaapp.data.repository.BandsRepo
 import com.example.multimediaapp.data.repository.MainRepo
-import com.example.multimediaapp.model.MainDTO
 import com.example.multimediaapp.viewmodel.uistate.MainUiState
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
-import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.launch
 
 /**
@@ -20,28 +17,26 @@ import kotlinx.coroutines.launch
  * - Se comunica con el Repository.
  * - Expone un StateFlow que la UI observa.
  */
-data class MainUiState(
-    val imageBands: List<MainDTO> = emptyList()
-)
 
 class MainVM : ViewModel() {
 
-    private val _uiState = MutableStateFlow(MainUiState())
+    private val repo = MainRepo
+    private val _uiState = MutableStateFlow(MainUiState(isLoading = true))
     val uiState: StateFlow<MainUiState> = _uiState
+
+    init {
+        loadData()
+    }
+
 
     // Función para cargar datos (fake para preview y pruebas)
     fun loadData() {
-        viewModelScope.launch {
-            // Aquí simulas obtener datos del repositorio
-            val fakeBands = listOf(
-                MainDTO(id = "1", imageBand = "https://via.placeholder.com/150"),
-                MainDTO(id = "2", imageBand = "https://via.placeholder.com/150"),
-                MainDTO(id = "3", imageBand = "https://via.placeholder.com/150")
-            )
-            _uiState.value = MainUiState(mainBands =  fakeBands)
-        }
+
+        val bands = MainRepo.getBands()
+        _uiState.value = MainUiState(mainBands = bands)
     }
 }
+
 /** Teoría:
  * flujo de la Arquitectura aplicada:
 UI (Activity/Compose)

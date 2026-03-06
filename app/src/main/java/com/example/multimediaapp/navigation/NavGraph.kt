@@ -15,6 +15,7 @@ import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import com.example.multimediaapp.view.pages.BandScreen
+import com.example.multimediaapp.view.pages.DialogRegisterScreen
 import com.example.multimediaapp.view.pages.LoginRegScreen
 import com.example.multimediaapp.view.pages.LoginScreen
 import com.example.multimediaapp.view.pages.MainScreen
@@ -117,6 +118,12 @@ fun NavGraph(navController: NavHostController) {
         //ruta configuración
         composable(ObjRoutes.SETTINGS) {
             SettingsScreen()
+        }
+        composable(ObjRoutes.DIALOG){
+            DialogRegisterScreen(
+                navController = navController,
+
+            )
         }
     }
 }

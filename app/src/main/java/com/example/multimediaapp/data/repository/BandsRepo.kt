@@ -40,12 +40,12 @@ class BandsRepo {
 
                     "ApiGenerica/data/resources/tool.jpg",
                     albumImages = listOf(
-                        "data/resources/tool3.jpg",
-                        "data/resources/tool4.JPG",
-                        "data/resources/tool5.jpg",
-                        "data/resources/tool6.jpg",
-                        "data/resources/tool7.jpeg",
-                        "data/resources/tool8.jpg"
+                        "ApiGenerica/data/resources/tool3.jpg",
+                        "ApiGenerica/data/resources/tool4.JPG",
+                        "ApiGenerica/data/resources/tool5.jpg",
+                        "ApiGenerica/data/resources/tool6.jpg",
+                        "ApiGenerica/data/resources/tool7.jpeg",
+                        "ApiGenerica/data/resources/tool8.jpg"
                     ),
                     style = "metal progresivo",
                     recordLabel = "BGM",
@@ -72,13 +72,13 @@ class BandsRepo {
                             " más influyentes de los últimos 25 años.",
                     "ApiGenerica/data/resources/aphx.png",
                     albumImages = listOf(
-                        "data/resources/aphx1.jpg",
-                        "data/resources/aphx2.jpg",
-                        "data/resources/aphx3.jpg",
-                        "data/resources/aphx4.jpg",
-                        "data/resources/aphx6.jpg",
-                        "data/resources/aphx7.jpg",
-                        "data/resources/aphx8.jpg"
+                        "ApiGenerica/data/resources/aphx1.jpg",
+                        "ApiGenerica/data/resources/aphx2.jpg",
+                        "ApiGenerica/data/resources/aphx3.jpg",
+                        "ApiGenerica/data/resources/aphx4.jpg",
+                        "ApiGenerica/data/resources/aphx6.jpg",
+                        "ApiGenerica/data/resources/aphx7.jpg",
+                        "ApiGenerica/data/resources/aphx8.jpg"
                     ),
                     style = "idm",
                     recordLabel = "Warp Records",
@@ -108,11 +108,11 @@ class BandsRepo {
 
                     "ApiGenerica/data/resources/nin.jpg",
                     albumImages = listOf(
-                        "data/resources/nin2.jpeg",
-                        "data/resources/nin3.jpeg",
-                        "data/resources/nin4.jpeg",
-                        "data/resources/nin5.jpeg",
-                        "data/resources/nin6.jpeg"
+                        "ApiGenerica/data/resources/nin2.jpeg",
+                        "ApiGenerica/data/resources/nin3.jpeg",
+                        "ApiGenerica/data/resources/nin4.jpeg",
+                        "ApiGenerica/data/resources/nin5.jpeg",
+                        "ApiGenerica/data/resources/nin6.jpeg"
                     ),
                     style = "industrial, alternative",
                     recordLabel = "nothing records, null corp",
@@ -141,8 +141,11 @@ class BandsRepo {
                             "incluyendo complejos patrones de ritmo y melodías tenues.",
                     "ApiGenerica/data/resources/ae0.jpg",
                     albumImages = listOf(
-                        "data/resources/ae2.jpg", "data/resources/ae3.jpg",
-                        "data/resources/ae4.jpg", "data/resources/ae5.jpg", "data/resources/ae6.jpg"
+                        "ApiGenerica/data/resources/ae2.jpg",
+                        "ApiGenerica/data/resources/ae3.jpg",
+                        "ApiGenerica/data/resources/ae4.jpg",
+                        "ApiGenerica/data/resources/ae5.jpg",
+                        "ApiGenerica/data/resources/ae6.jpg"
                     ),
                     style = "experimental",
                     recordLabel = "Warp Records",
@@ -188,11 +191,11 @@ class BandsRepo {
                             " y convirtiéndose inmediatamente en un clásico de culto. ",
                     "ApiGenerica/data/resources/boc1.jpg",
                     albumImages = listOf(
-                        "data/resources/boc2.jpeg",
-                        "data/resources/boc3.jpeg",
-                        "data/resources/boc4.jpg",
-                        "data/resources/boc5.jpg",
-                        "data/resources/boc6.jpg"
+                        "ApiGenerica/data/resources/boc2.jpeg",
+                        "ApiGenerica/data/resources/boc3.jpeg",
+                        "ApiGenerica/data/resources/boc4.jpg",
+                        "ApiGenerica/data/resources/boc5.jpg",
+                        "ApiGenerica/data/resources/boc6.jpg"
                     ),
                     style = "idm, downtempo",
                     recordLabel = "Warp records, Skam Records",

@@ -2,9 +2,9 @@ package com.example.multimediaapp.view.components
 
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.clickable
+import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.runtime.Composable
@@ -14,8 +14,6 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import coil.compose.rememberAsyncImagePainter
 import com.example.multimediaapp.model.MainDTO
-import com.example.multimediaapp.viewmodel.uistate.BandUiState
-import com.example.multimediaapp.viewmodel.uistate.MainUiState
 
 /**
  * @author andrés
@@ -40,8 +38,8 @@ fun CardList(
                 contentDescription = "album image",
                 // Modificadores de la imagen
                 modifier = Modifier
-                    .height(120.dp)// Altura fija de cada imagen
-                    .width(120.dp)// Ancho fijo de cada imagen
+                    .fillMaxWidth()
+                    .height(300.dp)
                     .padding(end = 8.dp)
                     .clickable { onImageClick(mainBand) },
                 // Escala de la imagen para que llene su contenedor y recorte lo sobrante
@@ -52,9 +50,9 @@ fun CardList(
 }
 
 val previewBands = listOf(
-    MainDTO("Metallica", "https://via.placeholder.com/300x150.png?text=Metallica"),
-    MainDTO("Iron Maiden", "https://via.placeholder.com/300x150.png?text=Iron+Maiden"),
-    MainDTO("AC/DC", "https://via.placeholder.com/300x150.png?text=ACDC")
+    MainDTO("1","Metallica", "https://via.placeholder.com/300x150.png?text=Metallica"),
+    MainDTO("2","Iron Maiden", "https://via.placeholder.com/300x150.png?text=Iron+Maiden"),
+    MainDTO("3","AC/DC", "https://via.placeholder.com/300x150.png?text=ACDC")
 )
 
 @Preview

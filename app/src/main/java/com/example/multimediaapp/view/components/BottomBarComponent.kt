@@ -41,8 +41,8 @@ fun BottomBar(navController: NavHostController) {
             Icons.Default.Home,
             route = ObjRoutes.MAIN
         ),
-        /*
-        BottomItems.BottomBarItem(
+
+        /*BottomItems.BottomBarItem(
             label = stringResource(R.string.búsqueda),
             Icons.Default.Search,
 

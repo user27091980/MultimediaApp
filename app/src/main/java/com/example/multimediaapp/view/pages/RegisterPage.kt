@@ -1,16 +1,13 @@
 package com.example.multimediaapp.view.pages
 
-import com.example.multimediaapp.view.components.ButtonAcept
-import com.example.multimediaapp.view.components.ButtonCancel
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.runtime.Composable
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
@@ -21,6 +18,8 @@ import androidx.navigation.NavController
 import androidx.navigation.compose.rememberNavController
 import com.example.multimediaapp.navigation.ObjRoutes
 import com.example.multimediaapp.ui.theme.boxModifier
+import com.example.multimediaapp.view.components.ButtonAcept
+import com.example.multimediaapp.view.components.ButtonCancel
 import com.example.multimediaapp.view.components.TextFieldsComponent
 import com.example.multimediaapp.viewmodel.vm.RegisterVM
 
@@ -28,11 +27,13 @@ import com.example.multimediaapp.viewmodel.vm.RegisterVM
 fun RegisterScreen(navController: NavController, vm: RegisterVM = viewModel()) {
     Box(
         modifier = boxModifier
+            .fillMaxSize()
             .background(
                 Brush.verticalGradient(
                     colors = listOf(Color.DarkGray, Color.Black) // verde Spotify → negro
                 )
-            )
+            ),
+        contentAlignment = Alignment.Center
     ) {
         Column(
             Modifier
@@ -49,7 +50,7 @@ fun RegisterScreen(navController: NavController, vm: RegisterVM = viewModel()) {
             }
 
             ButtonAcept(
-                onClick = { navController.navigate(ObjRoutes.INFOUSER) }
+                onClick = { navController.navigate(ObjRoutes.DIALOG) }
             )
             ButtonCancel(
                 onClick = { navController.navigate(ObjRoutes.LOGIN) }

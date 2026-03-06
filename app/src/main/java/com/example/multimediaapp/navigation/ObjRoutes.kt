@@ -9,9 +9,9 @@ package com.example.multimediaapp.navigation
  * - Sirve como contenedor de constantes
  */
 object ObjRoutes {
-    // =========================
-    // 🔹 RUTAS SIN PARÁMETROS
-    // =========================
+
+    //RUTAS SIN PARÁMETROS
+
 
     /**
      * Pantalla inicial Login / Register
@@ -34,10 +34,9 @@ object ObjRoutes {
      * Pantalla relacionada con bandas
      */
     const val BAND = "BandRoute"
-    // =========================
-    // 🔹 RUTAS CON PARÁMETROS
-    // =========================
+    const val DIALOG = "DialogRoute"
 
+    // RUTAS CON PARÁMETROS
     /**
      * Ruta de Login que recibe:
      * - email

@@ -24,7 +24,7 @@ class ApiClient(private val context: Context) {
      * URL base del backend.
      * 10.0.2.2 apunta al localhost del PC desde el emulador.
      */
-    val baseUrl: String = "http://10.0.2.2:5097/api/" // Replace with your actual base URL
+    val baseUrl: String = "http://10.0.2.2:5097/ApiGenerica/" // Replace with your actual base URL
 
     /**
      * Devuelve la instancia de Retrofit.

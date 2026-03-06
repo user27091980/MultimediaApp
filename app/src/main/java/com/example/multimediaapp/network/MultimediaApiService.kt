@@ -2,6 +2,7 @@ package com.example.multimediaapp.network
 
 // Modelo de datos que representa la respuesta del servidor
 import com.example.multimediaapp.model.BandDTO
+import com.example.multimediaapp.model.MainDTO
 // Clase wrapper que contiene:
 // - body()
 // - isSuccessful
@@ -48,7 +49,7 @@ interface MultimediaApiService {
     suspend fun getDiscography(@Path("discografia") discography: List<String>): Response<BandDTO>
 
     @GET("json/imagenes/{id}")
-    suspend fun getImagesMain(@Path("grupos") imagenesGrupos: String): Response<BandDTO>
+    suspend fun getImagesMain(): List<MainDTO>
 
     //para el lazy row de las imágenes de la página de cada grupo
     @GET("json/discos/{discos}")

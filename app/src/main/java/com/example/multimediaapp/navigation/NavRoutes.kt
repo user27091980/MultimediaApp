@@ -61,7 +61,7 @@ object BandRoute : NavRoute
 object UserInfoRoute : NavRoute
 
 @Serializable
-object DialogPageRoute : NavRoute
+object DialogRoute : NavRoute
 
 @Serializable
 object SettingsRoute : NavRoute
