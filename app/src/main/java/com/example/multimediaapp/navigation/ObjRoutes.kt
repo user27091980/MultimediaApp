@@ -11,12 +11,11 @@ package com.example.multimediaapp.navigation
 object ObjRoutes {
 
     //RUTAS SIN PARÁMETROS
-
-
     /**
      * Pantalla inicial Login / Register
      */
     const val LOGINREG = "LoginRegRoute"
+
     /**
      * Pantalla principal después de login
      */
@@ -26,10 +25,12 @@ object ObjRoutes {
      * Pantalla de información del usuario
      */
     const val INFOUSER = "UserInfoRoute"
+
     /**
      * Pantalla de configuración
      */
     const val SETTINGS = "SettingsRoute"
+
     /**
      * Pantalla relacionada con bandas
      */
@@ -54,7 +55,7 @@ object ObjRoutes {
      * LoginScreen("correo@mail.com", "1234")
      * → "LoginRoute/correo@mail.com/1234"
      */
-    fun LoginScreen(email: String, passwd:String) = "LoginRoute/$email/$passwd"
+
 
     /**
      * Ruta de Register que recibe:
@@ -69,7 +70,5 @@ object ObjRoutes {
      * RegisterScreen("correo@mail.com", "Juan")
      * → "RegisterRoute/correo@mail.com/Juan"
      */
-    fun RegisterScreen(email: String, name: String) = "RegisterRoute/$email/$name"
 
-    //menos seguro ya que pasamos contraseña por navegación.
 }

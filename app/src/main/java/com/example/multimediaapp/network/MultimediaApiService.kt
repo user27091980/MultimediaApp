@@ -3,13 +3,18 @@ package com.example.multimediaapp.network
 // Modelo de datos que representa la respuesta del servidor
 import com.example.multimediaapp.model.BandDTO
 import com.example.multimediaapp.model.MainDTO
+import com.example.multimediaapp.model.UsersDTO
+import com.example.multimediaapp.model.UsersInfoDTO
 // Clase wrapper que contiene:
 // - body()
 // - isSuccessful
 // - errorBody()
 import retrofit2.Response
+import retrofit2.Retrofit
+import retrofit2.converter.gson.GsonConverterFactory
 // Anotaciones de Retrofit para definir endpoints HTTP
 import retrofit2.http.GET
+import retrofit2.http.PUT
 import retrofit2.http.Path
 import retrofit2.http.Query
 
@@ -55,5 +60,26 @@ interface MultimediaApiService {
     @GET("json/discos/{discos}")
     suspend fun getAlbumImages(@Path("discos") albumImages: List<String>): Response<BandDTO>
 
+    @GET("json/users/{id}")
+    suspend fun getUsers(@Path("id") userId: String): Response<UsersInfoDTO>
 
+    @PUT("json/users/{id}")
+    suspend fun updateUser(@Path("id") userId: String, @Query("name") name: String): Response<UsersDTO>
+
+
+
+
+
+    companion object {
+
+        private const val BASE_URL = "http://10.0.2.2:5131/"
+        fun create(): MultimediaApiService {
+            val retrofit = Retrofit.Builder()
+                .baseUrl(BASE_URL)
+                .addConverterFactory(GsonConverterFactory.create())
+                .build()
+
+            return retrofit.create(MultimediaApiService::class.java)
+        }
+    }
 }

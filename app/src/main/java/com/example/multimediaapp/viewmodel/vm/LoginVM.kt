@@ -39,6 +39,7 @@ class LoginVM : ViewModel() {
     private val _events = MutableSharedFlow<LoginEvent>()
     val events = _events.asSharedFlow()
 
+
     // ACTUALIZACIÓN DE CAMPOS
 
     fun onEmailChange(email: String) {
@@ -107,3 +108,4 @@ class LoginVM : ViewModel() {
         }
     }
 }
+

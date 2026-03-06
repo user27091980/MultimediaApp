@@ -3,6 +3,7 @@ package com.example.multimediaapp.view.pages
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
+import androidx.compose.runtime.getValue
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavController
@@ -15,7 +16,7 @@ import com.example.multimediaapp.viewmodel.vm.MainVM
 
 @Composable
 fun MainScreen(navController: NavController, vm: MainVM = viewModel()) {
-
+    val uiState by vm.uiState.collectAsState()
     // LaunchedEffect se ejecuta cuando el Composable entra en composición.
     // Unit como clave significa que se ejecutará solo una vez.
     // Aquí llamamos a loadData() para cargar las bandas desde el ViewModel.
@@ -25,14 +26,12 @@ fun MainScreen(navController: NavController, vm: MainVM = viewModel()) {
     // collectAsState() convierte el StateFlow del ViewModel en un State observable por Compose.
     // Cuando uiState cambie, la UI se recompondrá automáticamente.
     // Observamos el StateFlow con valor inicial para evitar errores
-    val uiState = vm.uiState.collectAsState(initial = MainUiState())
+
     // Llamamos al componente que muestra la lista de bandas.
     // Accedemos a .value porque collectAsState() devuelve un State<T>.
     CardList(
-        bands = uiState.value.mainBands,
-        onImageClick = {
-            // Aquí puedes navegar o mostrar detalles
-                bandId ->
+        bands = uiState.mainBands,
+        onImageClick = { bandId ->
                 navController.navigate("${ObjRoutes.BAND}/$bandId")
         }
     )

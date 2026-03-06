@@ -55,12 +55,8 @@ fun RegisterScreen(navController: NavController, vm: RegisterVM = viewModel()) {
             ButtonCancel(
                 onClick = { navController.navigate(ObjRoutes.LOGIN) }
             )
-
-
         }
-
     }
-
 }
 
 @Preview

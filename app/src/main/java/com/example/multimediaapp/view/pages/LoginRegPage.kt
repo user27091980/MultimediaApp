@@ -15,6 +15,7 @@ import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavController
 import androidx.navigation.compose.rememberNavController
 import com.example.multimediaapp.navigation.ObjRoutes
@@ -24,7 +25,7 @@ import com.example.multimediaapp.viewmodel.vm.LoginRegVM
  * @author Andrés
  */
 @Composable
-fun LoginRegScreen(navController: NavController, vm: LoginRegVM) {
+fun LoginRegScreen(navController: NavController, vm: LoginRegVM=viewModel()) {
 
     Box(
         modifier = Modifier
