@@ -9,7 +9,6 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavController
-import androidx.navigation.compose.rememberNavController
 import com.example.multimediaapp.model.MainDTO
 import com.example.multimediaapp.navigation.ObjRoutes
 import com.example.multimediaapp.network.MultimediaApiService

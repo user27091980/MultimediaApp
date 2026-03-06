@@ -19,9 +19,10 @@ import kotlinx.coroutines.launch
  * - Expone un StateFlow que la UI observa.
  */
 
-class MainVM (api: MultimediaApiService) : ViewModel() {
+class MainVM(api1: MultimediaApiService) : ViewModel() {
 
     // instancia real del repositorio
+    private val api = MultimediaApiService.create()
     private val repo = MainRepo(api)
     private val _uiState = MutableStateFlow(MainUiState(isLoading = true))
     val uiState: StateFlow<MainUiState> = _uiState
