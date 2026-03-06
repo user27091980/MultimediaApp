@@ -5,10 +5,14 @@ import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.tooling.preview.Preview
+import androidx.lifecycle.ViewModel
+import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavController
 import androidx.navigation.compose.rememberNavController
+import com.example.multimediaapp.model.MainDTO
 import com.example.multimediaapp.navigation.ObjRoutes
+import com.example.multimediaapp.network.MultimediaApiService
 import com.example.multimediaapp.view.components.CardList
 import com.example.multimediaapp.viewmodel.uistate.MainUiState
 import com.example.multimediaapp.viewmodel.vm.MainVM
@@ -16,6 +20,15 @@ import com.example.multimediaapp.viewmodel.vm.MainVM
 
 @Composable
 fun MainScreen(navController: NavController, vm: MainVM = viewModel()) {
+    val api = MultimediaApiService.create()
+    val vm: MainVM = viewModel(
+        factory = object : ViewModelProvider.Factory {
+            override fun <T : ViewModel> create(modelClass: Class<T>): T {
+                return MainVM(api) as T
+            }
+        }
+    )
+
     val uiState by vm.uiState.collectAsState()
     // LaunchedEffect se ejecuta cuando el Composable entra en composición.
     // Unit como clave significa que se ejecutará solo una vez.
@@ -29,25 +42,45 @@ fun MainScreen(navController: NavController, vm: MainVM = viewModel()) {
 
     // Llamamos al componente que muestra la lista de bandas.
     // Accedemos a .value porque collectAsState() devuelve un State<T>.
+    MainContent(
+        uiState = uiState,
+        onImageClick = { bandId ->
+            navController.navigate("${ObjRoutes.BAND}/$bandId")
+        }
+    )
+
+}
+
+@Composable
+fun MainContent(
+    uiState: MainUiState,
+    onImageClick: (String) -> Unit
+) {
     CardList(
         bands = uiState.mainBands,
-        onImageClick = { bandId ->
-                navController.navigate("${ObjRoutes.BAND}/$bandId")
+        onImageClick = { band ->
+            onImageClick(band.id)
         }
     )
 }
 
+
 @Preview(showBackground = true)
 @Composable
 fun MainScreenPreview() {
-
-    val navController = rememberNavController()
-
-    MainScreen(
-        navController = navController
+    // Now the preview uses the stateless MainContent with mock data
+    // avoiding the ViewModel instantiation error.
+    MainContent(
+        uiState = MainUiState(
+            mainBands = listOf(
+                MainDTO("1", "Autechre", "https://via.placeholder.com/150"),
+                MainDTO("2", "Aphex Twin", "https://via.placeholder.com/150"),
+                MainDTO("3", "Boards of Canada", "https://via.placeholder.com/150")
+            )
+        ),
+        onImageClick = {}
     )
 }
-
 /**
  * Teoría:
  *
