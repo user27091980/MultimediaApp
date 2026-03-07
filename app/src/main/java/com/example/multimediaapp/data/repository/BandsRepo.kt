@@ -18,6 +18,7 @@ class BandsRepo {
         // Lista mutable que almacena las bandas en memoria.
         // Se inicializa con datos "hardcodeados".
         private val bands = ArrayList<BandDTO>(
+
             listOf(
                 // ----------- TOOL -----------
                 BandDTO(
@@ -38,14 +39,14 @@ class BandsRepo {
                             " Su quinto álbum de estudio, Fear Inoculum, se lanzó el 30 de agosto de 2019 con gran éxito de crítica.\n" +
                             " Antes de su lanzamiento, la banda había vendido más de 13 millones de álbumes solo en Estados Unidos.",
 
-                    "ApiGenerica/data/resources/tool.jpg",
+                    headerImage = "ApiGenerica/data/resources/tool",
                     albumImages = listOf(
-                        "http://localhost:5131/images/tool3.jpg",
-                        "http://localhost:5131/images/tool4.JPG",
-                        "http://localhost:5131/images/tool5.jpg",
-                        "http://localhost:5131/images/tool6.jpg",
-                        "http://localhost:5131/images/tool7.jpeg",
-                        "http://localhost:5131/images/tool8.jpg"
+                        "http://10.0.2.2:5131/images/tool3",
+                        "http://10.0.2.2:5131/images/tool4",
+                        "http://10.0.2.2:5131/images/tool5",
+                        "http://10.0.2.2:5131/images/tool6",
+                        "http://10.0.2.2:5131/images/tool7",
+                        "http://10.0.2.2:5131/images/tool8"
                     ),
                     style = "metal progresivo",
                     recordLabel = "BGM",
@@ -70,15 +71,15 @@ class BandsRepo {
                             " Fundó el sello discográfico Rephlex Records en 1991 junto a Grant Wilson-Claridge.\n" +
                             " En 2021, la publicación Pitchfork lo incluyó en su lista de los 200 artistas\n" +
                             " más influyentes de los últimos 25 años.",
-                    "ApiGenerica/data/resources/aphx.png",
+                    headerImage = "http://localhost:5131/images/aphx.png",
                     albumImages = listOf(
-                        "http://localhost:5131/images/aphx1.jpg",
-                        "http://localhost:5131/images/aphx2.jpg",
-                        "http://localhost:5131/images/aphx3.jpg",
-                        "http://localhost:5131/images/aphx4.jpg",
-                        "http://localhost:5131/images/aphx6.jpg",
-                        "http://localhost:5131/images/aphx7.jpg",
-                        "http://localhost:5131/images/aphx8.jpg"
+                        "http://10.0.2.2:5131/images/aphx1",
+                        "http://10.0.2.2:5131/images/aphx2",
+                        "http://10.0.2.2:5131/images/aphx3",
+                        "http://10.0.2.2:5131/images/aphx4",
+                        "http://10.0.2.2:5131/images/aphx6",
+                        "http://10.0.2.2:5131/images/aphx7",
+                        "http://10.0.2.2:5131/images/aphx8"
                     ),
                     style = "idm",
                     recordLabel = "Warp Records",
@@ -91,7 +92,7 @@ class BandsRepo {
                         "...i care because you do"
 
                     )
-                    //imageBand = "data/resources/aphx5.jpg"
+
                 ),
                 BandDTO(
                     "2", "NIN",
@@ -106,13 +107,13 @@ class BandsRepo {
                             " por «Wish» en 1992, «Happiness in Slavery» en 1995 y «As Alive As You Need Me to Be» en 2026.\n" +
                             "Ganador de varios premios por sus bandas sonoras dos Oscars, tres premios Emmy y 1 Bafta ",
 
-                    "ApiGenerica/data/resources/nin.jpg",
+                    headerImage = "http://10.0.2.2:5131/images/nin.jpg",
                     albumImages = listOf(
-                        "http://localhost:5131/images/nin2.jpeg",
-                        "http://localhost:5131/images/nin3.jpeg",
-                        "http://localhost:5131/images/nin4.jpeg",
-                        "http://localhost:5131/images/nin5.jpeg",
-                        "http://localhost:5131/images/nin6.jpeg"
+                        "http://10.0.2.2:5131/images/nin2",
+                        "http://10.0.2.2:5131/images/nin3",
+                        "http://10.0.2.2:5131/images/nin4",
+                        "http://10.0.2.2:5131/images/nin5",
+                        "http://10.0.2.2:5131/images/nin6"
                     ),
                     style = "industrial, alternative",
                     recordLabel = "nothing records, null corp",
@@ -139,13 +140,13 @@ class BandsRepo {
                             ", desde su trabajo anterior con claras raíces en el techno, house y electro,\n" +
                             " hasta álbumes que a menudo son considerados de naturaleza experimental,\n" +
                             "incluyendo complejos patrones de ritmo y melodías tenues.",
-                    "ApiGenerica/data/resources/ae0.jpg",
+                    headerImage = "http://localhost:5131/images/ae0",
                     albumImages = listOf(
-                        "ApiGenerica/data/resources/ae2.jpg",
-                        "ApiGenerica/data/resources/ae3.jpg",
-                        "ApiGenerica/data/resources/ae4.jpg",
-                        "ApiGenerica/data/resources/ae5.jpg",
-                        "ApiGenerica/data/resources/ae6.jpg"
+                        "http://10.0.2.2:5131/images/ae2",
+                        "http://10.0.2.2:5131/images/ae3",
+                        "http://10.0.2.2:5131/images/ae4",
+                        "http://10.0.2.2:5131/images/ae5",
+                        "http://10.0.2.2:5131/images/ae6"
                     ),
                     style = "experimental",
                     recordLabel = "Warp Records",
@@ -189,13 +190,13 @@ class BandsRepo {
                             " El disco fue un éxito tanto entre la crítica como en el público, \n" +
                             "siendo considerado por muchos como uno de los mejores discos de IDM de la historia\n" +
                             " y convirtiéndose inmediatamente en un clásico de culto. ",
-                    "ApiGenerica/data/resources/boc1.jpg",
+                    headerImage = "http://10.0.2.2:5131/images/boc1",
                     albumImages = listOf(
-                        "ApiGenerica/data/resources/boc2.jpeg",
-                        "ApiGenerica/data/resources/boc3.jpeg",
-                        "ApiGenerica/data/resources/boc4.jpg",
-                        "ApiGenerica/data/resources/boc5.jpg",
-                        "ApiGenerica/data/resources/boc6.jpg"
+                        "http://10.0.2.2:5131/images/boc2",
+                        "http://10.0.2.2:5131/images/boc3",
+                        "http://10.0.2.2:5131/images/boc4",
+                        "http://10.0.2.2:5131/images/boc5",
+                        "http://10.0.2.2:5131/images/boc6"
                     ),
                     style = "idm, downtempo",
                     recordLabel = "Warp records, Skam Records",
@@ -206,7 +207,6 @@ class BandsRepo {
                         "Geogaddi",
                         "Tomorrow´s harvest",
                         "The Campfire headphase"
-
                     )
 
                 )

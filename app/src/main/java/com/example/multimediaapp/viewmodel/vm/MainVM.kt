@@ -19,7 +19,7 @@ import kotlinx.coroutines.launch
  * - Expone un StateFlow que la UI observa.
  */
 
-class MainVM(api1: MultimediaApiService) : ViewModel() {
+class MainVM(api: MultimediaApiService) : ViewModel() {
 
     // instancia real del repositorio
     private val api = MultimediaApiService.create()
@@ -36,7 +36,7 @@ class MainVM(api1: MultimediaApiService) : ViewModel() {
     fun loadData() {
         viewModelScope.launch {
             try {
-                val bands = repo.getBands() // aquí luego será suspend si usas Retrofit
+                val bands = repo.getMainImages() // aquí luego será suspend si usas Retrofit
                 _uiState.value = _uiState.value.copy(
                     mainBands = bands,
                     isLoading = false,
