@@ -1,6 +1,7 @@
 package com.example.multimediaapp.view.components
 
 import androidx.compose.foundation.Image
+import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxSize
@@ -8,7 +9,9 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.runtime.Composable
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.layout.ContentScale
@@ -22,12 +25,14 @@ import com.example.multimediaapp.viewmodel.uistate.BandUiState
 @Composable
 fun BandHeader(band: BandUiState) {
 
+    val headerHeight = 100.dp
     Box(
         modifier = Modifier
-            .height(150.dp)
             .fillMaxWidth()
-             // margen lateral
-            .clip(RoundedCornerShape(6.dp))
+            .height(100.dp) // altura más pequeña
+            .padding(horizontal = 1.dp) // margenes laterales
+            .clip(RoundedCornerShape(8.dp)),
+        contentAlignment = Alignment.Center
     ) {
         Image(
             // 'painter' define la fuente de la imagen.
@@ -36,8 +41,7 @@ fun BandHeader(band: BandUiState) {
             // Descripción de la imagen para accesibilidad (lectores de pantalla).
             contentDescription = band.name,
             // Modificadores para definir el tamaño y comportamiento de la imagen.
-            modifier = Modifier
-                .fillMaxSize(),
+            modifier = Modifier.height(headerHeight*0.9f),
             // Escala de la imagen dentro del espacio definido:
             // 'Crop' recorta la imagen si no coincide exactamente con el tamaño del contenedor.
             contentScale = ContentScale.Crop

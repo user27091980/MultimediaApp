@@ -15,8 +15,13 @@ private val DarkColorScheme = darkColorScheme(
     primary = Purple80,
     secondary = PurpleGrey80,
     tertiary = Pink80,
-    background = DarkGray80,
-    surface = DarkGray80
+    background = Black,
+    surface = DarkGray80,
+    onPrimary = White,
+    onSecondary = White,
+    onTertiary = White,
+    onBackground = White,           // texto sobre fondo oscuro
+    onSurface = White
 )
 
 private val LightColorScheme = lightColorScheme(
@@ -24,7 +29,12 @@ private val LightColorScheme = lightColorScheme(
     secondary = PurpleGrey40,
     tertiary = Pink40,
     background = DarkGray40,
-    surface = DarkGray40
+    surface = Gray40,
+    onPrimary = Black,
+    onSecondary = Black,
+    onTertiary = Black,
+    onBackground = Black,
+    onSurface = Black
 
     /* Other default colors to override
     background = Color(0xFFFFFBFE),
@@ -40,19 +50,10 @@ private val LightColorScheme = lightColorScheme(
 @Composable
 fun MultimediaAppTheme(
     darkTheme: Boolean = isSystemInDarkTheme(),
-    // Dynamic color is available on Android 12+
-    dynamicColor: Boolean = true,
+
     content: @Composable () -> Unit
 ) {
-    val colorScheme = when {
-        dynamicColor -> {
-            val context = LocalContext.current
-            if (darkTheme) dynamicDarkColorScheme(context) else dynamicLightColorScheme(context)
-        }
-
-        darkTheme -> DarkColorScheme
-        else -> LightColorScheme
-    }
+    val colorScheme = if (darkTheme) DarkColorScheme else LightColorScheme
 
     MaterialTheme(
         colorScheme = colorScheme,
@@ -60,3 +61,5 @@ fun MultimediaAppTheme(
         content = content
     )
 }
+
+

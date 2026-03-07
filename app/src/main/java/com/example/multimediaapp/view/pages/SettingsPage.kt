@@ -48,7 +48,8 @@ fun SettingsScreen(vm: SettingsVM = viewModel()) {
         Spacer(modifier = Modifier.height(24.dp))// Separación vertical de 24dp
 
         // Sección de apariencia
-        Text("Apariencia", style = MaterialTheme.typography.titleMedium)// Subtítulo
+        Text("Apariencia", style = MaterialTheme.typography.headlineMedium,
+            color = MaterialTheme.colorScheme.onBackground)// Subtítulo
 // Switch para el modo oscuro
         SettingSwitch(
             title = "Modo óscuro",// Texto del switch
@@ -58,14 +59,16 @@ fun SettingsScreen(vm: SettingsVM = viewModel()) {
         Spacer(modifier = Modifier.height(24.dp))// Separación vertical de 24dp
 
         // Información sobre la versión de la app
-        Text("App Version: 1.0", style = MaterialTheme.typography.titleMedium)
+        Text("App Version: 1.0", style = MaterialTheme.typography.headlineMedium,
+            color = MaterialTheme.colorScheme.onBackground)
 
         Spacer(modifier = Modifier.height(24.dp))
 
         Text(
             "Agradecimientos: 5% a chatGpt,\n 70% a Pedro que le debo unos porteos" +
                     "\ny 25% a mí mismo por no desquiciarme",
-            style = MaterialTheme.typography.titleMedium
+            style = MaterialTheme.typography.titleMedium,
+            color = MaterialTheme.colorScheme.onBackground
         )
 
     }
