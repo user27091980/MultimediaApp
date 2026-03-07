@@ -351,7 +351,7 @@ C	Create	Crear datos
 R	Read	Leer datos
 U	Update	Actualizar datos
 D	Delete	Eliminar datos
- Create (Crear)
+Create (Crear)
 
 Permite agregar un nuevo registro.
 
@@ -367,7 +367,7 @@ En Kotlin podría verse así:
 
 fun create(band: BandDTO)
 
- Read (Leer)
+Read (Leer)
 
 Permite consultar datos existentes.
 
