@@ -34,14 +34,6 @@ val rowModifier =Modifier
     .fillMaxWidth()
     .padding(horizontal = 16.dp, vertical = 8.dp)
 
-//row para las cards de info
-val rowCardModifier = Modifier
-    .padding(10.dp, 140.dp, 10.dp, 180.dp)
-
-//row para el lazyRow
-val lazyRowMod = Modifier
-    .padding(5.dp, 600.dp, 5.dp, 5.dp)
-
 //modificadores para cards
 val cardModifier = Modifier
     .size(width = 300.dp, height = 100.dp)

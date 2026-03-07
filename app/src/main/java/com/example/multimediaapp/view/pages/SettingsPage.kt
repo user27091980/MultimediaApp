@@ -31,6 +31,7 @@ import com.example.multimediaapp.viewmodel.vm.SettingsVM
 fun SettingsScreen(vm: SettingsVM = viewModel()) {
     // Estado local para el switch de modo oscuro
     val uiState by vm.uiState.collectAsState()// Columna principal que organiza todos los elementos de la pantalla
+
     Column(
         modifier = Modifier
             .fillMaxSize()// Ocupa todo el espacio disponible
@@ -80,8 +81,6 @@ fun SettingSwitch(
     checked: Boolean,
     onCheckedChange: (Boolean) -> Unit
 ) {
-    val settingsVM: SettingsVM = viewModel()
-    val uiState by settingsVM.uiState.collectAsState()
 
     Row(
         modifier = Modifier.fillMaxWidth(),

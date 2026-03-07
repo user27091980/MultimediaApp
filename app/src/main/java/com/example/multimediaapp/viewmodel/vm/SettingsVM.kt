@@ -15,9 +15,9 @@ import kotlinx.coroutines.flow.asStateFlow
 class SettingsVM : ViewModel() {
 
     /** Estado interno mutable */
-    private val _uiState = MutableStateFlow(SettingsUiState())
+    private val _uiState = MutableStateFlow(SettingsUiState(darkMode = false))
     /** Estado expuesto como solo lectura */
-    val uiState: StateFlow<SettingsUiState> = _uiState.asStateFlow()
+    val uiState: StateFlow<SettingsUiState> = _uiState
 
     /**
      * Cambia el modo oscuro de la aplicación.
