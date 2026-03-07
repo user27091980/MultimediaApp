@@ -61,13 +61,13 @@ interface MultimediaApiService {
     suspend fun getAlbumImages(@Path("discos") albumImages: List<String>): Response<BandDTO>
 
     @GET("json/users/{id}")
-    suspend fun getUsers(@Path("id") userId: String): Response<UsersInfoDTO>
+    suspend fun getUsers(@Path("id") userId: String): Response<UsersDTO>
 
     @PUT("json/users/{id}")
-    suspend fun updateUser(@Path("id") userId: String, @Query("name") name: String): Response<UsersDTO>
+    suspend fun updateUser(@Path("id") userId: String): Response<UsersDTO>
 
-
-
+    @GET("json/users/{id}")
+    suspend fun getUsersInfo(@Path("id") userId: String): Response<UsersInfoDTO>
 
 
     companion object {

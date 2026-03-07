@@ -43,7 +43,7 @@ fun NavGraph(navController: NavHostController) {
         // Pantalla principal
         composable(ObjRoutes.MAIN) {
             val api = MultimediaApiService.create()
-            val vm: MainVM = viewModel()
+            val vm: MainVM = viewModel(factory = MainVMFactory(api))
 
             MainScreen(navController = navController, vm = vm)
         }
