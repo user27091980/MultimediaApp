@@ -1,10 +1,16 @@
 package com.example.multimediaapp.view.components
 
 import androidx.compose.foundation.Image
+import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.fillMaxHeight
+import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.clip
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.unit.dp
 import coil.compose.rememberAsyncImagePainter
@@ -16,20 +22,27 @@ import com.example.multimediaapp.viewmodel.uistate.BandUiState
 @Composable
 fun BandHeader(band: BandUiState) {
 
-    Image(
-        // 'painter' define la fuente de la imagen.
-        // `rememberAsyncImagePainter` de Coil permite cargar imágenes desde URLs de forma asíncrona.
-        painter = rememberAsyncImagePainter(band.headerImage),
-        // Descripción de la imagen para accesibilidad (lectores de pantalla).
-        contentDescription = band.name,
-        // Modificadores para definir el tamaño y comportamiento de la imagen.
+    Box(
         modifier = Modifier
-            .fillMaxWidth()// Ocupa todo el ancho disponible
-            .height(100.dp),// Altura fija de 100dp
-        // Escala de la imagen dentro del espacio definido:
-        // 'Crop' recorta la imagen si no coincide exactamente con el tamaño del contenedor.
-        contentScale = ContentScale.Crop
-    )
+            .height(150.dp)
+            .fillMaxWidth()
+             // margen lateral
+            .clip(RoundedCornerShape(6.dp))
+    ) {
+        Image(
+            // 'painter' define la fuente de la imagen.
+            // `rememberAsyncImagePainter` de Coil permite cargar imágenes desde URLs de forma asíncrona.
+            painter = rememberAsyncImagePainter(band.headerImage),
+            // Descripción de la imagen para accesibilidad (lectores de pantalla).
+            contentDescription = band.name,
+            // Modificadores para definir el tamaño y comportamiento de la imagen.
+            modifier = Modifier
+                .fillMaxSize(),
+            // Escala de la imagen dentro del espacio definido:
+            // 'Crop' recorta la imagen si no coincide exactamente con el tamaño del contenedor.
+            contentScale = ContentScale.Crop
+        )
+    }
 }
 
 /**

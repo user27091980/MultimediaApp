@@ -28,10 +28,9 @@ import com.example.multimediaapp.viewmodel.vm.SettingsVM
  * Permite cambiar preferencias como el modo oscuro y mostrar información básica de la app.
  */
 @Composable
-fun SettingsScreen( vm: SettingsVM = viewModel()) {
+fun SettingsScreen(vm: SettingsVM = viewModel()) {
     // Estado local para el switch de modo oscuro
-    var darkMode by remember { mutableStateOf(false) }
-// Columna principal que organiza todos los elementos de la pantalla
+    val uiState by vm.uiState.collectAsState()// Columna principal que organiza todos los elementos de la pantalla
     Column(
         modifier = Modifier
             .fillMaxSize()// Ocupa todo el espacio disponible
@@ -50,8 +49,8 @@ fun SettingsScreen( vm: SettingsVM = viewModel()) {
 // Switch para el modo oscuro
         SettingSwitch(
             title = "Modo óscuro",// Texto del switch
-            checked = darkMode,// Estado del switch
-            onCheckedChange = { darkMode = it },
+            checked = uiState.darkMode,// Estado del switch
+            onCheckedChange = { vm.onDarkModeChange(it) },
         )
         Spacer(modifier = Modifier.height(24.dp))// Separación vertical de 24dp
 
@@ -60,9 +59,11 @@ fun SettingsScreen( vm: SettingsVM = viewModel()) {
 
         Spacer(modifier = Modifier.height(24.dp))
 
-        Text("Agradecimientos: 5% a chatGpt,\n 70% a Pedro que le debo unos porteos" +
-                "\ny 25% a mí mismo por no desquiciarme",
-            style = MaterialTheme.typography.titleMedium)
+        Text(
+            "Agradecimientos: 5% a chatGpt,\n 70% a Pedro que le debo unos porteos" +
+                    "\ny 25% a mí mismo por no desquiciarme",
+            style = MaterialTheme.typography.titleMedium
+        )
 
     }
 }
@@ -88,13 +89,12 @@ fun SettingSwitch(
     ) {
         Text(title)// Título a la izquierda
         Switch(
-            checked = uiState.darkMode,
-                onCheckedChange = {
-                    settingsVM.onDarkModeChange(it)
-                }
+            checked = checked,
+            onCheckedChange = onCheckedChange
         )
     }
 }
+
 /**
  * Preview de la pantalla de configuración.
  * Permite ver cómo se renderiza en el editor de Compose sin ejecutar la app.

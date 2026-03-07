@@ -39,7 +39,7 @@ class BandsRepo {
                             " Su quinto álbum de estudio, Fear Inoculum, se lanzó el 30 de agosto de 2019 con gran éxito de crítica.\n" +
                             " Antes de su lanzamiento, la banda había vendido más de 13 millones de álbumes solo en Estados Unidos.",
 
-                    headerImage = "ApiGenerica/data/resources/tool",
+                    headerImage = "http://10.0.2.2:5131/images/tool",
                     albumImages = listOf(
                         "http://10.0.2.2:5131/images/tool3",
                         "http://10.0.2.2:5131/images/tool4",
@@ -71,7 +71,7 @@ class BandsRepo {
                             " Fundó el sello discográfico Rephlex Records en 1991 junto a Grant Wilson-Claridge.\n" +
                             " En 2021, la publicación Pitchfork lo incluyó en su lista de los 200 artistas\n" +
                             " más influyentes de los últimos 25 años.",
-                    headerImage = "http://localhost:5131/images/aphx.png",
+                    headerImage = "http://10.0.2.2:5131/images/aphx",
                     albumImages = listOf(
                         "http://10.0.2.2:5131/images/aphx1",
                         "http://10.0.2.2:5131/images/aphx2",
@@ -107,7 +107,7 @@ class BandsRepo {
                             " por «Wish» en 1992, «Happiness in Slavery» en 1995 y «As Alive As You Need Me to Be» en 2026.\n" +
                             "Ganador de varios premios por sus bandas sonoras dos Oscars, tres premios Emmy y 1 Bafta ",
 
-                    headerImage = "http://10.0.2.2:5131/images/nin.jpg",
+                    headerImage = "http://10.0.2.2:5131/images/nin",
                     albumImages = listOf(
                         "http://10.0.2.2:5131/images/nin2",
                         "http://10.0.2.2:5131/images/nin3",
@@ -140,7 +140,7 @@ class BandsRepo {
                             ", desde su trabajo anterior con claras raíces en el techno, house y electro,\n" +
                             " hasta álbumes que a menudo son considerados de naturaleza experimental,\n" +
                             "incluyendo complejos patrones de ritmo y melodías tenues.",
-                    headerImage = "http://localhost:5131/images/ae0",
+                    headerImage = "http://10.0.2.2:5131/images/ae0",
                     albumImages = listOf(
                         "http://10.0.2.2:5131/images/ae2",
                         "http://10.0.2.2:5131/images/ae3",
