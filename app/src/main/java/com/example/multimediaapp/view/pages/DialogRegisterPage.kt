@@ -47,7 +47,8 @@ fun DialogRegisterScreen(
             navController.navigate(ObjRoutes.LOGINREG)}) {
                 Text("no")
             }
-        }
+        },
+
     )
 }
 

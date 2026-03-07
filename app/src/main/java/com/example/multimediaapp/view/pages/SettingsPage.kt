@@ -1,5 +1,6 @@
 package com.example.multimediaapp.view.pages
 
+import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
@@ -34,7 +35,8 @@ fun SettingsScreen(vm: SettingsVM = viewModel()) {
 
     Column(
         modifier = Modifier
-            .fillMaxSize()// Ocupa todo el espacio disponible
+            .fillMaxSize()
+            .background(MaterialTheme.colorScheme.background)// Ocupa todo el espacio disponible
             .padding(16.dp)// Margen interno de 16dp en todos los lados
     ) {
         // Título de la pantalla

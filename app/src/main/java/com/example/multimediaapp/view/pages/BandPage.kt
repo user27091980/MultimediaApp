@@ -2,13 +2,17 @@ package com.example.multimediaapp.view.pages
 
 // Importaciones necesarias de Compose
 // Componentes y utilidades de tu proyecto
+import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.heightIn
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
@@ -48,30 +52,37 @@ fun BandScreen(
     val band = uiState.bands.find { it.id == bandId }
 
     band?.let { bd ->
-        Column(
-            bandColumnModifier
-                .verticalScroll(rememberScrollState())
-                .heightIn(min = 400.dp),
-            verticalArrangement = Arrangement.spacedBy(10.dp)
+        Box(
+            modifier = Modifier
+                .fillMaxSize()
+                // Puedes usar un color fijo o el color de fondo del tema
+                .background(MaterialTheme.colorScheme.background)
         ) {
+            Column(
+                bandColumnModifier
+                    .verticalScroll(rememberScrollState())
+                    .heightIn(min = 400.dp),
+                verticalArrangement = Arrangement.spacedBy(10.dp)
+            ) {
 
-            BandHeader(band = bd)
+                BandHeader(band = bd)
 
-            Spacer(modifier = Modifier.height(6.dp))
+                Spacer(modifier = Modifier.height(6.dp))
 
-            CardRowComponent(band = bd)
+                CardRowComponent(band = bd)
 
-            Spacer(modifier = Modifier.height(6.dp))
+                Spacer(modifier = Modifier.height(6.dp))
 
-            BandTags(band = bd)
+                BandTags(band = bd)
 
-            Spacer(modifier = Modifier.height(6.dp))
+                Spacer(modifier = Modifier.height(6.dp))
 
-            ImagesRowList(
-                band = bd,
-                modifier = Modifier,
-                onImageClick = { /* TODO navegación */ }
-            )
+                ImagesRowList(
+                    band = bd,
+                    modifier = Modifier,
+                    onImageClick = { /* TODO navegación */ }
+                )
+            }
         }
     }
 }

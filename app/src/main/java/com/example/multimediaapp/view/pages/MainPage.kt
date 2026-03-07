@@ -1,9 +1,14 @@
 package com.example.multimediaapp.view.pages
 
+import androidx.compose.foundation.background
+import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
+import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
@@ -12,6 +17,7 @@ import androidx.navigation.NavController
 import com.example.multimediaapp.model.MainDTO
 import com.example.multimediaapp.navigation.ObjRoutes
 import com.example.multimediaapp.network.MultimediaApiService
+import com.example.multimediaapp.ui.theme.MultimediaAppTheme
 import com.example.multimediaapp.view.components.CardList
 import com.example.multimediaapp.viewmodel.uistate.MainUiState
 import com.example.multimediaapp.viewmodel.vm.MainVM
@@ -41,12 +47,20 @@ fun MainScreen(navController: NavController, vm: MainVM = viewModel()) {
 
     // Llamamos al componente que muestra la lista de bandas.
     // Accedemos a .value porque collectAsState() devuelve un State<T>.
-    MainContent(
-        uiState = uiState,
-        onImageClick = { bandId ->
-            navController.navigate("${ObjRoutes.BAND}/$bandId")
+    MultimediaAppTheme {
+        Box(
+            modifier = Modifier
+                .fillMaxSize()
+                .background(MaterialTheme.colorScheme.background) // fondo dinámico según el tema
+        ) {
+            MainContent(
+                uiState = uiState,
+                onImageClick = { bandId ->
+                    navController.navigate("${ObjRoutes.BAND}/$bandId")
+                }
+            )
         }
-    )
+    }
 
 }
 
