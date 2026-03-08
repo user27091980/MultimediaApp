@@ -18,7 +18,9 @@ import com.example.multimediaapp.viewmodel.vm.*
  * Cada "composable" representa una pantalla de la app.
  */
 @Composable
-fun NavGraph(navController: NavHostController) {
+fun NavGraph(
+    navController: NavHostController,
+    settingsVM: SettingsVM) {
 
     NavHost(
         navController = navController,
@@ -65,7 +67,7 @@ fun NavGraph(navController: NavHostController) {
 
         // Configuración
         composable(ObjRoutes.SETTINGS) {
-            SettingsScreen()
+            SettingsScreen(settingsVM)
         }
 
         // Dialog

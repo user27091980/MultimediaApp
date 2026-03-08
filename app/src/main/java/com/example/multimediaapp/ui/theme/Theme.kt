@@ -2,6 +2,7 @@ package com.example.multimediaapp.ui.theme
 
 import androidx.compose.foundation.isSystemInDarkTheme
 import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.MaterialTheme.colorScheme
 import androidx.compose.material3.darkColorScheme
 import androidx.compose.material3.lightColorScheme
 import androidx.compose.runtime.Composable
@@ -44,14 +45,17 @@ private val LightColorScheme = lightColorScheme(
 
 @Composable
 fun MultimediaAppTheme(
-    darkTheme: Boolean = isSystemInDarkTheme(),
-
+    darkTheme: Boolean = false,
     content: @Composable () -> Unit
 ) {
-    val colorScheme = if (darkTheme) DarkColorScheme else LightColorScheme
+    val colors = if (darkTheme) {
+        darkColorScheme()
+    } else {
+        lightColorScheme()
+    }
 
     MaterialTheme(
-        colorScheme = colorScheme,
+        colorScheme = colors,
         typography = Typography,
         content = content
     )

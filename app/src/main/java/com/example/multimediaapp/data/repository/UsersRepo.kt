@@ -35,7 +35,7 @@ class UsersRepo {
         onSuccess(users.toList())//evitamos que se pueda modificar desde fuera
     }
 
-    fun crear(
+    fun create(
         est: UsersDTO,
         onSuccess: (usuarioCreado: UsersDTO) -> Unit,
         onError: () -> Unit

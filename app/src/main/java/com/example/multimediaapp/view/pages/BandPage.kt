@@ -77,6 +77,10 @@ fun BandScreen(
 
                 Spacer(modifier = Modifier.height(6.dp))
 
+                Text(stringResource(R.string.info))
+
+                Spacer(modifier = Modifier.height(6.dp))
+
                 BandTags(band = bd)
 
                 Spacer(modifier = Modifier.height(6.dp))
@@ -89,7 +93,7 @@ fun BandScreen(
                     band = bd,
                     modifier = Modifier,
 
-                )
+                    )
             }
         }
     }
@@ -101,7 +105,7 @@ fun BandScreenPreview() {
     BandScreen(
         bandId = "1",
 
-    )
+        )
 }
 
 

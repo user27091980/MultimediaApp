@@ -72,7 +72,10 @@ class MainActivity : ComponentActivity() {
                                 .fillMaxSize()
                                 .padding(innerPadding)
                         ) {
-                            NavGraph(navController)
+                            NavGraph(
+                                navController=navController,
+                                settingsVM
+                            )
                         }
                     }
                 )

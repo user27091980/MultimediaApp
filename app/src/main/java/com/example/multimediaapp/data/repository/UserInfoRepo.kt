@@ -40,7 +40,7 @@ class UsersInfoRepo {
 
     // CREATE
     // Crea un nuevo usuario.
-    fun crear(
+    fun create(
         est: UsersInfoDTO,
         onSuccess: (usuarioCreado: UsersInfoDTO) -> Unit,
         onError: () -> Unit
