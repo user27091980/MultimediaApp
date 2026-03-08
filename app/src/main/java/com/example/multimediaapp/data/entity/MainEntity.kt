@@ -3,6 +3,7 @@ package com.example.multimediaapp.data.entity
 import com.example.multimediaapp.model.MainDTO
 import com.google.gson.annotations.SerializedName
 
+//para comentario ver BandEntity
 data class MainEntity(
 
     val id: String,

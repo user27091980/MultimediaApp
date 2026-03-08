@@ -28,21 +28,31 @@ import com.example.multimediaapp.R
 import com.example.multimediaapp.navigation.ObjRoutes
 import com.example.multimediaapp.ui.theme.rowModifier
 
+/**
+ * Composable que representa la barra superior de la aplicación (TopBar)
+ *
+ * Incluye:
+ * - Icono de menú para desplegar opciones
+ * - Icono de ajustes para navegar a la pantalla de configuración
+ * - Menú desplegable con enlaces externos y opción de cerrar la app
+ *
+ * @param navController Controlador de navegación de Compose
+ */
 @Composable
 fun TopBar(navController: NavHostController) {
-    //
+    // Estado que indica si el menú desplegable está abierto o cerrado
     var isExpanded by remember { mutableStateOf(false) }
-    //Context and activity for open links or close the app
+    // Contexto actual (necesario para abrir enlaces o finalizar la app)
     val context = LocalContext.current
-    //it tries to obtain the Activity for can close the app
+    // Intenta obtener la Activity actual desde el contexto, útil para cerrar la app
     val activity = context as? Activity
-    //Row for icons and topBar
+    // Fila horizontal que contiene los iconos y la barra superior
     Row(
         rowModifier,
         verticalAlignment = Alignment.CenterVertically
     )
     {
-        //Menu button
+        // Botón de menú
         IconButton(onClick = { isExpanded = true }) {
 
             Icon(
@@ -54,7 +64,7 @@ fun TopBar(navController: NavHostController) {
                 )
 
         }
-        //Settings button
+        //Configuración button
         IconButton(onClick = { navController.navigate(ObjRoutes.SETTINGS) }) {
 
             Icon(
@@ -65,13 +75,13 @@ fun TopBar(navController: NavHostController) {
 
                 )
         }
-        //Dropdown menu, it shows on top leff corner
+        //Dropdown menu, se muestra en la esquina superior izquierda
         DropdownMenu(
             expanded = isExpanded,
             onDismissRequest = { isExpanded = false },
             modifier = Modifier.fillMaxWidth()
         ) {
-            //Option for open last.fm web
+            //Opción para abrir last.fm web
             DropdownMenuItem(
                 text = { Text(text = stringResource(R.string.link_last)) },
                 onClick = {
@@ -86,7 +96,7 @@ fun TopBar(navController: NavHostController) {
                     }
                 }
             )
-            //option for open discogs web
+            //opción para abrir  discogs web
             DropdownMenuItem(
                 text = { Text(text = stringResource(R.string.link_disc)) },
                 onClick = {
@@ -100,7 +110,7 @@ fun TopBar(navController: NavHostController) {
                     }
                 }
             )
-            //option for closed the app
+            //para cerrar la app
             DropdownMenuItem(
                 text = { Text(text = stringResource(R.string.salir)) },
                 onClick = {

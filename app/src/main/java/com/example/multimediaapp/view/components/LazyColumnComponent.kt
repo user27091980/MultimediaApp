@@ -24,9 +24,10 @@ import coil.compose.rememberAsyncImagePainter
 import com.example.multimediaapp.model.MainDTO
 
 /**
- * @author andrés
- * @param bands
- * @param onImageClick
+ * Composable que muestra una lista vertical de tarjetas con imagen y nombre de banda.
+ *
+ * @param bands Lista de objetos MainDTO que contienen la información de cada banda.
+ * @param onImageClick Lambda que se ejecuta al hacer clic en la imagen de una banda.
  */
 @Composable
 fun CardList(
@@ -61,7 +62,7 @@ fun CardList(
                 )
                 Text(
                     text = mainBand.bandName,
-                    color = Color.Black,
+                    color = MaterialTheme.colorScheme.primary,
                     style = MaterialTheme.typography.headlineMedium,
                     fontWeight = FontWeight.Bold
                 )
@@ -70,13 +71,16 @@ fun CardList(
         }
     }
 }
-
+// Datos de ejemplo para el preview
 val previewBands = listOf(
     MainDTO("1","Metallica", "https://via.placeholder.com/300x150.png?text=Metallica"),
     MainDTO("2","Iron Maiden", "https://via.placeholder.com/300x150.png?text=Iron+Maiden"),
     MainDTO("3","AC/DC", "https://via.placeholder.com/300x150.png?text=ACDC")
 )
-
+/**
+ * Preview de CardList en Android Studio
+ * Permite visualizar cómo se vería la lista con datos de ejemplo
+ */
 @Preview
 @Composable
 fun CardListPreview() {
@@ -85,3 +89,19 @@ fun CardListPreview() {
         onImageClick = {}
     )
 }
+
+/*
+LazyColumn: lista vertical optimizada, renderiza solo lo visible, mejora rendimiento.
+
+items(bands): itera sobre la lista de bandas. Cada mainBand representa un elemento.
+
+Column: organiza la imagen y el nombre verticalmente, centrado horizontalmente.
+
+Image + rememberAsyncImagePainter: carga imágenes desde URLs de forma asíncrona usando Coil.
+
+clickable: permite que la imagen responda a clicks y ejecute un callback.
+
+Spacer: agrega separación visual entre elementos.
+
+@Preview: permite ver un ejemplo visual de la lista sin ejecutar la app.
+ */

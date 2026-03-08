@@ -1,5 +1,6 @@
 package com.example.multimediaapp.ui.theme
 
+import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
@@ -22,9 +23,9 @@ val bandColumnModifier = Modifier
     .padding(16.dp)//internal padding
 val cardColumnModifier = Modifier
     .fillMaxWidth()
-    .padding(10.dp)//internal padding
-val colModifier = Modifier
-    .padding(20.dp, 130.dp, 20.dp, 110.dp)
+    .padding(10.dp)
+    //internal padding
+
 val boxModifier = Modifier
     .fillMaxSize()
     .padding(5.dp, 30.dp, 5.dp, 90.dp)

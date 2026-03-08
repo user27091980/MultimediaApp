@@ -25,14 +25,7 @@ import com.example.multimediaapp.viewmodel.vm.MainVM
 
 @Composable
 fun MainScreen(navController: NavController, vm: MainVM = viewModel()) {
-    val api = MultimediaApiService.create()
-    val vm: MainVM = viewModel(
-        factory = object : ViewModelProvider.Factory {
-            override fun <T : ViewModel> create(modelClass: Class<T>): T {
-                return MainVM(api) as T
-            }
-        }
-    )
+
 
     val uiState by vm.uiState.collectAsState()
     // LaunchedEffect se ejecuta cuando el Composable entra en composición.

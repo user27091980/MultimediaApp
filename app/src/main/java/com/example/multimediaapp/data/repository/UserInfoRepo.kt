@@ -12,6 +12,7 @@ class UsersInfoRepo {
     companion object {
         // Lista mutable que almacena los usuarios.
         // Se inicializa con algunos datos de prueba (hardcoded).
+
         val usersInfo = ArrayList<UsersInfoDTO>(
             listOf(
                 UsersInfoDTO("0", "aaaa@gmail.com", "user1", "England", "Paco", "Smith"),

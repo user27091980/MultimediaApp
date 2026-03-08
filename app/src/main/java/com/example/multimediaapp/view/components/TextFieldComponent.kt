@@ -21,12 +21,12 @@ import androidx.compose.ui.text.input.VisualTransformation
 import com.example.multimediaapp.R
 
 /**
- * @author="Andrés"
- * @param
- * @function
- */
-/*
-Se encarga de gestionar los TextFields y añadir sus etiquetas
+ * Composable principal que agrupa todos los TextFields de login/registro.
+ *
+ * Contiene:
+ * - TextFieldUserComponent_ para ingresar el nombre de usuario
+ * - TextFieldPassComponent:para ingresar la contraseña con toggle de visibilidad
+ * - TextFieldEmailComponent: para ingresar el correo electrónico
  */
 @Composable
 fun TextFieldsComponent() {
@@ -39,52 +39,55 @@ fun TextFieldsComponent() {
 }
 
 /**
- * @param
- * @function
+ * TextField para ingresar el nombre de usuario
  */
 @Composable
 fun TextFieldUserComponent() {
-
+    // Estado interno para almacenar el texto ingresado
     var text by remember { mutableStateOf("") }
 
     TextField(
-        value = text,
-        onValueChange = { text = it },
-        singleLine = true,
-        label = { Text("user") }
+        value = text,// Valor actual del TextField
+        onValueChange = { text = it }, // Actualiza el estado al escribir
+        singleLine = true,// Una sola línea de texto
+        label = { Text("user") } // Etiqueta que se muestra arriba del campo
     )
 }
 
 /**
- * @param
- * @function
+ * TextField para ingresar la contraseña
+ * Permite mostrar/ocultar la contraseña usando un icono de ojo
  */
 @Composable
 fun TextFieldPassComponent() {
 
-    // Creating a variable to store passwords
+    // Estado para almacenar la contraseña ingresada
     var pass by remember { mutableStateOf("") }
-    // Creating a variable to store toggle state
+    // Estado para controlar si la contraseña es visible o no
     var passwordVisible by remember { mutableStateOf(false) }
 
     TextField(
 
         value = pass,
         onValueChange = { pass = it },
+
         label = { Text("password") },
         singleLine = true,
+        // Si passwordVisible es true, se muestra texto plano; si no, se oculta
         visualTransformation = if (passwordVisible) VisualTransformation.None else PasswordVisualTransformation(),
+        // Teclado de tipo contraseña
         keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Password),
+        // Icono que permite alternar la visibilidad de la contraseña
         trailingIcon = {
-//cambia el icono del ojo
+        //cambia el icono del ojo
             val image = if (passwordVisible)
                 Icons.Filled.Visibility
             else Icons.Filled.VisibilityOff
 
-            // Localized description for accessibility services
+            // descripción para accesibiliad
             val description = if (passwordVisible) "Hide password" else "Show password"
 
-            // Toggle button to hide or display password
+            // Botón que cambia el estado passwordVisible al presionar
             IconButton(onClick = { passwordVisible = !passwordVisible }) {
                 Icon(imageVector = image, description)
 
@@ -94,12 +97,11 @@ fun TextFieldPassComponent() {
 }
 
 /**
- * @param
- * @function
+ * TextField para ingresar el correo electrónico
  */
 @Composable
 fun TextFieldEmailComponent() {
-
+    // Estado para almacenar el correo ingresad
     var text by remember { mutableStateOf("") }
 
     TextField(
@@ -111,3 +113,17 @@ fun TextFieldEmailComponent() {
         }
     )
 }
+/*
+remember { mutableStateOf("") } nos guarda el estado local de cada TextField, Compose lo recuerda entre recomposiciones.
+
+TextField campo de texto editable con propiedades para controlar estilo, teclado, visualización de texto, etc.
+
+VisualTransformation  transforma cómo se muestra el texto; útil para ocultar contraseñas.
+
+trailingIcon permite colocar un icono dentro del TextField.
+
+IconButton + Icon es el botón interactivo dentro del TextField que alterna visibilidad.
+
+stringResource nos permite usar strings desde res/values/strings.xml, útil para internacionalización.
+
+ */

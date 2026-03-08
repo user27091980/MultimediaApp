@@ -68,8 +68,6 @@ interface MultimediaApiService {
 
     @GET("json/users/{id}")
     suspend fun getUsersInfo(@Path("id") userId: String): Response<UsersInfoDTO>
-
-
     companion object {
 
         private const val BASE_URL = "http://10.0.2.2:5131/"

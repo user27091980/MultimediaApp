@@ -3,7 +3,6 @@ package com.example.multimediaapp.viewmodel.vm
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.multimediaapp.data.repository.MainRepo
-import com.example.multimediaapp.network.MultimediaApiService
 import com.example.multimediaapp.viewmodel.uistate.MainUiState
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
@@ -19,30 +18,42 @@ import kotlinx.coroutines.launch
  * - Expone un StateFlow que la UI observa.
  */
 
-class MainVM(api: MultimediaApiService) : ViewModel() {
+class MainVM : ViewModel() {
 
-    // instancia real del repositorio
-    private val api = MultimediaApiService.create()
-    private val repo = MainRepo(api)
+    // Repositorio que proporciona los datos
+    private val repo = MainRepo()
+
+    // Estado interno mutable
     private val _uiState = MutableStateFlow(MainUiState(isLoading = true))
+
+    // Estado observable por la UI
     val uiState: StateFlow<MainUiState> = _uiState
 
+    // Se ejecuta automáticamente al crear el ViewModel
     init {
         loadData()
     }
 
-
-    // Función para cargar datos (fake para preview y pruebas)
+    /**
+     * Carga las bandas desde el repositorio
+     */
     fun loadData() {
+
         viewModelScope.launch {
+
             try {
-                val bands = repo.getMainImages() // aquí luego será suspend si usas Retrofit
+
+                // Obtener datos del repositorio
+                val bands = repo.getMainImages()
+
                 _uiState.value = _uiState.value.copy(
                     mainBands = bands,
                     isLoading = false,
                     error = null
                 )
+
             } catch (e: Exception) {
+
                 _uiState.value = _uiState.value.copy(
                     isLoading = false,
                     error = e.message ?: "Error desconocido"

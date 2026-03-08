@@ -22,6 +22,9 @@ import com.example.multimediaapp.viewmodel.uistate.BandUiState
 // Componente Jetpack Compose que muestra la cabecera (banner) de una banda.
 // Recibe un objeto BandUiState con la información de la banda.
 
+/**
+ * @param band recibe un objeto con la info de la banda incluyendo la url de la imagen del banner
+ */
 @Composable
 fun BandHeader(band: BandUiState) {
 

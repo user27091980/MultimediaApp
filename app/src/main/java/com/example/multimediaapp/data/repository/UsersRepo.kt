@@ -1,11 +1,22 @@
 package com.example.multimediaapp.data.repository
 
+// Importa el modelo de usuario
 import com.example.multimediaapp.model.UsersDTO
 
-
+/**
+ * Repositorio que maneja operaciones CRUD sobre los usuarios.
+ *
+ * Actualmente utiliza datos en memoria (ArrayList) como "fake database".
+ * Puede ser reemplazado por API o base de datos real en el futuro.
+ */
 
 class UsersRepo {
+    /**
+     * Companion object para almacenar los usuarios y el contador de IDs
+     * de manera estática, accesible desde cualquier instancia de UsersRepo.
+     */
     companion object {
+        // Lista en memoria de usuarios iniciales
         val users = ArrayList<UsersDTO>(
             listOf(
                 UsersDTO("0", "aaaa@gmail.com", "user1", "1234"),

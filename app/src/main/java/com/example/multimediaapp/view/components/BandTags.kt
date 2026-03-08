@@ -1,11 +1,13 @@
 package com.example.multimediaapp.view.components
 
 // Importaciones necesarias de Compose
+import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.FlowRow
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -27,7 +29,8 @@ import com.example.multimediaapp.viewmodel.uistate.BandUiState
 fun BandTags(band: BandUiState) {
 
     Column(
-        modifier = Modifier.padding(8.dp),
+        modifier = Modifier.padding(8.dp)
+            .background(MaterialTheme.colorScheme.background),
         verticalArrangement = Arrangement.spacedBy(10.dp)
     ) {
 
