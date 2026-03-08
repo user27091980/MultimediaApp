@@ -13,14 +13,18 @@ import androidx.compose.foundation.layout.heightIn
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import androidx.datastore.preferences.core.stringPreferencesKey
 import androidx.lifecycle.viewmodel.compose.viewModel
+import com.example.multimediaapp.R
 import com.example.multimediaapp.ui.theme.bandColumnModifier
 import com.example.multimediaapp.view.components.BandHeader
 import com.example.multimediaapp.view.components.BandTags
@@ -74,6 +78,10 @@ fun BandScreen(
                 Spacer(modifier = Modifier.height(6.dp))
 
                 BandTags(band = bd)
+
+                Spacer(modifier = Modifier.height(6.dp))
+
+                Text(stringResource(R.string.discografia))
 
                 Spacer(modifier = Modifier.height(6.dp))
 

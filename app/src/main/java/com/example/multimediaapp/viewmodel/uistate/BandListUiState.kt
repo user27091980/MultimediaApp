@@ -35,7 +35,9 @@ data class BandUiState(
     //Discografía de la banda (lista de álbumes)
     val discography: List<String>,
     //lista de enlaces
-    val albumLinks: List<String>
+    val albumLinks: List<String>,
+    //lista de enlaces de las cabeceras
+    val headerLink: String
 
 
 )

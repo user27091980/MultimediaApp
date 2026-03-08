@@ -66,7 +66,8 @@ class BandsRepo {
                         "https://www.youtube.com/playlist?list=OLAK5uy_lKfwlbgU4wmlqdKp4GdNO7W6vlG-fhDaM",
                         "https://www.youtube.com/playlist?list=OLAK5uy_l7KrE4YuWhZsfCdXlLJERHyk4YlwydukA",
                         "https://www.youtube.com/playlist?list=OLAK5uy_k_Z0-DYw0_cGPvZm6icNUGbefRT4wktdY"
-                    )
+                    ),
+                    headerLink="https://www.toolband.com/home?k=4d58aff6"
                 ),
                 BandDTO(
                     "1", "Aphex Twin",
@@ -105,7 +106,8 @@ class BandsRepo {
                         "https://www.youtube.com/playlist?list=OLAK5uy_kqtENKafwOg96cqWcB0BVuFCf2iTroYqk",
                         "https://www.youtube.com/watch?v=CWwgWWfb2u4&list=PLk5ImplHgDw0s4mwh1D9r_Mo7sMZIdyEn",
                         "https://www.youtube.com/playlist?list=OLAK5uy_lkdpFMWST_gPGQ9hKW6Pvum5ybfLhOGjs"
-                    )
+                    ),
+                    headerLink = "https://aphextwin.warp.net/"
                 ),
                 BandDTO(
                     "2", "NIN",
@@ -145,7 +147,8 @@ class BandsRepo {
                         "https://www.youtube.com/watch?v=SWCYAS_p8zU&list=PLnif9Rfb5Adl4SmrXY_L4GshBSYCecEX3",
                         "https://www.youtube.com/playlist?list=OLAK5uy_mNlb0ntqQSw8iFKOBO1bDlGxlRKsW_MAA"
 
-                    )
+                    ),
+                    headerLink = "https://www.nin.com/"
 
                 ),
                 BandDTO(
@@ -184,9 +187,10 @@ class BandsRepo {
                         "https://www.youtube.com/playlist?list=OLAK5uy_mIkZBmozb7s6SmnlOVhJoGDiEMmK0h1dM",
                         "https://www.youtube.com/playlist?list=OLAK5uy_nqFGUvQ82a8-29dCHQWoEhI9UeoA1tpDk",
                         "https://www.youtube.com/watch?v=Wr6vARWre-Y&list=PL4wjgXyj5LGQWHfBI38Lizk13S8zm7Ibs",
-                        "https://www.youtube.com/watch?v=Wr6vARWre-Y&list=PL4wjgXyj5LGQWHfBI38Lizk13S8zm7Ibs"
+                        "https://www.youtube.com/playlist?list=OLAK5uy_nKTeSB_e8VUv_ZZl8Y36TqAp9GWBadhnU"
 
-                    )
+                    ),
+                    headerLink = "https://autechre.warp.net/"
 
                 ),
                 BandDTO(
@@ -238,13 +242,14 @@ class BandsRepo {
                         "The Campfire headphase"
                     ),
                     albumLinks = listOf(
-                        "https://www.youtube.com/watch?v=Wr6vARWre-Y&list=PL4wjgXyj5LGQWHfBI38Lizk13S8zm7Ibs",
-                        "https://www.youtube.com/watch?v=Wr6vARWre-Y&list=PL4wjgXyj5LGQWHfBI38Lizk13S8zm7Ibs",
-                        "https://www.youtube.com/watch?v=Wr6vARWre-Y&list=PL4wjgXyj5LGQWHfBI38Lizk13S8zm7Ibs",
-                        "https://www.youtube.com/watch?v=Wr6vARWre-Y&list=PL4wjgXyj5LGQWHfBI38Lizk13S8zm7Ibs",
-                        "https://www.youtube.com/watch?v=Wr6vARWre-Y&list=PL4wjgXyj5LGQWHfBI38Lizk13S8zm7Ibs"
+                        "https://www.youtube.com/watch?v=EuvMNQ7IjNY&list=RDEuvMNQ7IjNY&start_radio=1",
+                        "https://www.youtube.com/playlist?list=OLAK5uy_lcbBHZNY1YP-yJMLufIAuk6s1NXF0N_bU",
+                        "https://www.youtube.com/playlist?list=OLAK5uy_kBIHneSc23tMiNaX68rurYceNxzwtBH84",
+                        "https://www.youtube.com/playlist?list=OLAK5uy_lbgL-BgNt1VLeoJN1QDMPfBWwFn5zsccA",
+                        "https://www.youtube.com/playlist?list=OLAK5uy_nwT_ryJ0N8-TmfqftIrZkcLGGiE_JMT7s"
 
-                    )
+                    ),
+                    headerLink="https://warp.net/artists/boards-of-canada"
 
                 )
 

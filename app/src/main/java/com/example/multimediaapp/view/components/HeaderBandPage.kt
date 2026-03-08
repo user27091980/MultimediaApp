@@ -1,21 +1,22 @@
 package com.example.multimediaapp.view.components
 
+import android.content.Intent
+import android.system.Os.link
 import androidx.compose.foundation.Image
-import androidx.compose.foundation.background
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Box
-import androidx.compose.foundation.layout.fillMaxHeight
-import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.shape.RoundedCornerShape
-import androidx.compose.material3.MaterialTheme
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.layout.ContentScale
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.unit.dp
+import androidx.core.net.toUri
 import coil.compose.rememberAsyncImagePainter
 import com.example.multimediaapp.viewmodel.uistate.BandUiState
 
@@ -29,6 +30,7 @@ import com.example.multimediaapp.viewmodel.uistate.BandUiState
 fun BandHeader(band: BandUiState) {
 
     val headerHeight = 100.dp
+    val context = LocalContext.current
     Box(
         modifier = Modifier
             .fillMaxWidth()
@@ -44,7 +46,14 @@ fun BandHeader(band: BandUiState) {
             // Descripción de la imagen para accesibilidad (lectores de pantalla).
             contentDescription = band.name,
             // Modificadores para definir el tamaño y comportamiento de la imagen.
-            modifier = Modifier.height(headerHeight*0.9f),
+            modifier = Modifier.height(headerHeight*0.9f)
+                .clickable{
+                    if(band.headerLink.isNotEmpty()){
+
+                        val intent = Intent(Intent.ACTION_VIEW, band.headerLink.toUri())
+                        context.startActivity(intent)
+                    }
+                },
             // Escala de la imagen dentro del espacio definido:
             // 'Crop' recorta la imagen si no coincide exactamente con el tamaño del contenedor.
             contentScale = ContentScale.Crop

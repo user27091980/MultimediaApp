@@ -44,10 +44,6 @@ fun BandTags(band: BandUiState) {
             TagItem(band.recordLabel)
             TagItem(band.style)
 
-            // Lista de álbumes → recorrer
-            band.discography.forEach { album ->
-                TagItem(album)
-            }
         }
     }
 }

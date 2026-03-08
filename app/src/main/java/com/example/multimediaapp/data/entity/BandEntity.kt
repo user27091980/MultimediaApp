@@ -43,6 +43,7 @@ data class BandEntity(
     @SerializedName("discos") val albumImages: List<String>,
     // enlaces discos
     @SerializedName("albumLinks") val albumLinks: List<String>,
+    @SerializedName("enlaces") val headerLink: String
 
 
 )
@@ -66,6 +67,7 @@ fun BandEntity.toDTO(): BandDTO = BandDTO(
     components = components,
     discography = discography,
     albumLinks = albumLinks,
+    headerLink = headerLink
 
 )
 

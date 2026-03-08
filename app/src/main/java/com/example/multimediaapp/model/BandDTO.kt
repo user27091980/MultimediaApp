@@ -25,7 +25,7 @@ data class BandDTO(
     val discography: List<String>,
     // Lista de enlaces a youtube
     val albumLinks: List<String>,
-
+    val headerLink: String
 
     )
 

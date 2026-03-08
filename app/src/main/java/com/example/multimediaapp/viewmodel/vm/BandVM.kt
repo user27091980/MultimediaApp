@@ -80,7 +80,8 @@ class BandVM : ViewModel() {
                     it.recordLabel,
                     it.components,
                     it.discography,
-                    it.albumLinks
+                    it.albumLinks,
+                    it.headerLink
                 )
             }.toList())
         }) {
