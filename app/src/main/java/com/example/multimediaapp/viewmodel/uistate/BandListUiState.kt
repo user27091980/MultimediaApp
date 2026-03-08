@@ -30,10 +30,12 @@ data class BandUiState(
     val style: String,
     /** Discográfica a la que pertenece la banda */
     val recordLabel: String,
-    /** Componentes o integrantes de la banda */
+    // Componentes o integrantes de la banda
     val components: String,
-    /** Discografía de la banda (lista de álbumes) */
+    //Discografía de la banda (lista de álbumes)
     val discography: List<String>,
+    //lista de enlaces
+    val albumLinks: List<String>
 
 
 )

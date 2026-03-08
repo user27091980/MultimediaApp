@@ -53,6 +53,9 @@ interface MultimediaApiService {
     @GET("json/discografia/{discografia}")
     suspend fun getDiscography(@Path("discografia") discography: List<String>): Response<BandDTO>
 
+    @GET("json/links/{links}")
+    suspend fun getLinkss(@Path("enlaces") albumLinks: List<String>): Response<BandDTO>
+
     @GET("json/imagenes/main")
     suspend fun getImagesMain(): List<MainDTO>
 
@@ -68,6 +71,8 @@ interface MultimediaApiService {
 
     @GET("json/users/{id}")
     suspend fun getUsersInfo(@Path("id") userId: String): Response<UsersInfoDTO>
+
+
     companion object {
 
         private const val BASE_URL = "http://10.0.2.2:5131/"

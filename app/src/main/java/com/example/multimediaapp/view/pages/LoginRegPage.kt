@@ -22,11 +22,18 @@ import com.example.multimediaapp.navigation.ObjRoutes
 import com.example.multimediaapp.viewmodel.vm.LoginRegVM
 
 /**
- * @author Andrés
+ * Pantalla inicial que ofrece opciones de Login o Registro.
+ *
+ * @param navController Controlador de navegación para moverse entre pantallas.
+ * @param vm ViewModel que maneja el estado de la pantalla Login/Registro.
  */
 @Composable
-fun LoginRegScreen(navController: NavController, vm: LoginRegVM=viewModel()) {
-
+fun LoginRegScreen(
+    navController: NavController,
+    vm: LoginRegVM = viewModel()// obtiene automáticamente el ViewModel asociado al ciclo de vida
+) {
+    // Caja principal que ocupa toda la pantalla
+    // Se aplica un fondo degradado de oscuro a negro
     Box(
         modifier = Modifier
             .fillMaxSize()
@@ -37,6 +44,7 @@ fun LoginRegScreen(navController: NavController, vm: LoginRegVM=viewModel()) {
             ),
         contentAlignment = Alignment.Center
     ) {
+        // Columna que contiene los botones de login y registro
         Column(
             horizontalAlignment = Alignment.CenterHorizontally,
             verticalArrangement = Arrangement.spacedBy(20.dp),
@@ -62,6 +70,10 @@ fun LoginRegScreen(navController: NavController, vm: LoginRegVM=viewModel()) {
 
     }
 }
+
+/**
+ * Preview para mostrar cómo se ve la pantalla en Android Studio sin ejecutar la app.
+ */
 @Preview()
 @Composable
 fun LoginRegScreenPreview() {
@@ -73,3 +85,14 @@ fun LoginRegScreenPreview() {
     )
 }
 
+/**
+ * notas:
+ *
+ * - **Box**: Contenedor que permite posicionar elementos con alineación y superposición.
+ * - **Column**: Organiza elementos de manera vertical.
+ * - **horizontalAlignment / verticalArrangement**: Controlan alineación y separación de los hijos.
+ * - **Modifier.padding / fillMaxSize / background**: Permiten ajustar tamaño, márgenes y fondo.
+ * - **ButtonLogin / ButtonRegister**: Componentes reutilizables para acciones principales.
+ * - **navController.navigate(route)**: Permite cambiar de pantalla dentro de la navegación de Compose.
+ * - **@Preview**: Permite ver la UI en el IDE sin ejecutar la app.
+ */

@@ -15,7 +15,6 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
@@ -73,9 +72,9 @@ fun CardList(
 }
 // Datos de ejemplo para el preview
 val previewBands = listOf(
-    MainDTO("1","Metallica", "https://via.placeholder.com/300x150.png?text=Metallica"),
-    MainDTO("2","Iron Maiden", "https://via.placeholder.com/300x150.png?text=Iron+Maiden"),
-    MainDTO("3","AC/DC", "https://via.placeholder.com/300x150.png?text=ACDC")
+    MainDTO("1", "Metallica", "https://via.placeholder.com/300x150.png?text=Metallica",),
+    MainDTO("2", "Iron Maiden", "https://via.placeholder.com/300x150.png?text=Iron+Maiden",),
+    MainDTO("3", "AC/DC", "https://via.placeholder.com/300x150.png?text=ACDC",)
 )
 /**
  * Preview de CardList en Android Studio

@@ -80,7 +80,7 @@ fun BandScreen(
                 ImagesRowList(
                     band = bd,
                     modifier = Modifier,
-                    onImageClick = { /* TODO navegación */ }
+
                 )
             }
         }

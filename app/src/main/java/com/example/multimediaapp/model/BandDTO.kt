@@ -1,6 +1,7 @@
 // Paquete donde se encuentran los modelos de la aplicación.
 // Pertenece a la capa de dominio / modelo.
 package com.example.multimediaapp.model
+
 // Data class que representa el modelo que usa la aplicación
 // para trabajar con la información de una banda.
 data class BandDTO(
@@ -22,9 +23,11 @@ data class BandDTO(
     val components: String,
     // Lista de nombres de discos publicados
     val discography: List<String>,
+    // Lista de enlaces a youtube
+    val albumLinks: List<String>,
 
 
-)
+    )
 
 /**
  * EXPLICACIÓN:

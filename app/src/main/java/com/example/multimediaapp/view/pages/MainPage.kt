@@ -10,13 +10,10 @@ import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
-import androidx.lifecycle.ViewModel
-import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavController
 import com.example.multimediaapp.model.MainDTO
 import com.example.multimediaapp.navigation.ObjRoutes
-import com.example.multimediaapp.network.MultimediaApiService
 import com.example.multimediaapp.ui.theme.MultimediaAppTheme
 import com.example.multimediaapp.view.components.CardList
 import com.example.multimediaapp.viewmodel.uistate.MainUiState
@@ -79,9 +76,9 @@ fun MainScreenPreview() {
     MainContent(
         uiState = MainUiState(
             mainBands = listOf(
-                MainDTO("1", "Autechre", "https://via.placeholder.com/150"),
-                MainDTO("2", "Aphex Twin", "https://via.placeholder.com/150"),
-                MainDTO("3", "Boards of Canada", "https://via.placeholder.com/150")
+                MainDTO("1", "Autechre", "https://via.placeholder.com/150",),
+                MainDTO("2", "Aphex Twin", "https://via.placeholder.com/150",),
+                MainDTO("3", "Boards of Canada", "https://via.placeholder.com/150",)
             )
         ),
         onImageClick = {}

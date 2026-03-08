@@ -2,6 +2,7 @@ package com.example.multimediaapp.view.components
 
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.text.KeyboardOptions
+import androidx.compose.foundation.text.input.InputTransformation.Companion.keyboardOptions
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Visibility
 import androidx.compose.material.icons.filled.VisibilityOff
@@ -29,90 +30,77 @@ import com.example.multimediaapp.R
  * - TextFieldEmailComponent: para ingresar el correo electrónico
  */
 @Composable
-fun TextFieldsComponent() {
-
+fun TextFieldsComponent(
+    user: String,
+    email: String,
+    pass: String,
+    onUserChange: (String) -> Unit,
+    onEmailChange: (String) -> Unit,
+    onPassChange: (String) -> Unit
+) {
     Column {
-        TextFieldUserComponent()
-        TextFieldPassComponent()
-        TextFieldEmailComponent()
+        TextFieldUserComponent(
+            user = user,
+            onUserChange = onUserChange
+        )
+        TextFieldPassComponent(
+            pass = pass,
+            onPassChange = onPassChange
+        )
+        TextFieldEmailComponent(
+            email = email,
+            onEmailChange = onEmailChange
+        )
     }
 }
 
-/**
- * TextField para ingresar el nombre de usuario
- */
 @Composable
-fun TextFieldUserComponent() {
-    // Estado interno para almacenar el texto ingresado
-    var text by remember { mutableStateOf("") }
-
+fun TextFieldUserComponent(user: String, onUserChange: (String) -> Unit) {
     TextField(
-        value = text,// Valor actual del TextField
-        onValueChange = { text = it }, // Actualiza el estado al escribir
-        singleLine = true,// Una sola línea de texto
-        label = { Text("user") } // Etiqueta que se muestra arriba del campo
+        value = user,
+        onValueChange = onUserChange,
+        singleLine = true,
+        label = { Text("User") }
     )
 }
 
-/**
- * TextField para ingresar la contraseña
- * Permite mostrar/ocultar la contraseña usando un icono de ojo
- */
 @Composable
-fun TextFieldPassComponent() {
-
-    // Estado para almacenar la contraseña ingresada
-    var pass by remember { mutableStateOf("") }
-    // Estado para controlar si la contraseña es visible o no
+fun TextFieldPassComponent(pass: String, onPassChange: (String) -> Unit) {
     var passwordVisible by remember { mutableStateOf(false) }
 
     TextField(
-
         value = pass,
-        onValueChange = { pass = it },
-
-        label = { Text("password") },
+        onValueChange = onPassChange,
         singleLine = true,
-        // Si passwordVisible es true, se muestra texto plano; si no, se oculta
-        visualTransformation = if (passwordVisible) VisualTransformation.None else PasswordVisualTransformation(),
-        // Teclado de tipo contraseña
+        label = { Text("Password") },
+        visualTransformation = if (passwordVisible) VisualTransformation.None
+        else PasswordVisualTransformation(),
         keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Password),
-        // Icono que permite alternar la visibilidad de la contraseña
         trailingIcon = {
-        //cambia el icono del ojo
-            val image = if (passwordVisible)
-                Icons.Filled.Visibility
-            else Icons.Filled.VisibilityOff
-
-            // descripción para accesibiliad
-            val description = if (passwordVisible) "Hide password" else "Show password"
-
-            // Botón que cambia el estado passwordVisible al presionar
+            val image = if (passwordVisible) Icons.Filled.Visibility else Icons.Filled.VisibilityOff
+            val desc = if (passwordVisible) "Hide password" else "Show password"
             IconButton(onClick = { passwordVisible = !passwordVisible }) {
-                Icon(imageVector = image, description)
-
+                Icon(imageVector = image, contentDescription = desc)
             }
         }
     )
 }
 
-/**
- * TextField para ingresar el correo electrónico
- */
 @Composable
-fun TextFieldEmailComponent() {
-    // Estado para almacenar el correo ingresad
-    var text by remember { mutableStateOf("") }
-
+fun TextFieldEmailComponent(email: String, onEmailChange: (String) -> Unit) {
     TextField(
-        value = text,
-        onValueChange = { text = it },
+        value = email,
+        onValueChange = onEmailChange,
         singleLine = true,
         label = {
-            Text(text = stringResource(R.string.correo))
-        }
+            Text("Email")
+        },
+        keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Email)
     )
 }
+
+
+
 /*
 remember { mutableStateOf("") } nos guarda el estado local de cada TextField, Compose lo recuerda entre recomposiciones.
 

@@ -58,8 +58,15 @@ class BandsRepo {
                         "lateralus",
                         "10000 days",
                         "fear inoculum"
+                    ),
+                    albumLinks = listOf(
+                        "https://www.youtube.com/playlist?list=OLAK5uy_lGJLMX42JRmpbF-DFZrUBLL7ymhQ9AiCY",
+                        "https://www.youtube.com/playlist?list=OLAK5uy_kPpSQAo2ycoWy2VJY4BAqjW0lKyrsi4ro",
+                        "https://www.youtube.com/playlist?list=OLAK5uy_krq_ZS_QzdAelhJqlSSkpFNDRnff6CQgs",
+                        "https://www.youtube.com/playlist?list=OLAK5uy_lKfwlbgU4wmlqdKp4GdNO7W6vlG-fhDaM",
+                        "https://www.youtube.com/playlist?list=OLAK5uy_l7KrE4YuWhZsfCdXlLJERHyk4YlwydukA",
+                        "https://www.youtube.com/playlist?list=OLAK5uy_k_Z0-DYw0_cGPvZm6icNUGbefRT4wktdY"
                     )
-
                 ),
                 BandDTO(
                     "1", "Aphex Twin",
@@ -91,8 +98,14 @@ class BandsRepo {
                         "Hangable Auto Bulb",
                         "...i care because you do"
 
+                    ),
+                    albumLinks = listOf(
+                        "https://www.youtube.com/watch?v=sWcLccMuCA8&list=PLmGuMvhZ3-aPMfmoKpQ6WE3bSTkBFuaSl",
+                        "https://www.youtube.com/playlist?list=OLAK5uy_kZb_rG2RQfOcyfRPpp3ZTThnCRHDzHQO0",
+                        "https://www.youtube.com/playlist?list=OLAK5uy_kqtENKafwOg96cqWcB0BVuFCf2iTroYqk",
+                        "https://www.youtube.com/watch?v=CWwgWWfb2u4&list=PLk5ImplHgDw0s4mwh1D9r_Mo7sMZIdyEn",
+                        "https://www.youtube.com/playlist?list=OLAK5uy_lkdpFMWST_gPGQ9hKW6Pvum5ybfLhOGjs"
                     )
-
                 ),
                 BandDTO(
                     "2", "NIN",
@@ -124,6 +137,14 @@ class BandsRepo {
                         "the downward spiral",
                         "the fragile",
                         "with teeth"
+                    ),
+                    albumLinks = listOf(
+                        "https://www.youtube.com/playlist?list=OLAK5uy_kb5JAPIaEHswetSZRxEguGMBMXUlMwXC4",
+                        "https://www.youtube.com/playlist?list=OLAK5uy_ntyTKmPtSuVGCKd7FPfc7ep68vIobe9VE",
+                        "https://www.youtube.com/playlist?list=OLAK5uy_kxE6rMX-COuLZaPTSRr2Rqr-UOkPAEmbs",
+                        "https://www.youtube.com/watch?v=SWCYAS_p8zU&list=PLnif9Rfb5Adl4SmrXY_L4GshBSYCecEX3",
+                        "https://www.youtube.com/playlist?list=OLAK5uy_mNlb0ntqQSw8iFKOBO1bDlGxlRKsW_MAA"
+
                     )
 
                 ),
@@ -157,6 +178,14 @@ class BandsRepo {
                         "Incunabula",
                         "NTS Sessions",
                         "AE_2022"
+                    ),
+                    albumLinks = listOf(
+                        "https://www.youtube.com/watch?v=kmf29LAjJGI&list=PLQNcb2RwdcZKodeo9nrQkeNn2LnCgCZMW",
+                        "https://www.youtube.com/playlist?list=OLAK5uy_mIkZBmozb7s6SmnlOVhJoGDiEMmK0h1dM",
+                        "https://www.youtube.com/playlist?list=OLAK5uy_nqFGUvQ82a8-29dCHQWoEhI9UeoA1tpDk",
+                        "https://www.youtube.com/watch?v=Wr6vARWre-Y&list=PL4wjgXyj5LGQWHfBI38Lizk13S8zm7Ibs",
+                        "https://www.youtube.com/watch?v=Wr6vARWre-Y&list=PL4wjgXyj5LGQWHfBI38Lizk13S8zm7Ibs"
+
                     )
 
                 ),
@@ -207,6 +236,14 @@ class BandsRepo {
                         "Geogaddi",
                         "Tomorrow´s harvest",
                         "The Campfire headphase"
+                    ),
+                    albumLinks = listOf(
+                        "https://www.youtube.com/watch?v=Wr6vARWre-Y&list=PL4wjgXyj5LGQWHfBI38Lizk13S8zm7Ibs",
+                        "https://www.youtube.com/watch?v=Wr6vARWre-Y&list=PL4wjgXyj5LGQWHfBI38Lizk13S8zm7Ibs",
+                        "https://www.youtube.com/watch?v=Wr6vARWre-Y&list=PL4wjgXyj5LGQWHfBI38Lizk13S8zm7Ibs",
+                        "https://www.youtube.com/watch?v=Wr6vARWre-Y&list=PL4wjgXyj5LGQWHfBI38Lizk13S8zm7Ibs",
+                        "https://www.youtube.com/watch?v=Wr6vARWre-Y&list=PL4wjgXyj5LGQWHfBI38Lizk13S8zm7Ibs"
+
                     )
 
                 )

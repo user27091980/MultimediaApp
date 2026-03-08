@@ -14,44 +14,61 @@ import com.example.multimediaapp.navigation.ObjRoutes
 import com.example.multimediaapp.viewmodel.vm.DialogVM
 
 /**
- * @author Andrés
+ * Composable que representa un diálogo de confirmación para el registro de un usuario.
+ *
+ * Muestra un AlertDialog con botones de "sí" y "no".
+ *
+ * @param navController Controlador de navegación para moverse entre pantallas.
+ * @param vm Instancia del ViewModel encargado de manejar el estado del diálogo.
  */
-
-//ejemplo dialog
 
 @Composable
 fun DialogRegisterScreen(
     navController: NavController,
     vm: DialogVM = viewModel(),
 
-) {
-
+    ) {
+    // Observa el estado del diálogo desde el ViewModel
     val uiState by vm.uiState.collectAsState()
-
+    // AlertDialog es un componente de Compose para mostrar diálogos modales
     AlertDialog(
-        onDismissRequest = {vm.hideDialog()},
+        // Acción al intentar cerrar el diálogo tocando fuera de él
+        onDismissRequest = { vm.hideDialog() },
+        // Título del diálogo
         title = {
             Text("¿Confirmar registro?")
         },
+        // Botón de confirmación
         confirmButton = {
-
-            TextButton(onClick = { vm.confirmAction()
-            navController.navigate(ObjRoutes.INFOUSER)}) {
+            // Lógica de confirmación en el ViewModel
+            TextButton(onClick = {
+                vm.confirmAction()
+                // Navega a la pantalla de login
+                navController.navigate(ObjRoutes.LOGIN)
+            }) {
 
                 Text("sí")
             }
 
         },
+        // Botón de cancelación
         dismissButton = {
-            TextButton(onClick = {vm.hideDialog()
-            navController.navigate(ObjRoutes.LOGINREG)}) {
+            TextButton(onClick = {
+                // Oculta el diálogo desde el ViewModel
+                vm.hideDialog()
+                // Vuelve a la pantalla de Login/Register
+                navController.navigate(ObjRoutes.LOGINREG)
+            }) {
                 Text("no")
             }
         },
 
-    )
+        )
 }
-
+/**
+ * Preview del diálogo para ver cómo se renderiza en Compose Preview.
+ * No requiere ViewModel real, se usa un NavController de prueba.
+ */
 @Preview(showBackground = true)
 @Composable
 fun DialogPrev() {
@@ -59,5 +76,12 @@ fun DialogPrev() {
     DialogRegisterScreen(
         navController = rememberNavController(),
 
-    )
+        )
 }
+/**NOTAS:
+ * 1. **AlertDialog**: Componente de Jetpack Compose que permite mostrar un diálogo modal.
+ * 2. **onDismissRequest**: Callback que se ejecuta cuando el usuario toca fuera del diálogo.
+ * 3. **confirmButton / dismissButton**: Botones que ejecutan acciones de confirmación o cancelación.
+ * 4. **collectAsState()**: Convierte un StateFlow del ViewModel en un estado observable por Compose.
+ * 5. **Preview**: Permite ver el diálogo en tiempo de diseño sin ejecutar la app.
+ */

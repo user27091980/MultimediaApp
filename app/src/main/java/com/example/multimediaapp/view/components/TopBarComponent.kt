@@ -122,3 +122,21 @@ fun TopBar(navController: NavHostController) {
         }
     }
 }
+
+/*
+remember { mutableStateOf(false) } mantiene el estado abierto/cerrado del menú entre recomposiciones.
+
+LocalContext.current  obtiene el contexto de Compose, necesario para abrir enlaces web o interactuar con la Activity.
+
+Row organiza los iconos de manera horizontal.
+
+IconButton + Icon botones interactivos con iconos, aquí para menú y ajustes.
+
+DropdownMenu menú desplegable que se muestra sobre otros elementos.
+
+DropdownMenuItem cada opción del menú; puede ejecutar acciones como abrir URL o cerrar app.
+
+finishAffinity() cierra todas las actividades y termina la app de manera segura.
+
+stringResource() obtiene texto desde strings.xml para internacionalización.
+ */

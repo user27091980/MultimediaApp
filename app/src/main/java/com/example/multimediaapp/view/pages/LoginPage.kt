@@ -42,7 +42,10 @@ import com.example.multimediaapp.viewmodel.vm.LoginVM
 
 
 /**
- * @author Andrés
+ * Pantalla de login.
+ *
+ * @param navController Controlador de navegación para moverse entre pantallas.
+ * @param vm ViewModel que maneja el estado y la lógica del login.
  */
 @Composable
 fun LoginScreen(
@@ -50,30 +53,36 @@ fun LoginScreen(
     vm: LoginVM = viewModel()
 
 ) {
-
+    // Observa los cambios del estado UI del ViewModel
     val uiState by vm.uiState.collectAsState()
+    // LaunchedEffect se ejecuta una vez al entrar en composición
+    // Aquí escucha eventos del ViewModel (ej: navegar a la pantalla principal)
     LaunchedEffect(Unit) {
         vm.events.collect { event ->
             when (event) {
                 is LoginEvent.NavigateToHome -> {
                     navController.navigate(ObjRoutes.MAIN) {
+                        // elimina pantallas previas del stack
                         popUpTo(ObjRoutes.LOGINREG) { inclusive = true }
+                        // evita duplicar pantallas
                         launchSingleTop = true
                     }
                 }
             }
         }
     }
+    // Caja principal que ocupa toda la pantalla y tiene un fondo degradado
     Box(
         modifier = Modifier
             .fillMaxSize()
             .background(
                 Brush.verticalGradient(
-                    colors = listOf(Color.DarkGray, Color.Black) // verde Spotify → negro
+                    colors = listOf(Color.DarkGray, Color.Black) // degradado de gris oscuro a negro
                 )
             ),
         contentAlignment = Alignment.Center
     ) {
+        // Columna que contiene los TextFields y botones
         Column(
             modifier = Modifier
                 .fillMaxWidth()
@@ -83,10 +92,13 @@ fun LoginScreen(
             verticalArrangement = Arrangement.spacedBy(16.dp)
 
         ) {
+            // Título
             Text("LOGIN", color = Color.White)
-            //TextFieldUserComponent()
+            // Campo de email
             OutlinedTextField(
+                // valor del TextField
                 value = uiState.email,
+                // callback al cambiar texto
                 onValueChange = vm::onEmailChange,
                 label = { Text(stringResource(R.string.correo)) },
                 modifier = Modifier.fillMaxWidth(),
@@ -102,14 +114,15 @@ fun LoginScreen(
                 )
             )
 
-            //TextFieldPassComponent()
+            // Campo de contraseña
             OutlinedTextField(
                 value = uiState.password,
                 onValueChange = vm::onPasswordChange,
-                label = { Text(stringResource(R.string.contraseña))},
+                label = { Text(stringResource(R.string.contraseña)) },
                 modifier = Modifier.fillMaxWidth(),
                 visualTransformation =
                     if (uiState.passwordVisible) VisualTransformation.None
+
                     else PasswordVisualTransformation(),
                 keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Password),
                 singleLine = true,
@@ -121,13 +134,14 @@ fun LoginScreen(
                     focusedLabelColor = MaterialTheme.colors.onPrimary,      // label activo
                     unfocusedLabelColor = Color.White     // label normal
                 ),
+                // Icono para mostrar u ocultar contraseña
                 trailingIcon = {
                     TextButton(onClick = vm::togglePasswordVisibility) {
                         Text(if (uiState.passwordVisible) "Hide" else "Show")
                     }
                 }
             )
-            // Mostrar error si hay
+           // Mostrar mensaje de error si existe
             uiState.errorMessage?.let { error ->
                 Text(error, color = MaterialTheme.colors.error)
             }
@@ -136,11 +150,12 @@ fun LoginScreen(
                 modifier = Modifier.fillMaxWidth(),
                 horizontalArrangement = Arrangement.spacedBy(16.dp)
             ) {
+                // Botón aceptar / login
                 ButtonAcept(
                     modifier = Modifier.weight(1f),
                     onClick = { navController.navigate(ObjRoutes.MAIN) }
                 )
-
+                // Botón cancelar / volver
                 ButtonCancel(
                     modifier = Modifier.weight(1f),
                     onClick = { navController.navigate(ObjRoutes.LOGIN) }
@@ -159,3 +174,16 @@ fun LoginScreenPreview() {
         vm = LoginVM()
     )
 }
+
+/**
+ * NOTAS
+ *
+ * - **OutlinedTextField**: Campo de texto con borde, permite customizar colores y visibilidad de la contraseña.
+ * - **TextFieldDefaults.outlinedTextFieldColors**: Personaliza colores de texto, borde, cursor y label.
+ * - **LaunchedEffect(Unit)**: Ejecuta código solo una vez al entrar en composición; aquí escucha eventos del ViewModel.
+ * - **collectAsState()**: Convierte un StateFlow en un estado observable en Compose.
+ * - **Row / Column**: Organiza elementos horizontal o verticalmente.
+ * - **Spacer**: Añade espacio entre elementos.
+ * - **ButtonAcept / ButtonCancel**: Componentes reutilizables para acciones principales y secundarias.
+ */
+
