@@ -39,7 +39,8 @@ import com.example.multimediaapp.viewmodel.vm.RegisterVM
 fun LoginScreen(
     navController: NavController,
     // obtiene automáticamente el ViewModel asociado al ciclo de vida
-    vm: LoginVM = viewModel()) {
+    vm: LoginVM = viewModel()
+) {
     // Obtenemos el estado actual del ViewModel
     val uiState by vm.uiState.collectAsState()
 
@@ -72,7 +73,8 @@ fun LoginScreen(
                     email = uiState.email,
                     pass = uiState.password,
                     onEmailChange = vm::onEmailChange,
-                    onPassChange = vm::onPasswordChange)
+                    onPassChange = vm::onPasswordChange
+                )
                 // Mostramos error si existe
                 uiState.errorMessage?.let { error ->
                     androidx.compose.material3.Text(
@@ -126,7 +128,6 @@ fun LoginScreenPreview() {
  *
  * Nota: Se puede conectar con el ViewModel para validar campos antes de navegar.
  */
-
 
 
 /**

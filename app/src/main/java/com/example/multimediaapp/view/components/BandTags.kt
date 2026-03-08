@@ -29,7 +29,8 @@ import com.example.multimediaapp.viewmodel.uistate.BandUiState
 fun BandTags(band: BandUiState) {
 
     Column(
-        modifier = Modifier.padding(8.dp)
+        modifier = Modifier
+            .padding(8.dp)
             .background(MaterialTheme.colorScheme.background),
         verticalArrangement = Arrangement.spacedBy(10.dp)
     ) {

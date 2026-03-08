@@ -52,11 +52,11 @@ fun LoginRegScreen(
                 .padding(horizontal = 32.dp)
 
         ) {
-            //
+            //boton de Login
             ButtonLogin(
                 onClick = { navController.navigate(ObjRoutes.LOGIN) }
             )
-            // Botón Registro con estilo tonal
+            // Botón Registro
             ButtonRegister(
 
                 onClick = { navController.navigate(ObjRoutes.REGISTER) }

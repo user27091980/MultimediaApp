@@ -27,7 +27,7 @@ data class BandDTO(
     val albumLinks: List<String>,
     val headerLink: String
 
-    )
+)
 
 /**
  * EXPLICACIÓN:

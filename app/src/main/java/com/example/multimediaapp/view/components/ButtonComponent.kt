@@ -71,6 +71,7 @@ fun ButtonLogin(
         modifier = modifier
     )
 }
+
 /**
  * Botón específico para Aceptar
  *
@@ -87,6 +88,7 @@ fun ButtonAccept(
         modifier = modifier
     )
 }
+
 /**
  * Botón específico para cancelar
  *
@@ -103,6 +105,7 @@ fun ButtonCancel(
         modifier = modifier
     )
 }
+
 /**
  * Botón específico para Registar
  *

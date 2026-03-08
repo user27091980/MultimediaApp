@@ -10,7 +10,15 @@ class DialogVM : ViewModel() {
     private val _uiState = MutableStateFlow(false) // false = no mostrar
     val uiState: StateFlow<Boolean> = _uiState.asStateFlow()
 
-    fun showDialog() { _uiState.value = true }
-    fun hideDialog() { _uiState.value = false }
-    fun confirmAction() { _uiState.value = false }
+    fun showDialog() {
+        _uiState.value = true
+    }
+
+    fun hideDialog() {
+        _uiState.value = false
+    }
+
+    fun confirmAction() {
+        _uiState.value = false
+    }
 }

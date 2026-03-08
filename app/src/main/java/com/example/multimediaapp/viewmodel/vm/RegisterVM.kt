@@ -35,7 +35,8 @@ class RegisterVM : ViewModel() {
             return false
         }
         if (state.pass.length < 4) {
-            _uiState.value = state.copy(errorMessage = "La contraseña debe tener al menos 4 caracteres")
+            _uiState.value =
+                state.copy(errorMessage = "La contraseña debe tener al menos 4 caracteres")
             return false
         }
         _uiState.value = state.copy(errorMessage = null)

@@ -6,7 +6,7 @@ package com.example.multimediaapp.model
  * Esta información se puede usar en la pantalla de perfil o configuración de usuario.
  * Todos los campos son inmutables (`val`) para evitar modificaciones accidentales.
  */
-data class UsersInfoDTO (
+data class UsersInfoDTO(
     val id: String,
     val email: String,
     val user: String,

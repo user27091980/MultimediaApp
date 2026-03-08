@@ -52,6 +52,7 @@ fun MainScreen(navController: NavController, vm: MainVM = viewModel()) {
         )
     }
 }
+
 /**
  * Composable encargado de mostrar el contenido principal de la pantalla.
  *

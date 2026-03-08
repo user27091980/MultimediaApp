@@ -4,6 +4,7 @@ import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
+
 /**
  * Objeto singleton que centraliza la configuración
  * de Retrofit y el cliente HTTP.
@@ -20,6 +21,7 @@ object NetworkModule {
      * para apuntar al localhost del PC.
      */
     private const val BASE_URL = "http://10.0.2.2:5131/"
+
     /**
      * Interceptor de logging.
      *
@@ -33,6 +35,7 @@ object NetworkModule {
     private val logging = HttpLoggingInterceptor().apply {
         level = HttpLoggingInterceptor.Level.BASIC
     }
+
     /**
      * Cliente HTTP personalizado.
      *
@@ -45,6 +48,7 @@ object NetworkModule {
     private val okHttpClient: OkHttpClient = OkHttpClient.Builder()
         .addInterceptor(logging)
         .build()
+
     /**
      * Instancia principal de Retrofit.
      *
@@ -57,12 +61,13 @@ object NetworkModule {
         .client(okHttpClient)
         .addConverterFactory(GsonConverterFactory.create())
         .build()
-   /**
-    * Servicio API generado por Retrofit.
-    *
-    * Aquí se definen los endpoints en la interfaz
-    * MultimediaApiService.
-    */
+
+    /**
+     * Servicio API generado por Retrofit.
+     *
+     * Aquí se definen los endpoints en la interfaz
+     * MultimediaApiService.
+     */
     val multimediaApiService: MultimediaApiService =
         retrofit.create(MultimediaApiService::class.java)
 }

@@ -24,14 +24,14 @@ val bandColumnModifier = Modifier
 val cardColumnModifier = Modifier
     .fillMaxWidth()
     .padding(10.dp)
-    //internal padding
+//internal padding
 
 val boxModifier = Modifier
     .fillMaxSize()
     .padding(5.dp, 30.dp, 5.dp, 90.dp)
 
 //row para la imagen de cabecera
-val rowModifier =Modifier
+val rowModifier = Modifier
     .fillMaxWidth()
     .padding(horizontal = 16.dp, vertical = 8.dp)
 

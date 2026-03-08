@@ -20,7 +20,8 @@ import com.example.multimediaapp.viewmodel.vm.*
 @Composable
 fun NavGraph(
     navController: NavHostController,
-    settingsVM: SettingsVM) {
+    settingsVM: SettingsVM
+) {
 
     NavHost(
         navController = navController,

@@ -7,6 +7,7 @@ import com.example.multimediaapp.viewmodel.uistate.UserUIState
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
+
 /**
  * ViewModel encargado de gestionar la lista de usuarios.
  *
@@ -15,17 +16,19 @@ import kotlinx.coroutines.flow.asStateFlow
  * - Se comunica con el repositorio
  * - Expone un estado observable (StateFlow)
  */
-class UserVM : ViewModel(){
+class UserVM : ViewModel() {
     /**
      * Estado interno mutable.
      * Solo puede ser modificado dentro del ViewModel.
      */
     private val _uiState = MutableStateFlow(UserListUiState())
+
     /**
      * Estado expuesto como solo lectura.
      * La UI lo observa para reaccionar a cambios.
      */
     val uiState: StateFlow<UserListUiState> = _uiState.asStateFlow()
+
     /**
      * Repositorio que actúa como fuente de datos.
      * En una app real podría conectarse a:
@@ -34,6 +37,7 @@ class UserVM : ViewModel(){
      * - Firebase
      */
     private val repo: UsersRepo = UsersRepo()
+
     /**
      * Reinicia el estado.
      * Actualmente solo crea un estado vacío.
@@ -41,6 +45,7 @@ class UserVM : ViewModel(){
     fun reset() {
         _uiState.value = UserListUiState()
     }
+
     /**
      * Elimina un usuario por ID.
      *
@@ -55,9 +60,11 @@ class UserVM : ViewModel(){
         }) {
             _uiState.value = _uiState.value.copy(
                 isLoading = false,
-                error = "Error al eliminar usuarios")
+                error = "Error al eliminar usuarios"
+            )
         }
     }
+
     /**
      * Carga todos los usuarios desde el repositorio.
      *
@@ -81,7 +88,8 @@ class UserVM : ViewModel(){
             //READLL ON ERROR
             _uiState.value = _uiState.value.copy(
                 isLoading = false,
-                error = "Error al cargar usuarios")
+                error = "Error al cargar usuarios"
+            )
         }
     }
 }

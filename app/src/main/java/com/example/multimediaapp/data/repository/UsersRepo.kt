@@ -54,7 +54,7 @@ class UsersRepo {
         onSuccess: (UsersDTO?) -> Unit,
         onError: () -> Unit
     ) {
-        val user = users.find { it.id ==(id) }
+        val user = users.find { it.id == (id) }
         if (user != null)
             onSuccess(user)
         else

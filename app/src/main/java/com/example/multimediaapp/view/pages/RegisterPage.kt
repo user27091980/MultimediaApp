@@ -37,7 +37,8 @@ import com.example.multimediaapp.viewmodel.vm.RegisterVM
 fun RegisterScreen(
     navController: NavController,
     // obtiene automáticamente el ViewModel asociado al ciclo de vida
-    vm: RegisterVM = viewModel()) {
+    vm: RegisterVM = viewModel()
+) {
     // Obtenemos el estado actual del ViewModel
     val uiState by vm.uiState.collectAsState()
 
@@ -72,7 +73,8 @@ fun RegisterScreen(
                     pass = uiState.pass,
                     onUserChange = vm::onUserChange,
                     onEmailChange = vm::onEmailChange,
-                    onPassChange = vm::onPassChange)
+                    onPassChange = vm::onPassChange
+                )
                 // Mostramos error si existe
                 uiState.errorMessage?.let { error ->
                     Text(

@@ -9,7 +9,7 @@ package com.example.multimediaapp.viewmodel.uistate
  */
 data class LoginUiState(
     /** Nombre del usuario, útil para mostrar en pantalla tras login exitoso */
-    val user: String="",
+    val user: String = "",
     /** Correo electrónico ingresado por el usuario */
     val email: String = "",
     /** Contraseña ingresada por el usuario */

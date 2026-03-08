@@ -1,7 +1,6 @@
 package com.example.multimediaapp.viewmodel.uistate
 
 
-
 /**
  * Representa el estado de la pantalla de lista de usuarios.
  *

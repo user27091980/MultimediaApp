@@ -1,6 +1,7 @@
 package com.example.multimediaapp.navigation
 
 import kotlinx.serialization.Serializable
+
 /**
  * Interfaz sellada que representa TODAS las rutas posibles
  * de la aplicación.
@@ -13,6 +14,7 @@ import kotlinx.serialization.Serializable
  */
 @Serializable
 sealed interface NavRoute
+
 /**
  * Ruta hacia Login que recibe parámetros.
  *

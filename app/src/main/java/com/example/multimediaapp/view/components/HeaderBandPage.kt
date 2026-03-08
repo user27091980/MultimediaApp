@@ -46,9 +46,10 @@ fun BandHeader(band: BandUiState) {
             // Descripción de la imagen para accesibilidad (lectores de pantalla).
             contentDescription = band.name,
             // Modificadores para definir el tamaño y comportamiento de la imagen.
-            modifier = Modifier.height(headerHeight*0.9f)
-                .clickable{
-                    if(band.headerLink.isNotEmpty()){
+            modifier = Modifier
+                .height(headerHeight * 0.9f)
+                .clickable {
+                    if (band.headerLink.isNotEmpty()) {
 
                         val intent = Intent(Intent.ACTION_VIEW, band.headerLink.toUri())
                         context.startActivity(intent)

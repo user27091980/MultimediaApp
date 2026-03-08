@@ -19,17 +19,17 @@ data class UserInfoListUiState(
  */
 data class UserInfoUiState(
     /** ID único del usuario */
-    val id: String ="",
+    val id: String = "",
     /** Correo electrónico del usuario */
-    val email: String="",
+    val email: String = "",
     /** Nombre de usuario (login) */
-    val user: String="",
+    val user: String = "",
     /** País del usuario */
-    val country: String="",
+    val country: String = "",
     /** Nombre de pila del usuario */
-    val name: String="",
+    val name: String = "",
     /** Apellido del usuario */
-    val surname: String=""
+    val surname: String = ""
 )
 
 

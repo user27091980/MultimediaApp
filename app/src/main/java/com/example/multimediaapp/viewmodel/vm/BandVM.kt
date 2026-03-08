@@ -7,6 +7,7 @@ import com.example.multimediaapp.viewmodel.uistate.BandUiState
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
+
 /**
  * ViewModel encargado de gestionar la lista de bandas.
  *
@@ -21,11 +22,13 @@ class BandVM : ViewModel() {
      * Solo se puede modificar dentro del ViewModel.
      */
     private val _uiState = MutableStateFlow(BandListUiState())
+
     /**
      * Estado público inmutable.
      * La UI observa este flujo para reaccionar a cambios.
      */
     val uiState: StateFlow<BandListUiState> = _uiState.asStateFlow()
+
     /**
      * Repositorio que actúa como fuente de datos de las bandas.
      * Actualmente simula almacenamiento en memoria.
@@ -40,6 +43,7 @@ class BandVM : ViewModel() {
     fun loadDatos() {
         _uiState.value = BandListUiState()
     }
+
     /**
      * Elimina una banda por su ID.
      *
@@ -61,6 +65,7 @@ class BandVM : ViewModel() {
              */
         }
     }
+
     /**
      * Carga todas las bandas desde el repositorio.
      *

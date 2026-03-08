@@ -9,6 +9,7 @@ package com.example.multimediaapp.viewmodel.uistate
  * - Inmutable, de manera que solo el ViewModel puede actualizarlo mediante `copy()` o creando un nuevo objeto.
  */
 data class BandListUiState(val bands: List<BandUiState> = ArrayList())
+
 /**
  * Representa la información de una sola banda.
  *

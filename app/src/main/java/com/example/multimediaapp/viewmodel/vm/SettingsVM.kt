@@ -5,6 +5,7 @@ import com.example.multimediaapp.viewmodel.uistate.SettingsUiState
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
+
 /**
  * ViewModel encargado de gestionar la configuración de la app (Settings).
  *
@@ -16,6 +17,7 @@ class SettingsVM : ViewModel() {
 
     /** Estado interno mutable */
     private val _uiState = MutableStateFlow(SettingsUiState(darkMode = false))
+
     /** Estado expuesto como solo lectura */
     val uiState: StateFlow<SettingsUiState> = _uiState
 

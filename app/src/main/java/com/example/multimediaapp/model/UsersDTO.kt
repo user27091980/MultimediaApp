@@ -14,12 +14,3 @@ data class UsersDTO(
     val pass: String
 )
 
-/*====APUNTES====
-id: sirve para identificar la banda de manera única, útil para rutas o búsquedas.
-
-bandName: nombre que se mostrará en la UI.
-
-imageBand → ruta o URL de la imagen que se renderizará en la lista de bandas.
-
-Esto permite que tu MainScreen y CardList funcionen de forma consistente y segura.
- */

@@ -65,6 +65,7 @@ fun DialogRegisterScreen(
 
         )
 }
+
 /**
  * Preview del diálogo para ver cómo se renderiza en Compose Preview.
  * No requiere ViewModel real, se usa un NavController de prueba.

@@ -10,6 +10,7 @@ import okhttp3.OkHttpClient
 import okhttp3.Response
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
+
 /**
  * Clase que construye y proporciona la instancia de Retrofit.
  *
@@ -20,6 +21,7 @@ import retrofit2.converter.gson.GsonConverterFactory
 class ApiClient(private val context: Context) {
     // Instancia nullable de Retrofit (se inicializa una sola vez)
     var retrofit: Retrofit? = null
+
     /**
      * URL base del backend.
      * 10.0.2.2 apunta al localhost del PC desde el emulador.
@@ -47,6 +49,7 @@ class ApiClient(private val context: Context) {
         return retrofit!!
     }
 }
+
 /**
  * Interceptor que detecta respuestas 403 (Forbidden).
  *
@@ -70,6 +73,7 @@ class ForbiddenInterceptor() : Interceptor {
         return response
     }
 }
+
 /**
  * Objeto que actúa como emisor global de eventos de sesión.
  *
@@ -79,8 +83,10 @@ class ForbiddenInterceptor() : Interceptor {
 object SessionEvents {
     // Flujo compartido para emitir eventos
     private val _forbidden = MutableSharedFlow<Unit>()
+
     // Exponemos el flujo públicamente
     val forbidden = _forbidden
+
     /**
      * Función suspend que emite el evento.
      */
@@ -88,6 +94,7 @@ object SessionEvents {
         _forbidden.emit(Unit)
     }
 }
+
 /**
  * Interceptor que añade el header Authorization
  * a cada request si existe un token.
