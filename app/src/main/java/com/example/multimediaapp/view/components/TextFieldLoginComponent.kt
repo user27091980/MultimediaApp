@@ -24,53 +24,31 @@ import androidx.compose.ui.text.input.VisualTransformation
  * Composable principal que agrupa todos los TextFields de login/registro.
  *
  * Contiene:
- * - TextFieldUserComponent_ para ingresar el nombre de usuario
- * - TextFieldPassComponent:para ingresar la contraseña con toggle de visibilidad
- * - TextFieldEmailComponent: para ingresar el correo electrónico
+ * -
+ * - TextFieldLoginPassComponent:para ingresar la contraseña con toggle de visibilidad
+ * - TextFieldEmailLoginComponent: para ingresar el correo electrónico
  */
 @Composable
-fun TextFieldsComponent(
-    user: String,
+fun TextFieldsLoginComponent(
     email: String,
     pass: String,
-    onUserChange: (String) -> Unit,
     onEmailChange: (String) -> Unit,
     onPassChange: (String) -> Unit
 ) {
     // Columna que organiza los campos verticalmente
     Column {
-        TextFieldUserComponent(
-            user = user,
-            onUserChange = onUserChange
-        )
-        TextFieldPassComponent(
-            pass = pass,
-            onPassChange = onPassChange
-        )
-        TextFieldEmailComponent(
+        TextFieldLoginEmailComponent(
             email = email,
             onEmailChange = onEmailChange
         )
+        TextFieldLoginPassComponent(
+            pass = pass,
+            onPassChange = onPassChange
+        )
+
     }
 }
 
-/**
- * Campo de texto para introducir el nombre de usuario.
- *
- * @param user texto actual del campo
- * @param onUserChange callback que se ejecuta al modificar el texto
- */
-@Composable
-fun TextFieldUserComponent(user: String, onUserChange: (String) -> Unit) {
-    OutlinedTextField(
-        value = user,
-        onValueChange = onUserChange,
-        singleLine = true,
-        label = { Text("User", color = Color.White) },
-
-
-        )
-}
 
 /**
  * Campo de texto para introducir la contraseña.
@@ -82,7 +60,7 @@ fun TextFieldUserComponent(user: String, onUserChange: (String) -> Unit) {
  * @param onPassChange callback que se ejecuta al modificar la contraseña
  */
 @Composable
-fun TextFieldPassComponent(pass: String, onPassChange: (String) -> Unit) {
+fun TextFieldLoginPassComponent(pass: String, onPassChange: (String) -> Unit) {
     // Estado local que controla si la contraseña se muestra o se oculta
     var passwordVisible by remember { mutableStateOf(false) }
     // Cambia la forma en que se muestra el texto
@@ -115,7 +93,7 @@ fun TextFieldPassComponent(pass: String, onPassChange: (String) -> Unit) {
  * @param onEmailChange callback que se ejecuta al modificar el email
  */
 @Composable
-fun TextFieldEmailComponent(email: String, onEmailChange: (String) -> Unit) {
+fun TextFieldLoginEmailComponent(email: String, onEmailChange: (String) -> Unit) {
 
     // Comprueba si el email es válido
     val isValidEmail = Patterns.EMAIL_ADDRESS.matcher(email).matches()
@@ -126,9 +104,11 @@ fun TextFieldEmailComponent(email: String, onEmailChange: (String) -> Unit) {
         singleLine = true,
         label = {
             Text("Email", color = Color.White)
+
         },
         // Muestra teclado optimizado para escribir correos
         keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Email),
+
         // Mensaje de error debajo del campo
         supportingText = {
             if (email.isNotEmpty() && !isValidEmail) {

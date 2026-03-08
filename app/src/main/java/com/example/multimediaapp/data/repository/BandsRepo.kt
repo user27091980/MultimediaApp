@@ -7,7 +7,6 @@ import com.example.multimediaapp.model.BandDTO
 // Clase repositorio que simula una fuente de datos en memoria.
 // Aquí se gestiona el CRUD(CREATE, READ, UPDATE, DELETE) de bandas.
 class BandsRepo {
-
     // Companion object → funciona como un bloque estático en Java.
     // Las propiedades aquí definidas pertenecen a la clase y no a la instanci
     companion object {
@@ -67,7 +66,7 @@ class BandsRepo {
                         "https://www.youtube.com/playlist?list=OLAK5uy_l7KrE4YuWhZsfCdXlLJERHyk4YlwydukA",
                         "https://www.youtube.com/playlist?list=OLAK5uy_k_Z0-DYw0_cGPvZm6icNUGbefRT4wktdY"
                     ),
-                    headerLink="https://www.toolband.com/home?k=4d58aff6"
+                    headerLink = "https://www.toolband.com/home?k=4d58aff6"
                 ),
                 BandDTO(
                     "1", "Aphex Twin",
@@ -249,7 +248,7 @@ class BandsRepo {
                         "https://www.youtube.com/playlist?list=OLAK5uy_nwT_ryJ0N8-TmfqftIrZkcLGGiE_JMT7s"
 
                     ),
-                    headerLink="https://warp.net/artists/boards-of-canada"
+                    headerLink = "https://warp.net/artists/boards-of-canada"
 
                 )
 
@@ -304,7 +303,6 @@ class BandsRepo {
         else
             onError()
     }
-
     // DELETE
     // Elimina una banda por ID.
     fun delete(

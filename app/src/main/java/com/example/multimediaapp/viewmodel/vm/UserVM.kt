@@ -15,7 +15,7 @@ import kotlinx.coroutines.flow.asStateFlow
  * - Se comunica con el repositorio
  * - Expone un estado observable (StateFlow)
  */
-class UserListVM : ViewModel(){
+class UserVM : ViewModel(){
     /**
      * Estado interno mutable.
      * Solo puede ser modificado dentro del ViewModel.

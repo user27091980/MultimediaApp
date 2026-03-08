@@ -68,27 +68,27 @@ fun BandScreen(
                     .heightIn(min = 400.dp),
                 verticalArrangement = Arrangement.spacedBy(10.dp)
             ) {
-
+                // Encabezado con la imagen
                 BandHeader(band = bd)
 
                 Spacer(modifier = Modifier.height(6.dp))
-
+                // Tarjetas con información adicional (géneros, miembros, etc.)
                 CardRowComponent(band = bd)
 
                 Spacer(modifier = Modifier.height(6.dp))
-
+                // Título de sección "Información"
                 Text(stringResource(R.string.info))
 
                 Spacer(modifier = Modifier.height(6.dp))
-
+                // Tags asociados a la banda (ej. géneros musicales)
                 BandTags(band = bd)
 
                 Spacer(modifier = Modifier.height(6.dp))
-
+                // Título de sección "Discografía"
                 Text(stringResource(R.string.discografia))
 
                 Spacer(modifier = Modifier.height(6.dp))
-
+                // Lista horizontal de imágenes o discos de la banda
                 ImagesRowList(
                     band = bd,
                     modifier = Modifier,
@@ -99,6 +99,11 @@ fun BandScreen(
     }
 }
 
+/**
+ * Preview de BandScreen con un ID de ejemplo.
+ *
+ * Permite ver cómo se renderiza la pantalla en el editor sin ejecutar la app.
+ */
 @Preview
 @Composable
 fun BandScreenPreview() {

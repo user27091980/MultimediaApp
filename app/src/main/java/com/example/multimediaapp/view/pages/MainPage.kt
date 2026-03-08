@@ -37,31 +37,47 @@ fun MainScreen(navController: NavController, vm: MainVM = viewModel()) {
 
     // Llamamos al componente que muestra la lista de bandas.
     // Accedemos a .value porque collectAsState() devuelve un State<T>.
-    MultimediaAppTheme {
-        Box(
-            modifier = Modifier
-                .fillMaxSize()
-                .background(MaterialTheme.colorScheme.background) // fondo dinámico según el tema
-        ) {
-            MainContent(
-                uiState = uiState,
-                onImageClick = { bandId ->
-                    navController.navigate("${ObjRoutes.BAND}/$bandId")
-                }
-            )
-        }
-    }
 
+    Box(
+        modifier = Modifier
+            .background(MaterialTheme.colorScheme.background)
+            .fillMaxSize()
+
+    ) {
+        MainContent(
+            uiState = uiState,
+            onImageClick = { bandId ->
+                navController.navigate("${ObjRoutes.BAND}/$bandId")
+            }
+        )
+    }
 }
+/**
+ * Composable encargado de mostrar el contenido principal de la pantalla.
+ *
+ * Separa la lógica de UI de MainScreen para mantener la arquitectura más limpia
+ * y facilitar el uso de previews o pruebas.
+ *
+ * @param uiState Estado actual de la pantalla principal.
+ * Contiene la lista de bandas obtenidas desde el ViewModel.
+ *
+ * @param onImageClick Lambda que se ejecuta cuando el usuario pulsa
+ * sobre la imagen de una banda. Recibe el id de la banda seleccionada
+ * para poder navegar a su pantalla de detalle.
+ */
 
 @Composable
 fun MainContent(
     uiState: MainUiState,
     onImageClick: (String) -> Unit
 ) {
+    // CardList muestra una lista vertical con las bandas disponibles.
+    // Recibe la lista desde uiState y un callback para manejar el click.
     CardList(
         bands = uiState.mainBands,
         onImageClick = { band ->
+            // Cuando se pulsa una banda, se envía su id al callback
+            // para que la pantalla superior gestione la navegación.
             onImageClick(band.id)
         }
     )
@@ -76,9 +92,9 @@ fun MainScreenPreview() {
     MainContent(
         uiState = MainUiState(
             mainBands = listOf(
-                MainDTO("1", "Autechre", "https://via.placeholder.com/150",),
-                MainDTO("2", "Aphex Twin", "https://via.placeholder.com/150",),
-                MainDTO("3", "Boards of Canada", "https://via.placeholder.com/150",)
+                MainDTO("1", "Autechre", "https://via.placeholder.com/150"),
+                MainDTO("2", "Aphex Twin", "https://via.placeholder.com/150"),
+                MainDTO("3", "Boards of Canada", "https://via.placeholder.com/150")
             )
         ),
         onImageClick = {}

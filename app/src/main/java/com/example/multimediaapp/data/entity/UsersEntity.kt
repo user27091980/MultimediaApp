@@ -4,9 +4,9 @@ import com.example.multimediaapp.model.UsersDTO
 import com.google.gson.annotations.SerializedName
 
 //para comentario ver BandEntity
-data class UsersEntity (
+data class UsersEntity(
     val id: String,
-    @SerializedName("email") val email:String,
+    @SerializedName("email") val email: String,
     @SerializedName("usuario") val user: String,
     @SerializedName("pass") val pass: String,
 )
@@ -14,8 +14,8 @@ data class UsersEntity (
 //mapper para convertir en UsersDTO
 fun UsersEntity.toDTO(): UsersDTO = UsersDTO(
     id = id,
-    email=email,
+    email = email,
     user = user,
-    pass=pass
+    pass = pass
 
 )

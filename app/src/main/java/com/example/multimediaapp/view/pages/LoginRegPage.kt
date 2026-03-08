@@ -52,22 +52,17 @@ fun LoginRegScreen(
                 .padding(horizontal = 32.dp)
 
         ) {
-
-
+            //
             ButtonLogin(
                 onClick = { navController.navigate(ObjRoutes.LOGIN) }
             )
             // Botón Registro con estilo tonal
-
             ButtonRegister(
 
                 onClick = { navController.navigate(ObjRoutes.REGISTER) }
 
             )
-
-
         }
-
     }
 }
 
@@ -77,6 +72,7 @@ fun LoginRegScreen(
 @Preview()
 @Composable
 fun LoginRegScreenPreview() {
+
     val navController = rememberNavController()
 
     LoginRegScreen(

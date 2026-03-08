@@ -17,7 +17,12 @@ import androidx.compose.ui.unit.dp
  * - Ancho completo por defecto
  * - Bordes redondeados
  * - Colores del tema
- * - Habilitado / deshabilitado
+ * - Estado habilitado / deshabilitado
+ *
+ * @param text Texto que se mostrará en el botón
+ * @param onClick Acción que se ejecuta al pulsar el botón
+ * @param modifier Modifier opcional para personalizar tamaño, padding u otras propiedades
+ * @param enabled Boolean que indica si el botón está habilitado (true) o deshabilitado (false)
  */
 @Composable
 fun BaseButton(
@@ -46,9 +51,9 @@ fun BaseButton(
 
 
 /**
- * Botón específico de Login
+ * Botón de Login.
  *
- * Reutiliza BaseButton con texto predefinido "Login"
+ * Reutiliza BaseButton con texto fijo "Login".
  */
 @Composable
 fun ButtonLogin(
@@ -67,12 +72,12 @@ fun ButtonLogin(
     )
 }
 /**
- * Botón específico para Cancelar
+ * Botón específico para Aceptar
  *
- * Reutiliza BaseButton con texto predefinido "Cancelar"
+ * Reutiliza BaseButton con texto predefinido "Aceptar"
  */
 @Composable
-fun ButtonAcept(
+fun ButtonAccept(
     onClick: () -> Unit,
     modifier: Modifier = Modifier
 ) {
@@ -83,9 +88,9 @@ fun ButtonAcept(
     )
 }
 /**
- * Botón específico para Registrar
+ * Botón específico para cancelar
  *
- * Reutiliza BaseButton con texto predefinido "Registrar"
+ * Reutiliza BaseButton con texto predefinido "Cancelar"
  */
 @Composable
 fun ButtonCancel(
@@ -98,7 +103,11 @@ fun ButtonCancel(
         modifier = modifier
     )
 }
-
+/**
+ * Botón específico para Registar
+ *
+ * Reutiliza BaseButton con texto predefinido "Registrar"
+ */
 @Composable
 fun ButtonRegister(
     onClick: () -> Unit,

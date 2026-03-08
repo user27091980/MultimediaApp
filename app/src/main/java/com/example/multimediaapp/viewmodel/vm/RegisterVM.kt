@@ -25,6 +25,7 @@ class RegisterVM : ViewModel() {
 
     fun validateFields(): Boolean {
         val state = _uiState.value
+
         if (state.user.isBlank()) {
             _uiState.value = state.copy(errorMessage = "El usuario no puede estar vacío")
             return false

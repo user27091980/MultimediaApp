@@ -107,5 +107,19 @@ class LoginVM : ViewModel() {
             it.copy(errorMessage = null)
         }
     }
+    fun validateFieldsLogin(): Boolean {
+        val state = _uiState.value
+
+        if (state.email.isBlank() || !state.email.contains("@")) {
+            _uiState.value = state.copy(errorMessage = "Email inválido")
+            return false
+        }
+        if (state.password.length < 4) {
+            _uiState.value = state.copy(errorMessage = "La contraseña debe tener al menos 4 caracteres")
+            return false
+        }
+        _uiState.value = state.copy(errorMessage = null)
+        return true
+    }
 }
 

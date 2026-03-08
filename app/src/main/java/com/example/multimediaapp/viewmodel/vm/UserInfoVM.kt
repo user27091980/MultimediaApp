@@ -23,24 +23,23 @@ class UserInfoVM(initialState: UserInfoListUiState? = null) : ViewModel() {
      * Carga los datos de un usuario por ID.
      * Si ya hay datos (como en preview), no hace nada.
      */
-    fun loadData(userId: String) {
+    fun loadUser(userId: String) {
         if (_uiState.value.userInfo.any { it.id == userId }) return // ya cargado
 
-        // En ejecución real, traemos datos del repositorio
-        repo.readAll({ list ->
-            val mapped = list.map { data ->
-                UserInfoUiState(
-                    id = data.id,
-                    email = data.email,
-                    user = data.user,
-                    country = data.country,
-                    name = data.name,
-                    surname = data.surname
+        repo.read(userId, { data ->
+            data?.let {
+                val mapped = UserInfoUiState(
+                    id = it.id,
+                    email = it.email,
+                    user = it.user,
+                    country = it.country,
+                    name = it.name,
+                    surname = it.surname
                 )
+                _uiState.value = UserInfoListUiState(userInfo = listOf(mapped))
             }
-            _uiState.value = UserInfoListUiState(mapped)
         }) {
-            // manejar error de lectura si quieres
+            // manejar error
         }
     }
 }

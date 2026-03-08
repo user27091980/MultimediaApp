@@ -43,8 +43,8 @@ data class BandEntity(
     @SerializedName("discos") val albumImages: List<String>,
     // enlaces discos
     @SerializedName("albumLinks") val albumLinks: List<String>,
+    //enlace para la imagen de cabecera.
     @SerializedName("enlaces") val headerLink: String
-
 
 )
 
@@ -55,7 +55,6 @@ data class BandEntity(
 // en un BandDTO (capa dominio o presentación).
 // Esto ayuda a mantener separadas las capas de la arquitectura.
 fun BandEntity.toDTO(): BandDTO = BandDTO(
-
     // Se copian todas las propiedades al DTO
     id = id,
     name = name,

@@ -4,9 +4,11 @@ import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -25,20 +27,19 @@ fun UserInfoScreen(
     userInfoId: String,
     vm: UserInfoVM = viewModel()
 ) {
-    val uiState by vm.uiState.collectAsStateWithLifecycle()
+    val uiState by vm.uiState.collectAsState()
+
 
     // Cargar datos cuando cambie el userInfoId
     LaunchedEffect(userInfoId) {
-        vm.loadData(userInfoId)
+        vm.loadUser(userInfoId)
     }
-
-    // Buscar el usuario concreto
-    val user = uiState.userInfo.find { it.id == userInfoId }
 
     Box(modifier = Modifier.fillMaxSize()) {
         Column {
+            val user = uiState.userInfo.firstOrNull()
+
             if (user != null) {
-                // Usuario encontrado → mostrar tarjeta
                 UserCardComponent(
                     id = user.id,
                     email = user.email,
@@ -48,10 +49,9 @@ fun UserInfoScreen(
                     surname = user.surname
                 )
             } else {
-                // Usuario no cargado aún → placeholder
                 Text(
                     text = "Cargando información del usuario...",
-                    color = androidx.compose.ui.graphics.Color.White,
+                    color = MaterialTheme.colorScheme.tertiary,
                     modifier = Modifier.padding(16.dp)
                 )
             }
@@ -66,8 +66,7 @@ fun UserInfoScreen(
     }
 }
 
-
-@Preview(showBackground = true)
+@Preview
 @Composable
 fun UserInfoScreenPreview() {
     val previewUser = UserInfoUiState(
@@ -79,8 +78,6 @@ fun UserInfoScreenPreview() {
         surname = "García"
     )
     val previewState = UserInfoListUiState(userInfo = listOf(previewUser))
-
-    // Creamos el ViewModel de preview con estado inicial
     val previewVM = UserInfoVM(initialState = previewState)
 
     UserInfoScreen(userInfoId = "1", vm = previewVM)

@@ -5,6 +5,7 @@ import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -21,7 +22,7 @@ import androidx.navigation.NavController
 import androidx.navigation.compose.rememberNavController
 import com.example.multimediaapp.navigation.ObjRoutes
 import com.example.multimediaapp.ui.theme.boxModifier
-import com.example.multimediaapp.view.components.ButtonAcept
+import com.example.multimediaapp.view.components.ButtonAccept
 import com.example.multimediaapp.view.components.ButtonCancel
 import com.example.multimediaapp.view.components.TextFieldsComponent
 import com.example.multimediaapp.viewmodel.vm.RegisterVM
@@ -55,9 +56,10 @@ fun RegisterScreen(
         // Columna principal que contiene los campos de texto y botones
         Column(
             Modifier
-                .fillMaxSize()
-                .padding(40.dp, 40.dp),
-            verticalArrangement = Arrangement.SpaceBetween
+                .fillMaxWidth()
+                .padding(40.dp),
+            verticalArrangement = Arrangement.Center,
+            horizontalAlignment = Alignment.CenterHorizontally
 
         ) {
             Column(
@@ -81,7 +83,7 @@ fun RegisterScreen(
                 }
             }
             // Botón "Aceptar" que navega al dialog de confirmación
-            ButtonAcept(
+            ButtonAccept(
                 onClick = {
                     if (vm.validateFields()) {
                         // Si todo es correcto, navega al dialog
@@ -91,7 +93,7 @@ fun RegisterScreen(
             )
             // Botón "Cancelar" que regresa a la pantalla de login
             ButtonCancel(
-                onClick = { navController.navigate(ObjRoutes.LOGIN) }
+                onClick = { navController.navigate(ObjRoutes.LOGINREG) }
             )
         }
     }

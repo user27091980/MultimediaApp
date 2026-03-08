@@ -1,6 +1,7 @@
 package com.example.multimediaapp.view.components
 
 import androidx.compose.foundation.Image
+import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
@@ -35,7 +36,10 @@ fun CardList(
     // LazyColumn permite crear listas verticales, cargando solo los elementos visibles.
     // Es útil para listas grandes, para optimizar rendimiento.
     LazyColumn(
-        modifier = Modifier.padding(vertical = 8.dp),
+        modifier = Modifier
+            .background(MaterialTheme.colorScheme.background)
+            .padding(vertical = 8.dp),
+
         verticalArrangement = Arrangement.spacedBy(16.dp)
     ) {
         // Itera sobre la lista de URLs de imágenes de los álbumes.
