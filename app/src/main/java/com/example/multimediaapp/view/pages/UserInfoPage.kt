@@ -22,23 +22,31 @@ import com.example.multimediaapp.viewmodel.uistate.UserInfoListUiState
 import com.example.multimediaapp.viewmodel.uistate.UserInfoUiState
 import com.example.multimediaapp.viewmodel.vm.UserInfoVM
 
+/**
+ * Pantalla que muestra la información de un usuario específico.
+ *
+ * @param userInfoId ID del usuario cuya información se quiere mostrar.
+ * @param vm ViewModel que maneja el estado de la pantalla.
+ */
 @Composable
 fun UserInfoScreen(
     userInfoId: String,
-    vm: UserInfoVM = viewModel()
+    vm: UserInfoVM = viewModel() // ViewModel asociado al ciclo de vida
 ) {
+    // Observa el StateFlow del ViewModel y lo convierte en un estado Compose
     val uiState by vm.uiState.collectAsState()
-
-
-    // Cargar datos cuando cambie el userInfoId
+    // LaunchedEffect se ejecuta cuando userInfoId cambia o el Composable entra en composición
+    // Llama a loadUser() para cargar la información del usuario desde el repositorio
     LaunchedEffect(userInfoId) {
         vm.loadUser(userInfoId)
     }
-
+    // Caja principal que ocupa toda la pantalla
     Box(modifier = Modifier.fillMaxSize()) {
+        // Columna para mostrar los componentes verticalmente
         Column {
+            // Obtenemos el primer usuario de la lista (si existe)
             val user = uiState.userInfo.firstOrNull()
-
+            // Si el usuario está disponible, mostramos su información en una tarjeta
             if (user != null) {
                 UserCardComponent(
                     id = user.id,
@@ -48,6 +56,7 @@ fun UserInfoScreen(
                     name = user.name,
                     surname = user.surname
                 )
+            // Si los datos aún no se han cargado, mostramos un mensaje de carga
             } else {
                 Text(
                     text = "Cargando información del usuario...",
@@ -56,7 +65,7 @@ fun UserInfoScreen(
                 )
             }
         }
-
+        // Componente flotante de cámara en la esquina inferior derecha
         FloatCamera(
             onClick = { /* abrir cámara */ },
             modifier = Modifier
@@ -66,6 +75,10 @@ fun UserInfoScreen(
     }
 }
 
+/**
+ * Preview para la pantalla de información del usuario
+ * Permite ver cómo se verá el Composable sin ejecutar la app
+ */
 @Preview
 @Composable
 fun UserInfoScreenPreview() {

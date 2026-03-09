@@ -8,20 +8,20 @@ package com.example.multimediaapp.viewmodel.uistate
  * - Incluye campos para email, password, visibilidad de password, estado de carga y errores.
  */
 data class LoginUiState(
-    /** Nombre del usuario, útil para mostrar en pantalla tras login exitoso */
+    //Nombre del usuario, útil para mostrar en pantalla tras login exitoso
     val user: String = "",
-    /** Correo electrónico ingresado por el usuario */
+    //Correo electrónico ingresado por el usuario
     val email: String = "",
-    /** Contraseña ingresada por el usuario */
+    //Contraseña ingresada por el usuario
     val password: String = "",
-    /** Indica si la contraseña es visible en la UI (toggle show/hide) */
+    //Indica si la contraseña es visible en la UI (toggle show/hide)
     val passwordVisible: Boolean = false,
-    /** Indica si hay un proceso de login en curso */
+    //Indica si hay un proceso de login en curso
     val isLoading: Boolean = false,
-    /** Mensaje de error que se muestra en la UI en caso de fallo */
+    //Mensaje de error que se muestra en la UI en caso de fallo
     val errorMessage: String? = null
 ) {
-    /**
+    /*
      * Computed property para habilitar o deshabilitar el botón de login.
      *
      * - El botón solo está habilitado si:

@@ -117,14 +117,14 @@ fun LoginScreenPreview() {
 /**
  * notas:
  *
- * - **Box**: Contenedor que permite centrar y superponer elementos.
- * - **Column**: Organiza los hijos verticalmente.
- * - **Modifier.fillMaxSize()**: La UI ocupa todo el espacio disponible.
- * - **Modifier.padding()**: Aplica márgenes internos para separar los elementos de los bordes.
- * - **TextFieldsComponent()**: Contiene los campos de entrada de usuario, email y contraseña.
- * - **ButtonAcept / ButtonCancel**: Botones reutilizables para aceptar o cancelar la acción.
- * - **navController.navigate(route)**: Navega a la ruta definida dentro de la navegación de Compose.
- * - **@Preview**: Permite previsualizar la UI en el IDE sin ejecutar la app.
+ * - Box: Contenedor que permite centrar y superponer elementos.
+ * - Column: Organiza los hijos verticalmente.
+ * - Modifier.fillMaxSize(): La UI ocupa todo el espacio disponible.
+ * - Modifier.padding(): Aplica márgenes internos para separar los elementos de los bordes.
+ * - TextFieldsComponent(): Contiene los campos de entrada de usuario, email y contraseña.
+ * - ButtonAcept / ButtonCancel: Botones reutilizables para aceptar o cancelar la acción.
+ * - navController.navigate(route): Navega a la ruta definida dentro de la navegación de Compose.
+ * - @Preview: Permite previsualizar la UI en el IDE sin ejecutar la app.
  *
  * Nota: Se puede conectar con el ViewModel para validar campos antes de navegar.
  */
@@ -133,12 +133,12 @@ fun LoginScreenPreview() {
 /**
  * NOTAS
  *
- * - **OutlinedTextField**: Campo de texto con borde, permite customizar colores y visibilidad de la contraseña.
- * - **TextFieldDefaults.outlinedTextFieldColors**: Personaliza colores de texto, borde, cursor y label.
- * - **LaunchedEffect(Unit)**: Ejecuta código solo una vez al entrar en composición; aquí escucha eventos del ViewModel.
- * - **collectAsState()**: Convierte un StateFlow en un estado observable en Compose.
- * - **Row / Column**: Organiza elementos horizontal o verticalmente.
- * - **Spacer**: Añade espacio entre elementos.
- * - **ButtonAcept / ButtonCancel**: Componentes reutilizables para acciones principales y secundarias.
+ * - OutlinedTextField: Campo de texto con borde, permite customizar colores y visibilidad de la contraseña.
+ * - TextFieldDefaults.outlinedTextFieldColors: Personaliza colores de texto, borde, cursor y label.
+ * - LaunchedEffect(Unit): Ejecuta código solo una vez al entrar en composición; aquí escucha eventos del ViewModel.
+ * - collectAsState(): Convierte un StateFlow en un estado observable en Compose.
+ * - Row / Column: Organiza elementos horizontal o verticalmente.
+ * - Spacer: Añade espacio entre elementos.
+ * - ButtonAcept / ButtonCancel: Componentes reutilizables para acciones principales y secundarias.
  */
 

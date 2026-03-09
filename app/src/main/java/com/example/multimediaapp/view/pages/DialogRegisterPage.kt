@@ -80,9 +80,9 @@ fun DialogPrev() {
         )
 }
 /**NOTAS:
- * 1. **AlertDialog**: Componente de Jetpack Compose que permite mostrar un diálogo modal.
- * 2. **onDismissRequest**: Callback que se ejecuta cuando el usuario toca fuera del diálogo.
- * 3. **confirmButton / dismissButton**: Botones que ejecutan acciones de confirmación o cancelación.
+ * 1. **AlertDialog: Componente de Jetpack Compose que permite mostrar un diálogo modal.
+ * 2. **onDismissRequest: Callback que se ejecuta cuando el usuario toca fuera del diálogo.
+ * 3. **confirmButton / dismissButton: Botones que ejecutan acciones de confirmación o cancelación.
  * 4. **collectAsState()**: Convierte un StateFlow del ViewModel en un estado observable por Compose.
  * 5. **Preview**: Permite ver el diálogo en tiempo de diseño sin ejecutar la app.
  */

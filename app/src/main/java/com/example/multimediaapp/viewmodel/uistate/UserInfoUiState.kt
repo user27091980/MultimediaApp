@@ -18,17 +18,17 @@ data class UserInfoListUiState(
  * - Puede ser creado a partir de datos del repositorio o base de datos.
  */
 data class UserInfoUiState(
-    /** ID único del usuario */
+    //ID único del usuario
     val id: String = "",
-    /** Correo electrónico del usuario */
+    //Correo electrónico del usuario
     val email: String = "",
-    /** Nombre de usuario (login) */
+    // Nombre de usuario (login)
     val user: String = "",
-    /** País del usuario */
+    // País del usuario
     val country: String = "",
-    /** Nombre de pila del usuario */
+    //Nombre de pila del usuario
     val name: String = "",
-    /** Apellido del usuario */
+    //Apellido del usuario
     val surname: String = ""
 )
 

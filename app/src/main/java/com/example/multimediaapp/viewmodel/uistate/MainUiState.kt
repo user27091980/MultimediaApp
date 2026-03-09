@@ -1,6 +1,5 @@
 package com.example.multimediaapp.viewmodel.uistate
 
-import com.example.multimediaapp.model.BandDTO
 import com.example.multimediaapp.model.MainDTO
 
 /**

@@ -8,11 +8,11 @@ package com.example.multimediaapp.viewmodel.uistate
  * - Contiene la lista de usuarios, un indicador de carga y posibles errores.
  */
 data class UserListUiState(
-    /** Lista de usuarios que se mostrarán en la UI */
+    // Lista de usuarios que se mostrarán en la UI
     val users: List<UserUIState> = emptyList(),
-    /** Indica si se están cargando datos (por ejemplo desde un repositorio o API) */
+    //Indica si se están cargando datos (por ejemplo desde un repositorio o API)
     val isLoading: Boolean = false,
-    /** Mensaje de error en caso de fallo al cargar o manipular datos */
+    //Mensaje de error en caso de fallo al cargar o manipular datos
     val error: String? = null
 )
 
@@ -23,11 +23,11 @@ data class UserListUiState(
  * - Puede usarse directamente para mostrar información en la pantalla.
  */
 data class UserUIState(
-    /** ID único del usuario */
+    //ID único del usuario
     val id: String,
-    /** Nombre de usuario */
+    //Nombre de usuario
     val user: String,
-    /** Contraseña del usuario (para propósitos de UI, nunca se debería exponer en texto plano en producción) */
+    //Contraseña del usuario (para propósitos de UI, nunca se debería exponer en texto plano en producción)
     val pass: String
 
 )

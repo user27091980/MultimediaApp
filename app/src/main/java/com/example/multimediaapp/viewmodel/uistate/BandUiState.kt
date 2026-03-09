@@ -17,19 +17,19 @@ data class BandListUiState(val bands: List<BandUiState> = ArrayList())
  *   una banda en la UI.
  */
 data class BandUiState(
-    /** ID único de la banda */
+    // ID único de la banda
     val id: String,
-    /** Nombre de la banda */
+    //Nombre de la banda
     val name: String,
-    /** Descripción o biografía de la banda */
+    // Descripción o biografía de la banda
     val textInfo: String,
-    /** Imagen principal o cabecera de la banda */
+    //Imagen principal o cabecera de la banda
     val headerImage: String,
-    /** Lista de imágenes de álbumes de la banda */
+    //Lista de imágenes de álbumes de la banda
     val albumImages: List<String>,
-    /** Estilo o género musical de la banda */
+    //Estilo o género musical de la banda
     val style: String,
-    /** Discográfica a la que pertenece la banda */
+    //Discográfica a la que pertenece la banda
     val recordLabel: String,
     // Componentes o integrantes de la banda
     val components: String,
