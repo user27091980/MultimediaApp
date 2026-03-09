@@ -12,6 +12,7 @@ import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
@@ -79,9 +80,10 @@ fun UserInfoScreen(
  * Preview para la pantalla de información del usuario
  * Permite ver cómo se verá el Composable sin ejecutar la app
  */
-@Preview
+@Preview(showBackground = true)
 @Composable
 fun UserInfoScreenPreview() {
+    // Creamos un usuario de prueba
     val previewUser = UserInfoUiState(
         id = "1",
         email = "user@example.com",
@@ -90,9 +92,20 @@ fun UserInfoScreenPreview() {
         name = "Andrés",
         surname = "García"
     )
-    val previewState = UserInfoListUiState(userInfo = listOf(previewUser))
-    val previewVM = UserInfoVM(initialState = previewState)
 
-    UserInfoScreen(userInfoId = "1", vm = previewVM)
+    // Creamos un estado inicial con ese usuario
+    val previewState = UserInfoListUiState(
+        userInfo = listOf(previewUser)
+    )
+
+    // Creamos un ViewModel de prueba pasando el estado inicial
+    // Aquí usamos Context de Compose (no real en preview)
+    val previewVM = UserInfoVM(LocalContext.current, initialState = previewState)
+
+    // Llamamos al Composable con el ViewModel de prueba
+    UserInfoScreen(
+        userInfoId = "1",
+        vm = previewVM
+    )
 }
 
