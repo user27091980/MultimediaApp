@@ -1,7 +1,8 @@
 package com.example.multimediaapp.data.repository
 
 // Importa el modelo de usuario
-import com.example.multimediaapp.model.UsersDTO
+import com.example.multimediaapp.model.LoginDTO
+import com.example.multimediaapp.session.SessionManager
 
 /**
  * Repositorio que maneja operaciones CRUD sobre los usuarios.
@@ -10,19 +11,20 @@ import com.example.multimediaapp.model.UsersDTO
  * Puede ser reemplazado por API o base de datos real en el futuro.
  */
 
-class UsersRepo {
+class LoginRepo {
+
     /**
      * Companion object para almacenar los usuarios y el contador de IDs
-     * de manera estática, accesible desde cualquier instancia de UsersRepo.
+     * de manera estática, accesible desde cualquier instancia de LoginRepo.
      */
     companion object {
         // Lista en memoria de usuarios iniciales
-        val users = ArrayList<UsersDTO>(
+        val users = ArrayList<LoginDTO>(
             listOf(
-                UsersDTO("0", "aaaa@gmail.com", "user1", "1234"),
-                UsersDTO("1", "bbbb@gmail.com", "user2", "1234"),
-                UsersDTO("2", "cccc@gmail.com", "user3", "1234"),
-                UsersDTO("3", "dddd@gmail.com", "user4", "1234")
+                LoginDTO("0", "aaaa@gmail.com", "user1", "1234"),
+                LoginDTO("1", "bbbb@gmail.com", "user2", "1234"),
+                LoginDTO("2", "cccc@gmail.com", "user3", "1234"),
+                LoginDTO("3", "dddd@gmail.com", "user4", "1234")
             )
         )
         var currId = 4
@@ -31,13 +33,13 @@ class UsersRepo {
 
     //crud
 
-    fun readAll(onSuccess: (List<UsersDTO>) -> Unit, onError: () -> Unit) {
+    fun readAll(onSuccess: (List<LoginDTO>) -> Unit, onError: () -> Unit) {
         onSuccess(users.toList())//evitamos que se pueda modificar desde fuera
     }
 
     fun create(
-        est: UsersDTO,
-        onSuccess: (usuarioCreado: UsersDTO) -> Unit,
+        est: LoginDTO,
+        onSuccess: (usuarioCreado: LoginDTO) -> Unit,
         onError: () -> Unit
     ) {
 
@@ -51,7 +53,7 @@ class UsersRepo {
 
     fun read(
         id: String,
-        onSuccess: (UsersDTO?) -> Unit,
+        onSuccess: (LoginDTO?) -> Unit,
         onError: () -> Unit
     ) {
         val user = users.find { it.id == (id) }
@@ -71,4 +73,5 @@ class UsersRepo {
         else
             onError()
     }
+
 }
