@@ -1,108 +1,118 @@
-// Paquete donde se encuentra el repositorio.
-// Forma parte de la capa data dentro del módulo repository.
 package com.example.multimediaapp.data.repository
-// Importa el modelo de datos que representa la información de usuario.
+
+import android.content.Context
+import com.example.multimediaapp.model.LoginDTO
 import com.example.multimediaapp.model.UsersInfoDTO
+import com.example.multimediaapp.session.SessionManager
 
-// Clase repositorio que gestiona los datos de usuarios.
-// Actualmente funciona en memoria (no usa base de datos real).
-class UsersInfoRepo {
-    // Companion object → variables estáticas compartidas
-    // entre todas las instancias del repositorio.
+class UsersInfoRepo(context: Context) {
+
+    private val session = SessionManager(context)
+    private val loginRepo = LoginRepo() // Repo simulado de LoginDTO
+
     companion object {
-        // Lista mutable que almacena los usuarios.
-        // Se inicializa con algunos datos de prueba (hardcoded).
-
         val usersInfo = ArrayList<UsersInfoDTO>(
             listOf(
-                UsersInfoDTO("0", "aaaa@gmail.com", "user1", "England", "Paco", "Smith"),
-                UsersInfoDTO("1", "bbbb@gmail.com", "user2", "USA", "Pedro", "Sánchez"),
-                UsersInfoDTO("2", "cccc@gmail.com", "user3", "Spain", "Perico", "Tercero"),
-                UsersInfoDTO("3", "dddd@gmail.com", "user4", "Germany", "Adolf", "Gütemberg")
+                UsersInfoDTO("0", "user1", "aaaa@gmail.com", "England", "Paco", "Smith"),
+                UsersInfoDTO("1", "user2", "bbbb@gmail.com", "USA", "Pedro", "Sánchez"),
+                UsersInfoDTO("2", "user3", "cccc@gmail.com", "Spain", "Perico", "Tercero"),
+                UsersInfoDTO("3", "user4", "dddd@gmail.com", "Germany", "Adolf", "Gütemberg")
             )
         )
-
-        // Variable que guarda el siguiente ID disponible.
-        // Se incrementa cada vez que se crea un usuario nuevo.
         var currId = 4
-
     }
 
-    //CRUD
-
-    /*READ ALL
-    Devuelve todos los usuarios.
-
-     */
+    //CRUD básico sobre UsersInfoDTO
     fun readAll(onSuccess: (List<UsersInfoDTO>) -> Unit, onError: () -> Unit) {
-        onSuccess(usersInfo.toList())//evitamos que se pueda modificar desde fuera
+        onSuccess(usersInfo.toList())
     }
 
-    // CREATE
-    // Crea un nuevo usuario.
     fun create(
-        est: UsersInfoDTO,
-        onSuccess: (usuarioCreado: UsersInfoDTO) -> Unit,
+        user: UsersInfoDTO,
+        onSuccess: (UsersInfoDTO) -> Unit,
         onError: () -> Unit
     ) {
-        // Se crea una copia del usuario recibido,
-        // asignándole un nuevo ID autoincremental.
-        val newUser = est.copy(id = currId++.toString())
-        // Si se añade correctamente a la lista → éxito
-        if (usersInfo.add(newUser))
-            onSuccess(newUser)
-        else
-            onError()
-
+        val newUser = user.copy(id = currId++.toString())
+        if (usersInfo.add(newUser)) onSuccess(newUser) else onError()
     }
 
-    // READ (por ID)
-    // Busca un usuario por su ID.
-    fun read(
-        id: String,
-        onSuccess: (UsersInfoDTO?) -> Unit,
-        onError: () -> Unit
-    ) {
-        // Busca el primer usuario cuyo id coincida.
+    fun read(id: String, onSuccess: (UsersInfoDTO?) -> Unit, onError: () -> Unit) {
         val user = usersInfo.find { it.id == id }
-        if (user != null)
-            onSuccess(user)
-        else
-            onError()
+        if (user != null) onSuccess(user) else onError()
     }
-
-    // DELETE
-    // Elimina un usuario por ID.
-    fun delete(
-        id: String,
-        onSuccess: () -> Unit,
-        onError: () -> Unit
-    ) {
-        // removeIf devuelve true si eliminó algún elemento.
-        if (usersInfo.removeIf { it.id == (id) })
-            onSuccess()
-        else
-            onError()
-    }
-
-    //UPDATE
-    //Actualiza usuario por ID
 
     fun update(
         updatedUser: UsersInfoDTO,
         onSuccess: (UsersInfoDTO) -> Unit,
         onError: () -> Unit
     ) {
-        // Buscamos la posición del usuario con el mismo ID
         val index = usersInfo.indexOfFirst { it.id == updatedUser.id }
-
         if (index != -1) {
-            // Reemplazamos el usuario antiguo por el nuevo
             usersInfo[index] = updatedUser
             onSuccess(updatedUser)
-        } else {
-            onError()
+        } else onError()
+    }
+
+    fun delete(id: String, onSuccess: () -> Unit, onError: () -> Unit) {
+        if (usersInfo.removeIf { it.id == id }) onSuccess() else onError()
+    }
+
+    // LOGIN usando LoginRepo simulado
+    suspend fun login(email: String, password: String): Result<UsersInfoDTO> {
+        return try {
+            var foundUser: LoginDTO? = null
+            loginRepo.readAll(
+                onSuccess = { users ->
+                    foundUser = users.find { it.email == email && it.pass == password }
+                },
+                onError = { }
+            )
+
+            if (foundUser != null) {
+                val userInfo = UsersInfoDTO(
+                    id = foundUser!!.id,
+                    user = foundUser!!.user,
+                    email = foundUser!!.email,
+                    country = "",
+                    name = "",
+                    surname = ""
+                )
+                session.saveUser(userInfo)
+                Result.success(userInfo)
+            } else {
+                Result.failure(Exception("Usuario o contraseña incorrectos"))
+            }
+        } catch (e: Exception) {
+            Result.failure(e)
         }
     }
 
+    // REGISTRO usando LoginRepo simulado
+    suspend fun register(user: String, email: String, password: String): Result<UsersInfoDTO> {
+        return try {
+            var newUserDTO: LoginDTO? = null
+            val loginUser = LoginDTO(id = "", email = email, user = user, pass = password)
+
+            loginRepo.create(loginUser,
+                onSuccess = { newUserDTO = it },
+                onError = { throw Exception("Error al registrar usuario") }
+            )
+
+            val userInfo = UsersInfoDTO(
+                id = newUserDTO!!.id,
+                user = newUserDTO!!.user,
+                email = newUserDTO!!.email,
+                country = "",
+                name = "",
+                surname = ""
+            )
+            session.saveUser(userInfo)
+            Result.success(userInfo)
+        } catch (e: Exception) {
+            Result.failure(e)
+        }
+    }
+
+    fun getLoggedUser(): UsersInfoDTO? = session.getUser()
+    fun logout() = session.logout()
 }

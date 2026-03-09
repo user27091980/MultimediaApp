@@ -7,7 +7,7 @@ package com.example.multimediaapp.model
  * evitando cambios accidentales después de la creación.
  */
 //usar val para evitar mutabilidad
-data class UsersDTO(
+data class LoginDTO(
     val id: String,
     val email: String,
     val user: String,

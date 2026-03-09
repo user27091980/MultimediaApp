@@ -13,7 +13,7 @@ data class UsersInfoEntity(
     @SerializedName("apellidos") val surname: String,
 )
 
-//mapper para convertir en UsersDTO
+//mapper para convertir en LoginDTO
 fun UsersInfoEntity.toDTO(): UsersInfoDTO = UsersInfoDTO(
     id = id,
     email = email,
