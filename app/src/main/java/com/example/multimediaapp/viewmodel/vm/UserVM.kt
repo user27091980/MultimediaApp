@@ -1,7 +1,7 @@
 package com.example.multimediaapp.viewmodel.vm
 
 import androidx.lifecycle.ViewModel
-import com.example.multimediaapp.data.repository.UsersRepo
+import com.example.multimediaapp.data.repository.LoginRepo
 import com.example.multimediaapp.viewmodel.uistate.UserListUiState
 import com.example.multimediaapp.viewmodel.uistate.UserUIState
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -36,7 +36,7 @@ class UserVM : ViewModel() {
      * - Base de datos Room
      * - Firebase
      */
-    private val repo: UsersRepo = UsersRepo()
+    private val repo: LoginRepo = LoginRepo()
 
     /**
      * Reinicia el estado.

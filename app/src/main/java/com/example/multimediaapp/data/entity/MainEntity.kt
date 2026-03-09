@@ -11,7 +11,7 @@ data class MainEntity(
     @SerializedName("imagenBanda") val imageBand: String
 )
 
-//mapper para convertir en UsersDTO
+//mapper para convertir en LoginDTO
 fun MainEntity.toDTO(): MainDTO = MainDTO(
     id = id,
     bandName = bandName,

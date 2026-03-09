@@ -3,7 +3,7 @@ package com.example.multimediaapp.network
 // Modelo de datos que representa la respuesta del servidor
 import com.example.multimediaapp.model.BandDTO
 import com.example.multimediaapp.model.MainDTO
-import com.example.multimediaapp.model.UsersDTO
+import com.example.multimediaapp.model.LoginDTO
 import com.example.multimediaapp.model.UsersInfoDTO
 // Clase wrapper que contiene:
 // - body()
@@ -16,7 +16,6 @@ import retrofit2.converter.gson.GsonConverterFactory
 import retrofit2.http.GET
 import retrofit2.http.PUT
 import retrofit2.http.Path
-import retrofit2.http.Query
 
 /*
 @Path → se usa para reemplazar partes de la URL ({id}).
@@ -64,10 +63,10 @@ interface MultimediaApiService {
     suspend fun getAlbumImages(@Path("discos") albumImages: List<String>): Response<BandDTO>
 
     @GET("json/users/{id}")
-    suspend fun getUsers(@Path("id") userId: String): Response<UsersDTO>
+    suspend fun getUsers(@Path("id") userId: String): Response<LoginDTO>
 
     @PUT("json/users/{id}")
-    suspend fun updateUser(@Path("id") userId: String): Response<UsersDTO>
+    suspend fun updateUser(@Path("id") userId: String): Response<LoginDTO>
 
     @GET("json/users/{id}")
     suspend fun getUsersInfo(@Path("id") userId: String): Response<UsersInfoDTO>
