@@ -84,11 +84,11 @@ fun LoginRegScreenPreview() {
 /**
  * notas:
  *
- * - **Box**: Contenedor que permite posicionar elementos con alineación y superposición.
- * - **Column**: Organiza elementos de manera vertical.
- * - **horizontalAlignment / verticalArrangement**: Controlan alineación y separación de los hijos.
- * - **Modifier.padding / fillMaxSize / background**: Permiten ajustar tamaño, márgenes y fondo.
- * - **ButtonLogin / ButtonRegister**: Componentes reutilizables para acciones principales.
- * - **navController.navigate(route)**: Permite cambiar de pantalla dentro de la navegación de Compose.
- * - **@Preview**: Permite ver la UI en el IDE sin ejecutar la app.
+ * - Box Contenedor que permite posicionar elementos con alineación y superposición.
+ * - Column: Organiza elementos de manera vertical.
+ * - horizontalAlignment / verticalArrangement: Controlan alineación y separación de los hijos.
+ * - Modifier.padding / fillMaxSize / background: Permiten ajustar tamaño, márgenes y fondo.
+ * - ButtonLogin / ButtonRegister: Componentes reutilizables para acciones principales.
+ * - navController.navigate(route): Permite cambiar de pantalla dentro de la navegación de Compose.
+ * - @Preview: Permite ver la UI en el IDE sin ejecutar la app.
  */
