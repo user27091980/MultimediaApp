@@ -19,7 +19,7 @@ import kotlinx.coroutines.flow.asStateFlow
  * - Interactúa con UsersInfoRepo, que requiere Context.
  * - Permite precargar un estado inicial (útil para previews o pruebas).
  */
-class UserInfoVM(context: Context,
+class UserInfoVM(context: Context?=null,
                  initialState: UserInfoListUiState? = null
 ) : ViewModel(){
     // ESTADO OBSERVABLE
@@ -30,7 +30,7 @@ class UserInfoVM(context: Context,
     // REPOSITORIO
     // Instancia del repositorio de usuarios
     // Nota: si UsersInfoRepo requiere contexto, asegurarse de pasarlo en el constructor
-    private val repo: UsersInfoRepo = UsersInfoRepo(context)
+    private val repo: UsersInfoRepo? = context?.let { UsersInfoRepo(it) }
     // CARGA DE DATOS
     /**
      * Carga los datos de un usuario por ID.
@@ -42,12 +42,12 @@ class UserInfoVM(context: Context,
      * @param userId ID del usuario a cargar.
      */
     fun loadUser(userId: String) {
-        // Si ya tenemos el usuario, no hacemos nada
-        if (_uiState.value.userInfo.any { it.id == userId }) return // ya cargado
-        // Llamada al repositorio para leer el usuario
-        repo.read(userId, { data ->
+        // Si el usuario ya está cargado, no hacemos nada
+        if (_uiState.value.userInfo.any { it.id == userId }) return
+
+        // Solo intentamos leer si tenemos repo real
+        repo?.read(userId, { data ->
             data?.let {
-                // Mapear el DTO recibido a la UIState
                 val mapped = UserInfoUiState(
                     id = it.id,
                     email = it.email,
@@ -56,11 +56,10 @@ class UserInfoVM(context: Context,
                     name = it.name,
                     surname = it.surname
                 )
-                // Actualizar el estado con el nuevo usuario
                 _uiState.value = UserInfoListUiState(userInfo = listOf(mapped))
             }
         }) {
-            // manejar error
+            // manejar error (opcional)
         }
     }
 }
