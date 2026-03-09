@@ -97,13 +97,14 @@ class BandsRepo {
                         "Drukqs",
                         "Hangable Auto Bulb",
                         "...i care because you do"
-
                     ),
                     albumLinks = listOf(
-                        "https://www.youtube.com/watch?v=sWcLccMuCA8&list=PLmGuMvhZ3-aPMfmoKpQ6WE3bSTkBFuaSl",
-                        "https://www.youtube.com/playlist?list=OLAK5uy_kZb_rG2RQfOcyfRPpp3ZTThnCRHDzHQO0",
+                        "https://www.youtube.com/playlist?list=OLAK5uy_kWLa7L4b7s7TTTtf2Mku7oQ3M2obgG5Xg",
                         "https://www.youtube.com/playlist?list=OLAK5uy_kqtENKafwOg96cqWcB0BVuFCf2iTroYqk",
-                        "https://www.youtube.com/watch?v=CWwgWWfb2u4&list=PLk5ImplHgDw0s4mwh1D9r_Mo7sMZIdyEn",
+                        "https://www.youtube.com/playlist?list=OLAK5uy_kZb_rG2RQfOcyfRPpp3ZTThnCRHDzHQO0",
+                        "https://www.youtube.com/playlist?list=OLAK5uy_mnSPe56JhXwaXOG43cxrxds-qPitSZ2HI",
+                        "https://www.youtube.com/playlist?list=OLAK5uy_luEur9V6VWGm0oMYWJlNgRHlsvEOaAHww",
+                        "https://www.youtube.com/playlist?list=OLAK5uy_lmJE2foS5aHr3JB-dbRANISse_toOIk-I",
                         "https://www.youtube.com/playlist?list=OLAK5uy_lkdpFMWST_gPGQ9hKW6Pvum5ybfLhOGjs"
                     ),
                     headerLink = "https://aphextwin.warp.net/"
