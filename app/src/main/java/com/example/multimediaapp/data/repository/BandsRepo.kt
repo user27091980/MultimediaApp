@@ -5,7 +5,7 @@ package com.example.multimediaapp.data.repository
 import com.example.multimediaapp.model.BandDTO
 
 // Clase repositorio que simula una fuente de datos en memoria.
-// Aquí se gestiona el CRUD(CREATE, READ, UPDATE, DELETE) de bandas.
+// Aquí se gestiona el CRUD(CREATE, READ, UPDATE, DELETE) de bandas..
 class BandsRepo {
     // Companion object → funciona como un bloque estático en Java.
     // Las propiedades aquí definidas pertenecen a la clase y no a la instanci
