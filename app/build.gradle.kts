@@ -83,6 +83,7 @@ dependencies {
     implementation(libs.androidx.material3)
     implementation(libs.androidx.benchmark.common)
     implementation(libs.material3)
+    implementation(libs.ui)
 
     // Testing
     testImplementation(libs.junit)

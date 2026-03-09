@@ -68,7 +68,6 @@ object DialogRoute : NavRoute
 @Serializable
 object SettingsRoute : NavRoute
 
-
 /**
  * ===APUNTES====
  * /*emplear data class para rutas con parámetros:

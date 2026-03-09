@@ -15,4 +15,5 @@
     <string name="correo">email</string>
     <string name="discografia">discografía</string>
     <string name="info">información</string>
+    <string name="splash">Music App</string>
 </resources>
