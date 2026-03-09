@@ -83,7 +83,7 @@ fun UserInfoScreen(
 @Preview(showBackground = true)
 @Composable
 fun UserInfoScreenPreview() {
-    // Creamos un usuario de prueba
+    // Usuario de prueba
     val previewUser = UserInfoUiState(
         id = "1",
         email = "user@example.com",
@@ -93,16 +93,15 @@ fun UserInfoScreenPreview() {
         surname = "García"
     )
 
-    // Creamos un estado inicial con ese usuario
+    // Estado inicial
     val previewState = UserInfoListUiState(
         userInfo = listOf(previewUser)
     )
 
-    // Creamos un ViewModel de prueba pasando el estado inicial
-    // Aquí usamos Context de Compose (no real en preview)
-    val previewVM = UserInfoVM(LocalContext.current, initialState = previewState)
+    // ViewModel de preview: sin context, solo con estado inicial
+    val previewVM = UserInfoVM(initialState = previewState)
 
-    // Llamamos al Composable con el ViewModel de prueba
+    // Llamamos al Composable
     UserInfoScreen(
         userInfoId = "1",
         vm = previewVM
