@@ -113,7 +113,7 @@ fun TopBar(navController: NavHostController) {
             )
             // Logout
             DropdownMenuItem(
-                text = { Text(text = "Logout") },
+                text = { Text(text = stringResource(R.string.logout)) },
                 onClick = {
                     isExpanded = false
                     sessionManager.logout()

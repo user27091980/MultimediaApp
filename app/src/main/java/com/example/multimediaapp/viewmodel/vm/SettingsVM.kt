@@ -15,10 +15,10 @@ import kotlinx.coroutines.flow.asStateFlow
  */
 class SettingsVM : ViewModel() {
 
-    /** Estado interno mutable */
+    //Estado interno mutable
     private val _uiState = MutableStateFlow(SettingsUiState(darkMode = false))
 
-    /** Estado expuesto como solo lectura */
+    //Estado expuesto como solo lectura
     val uiState: StateFlow<SettingsUiState> = _uiState
 
     /**
