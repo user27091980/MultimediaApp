@@ -24,10 +24,10 @@ class UsersInfoRepo(context: Context) {
         // Lista simulada de usuarios
         val usersInfo = ArrayList<UsersInfoDTO>(
             listOf(
-                UsersInfoDTO("0", "user1", "aaaa@gmail.com", "England", "Paco", "Smith"),
-                UsersInfoDTO("1", "user2", "bbbb@gmail.com", "USA", "Pedro", "Sánchez"),
-                UsersInfoDTO("2", "user3", "cccc@gmail.com", "Spain", "Perico", "Tercero"),
-                UsersInfoDTO("3", "user4", "dddd@gmail.com", "Germany", "Adolf", "Gütemberg")
+                UsersInfoDTO("0", "user1", "aaaa@gmail.com", "Paco", "Smith"),
+                UsersInfoDTO("1", "user2", "bbbb@gmail.com", "Pedro", "Sánchez"),
+                UsersInfoDTO("2", "user3", "cccc@gmail.com", "Perico", "Tercero"),
+                UsersInfoDTO("3", "user4", "dddd@gmail.com", "Adolf", "Gütemberg")
             )
         )
         // Contador de IDs para nuevos usuarios
@@ -113,9 +113,8 @@ class UsersInfoRepo(context: Context) {
                 // Convertimos LoginDTO a UsersInfoDTO
                 val userInfo = UsersInfoDTO(
                     id = foundUser!!.id,
-                    user = foundUser!!.user,
+                    user = "",
                     email = foundUser!!.email,
-                    country = "",
                     name = "",
                     surname = ""
                 )
@@ -151,7 +150,6 @@ class UsersInfoRepo(context: Context) {
                 id = newUserDTO!!.id,
                 user = newUserDTO!!.user,
                 email = newUserDTO!!.email,
-                country = "",
                 name = "",
                 surname = ""
             )

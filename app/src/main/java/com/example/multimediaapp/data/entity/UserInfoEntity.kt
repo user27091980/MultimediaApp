@@ -8,7 +8,6 @@ data class UsersInfoEntity(
     val id: String,
     @SerializedName("email") val email: String,
     @SerializedName("usuario") val user: String,
-    @SerializedName("pais") val country: String,
     @SerializedName("nombre") val name: String,
     @SerializedName("apellidos") val surname: String,
 )
@@ -18,7 +17,6 @@ fun UsersInfoEntity.toDTO(): UsersInfoDTO = UsersInfoDTO(
     id = id,
     email = email,
     user = user,
-    country = country,
     name = name,
     surname = surname
 
