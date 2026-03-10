@@ -27,7 +27,7 @@ import androidx.navigation.NavHostController
 import com.example.multimediaapp.R
 import com.example.multimediaapp.navigation.ObjRoutes
 import com.example.multimediaapp.ui.theme.rowModifier
-
+import com.example.multimediaapp.session.SessionManager
 /**
  * Composable que representa la barra superior de la aplicación (TopBar)
  *
@@ -46,6 +46,7 @@ fun TopBar(navController: NavHostController) {
     val context = LocalContext.current
     // Intenta obtener la Activity actual desde el contexto, útil para cerrar la app
     val activity = context as? Activity
+    val sessionManager = SessionManager(context)
     // Fila horizontal que contiene los iconos y la barra superior
     Row(
         rowModifier,
@@ -110,18 +111,13 @@ fun TopBar(navController: NavHostController) {
                     }
                 }
             )
+            // Logout
             DropdownMenuItem(
-                text = { Text(text = stringResource(R.string.logOut)) },
+                text = { Text(text = "Logout") },
                 onClick = {
                     isExpanded = false
+                    sessionManager.logout()
 
-                    // Aquí limpiarías la sesión (token, usuario, etc)
-                    val sharedPreferences =
-                        context.getSharedPreferences("user_session", Activity.MODE_PRIVATE)
-
-                    sharedPreferences.edit().clear().apply()
-
-                    // Navegar al login y limpiar el backstack
                     navController.navigate(ObjRoutes.LOGIN) {
                         popUpTo(0)
                     }
