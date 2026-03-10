@@ -1,77 +1,53 @@
 package com.example.multimediaapp.data.repository
 
-import com.example.multimediaapp.data.entity.BandEntity
-import com.example.multimediaapp.data.entity.toDTO
 import com.example.multimediaapp.model.BandDTO
-import com.example.multimediaapp.network.ApiService
 
-// Interfaz del repositorio para BandEntity / BandDTO
-interface IBandRepo {
+/**
+ * Implementación en memoria de IBandsRepo.
+ * Simula un repositorio con CRUD de bandas.
+ */
+class BandRepo : IBandsRepo {
 
-    suspend fun getBands(): List<BandDTO>
+    // Lista mutable que almacena todas las bandas
+    private val bands = mutableListOf<BandDTO>()
 
-    suspend fun getBandById(id: String): BandDTO?
+    // Último ID usado, se incrementa al crear nuevas bandas
+    private var currId = 0
 
-    suspend fun createBand(band: BandDTO): BandDTO?
 
-    suspend fun updateBand(id: String, band: BandDTO): BandDTO?
+    // CRUD
 
-    suspend fun deleteBand(id: String): Boolean
-}
-
-// Implementación del repositorio usando Retrofit
-class BandsRepo(private val apiService: ApiService) : IBandRepo {
-
-    override suspend fun getBands(): List<BandDTO> {
-        val response = apiService.getBands()
-        return if (response.isSuccessful) {
-            response.body()?.map { it.toDTO() } ?: emptyList()
-        } else emptyList()
+    // CREATE
+    override fun createBand(band: BandDTO): BandDTO {
+        currId++
+        val newBand = band.copy(id = currId.toString())
+        bands.add(newBand)
+        return newBand
     }
 
-    override suspend fun getBandById(id: String): BandDTO? {
-        val response = apiService.getBandById(id)
-        return if (response.isSuccessful) response.body()?.toDTO() else null
+    // READ ALL
+    override fun getAllBands(): List<BandDTO> {
+        return bands.toList() // Copia inmutable
     }
 
-    override suspend fun createBand(band: BandDTO): BandDTO? {
-        val entity = BandEntity(
-            id = band.id,
-            name = band.name,
-            textInfo = band.textInfo,
-            headerImage = band.headerImage,
-            albumImages = band.albumImages,
-            style = band.style,
-            recordLabel = band.recordLabel,
-            components = band.components,
-            discography = band.discography,
-            albumLinks = band.albumLinks,
-            headerLink = band.headerLink
-        )
-        val response = apiService.createBand(entity)
-        return if (response.isSuccessful) response.body()?.toDTO() else null
+    // READ por ID
+    override fun getBandById(id: String): BandDTO? {
+        return bands.find { it.id == id }
     }
 
-    override suspend fun updateBand(id: String, band: BandDTO): BandDTO? {
-        val entity = BandEntity(
-            id = band.id,
-            name = band.name,
-            textInfo = band.textInfo,
-            headerImage = band.headerImage,
-            albumImages = band.albumImages,
-            style = band.style,
-            recordLabel = band.recordLabel,
-            components = band.components,
-            discography = band.discography,
-            albumLinks = band.albumLinks,
-            headerLink = band.headerLink
-        )
-        val response = apiService.updateBand(id, entity)
-        return if (response.isSuccessful) response.body()?.toDTO() else null
+    // UPDATE
+    override fun updateBand(band: BandDTO): Boolean {
+        val index = bands.indexOfFirst { it.id == band.id }
+        return if (index != -1) {
+            bands[index] = band
+            true
+        } else {
+            false
+        }
     }
 
-    override suspend fun deleteBand(id: String): Boolean {
-        val response = apiService.deleteBand(id)
-        return response.isSuccessful
+    // DELETE
+    override fun deleteBand(id: String): Boolean {
+        return bands.removeIf { it.id == id }
     }
 }
