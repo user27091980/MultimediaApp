@@ -113,7 +113,7 @@ class UsersInfoRepo(context: Context) {
                 // Convertimos LoginDTO a UsersInfoDTO
                 val userInfo = UsersInfoDTO(
                     id = foundUser!!.id,
-                    user = foundUser!!.user,
+                    user = "",
                     email = foundUser!!.email,
                     country = "",
                     name = "",

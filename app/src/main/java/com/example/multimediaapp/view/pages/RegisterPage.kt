@@ -71,9 +71,15 @@ fun RegisterScreen(
                     user = uiState.user,
                     email = uiState.email,
                     pass = uiState.pass,
+                    country = uiState.country,
+                    name=uiState.name,
+                    surname=uiState.surname,
                     onUserChange = vm::onUserChange,
                     onEmailChange = vm::onEmailChange,
-                    onPassChange = vm::onPassChange
+                    onPassChange = vm::onPassChange,
+                    onCountryChange = vm::onCountryChange,
+                    onNameChange = vm::onNameChange,
+                    onSurnameChange = vm::onSurnameChange
                 )
                 // Mostramos error si existe
                 uiState.errorMessage?.let { error ->
