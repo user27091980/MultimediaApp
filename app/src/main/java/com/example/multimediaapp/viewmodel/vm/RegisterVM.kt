@@ -20,9 +20,11 @@ import kotlinx.coroutines.launch
 class RegisterVM(application: Application) : AndroidViewModel(application) {
     // Repositorio que maneja la persistencia/lectura de usuarios
     private val repo = UsersInfoRepo(application.applicationContext)
+
     // ESTADO DE LA UI
     // MutableStateFlow que mantiene el estado actual del formulario de registro
     private val _uiState = MutableStateFlow(RegisterFormUiState())
+
     // Exponemos el estado como inmutable para que la UI lo observe
     val uiState: StateFlow<RegisterFormUiState> = _uiState
 
@@ -31,15 +33,28 @@ class RegisterVM(application: Application) : AndroidViewModel(application) {
     fun onUserChange(newUser: String) {
         _uiState.value = _uiState.value.copy(user = newUser, errorMessage = null)
     }
+
     //Actualiza el campo "email" y limpia errores previos
     fun onEmailChange(newEmail: String) {
         _uiState.value = _uiState.value.copy(email = newEmail, errorMessage = null)
     }
+
     //Actualiza el campo "password" y limpia errores previos
     fun onPassChange(newPass: String) {
         _uiState.value = _uiState.value.copy(pass = newPass, errorMessage = null)
     }
 
+    fun onNameChange(newName: String) {
+        _uiState.value = _uiState.value.copy(name = newName, errorMessage = null)
+    }
+
+    fun onSurnameChange(newSurname: String) {
+        _uiState.value = _uiState.value.copy(surname = newSurname, errorMessage = null)
+    }
+
+    fun onCountryChange(newCountry: String) {
+        _uiState.value = _uiState.value.copy(country = newCountry, errorMessage = null)
+    }
     // Validación de campos y registro
     /**
      * Valida los campos del formulario antes de registrar al usuario.
@@ -52,18 +67,30 @@ class RegisterVM(application: Application) : AndroidViewModel(application) {
         when {
             state.user.isBlank() -> _uiState.value =
                 state.copy(errorMessage = "El usuario no puede estar vacío")
+
             state.email.isBlank() || !state.email.contains("@") -> _uiState.value =
                 state.copy(errorMessage = "Email inválido")
+
             state.pass.length < 4 -> _uiState.value =
                 state.copy(errorMessage = "La contraseña debe tener al menos 4 caracteres")
             // Si todo está correcto, llamamos a la función que registra al usuario
+            state.name.isBlank() -> _uiState.value =
+                state.copy(errorMessage = "El nombre no puede estar vacío")
+
+            state.surname.isBlank() -> _uiState.value =
+                state.copy(errorMessage = "El apellido no puede estar vacío")
+
             else -> {
                 _uiState.value = state.copy(errorMessage = null)
 
-                registerUser(state.user, state.email, state.pass, onSuccess)
+                registerUser(
+                    state.user, state.email, state.pass, state.country,
+                    state.name, state.surname, onSuccess
+                )
             }
         }
     }
+
     /**
      * Llama al repositorio para registrar al usuario.
      *
@@ -74,6 +101,9 @@ class RegisterVM(application: Application) : AndroidViewModel(application) {
         user: String,
         email: String,
         pass: String,
+        country: String,
+        name: String,
+        surname: String,
         onSuccess: () -> Unit
     ) {
         viewModelScope.launch {
