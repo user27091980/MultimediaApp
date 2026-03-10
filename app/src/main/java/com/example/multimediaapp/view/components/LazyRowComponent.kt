@@ -15,8 +15,8 @@ import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.unit.dp
 import coil.compose.rememberAsyncImagePainter
-import com.example.multimediaapp.viewmodel.uistate.BandUiState
 import androidx.core.net.toUri
+import com.example.multimediaapp.model.BandDTO
 
 /* Componente Jetpack Compose que muestra las imágenes de los álbumes de una banda en una fila horizontal.
 *Recibe:
@@ -32,7 +32,7 @@ import androidx.core.net.toUri
  */
 @Composable
 fun ImagesRowList(
-    band: BandUiState,
+    band: BandDTO,
     modifier: Modifier = Modifier,
 ) {
     // LazyRow permite crear listas horizontales, cargando solo los elementos visibles.

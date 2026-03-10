@@ -10,8 +10,8 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
+import com.example.multimediaapp.model.BandDTO
 import com.example.multimediaapp.ui.theme.cardColumnModifier
-import com.example.multimediaapp.viewmodel.uistate.BandUiState
 
 /**
  * Componente de UI para mostrar información de la banda en una tarjeta (Card).
@@ -21,7 +21,7 @@ import com.example.multimediaapp.viewmodel.uistate.BandUiState
  */
 @Composable
 fun CardRowComponent(
-    band: BandUiState
+    band: BandDTO
 ) {
 
     //Columna que organiza las cards verticalmente

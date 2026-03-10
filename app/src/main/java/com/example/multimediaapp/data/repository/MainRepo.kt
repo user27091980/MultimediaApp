@@ -1,44 +1,37 @@
 package com.example.multimediaapp.data.repository
 
-import com.example.multimediaapp.data.entity.toDTO
-import com.example.multimediaapp.data.entity.toEntity
 import com.example.multimediaapp.model.MainDTO
-import com.example.multimediaapp.network.ApiService
 
-interface IMainRepo {
-    suspend fun getBands(): List<MainDTO>
-    suspend fun getBandById(id: String): MainDTO?
-    suspend fun createBand(band: MainDTO): MainDTO?
-    suspend fun updateBand(id: String, band: MainDTO): MainDTO?
-    suspend fun deleteBand(id: String): Boolean
-}
+class MainRepo : IMainRepo {
 
-class MainRepo(private val apiService: ApiService) : IMainRepo {
+    private val bands = mutableListOf<MainDTO>()
 
-    override suspend fun getBands(): List<MainDTO> {
-        val response = apiService.getMainBands()
-        return if (response.isSuccessful) {
-            response.body()?.map { it.toDTO() } ?: emptyList()
-        } else emptyList()
+    override fun getBands(): List<MainDTO> {
+        return bands
     }
 
-    override suspend fun getBandById(id: String): MainDTO? {
-        val response = apiService.getMainBandById(id)
-        return if (response.isSuccessful) response.body()?.toDTO() else null
+    override fun getBandById(id: String): MainDTO? {
+        return bands.find { it.id == id }
     }
 
-    override suspend fun createBand(band: MainDTO): MainDTO? {
-        val response = apiService.createMainBand(band.toEntity())
-        return if (response.isSuccessful) response.body()?.toDTO() else null
+    fun readAll(onSuccess: (List<MainDTO>) -> Unit, onError: () -> Unit) {
+        try {
+            onSuccess(bands)
+        } catch (e: Exception) {
+            onError()
+        }
     }
 
-    override suspend fun updateBand(id: String, band: MainDTO): MainDTO? {
-        val response = apiService.updateMainBand(id, band.toEntity())
-        return if (response.isSuccessful) response.body()?.toDTO() else null
-    }
-
-    override suspend fun deleteBand(id: String): Boolean {
-        val response = apiService.deleteMainBand(id)
-        return response.isSuccessful
+    fun delete(id: String, onSuccess: () -> Unit, onError: () -> Unit) {
+        try {
+            val removed = bands.removeIf { it.id == id }
+            if (removed) {
+                onSuccess()
+            } else {
+                onError()
+            }
+        } catch (e: Exception) {
+            onError()
+        }
     }
 }

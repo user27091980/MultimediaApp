@@ -18,6 +18,7 @@ import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.unit.dp
 import androidx.core.net.toUri
 import coil.compose.rememberAsyncImagePainter
+import com.example.multimediaapp.model.BandDTO
 import com.example.multimediaapp.viewmodel.uistate.BandUiState
 
 // Componente Jetpack Compose que muestra la cabecera (banner) de una banda.
@@ -27,7 +28,7 @@ import com.example.multimediaapp.viewmodel.uistate.BandUiState
  * @param band recibe un objeto con la info de la banda incluyendo la url de la imagen del banner
  */
 @Composable
-fun BandHeader(band: BandUiState) {
+fun BandHeader(band: BandDTO) {
 
     val headerHeight = 100.dp
     val context = LocalContext.current
