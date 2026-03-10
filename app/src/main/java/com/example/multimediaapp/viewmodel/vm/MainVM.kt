@@ -44,7 +44,7 @@ class MainVM : ViewModel() {
             try {
 
                 // Obtener datos del repositorio
-                val bands = repo.getMainImages()
+                val bands = repo.getBands()
 
                 _uiState.value = _uiState.value.copy(
                     mainBands = bands,

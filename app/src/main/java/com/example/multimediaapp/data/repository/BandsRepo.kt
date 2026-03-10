@@ -6,7 +6,7 @@ import com.example.multimediaapp.model.BandDTO
  * Implementación en memoria de IBandsRepo.
  * Simula un repositorio con CRUD de bandas.
  */
-class BandRepo : IBandsRepo {
+class BandsRepo : IBandsRepo {
 
     // Lista mutable que almacena todas las bandas
     private val bands = mutableListOf<BandDTO>()
