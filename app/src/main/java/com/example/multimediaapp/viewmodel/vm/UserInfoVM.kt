@@ -52,7 +52,6 @@ class UserInfoVM(context: Context?=null,
                     id = it.id,
                     email = it.email,
                     user = it.user,
-                    country = it.country,
                     name = it.name,
                     surname = it.surname
                 )
