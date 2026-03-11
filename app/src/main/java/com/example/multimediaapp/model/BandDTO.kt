@@ -7,23 +7,15 @@ package com.example.multimediaapp.model
 data class BandDTO(
     // Identificador único de la banda
     val id: String,
-    // Nombre de la banda
     val name: String,
-    // Descripción o información detallada de la banda
-    val textInfo: String,
-    // Imagen principal de cabecera (banner)
-    val headerImage: String,
-    // Lista de imágenes de los álbumes
+    val description: String,
+    val image: String,
     val albumImages: List<String>,
-    // Estilo musical
     val style: String,
-    // Discográfica
     val recordLabel: String,
-    // Componentes o miembros del grupo
-    val components: String,
-    // Lista de nombres de discos publicados
+    val components: List<String>,
     val discography: List<String>,
-    // Lista de enlaces a youtube
+    val imageBand: String,
     val albumLinks: List<String>,
     val headerLink: String
 

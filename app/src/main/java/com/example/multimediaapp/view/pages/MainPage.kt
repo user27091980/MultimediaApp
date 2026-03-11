@@ -90,22 +90,17 @@ fun MainScreen(navController: NavController, vm: MainVM = viewModel()) {
  * para poder navegar a su pantalla de detalle.
  */
 
+/**
+ * Composable que dibuja la lista de bandas
+ */
 @Composable
 fun MainContent(
     uiState: MainUiState,
     onImageClick: (String) -> Unit
 ) {
-    /*
-     CardList muestra una lista vertical con las bandas disponibles.
-     Recibe:
-     - bands: lista de bandas
-     - onImageClick: acción al pulsar una banda
-     */
     CardList(
         bands = uiState.mainBands,
         onImageClick = { band ->
-            // Cuando se pulsa una banda, se envía su id al callback
-            // para que la pantalla superior gestione la navegación.
             onImageClick(band.id)
         }
     )

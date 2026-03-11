@@ -66,8 +66,8 @@ object NetworkModule {
      * Servicio API generado por Retrofit.
      *
      * Aquí se definen los endpoints en la interfaz
-     * ApiService.
+     * ApiBandsService.
      */
-    val apiService: ApiService =
-        retrofit.create(ApiService::class.java)
+    val api: ApiBandsService =
+        retrofit.create(ApiBandsService::class.java)
 }
