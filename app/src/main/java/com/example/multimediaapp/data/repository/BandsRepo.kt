@@ -57,12 +57,12 @@ class BandsRepo(private val apiService: ApiService) : IBandRepo {
         val entity = BandEntity(
             id = band.id,
             name = band.name,
-            textInfo = band.textInfo,
+            description = band.description,
             headerImage = band.headerImage,
             albumImages = band.albumImages,
             style = band.style,
             recordLabel = band.recordLabel,
-            members = band.members,
+            components = band.components,
             discography = band.discography,
             albumLinks = band.albumLinks,
             headerLink = band.headerLink
