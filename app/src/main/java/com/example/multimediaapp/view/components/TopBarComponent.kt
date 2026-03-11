@@ -110,6 +110,23 @@ fun TopBar(navController: NavHostController) {
                     }
                 }
             )
+            DropdownMenuItem(
+                text = { Text(text = stringResource(R.string.logOut)) },
+                onClick = {
+                    isExpanded = false
+
+                    // Aquí limpiarías la sesión (token, usuario, etc)
+                    val sharedPreferences =
+                        context.getSharedPreferences("user_session", Activity.MODE_PRIVATE)
+
+                    sharedPreferences.edit().clear().apply()
+
+                    // Navegar al login y limpiar el backstack
+                    navController.navigate(ObjRoutes.LOGIN) {
+                        popUpTo(0)
+                    }
+                }
+            )
             //para cerrar la app
             DropdownMenuItem(
                 text = { Text(text = stringResource(R.string.salir)) },
