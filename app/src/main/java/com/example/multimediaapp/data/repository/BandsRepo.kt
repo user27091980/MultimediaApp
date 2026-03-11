@@ -43,7 +43,7 @@ class BandsRepo(private val apiService: ApiService) : IBandRepo {
             albumImages = band.albumImages,
             style = band.style,
             recordLabel = band.recordLabel,
-            components = band.components,
+            members = band.members,
             discography = band.discography,
             albumLinks = band.albumLinks,
             headerLink = band.headerLink
@@ -61,7 +61,7 @@ class BandsRepo(private val apiService: ApiService) : IBandRepo {
             albumImages = band.albumImages,
             style = band.style,
             recordLabel = band.recordLabel,
-            components = band.components,
+            members = band.members,
             discography = band.discography,
             albumLinks = band.albumLinks,
             headerLink = band.headerLink

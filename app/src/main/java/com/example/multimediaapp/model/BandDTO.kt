@@ -9,15 +9,14 @@ data class BandDTO(
     val id: String,
     val name: String,
     val description: String,
-    val image: String,
     val albumImages: List<String>,
     val style: String,
     val recordLabel: String,
-    val components: List<String>,
+    val components: String,
     val discography: List<String>,
-    val imageBand: String,
     val albumLinks: List<String>,
-    val headerLink: String
+    val headerLink: String,
+    val headerImage: String
 
 )
 
