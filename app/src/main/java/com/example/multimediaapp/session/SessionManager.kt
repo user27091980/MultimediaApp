@@ -21,7 +21,6 @@ class SessionManager(context: Context) {
         val email = prefs.getString("email", "") ?: ""
         return UsersInfoDTO(
             id, username, email,
-            country = TODO(),
             name = TODO(),
             surname = TODO()
         )

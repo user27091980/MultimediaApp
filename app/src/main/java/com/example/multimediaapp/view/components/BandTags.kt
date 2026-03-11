@@ -14,7 +14,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
-import com.example.multimediaapp.viewmodel.uistate.BandUiState
+import com.example.multimediaapp.model.BandDTO
 
 
 /**
@@ -26,7 +26,7 @@ import com.example.multimediaapp.viewmodel.uistate.BandUiState
  * - Discografía
  */
 @Composable
-fun BandTags(band: BandUiState) {
+fun BandTags(band: BandDTO) {
 
     Column(
         modifier = Modifier

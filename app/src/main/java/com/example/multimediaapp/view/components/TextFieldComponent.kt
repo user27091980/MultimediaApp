@@ -33,9 +33,16 @@ fun TextFieldsComponent(
     user: String,
     email: String,
     pass: String,
+    country: String,
+    name: String,
+    surname: String,
     onUserChange: (String) -> Unit,
     onEmailChange: (String) -> Unit,
-    onPassChange: (String) -> Unit
+    onPassChange: (String) -> Unit,
+    onCountryChange: (String) -> Unit,
+    onNameChange: (String) -> Unit,
+    onSurnameChange: (String) -> Unit
+
 ) {
     // Columna que organiza los campos verticalmente
     Column {
@@ -51,6 +58,19 @@ fun TextFieldsComponent(
             email = email,
             onEmailChange = onEmailChange
         )
+        TextFieldCountryComponent(
+            country=country,
+            onCountryChange=onCountryChange
+        )
+        TextFieldNameComponent(
+            name=name,
+            onNameChange = onNameChange
+        )
+        TextFieldSurnameComponent(
+            surname = surname,
+            onSurnameChange = onSurnameChange
+        )
+
     }
 }
 
@@ -66,10 +86,41 @@ fun TextFieldUserComponent(user: String, onUserChange: (String) -> Unit) {
         value = user,
         onValueChange = onUserChange,
         singleLine = true,
-        label = { Text("User", color = Color.White) },
+        label = { Text("Usuario", color = Color.White) },
 
 
         )
+}
+/**
+ * Campo de texto para introducir el correo electrónico.
+ *
+ * Configura el teclado en modo email para facilitar la escritura.
+ *
+ * @param email texto actual del campo
+ * @param onEmailChange callback que se ejecuta al modificar el email
+ */
+@Composable
+fun TextFieldEmailComponent(email: String, onEmailChange: (String) -> Unit) {
+
+    // Comprueba si el email es válido
+    val isValidEmail = Patterns.EMAIL_ADDRESS.matcher(email).matches()
+
+    OutlinedTextField(
+        value = email,
+        onValueChange = onEmailChange,
+        singleLine = true,
+        label = {
+            Text("Email", color = Color.White)
+        },
+        // Muestra teclado optimizado para escribir correos
+        keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Email),
+        // Mensaje de error debajo del campo
+        supportingText = {
+            if (email.isNotEmpty() && !isValidEmail) {
+                Text("Email no válido")
+            }
+        }
+    )
 }
 
 /**
@@ -106,39 +157,37 @@ fun TextFieldPassComponent(pass: String, onPassChange: (String) -> Unit) {
     )
 }
 
-/**
- * Campo de texto para introducir el correo electrónico.
- *
- * Configura el teclado en modo email para facilitar la escritura.
- *
- * @param email texto actual del campo
- * @param onEmailChange callback que se ejecuta al modificar el email
- */
+
+
 @Composable
-fun TextFieldEmailComponent(email: String, onEmailChange: (String) -> Unit) {
-
-    // Comprueba si el email es válido
-    val isValidEmail = Patterns.EMAIL_ADDRESS.matcher(email).matches()
-
+fun TextFieldNameComponent(name: String, onNameChange: (String) -> Unit) {
     OutlinedTextField(
-        value = email,
-        onValueChange = onEmailChange,
+        value = name,
+        onValueChange = onNameChange,
         singleLine = true,
-        label = {
-            Text("Email", color = Color.White)
-        },
-        // Muestra teclado optimizado para escribir correos
-        keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Email),
-        // Mensaje de error debajo del campo
-        supportingText = {
-            if (email.isNotEmpty() && !isValidEmail) {
-                Text("Email no válido")
-            }
-        }
+        label = { Text("Nombre", color = Color.White) }
     )
 }
 
 
+@Composable
+fun TextFieldSurnameComponent(surname: String, onSurnameChange: (String) -> Unit) {
+    OutlinedTextField(
+        value = surname,
+        onValueChange = onSurnameChange,
+        singleLine = true,
+        label = { Text("Apellido", color = Color.White) }
+    )
+}
+@Composable
+fun TextFieldCountryComponent(country: String, onCountryChange: (String) -> Unit) {
+    OutlinedTextField(
+        value = country,
+        onValueChange = onCountryChange,
+        singleLine = true,
+        label = { Text("País", color = Color.White) }
+    )
+}
 /*
 remember { mutableStateOf("") } nos guarda el estado local de cada TextField, Compose lo recuerda entre recomposiciones.
 

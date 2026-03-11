@@ -45,26 +45,26 @@ fun CardList(
         // Itera sobre la lista de URLs de imágenes de los álbumes.
         // 'imageBand' es cada URL de la lista.
 
-        items(bands) { mainBand ->
+        items(bands) { band ->
             Column(
                 modifier = Modifier.fillMaxWidth(),
                 horizontalAlignment = Alignment.CenterHorizontally // Centra horizontalmente todo dentro de la columna
             ) {
                 Image(
                     // Cargamos la imagen desde la URL usando Coil y rememberAsyncImagePainter
-                    painter = rememberAsyncImagePainter(mainBand.imageBand),
+                    painter = rememberAsyncImagePainter(band.imageBand),
                     // Descripción para accesibilidad
                     contentDescription = "album image",
                     // Modificadores de la imagen
                     modifier = Modifier
                         .fillMaxWidth()
                         .height(300.dp)
-                        .clickable { onImageClick(mainBand) },
+                        .clickable { onImageClick(band) },
                     // Escala de la imagen para que llene su contenedor y recorte lo sobrante
                     contentScale = ContentScale.Crop,
                 )
                 Text(
-                    text = mainBand.bandName,
+                    text = band.bandName,
                     color = MaterialTheme.colorScheme.primary,
                     style = MaterialTheme.typography.headlineMedium,
                     fontWeight = FontWeight.Bold
