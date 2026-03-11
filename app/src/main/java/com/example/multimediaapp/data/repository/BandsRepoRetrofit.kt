@@ -2,7 +2,7 @@ package com.example.multimediaapp.data.repository
 
 import android.content.Context
 import com.example.multimediaapp.model.BandDTO
-import com.example.multimediaapp.network.ApiBandsService
+import com.example.multimediaapp.network.ApiService
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
 
@@ -12,7 +12,7 @@ import kotlinx.coroutines.withContext
  */
 class BandsRepoRetrofit(context: Context) {
 
-    private val api: ApiBandsService = ApiBandsService.create()
+    private val api: ApiService = ApiService.create()
 
     // --- CRUD básico usando Retrofit ---
 
