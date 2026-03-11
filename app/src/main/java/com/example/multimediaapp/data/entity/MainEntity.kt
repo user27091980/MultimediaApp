@@ -17,3 +17,8 @@ fun MainEntity.toDTO(): MainDTO = MainDTO(
     bandName = bandName,
     imageBand = imageBand
 )
+fun MainDTO.toEntity(): MainEntity = MainEntity(
+    id = id,
+    bandName = bandName,
+    imageBand = imageBand
+)

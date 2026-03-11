@@ -1,13 +1,10 @@
 package com.example.multimediaapp.navigation
 
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.collectAsState
-import androidx.compose.runtime.getValue
 import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
-import com.example.multimediaapp.network.MultimediaApiService
 import com.example.multimediaapp.view.pages.*
 import com.example.multimediaapp.viewmodel.vm.*
 
