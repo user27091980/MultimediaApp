@@ -37,7 +37,7 @@ fun CardRowComponent(
                 cardColumnModifier.background(MaterialTheme.colorScheme.background)// Modifier personalizado desde el tema, puede incluir padding, shape, elevation
             ) {
 // Texto dentro de la tarjeta que muestra la descripción de la banda
-                Text(text = band.textInfo) // Extrae el texto descriptivo de BandUiState
+                Text(text = band.description) // Extrae el texto descriptivo de BandUiState
 
             }
         }

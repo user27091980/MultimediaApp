@@ -1,57 +1,94 @@
-package com.example.multimediaapp.viewmodel.vm
+package com.example.multimediaapp.ui.viewmodel
 
-import android.content.Context
 import androidx.lifecycle.ViewModel
-import com.example.multimediaapp.data.repository.BandsRepoRetrofit
+import androidx.lifecycle.viewModelScope
+import com.example.multimediaapp.data.repository.BandsRepo
 import com.example.multimediaapp.model.BandDTO
+import com.example.multimediaapp.network.ApiService
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
-import kotlinx.coroutines.flow.asStateFlow
+import kotlinx.coroutines.launch
 
 /**
- * ViewModel que gestiona la lista de bandas usando BandsRepo.
- * Expone un StateFlow que la UI puede observar.
+ * ViewModel para gestionar BandDTO usando BandsRepo.
+ * Expone datos de manera reactiva con StateFlow.
  */
-class BandVM(context: Context) : ViewModel() {
-
-    private val repo = BandsRepoRetrofit(context)
-
-    // Estado interno mutable
+open class BandVM(
+    private val repository: BandsRepo
+) : ViewModel(){
+    val vm = BandVM(BandsRepo(ApiService.create()))
+    // Lista de bandas observable
     private val _bandsState = MutableStateFlow<List<BandDTO>>(emptyList())
+    val bandsState: StateFlow<List<BandDTO>> get() = _bandsState
 
-    // Estado público inmutable
-    val bandsState: StateFlow<List<BandDTO>> = _bandsState.asStateFlow()
+    // Banda seleccionada
+    private val _selectedBand = MutableStateFlow<BandDTO?>(null)
+    val selectedBand: StateFlow<BandDTO?> get() = _selectedBand
 
-    // ======================================
-    // CRUD Methods
-    // ======================================
+    // Estado de error
+    private val _error = MutableStateFlow<String?>(null)
+    val error: StateFlow<String?> get() = _error
 
-    /** Carga todas las bandas del repositorio */
-    suspend fun loadAllBands() {
-        val allBands = repo.getAllBands()
-        _bandsState.value = allBands
+    // --- Funciones CRUD ---
+
+    fun loadAllBands() {
+        viewModelScope.launch {
+            try {
+                val bands = repository.getBands()
+                _bandsState.value = bands
+            } catch (e: Exception) {
+                _error.value = e.message
+            }
+        }
     }
 
-    /** Agrega una nueva banda */
-    suspend fun createBand(band: BandDTO) {
-        repo.createBand(band)
-        loadAllBands() // Actualiza la lista
+    fun fetchBandById(id: String) {
+        viewModelScope.launch {
+            try {
+                val band = repository.getBandById(id)
+                _selectedBand.value = band
+            } catch (e: Exception) {
+                _error.value = e.message
+            }
+        }
     }
 
-    /** Actualiza una banda existente */
-    suspend fun updateBand(band: BandDTO) {
-        repo.updateBand(band)
-        loadAllBands()
+    fun createBand(band: BandDTO) {
+        viewModelScope.launch {
+            try {
+                val created = repository.createBand(band)
+                created?.let {
+                    _bandsState.value = _bandsState.value + it
+                }
+            } catch (e: Exception) {
+                _error.value = e.message
+            }
+        }
     }
 
-    /** Elimina una banda por ID */
-    suspend fun deleteBand(id: String) {
-        repo.deleteBand(id)
-        loadAllBands()
+    fun updateBand(id: String, band: BandDTO) {
+        viewModelScope.launch {
+            try {
+                val updated = repository.updateBand(id, band)
+                updated?.let { bandUpdated ->
+                    _bandsState.value = _bandsState.value.map { if (it.id == id) bandUpdated else it }
+                }
+            } catch (e: Exception) {
+                _error.value = e.message
+            }
+        }
     }
 
-    /** Obtiene una banda por ID (sin modificar el estado) */
-    suspend fun getBandById(id: String): BandDTO? {
-        return repo.getBandById(id)
+    fun deleteBand(id: String) {
+        viewModelScope.launch {
+            try {
+                val deleted = repository.deleteBand(id)
+                if (deleted) {
+                    _bandsState.value = _bandsState.value.filter { it.id != id }
+                }
+            } catch (e: Exception) {
+                _error.value = e.message
+            }
+        }
     }
 }
