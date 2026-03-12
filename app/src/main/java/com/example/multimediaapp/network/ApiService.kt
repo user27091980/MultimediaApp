@@ -32,6 +32,9 @@ interface ApiService {
     @GET("json/main")
     suspend fun getMainBands(): Response<List<MainEntity>>
 
+    @GET("json/main/{images}")
+    suspend fun getMainImages(@Path("images") images: String): Response<MainEntity>
+
     @GET("json/main/{id}")
     suspend fun getMainBandById(@Path("id") id: String): Response<MainEntity>
 
@@ -43,6 +46,7 @@ interface ApiService {
 
     @DELETE("json/main/{id}")
     suspend fun deleteMainBand(@Path("id") id: String): Response<Unit>
+
 
     // USER ENDPOINTS (Añadido "json/") ====
     @GET("json/users/{id}")
