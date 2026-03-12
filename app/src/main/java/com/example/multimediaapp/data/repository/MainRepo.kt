@@ -1,74 +1,47 @@
 package com.example.multimediaapp.data.repository
 
-import com.example.multimediaapp.data.entity.MainEntity
 import com.example.multimediaapp.data.entity.toDTO
+import com.example.multimediaapp.data.entity.toEntity
 import com.example.multimediaapp.model.MainDTO
 import com.example.multimediaapp.network.ApiService
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.withContext
 
-class MainRepo {
+interface IMainRepo {
+    suspend fun getBands(): List<MainDTO>
+    suspend fun getBandById(id: String): MainDTO?
+    suspend fun createBand(band: MainDTO): MainDTO?
+    suspend fun updateBand(id: String, band: MainDTO): MainDTO?
+    suspend fun deleteBand(id: String): Boolean
+}
 
-    private val api = ApiService.create()
+class MainRepo(private val apiService: ApiService) : IMainRepo {
 
-    // =========================
-    // READ
-    // =========================
-    suspend fun getAllBands(): List<MainDTO> = withContext(Dispatchers.IO) {
-        try {
-            val response = api.getAllBands()
-            if (response.isSuccessful) {
-                response.body()?.map { it.toDTO() } ?: emptyList()
-            } else emptyList()
-        } catch (e: Exception) {
+    override suspend fun getBands(): List<MainDTO> {
+        val response = apiService.getMainBands() // Tu endpoint de la pantalla principal
+        return if (response.isSuccessful) {
+            // AQUÍ ES DONDE SE CONSTRUYE LA URL COMPLETA
+            response.body()?.map { it.toDTO() } ?: emptyList()
+        } else {
             emptyList()
         }
     }
 
-    suspend fun getBandById(id: String): MainDTO? = withContext(Dispatchers.IO) {
-        try {
-            val response = api.getBandById(id)
-            if (response.isSuccessful) response.body()?.toDTO() else null
-        } catch (e: Exception) {
-            null
-        }
+    override suspend fun getBandById(id: String): MainDTO? {
+        val response = apiService.getMainBandById(id)
+        return if (response.isSuccessful) response.body()?.toDTO() else null
     }
 
-    // =========================
-    // CREATE
-    // =========================
-    suspend fun createBand(band: MainDTO): MainDTO? = withContext(Dispatchers.IO) {
-        try {
-            val entity = MainEntity(band.id, band.bandName, band.imageBand)
-            val response = api.createBand(entity)
-            if (response.isSuccessful) response.body()?.toDTO() else null
-        } catch (e: Exception) {
-            null
-        }
+    override suspend fun createBand(band: MainDTO): MainDTO? {
+        val response = apiService.createMainBand(band.toEntity())
+        return if (response.isSuccessful) response.body()?.toDTO() else null
     }
 
-    // =========================
-    // UPDATE
-    // =========================
-    suspend fun updateBand(band: MainDTO): MainDTO? = withContext(Dispatchers.IO) {
-        try {
-            val entity = MainEntity(band.id, band.bandName, band.imageBand)
-            val response = api.updateBand(band.id, entity)
-            if (response.isSuccessful) response.body()?.toDTO() else null
-        } catch (e: Exception) {
-            null
-        }
+    override suspend fun updateBand(id: String, band: MainDTO): MainDTO? {
+        val response = apiService.updateMainBand(id, band.toEntity())
+        return if (response.isSuccessful) response.body()?.toDTO() else null
     }
 
-    // =========================
-    // DELETE
-    // =========================
-    suspend fun deleteBand(id: String): Boolean = withContext(Dispatchers.IO) {
-        try {
-            val response = api.deleteBand(id)
-            response.isSuccessful
-        } catch (e: Exception) {
-            false
-        }
+    override suspend fun deleteBand(id: String): Boolean {
+        val response = apiService.deleteMainBand(id)
+        return response.isSuccessful
     }
 }

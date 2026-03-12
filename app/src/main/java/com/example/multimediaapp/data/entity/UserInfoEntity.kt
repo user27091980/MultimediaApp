@@ -7,9 +7,9 @@ import com.google.gson.annotations.SerializedName
 data class UsersInfoEntity(
     val id: String,
     @SerializedName("email") val email: String,
-    @SerializedName("usuario") val user: String,
-    @SerializedName("nombre") val name: String,
-    @SerializedName("apellidos") val surname: String,
+    @SerializedName("user") val user: String,
+    @SerializedName("name") val name: String,
+    @SerializedName("surname") val surname: String,
 )
 
 //mapper para convertir en LoginDTO
