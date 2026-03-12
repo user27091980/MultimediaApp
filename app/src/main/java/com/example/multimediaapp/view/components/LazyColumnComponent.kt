@@ -1,5 +1,6 @@
 package com.example.multimediaapp.view.components
 
+import android.util.Log
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
@@ -16,10 +17,13 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.graphics.painter.ColorPainter
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import coil.compose.AsyncImage
 import coil.compose.rememberAsyncImagePainter
 import com.example.multimediaapp.model.MainDTO
 
@@ -50,18 +54,20 @@ fun CardList(
                 modifier = Modifier.fillMaxWidth(),
                 horizontalAlignment = Alignment.CenterHorizontally // Centra horizontalmente todo dentro de la columna
             ) {
-                Image(
-                    // Cargamos la imagen desde la URL usando Coil y rememberAsyncImagePainter
-                    painter = rememberAsyncImagePainter(band.imageBand),
-                    // Descripción para accesibilidad
+                AsyncImage(
+                    model = band.imageBand,
                     contentDescription = "album image",
-                    // Modificadores de la imagen
                     modifier = Modifier
                         .fillMaxWidth()
                         .height(300.dp)
                         .clickable { onImageClick(band) },
-                    // Escala de la imagen para que llene su contenedor y recorte lo sobrante
                     contentScale = ContentScale.Crop,
+                    // SI VES GRIS: Está intentando cargar (esperando al servidor)
+                    placeholder = ColorPainter(Color.LightGray),
+                    // SI VES ROJO: La URL está mal o Android bloquea la conexión
+                    error = ColorPainter(Color.Red),
+                    onSuccess = { Log.d("COIL", "Cargada: ${band.imageBand}") },
+                    onError = { Log.e("COIL", "Fallo en: ${band.imageBand}") }
                 )
                 Text(
                     text = band.bandName,

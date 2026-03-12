@@ -16,10 +16,13 @@ interface IMainRepo {
 class MainRepo(private val apiService: ApiService) : IMainRepo {
 
     override suspend fun getBands(): List<MainDTO> {
-        val response = apiService.getMainBands()
+        val response = apiService.getMainBands() // Tu endpoint de la pantalla principal
         return if (response.isSuccessful) {
+            // AQUÍ ES DONDE SE CONSTRUYE LA URL COMPLETA
             response.body()?.map { it.toDTO() } ?: emptyList()
-        } else emptyList()
+        } else {
+            emptyList()
+        }
     }
 
     override suspend fun getBandById(id: String): MainDTO? {

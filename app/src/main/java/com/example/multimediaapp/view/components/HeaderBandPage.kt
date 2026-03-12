@@ -1,7 +1,6 @@
 package com.example.multimediaapp.view.components
 
 import android.content.Intent
-import android.system.Os.link
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Box
@@ -19,7 +18,6 @@ import androidx.compose.ui.unit.dp
 import androidx.core.net.toUri
 import coil.compose.rememberAsyncImagePainter
 import com.example.multimediaapp.model.BandDTO
-import com.example.multimediaapp.viewmodel.uistate.BandUiState
 
 // Componente Jetpack Compose que muestra la cabecera (banner) de una banda.
 // Recibe un objeto BandUiState con la información de la banda.
@@ -43,7 +41,7 @@ fun BandHeader(band: BandDTO) {
         Image(
             // 'painter' define la fuente de la imagen.
             // `rememberAsyncImagePainter` de Coil permite cargar imágenes desde URLs de forma asíncrona.
-            painter = rememberAsyncImagePainter(band.headerImage),
+            painter = rememberAsyncImagePainter(band.banner),
             // Descripción de la imagen para accesibilidad (lectores de pantalla).
             contentDescription = band.name,
             // Modificadores para definir el tamaño y comportamiento de la imagen.

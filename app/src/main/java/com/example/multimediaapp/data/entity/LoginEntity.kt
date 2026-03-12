@@ -7,7 +7,7 @@ import com.google.gson.annotations.SerializedName
 data class UsersEntity(
     val id: String,
     @SerializedName("email") val email: String,
-    @SerializedName("usuario") val user: String,
+    @SerializedName("user") val user: String,
     @SerializedName("pass") val pass: String,
 )
 

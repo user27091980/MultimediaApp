@@ -12,46 +12,46 @@ import retrofit2.http.*
 
 interface ApiService {
 
-    // ==== BAND ENDPOINTS ====
-    @GET("bands")
+    // ==== BAND ENDPOINTS (Añadido "json/") ====
+    @GET("json/bands")
     suspend fun getBands(): Response<List<BandEntity>>
 
-    @GET("bands/{id}")
+    @GET("json/bands/{id}")
     suspend fun getBandById(@Path("id") id: String): Response<BandEntity>
 
-    @POST("bands")
+    @POST("json/bands")
     suspend fun createBand(@Body band: BandEntity): Response<BandEntity>
 
-    @PUT("bands/{id}")
+    @PUT("json/bands/{id}")
     suspend fun updateBand(@Path("id") id: String, @Body band: BandEntity): Response<BandEntity>
 
-    @DELETE("bands/{id}")
+    @DELETE("json/bands/{id}")
     suspend fun deleteBand(@Path("id") id: String): Response<Unit>
 
-    // ==== MAIN ENTITY ENDPOINTS ====
-    @GET("main")
+    // ==== MAIN ENTITY ENDPOINTS (Añadido "json/") ====
+    @GET("json/main")
     suspend fun getMainBands(): Response<List<MainEntity>>
 
-    @GET("main/{id}")
+    @GET("json/main/{id}")
     suspend fun getMainBandById(@Path("id") id: String): Response<MainEntity>
 
-    @POST("main")
+    @POST("json/main")
     suspend fun createMainBand(@Body band: MainEntity): Response<MainEntity>
 
-    @PUT("main/{id}")
+    @PUT("json/main/{id}")
     suspend fun updateMainBand(@Path("id") id: String, @Body band: MainEntity): Response<MainEntity>
 
-    @DELETE("main/{id}")
+    @DELETE("json/main/{id}")
     suspend fun deleteMainBand(@Path("id") id: String): Response<Unit>
 
-    // ==== USER ENDPOINTS ====
-    @GET("users/{id}")
+    // USER ENDPOINTS (Añadido "json/") ====
+    @GET("json/users/{id}")
     suspend fun getUser(@Path("id") userId: String): Response<LoginDTO>
 
-    @PUT("users/{id}")
+    @PUT("json/users/{id}")
     suspend fun updateUser(@Path("id") userId: String, @Body user: LoginDTO): Response<LoginDTO>
 
-    @GET("users/info/{id}")
+    @GET("json/users/info/{id}")
     suspend fun getUserInfo(@Path("id") userId: String): Response<UsersInfoDTO>
 
     companion object {
