@@ -41,7 +41,6 @@ data class BandEntity(
     // Enlace a la imagen de cabecera (JSON: "enlaces")
     @SerializedName("headerLink") val headerLink: String
 
-
 )
 
 /**
@@ -55,7 +54,7 @@ data class BandEntity(
 fun BandEntity.toDTO(): BandDTO {
     // Esta es la base de tu servidor local en el emulador.
     // Si las fotos están en otra carpeta (ej: /images/), ajústalo aquí.
-    val baseUrl = "http://10.0.2.2"
+    val baseUrl = "http://10.0.2.2:5131/json/main/"
 
     return BandDTO(
         id = id,

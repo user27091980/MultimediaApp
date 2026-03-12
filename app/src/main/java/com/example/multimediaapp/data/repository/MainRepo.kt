@@ -11,6 +11,9 @@ interface IMainRepo {
     suspend fun createBand(band: MainDTO): MainDTO?
     suspend fun updateBand(id: String, band: MainDTO): MainDTO?
     suspend fun deleteBand(id: String): Boolean
+
+    suspend fun getImages(id: String): MainDTO?
+
 }
 
 class MainRepo(private val apiService: ApiService) : IMainRepo {
@@ -44,4 +47,13 @@ class MainRepo(private val apiService: ApiService) : IMainRepo {
         val response = apiService.deleteMainBand(id)
         return response.isSuccessful
     }
+
+    override suspend fun getImages(id: String): MainDTO {
+        val response = apiService.getMainImages(id)
+        if (response.isSuccessful) {
+            return response.body()?.toDTO() ?: throw Exception("Cuerpo vacío")
+        }
+        throw Exception("Error al obtener imágenes")
+    }
+
 }
