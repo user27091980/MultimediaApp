@@ -1,7 +1,6 @@
 package com.example.multimediaapp.network
 
 import com.example.multimediaapp.model.LoginDTO
-import com.example.multimediaapp.model.UsersInfoDTO
 import retrofit2.Response
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
