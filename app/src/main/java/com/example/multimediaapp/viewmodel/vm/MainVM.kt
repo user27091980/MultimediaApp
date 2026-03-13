@@ -4,6 +4,7 @@ import android.util.Log
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.multimediaapp.data.repository.MainRepo
+import com.example.multimediaapp.network.MainApiService
 import com.example.multimediaapp.retrofit.RetrofitModule
 import com.example.multimediaapp.viewmodel.uistate.MainUiState
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -14,36 +15,52 @@ import kotlinx.coroutines.launch
 
 class MainVM : ViewModel() {
 
-    // Inyectamos el servicio de Main directamente al repositorio
-    private val repo = MainRepo(RetrofitModule.mainApi)
+    // CORRECCIÓN/MEJORA:
+    // Usamos el método .create() que definimos en el Companion Object de la interfaz
+    // o la instancia que tengas en tu RetrofitModule.
+    private val mainApi = MainApiService.create()
+    private val repo = MainRepo(mainApi)
 
     private val _uiState = MutableStateFlow(MainUiState())
     val uiState: StateFlow<MainUiState> = _uiState.asStateFlow()
 
+    // Ejecutamos la carga inicial al instanciar el ViewModel
+    init {
+        loadData()
+    }
+
     /**
      * Carga los datos de las bandas principales.
-     * El ViewModel ya no sabe nada de Retrofit ni de Responses, solo de DTOs.
      */
     fun loadData() {
         viewModelScope.launch {
-            // 1. Indicamos que estamos cargando y limpiamos errores previos
+            // 1. Estado de carga activo y reset de error
             _uiState.update { it.copy(isLoading = true, error = null) }
 
             try {
-                // 2. Pedimos los datos al repositorio (que ya devuelve List<MainDTO>)
+                // 2. Llamada al repositorio
                 val bands = repo.getBands()
 
-                // 3. Actualizamos el estado con los datos recibidos
-                _uiState.update {
-                    it.copy(mainBands = bands, isLoading = false)
+                // 3. Verificamos si la lista llegó vacía para manejarlo en la UI si quieres
+                if (bands.isEmpty()) {
+                    _uiState.update {
+                        it.copy(isLoading = false, error = "No se encontraron bandas disponibles")
+                    }
+                } else {
+                    _uiState.update {
+                        it.copy(mainBands = bands, isLoading = false)
+                    }
+                    Log.d("DEBUG_API", "Carga exitosa: ${bands.size} elementos")
                 }
-                Log.d("DEBUG_API", "Carga exitosa: ${bands.size} elementos")
 
             } catch (e: Exception) {
-                // 4. Capturamos cualquier error (red, parseo, etc.)
-                Log.e("DEBUG_API", "Error en loadData", e)
+                // 4. Captura de errores (Red, Timeout, etc.)
+                Log.e("DEBUG_API", "Error en loadData: ${e.message}", e)
                 _uiState.update {
-                    it.copy(isLoading = false, error = "Error al cargar datos: ${e.localizedMessage}")
+                    it.copy(
+                        isLoading = false,
+                        error = "Error de conexión: Verifica que el servidor esté activo"
+                    )
                 }
             }
         }
