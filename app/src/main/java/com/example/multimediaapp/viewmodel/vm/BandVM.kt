@@ -4,7 +4,8 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.multimediaapp.data.repository.BandsRepo
 import com.example.multimediaapp.model.BandDTO
-import com.example.multimediaapp.network.ApiService
+//import com.example.multimediaapp.network.ApiService
+import com.example.multimediaapp.network.BandApiService
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.launch
@@ -16,7 +17,7 @@ import kotlinx.coroutines.launch
 open class BandVM(
     private val repository: BandsRepo
 ) : ViewModel(){
-    val vm = BandVM(BandsRepo(ApiService.create()))
+    val vm = BandVM(BandsRepo(BandApiService.create()))
     // Lista de bandas observable
     private val _bandsState = MutableStateFlow<List<BandDTO>>(emptyList())
     val bandsState: StateFlow<List<BandDTO>> get() = _bandsState

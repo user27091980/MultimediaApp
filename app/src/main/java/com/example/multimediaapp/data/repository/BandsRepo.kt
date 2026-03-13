@@ -3,7 +3,7 @@ package com.example.multimediaapp.data.repository
 import com.example.multimediaapp.data.entity.BandEntity
 import com.example.multimediaapp.data.entity.toDTO
 import com.example.multimediaapp.model.BandDTO
-import com.example.multimediaapp.network.ApiService
+import com.example.multimediaapp.network.BandApiService
 
 // Interfaz del repositorio para BandEntity / BandDTO
 interface IBandRepo {
@@ -20,17 +20,17 @@ interface IBandRepo {
 }
 
 // Implementación del repositorio usando Retrofit
-class BandsRepo(private val apiService: ApiService) : IBandRepo {
+class BandsRepo(private val bandApi: BandApiService) : IBandRepo {
 
     override suspend fun getBands(): List<BandDTO> {
-        val response = apiService.getBands()
+        val response = bandApi.getBands()
         return if (response.isSuccessful) {
             response.body()?.map { it.toDTO() } ?: emptyList()
         } else emptyList()
     }
 
     override suspend fun getBandById(id: String): BandDTO? {
-        val response = apiService.getBandById(id)
+        val response = bandApi.getBandById(id)
         return if (response.isSuccessful) response.body()?.toDTO() else null
     }
 
@@ -49,7 +49,7 @@ class BandsRepo(private val apiService: ApiService) : IBandRepo {
             headerLink = band.headerLink,
 
         )
-        val response = apiService.createBand(entity)
+        val response = bandApi.createBand(entity)
         return if (response.isSuccessful) response.body()?.toDTO() else null
     }
 
@@ -67,12 +67,12 @@ class BandsRepo(private val apiService: ApiService) : IBandRepo {
             albumLinks = band.albumLinks,
             headerLink = band.headerLink
         )
-        val response = apiService.updateBand(id, entity)
+        val response = bandApi.updateBand(id, entity)
         return if (response.isSuccessful) response.body()?.toDTO() else null
     }
 
     override suspend fun deleteBand(id: String): Boolean {
-        val response = apiService.deleteBand(id)
+        val response = bandApi.deleteBand(id)
         return response.isSuccessful
     }
 }
