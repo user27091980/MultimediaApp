@@ -1,5 +1,5 @@
 package com.example.multimediaapp.network
-
+/*
 import com.example.multimediaapp.data.entity.BandEntity
 import com.example.multimediaapp.data.entity.MainEntity
 import com.example.multimediaapp.model.LoginDTO
@@ -71,3 +71,4 @@ interface ApiService {
         }
     }
 }
+*/
