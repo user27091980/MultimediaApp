@@ -7,6 +7,7 @@ import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
@@ -20,27 +21,30 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.painter.ColorPainter
 import androidx.compose.ui.layout.ContentScale
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import coil.compose.AsyncImage
 import coil.compose.rememberAsyncImagePainter
+import coil.request.ImageRequest
 import com.example.multimediaapp.model.MainDTO
 
 /**
  * Composable que muestra una lista vertical de tarjetas con imagen y nombre de banda.
  *
- * @param bands Lista de objetos MainDTO que contienen la información de cada banda.
+ * @param main Lista de objetos MainDTO que contienen la información de cada banda.
  * @param onImageClick Lambda que se ejecuta al hacer clic en la imagen de una banda.
  */
 @Composable
 fun CardList(
-    bands: List<MainDTO>, onImageClick: (MainDTO) -> Unit // Lambda que recibe la banda clicada
+    main: List<MainDTO>, onImageClick: (MainDTO) -> Unit // Lambda que recibe la banda clicada
 ) {
     // LazyColumn permite crear listas verticales, cargando solo los elementos visibles.
     // Es útil para listas grandes, para optimizar rendimiento.
     LazyColumn(
         modifier = Modifier
+            .fillMaxSize()
             .background(MaterialTheme.colorScheme.background)
             .padding(vertical = 8.dp),
 
@@ -48,29 +52,29 @@ fun CardList(
     ) {
         // Itera sobre la lista de URLs de imágenes de los álbumes.
         // 'imageBand' es cada URL de la lista.
-
-        items(bands) { band ->
+        // Mostramos un log aquí para confirmar que Compose está recibiendo los items
+        Log.d("CARD_LIST", "Dibujando ${main.size} bandas")
+        items(main) { main ->
             Column(
                 modifier = Modifier.fillMaxWidth(),
                 horizontalAlignment = Alignment.CenterHorizontally // Centra horizontalmente todo dentro de la columna
             ) {
                 AsyncImage(
-                    model = band.imageBand,
-                    contentDescription = "album image",
+                    model = ImageRequest.Builder(LocalContext.current)
+                        .data(main.imageBand)
+                        .crossfade(true)
+                        .build(),
+                    contentDescription = main.bandName,
                     modifier = Modifier
                         .fillMaxWidth()
                         .height(300.dp)
-                        .clickable { onImageClick(band) },
+                        .clickable { onImageClick(main) },
                     contentScale = ContentScale.Crop,
-                    // SI VES GRIS: Está intentando cargar (esperando al servidor)
                     placeholder = ColorPainter(Color.LightGray),
-                    // SI VES ROJO: La URL está mal o Android bloquea la conexión
-                    error = ColorPainter(Color.Red),
-                    onSuccess = { Log.d("COIL", "Cargada: ${band.imageBand}") },
-                    onError = { Log.e("COIL", "Fallo en: ${band.imageBand}") }
+                    error = ColorPainter(Color.Red)
                 )
                 Text(
-                    text = band.bandName,
+                    text = main.bandName,
                     color = MaterialTheme.colorScheme.primary,
                     style = MaterialTheme.typography.headlineMedium,
                     fontWeight = FontWeight.Bold
@@ -82,7 +86,7 @@ fun CardList(
 }
 
 // Datos de ejemplo para el preview
-val previewBands = listOf(
+val previewMain = listOf(
     MainDTO("1", "Metallica", "https://via.placeholder.com/300x150.png?text=Metallica"),
     MainDTO("2", "Iron Maiden", "https://via.placeholder.com/300x150.png?text=Iron+Maiden"),
     MainDTO("3", "AC/DC", "https://via.placeholder.com/300x150.png?text=ACDC")
@@ -96,7 +100,7 @@ val previewBands = listOf(
 @Composable
 fun CardListPreview() {
     CardList(
-        bands = previewBands,
+        main = previewMain,
         onImageClick = {}
     )
 }

@@ -54,7 +54,7 @@ data class BandEntity(
 fun BandEntity.toDTO(): BandDTO {
     // Esta es la base de tu servidor local en el emulador.
     // Si las fotos están en otra carpeta (ej: /images/), ajústalo aquí.
-    val baseUrl = "http://10.0.2.2:5131/json/main/"
+    val baseUrl = "http://10.0.2.2:5131/band/"
 
     return BandDTO(
         id = id,
