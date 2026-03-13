@@ -14,24 +14,24 @@ import retrofit2.http.Path
 interface BandApiService{
 
     // ==== BAND ENDPOINTS (Añadido "json/") ====
-    @GET("json/bands")
+    @GET("/band")
     suspend fun getBands(): Response<List<BandEntity>>
 
-    @GET("json/bands/{id}")
+    @GET("/band/{id}")
     suspend fun getBandById(@Path("id") id: String): Response<BandEntity>
 
-    @POST("json/bands")
-    suspend fun createBand(@Body band: BandEntity): Response<BandEntity>
+    @GET("images")
+    suspend fun getImageById(@Path("id") id:String):Response<BandEntity>
 
-    @PUT("json/bands/{id}")
+    @PUT("band/{id}")
     suspend fun updateBand(@Path("id") id: String, @Body band: BandEntity): Response<BandEntity>
 
-    @DELETE("json/bands/{id}")
+    @POST("band/{id}")
+    suspend fun createBand(@Body band: BandEntity): Response<BandEntity>
+    @DELETE("bands/{id}")
     suspend fun deleteBand(@Path("id") id: String): Response<Unit>
-
-
     companion object {
-        private const val BASE_URL = "http://10.0.2.2:5131/"
+        private const val BASE_URL = "http://10.0.2.2:5131/band/"
 
         fun create(): BandApiService {
             val retrofit = Retrofit.Builder()

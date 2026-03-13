@@ -43,7 +43,7 @@ open class BandVM(
         }
     }
 
-    fun fetchBandById(id: String) {
+    fun getBandById(id: String) {
         viewModelScope.launch {
             try {
                 val band = repository.getBandById(id)

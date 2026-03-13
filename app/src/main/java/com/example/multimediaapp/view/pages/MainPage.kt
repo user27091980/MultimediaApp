@@ -99,9 +99,9 @@ fun MainContent(
     onImageClick: (String) -> Unit
 ) {
     CardList(
-        bands = uiState.mainBands,
-        onImageClick = { band ->
-            onImageClick(band.id)
+        main = uiState.mainBands,
+        onImageClick = { main ->
+            onImageClick(main.id)
         }
     )
 }
