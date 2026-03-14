@@ -8,7 +8,9 @@ package com.example.multimediaapp.viewmodel.uistate
  */
 data class UserInfoListUiState(
     /** Lista de usuarios con información completa */
-    val userInfo: List<UserInfoUiState> = ArrayList()
+    val userInfo: List<UserInfoUiState> = emptyList(),
+    val isLoading: Boolean = false,
+    val error: String? = null
 )
 
 /**
@@ -18,19 +20,14 @@ data class UserInfoListUiState(
  * - Puede ser creado a partir de datos del repositorio o base de datos.
  */
 data class UserInfoUiState(
-    //ID único del usuario
     val id: String = "",
-    //Correo electrónico del usuario
     val email: String = "",
-    // Nombre de usuario (login)
     val user: String = "",
-    // País del usuario
-    val country: String = "",
-    //Nombre de pila del usuario
     val name: String = "",
-    //Apellido del usuario
-    val lastName: String = ""
+    val lastName: String = "",
+    val country: String = ""
 )
+
 
 
 

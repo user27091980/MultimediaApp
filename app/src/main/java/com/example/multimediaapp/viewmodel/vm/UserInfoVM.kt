@@ -2,6 +2,7 @@ package com.example.multimediaapp.viewmodel.vm
 
 
 import android.app.Application
+import android.util.Log
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.multimediaapp.data.repository.UsersInfoRepo
@@ -15,29 +16,23 @@ import kotlinx.coroutines.launch
 
 class UserInfoVM(application: Application) : AndroidViewModel(application) {
 
-    // Repositorio real que usa el contexto de la aplicación
     private val repo = UsersInfoRepo(application.applicationContext)
 
     private val _uiState = MutableStateFlow(UserInfoListUiState())
     val uiState: StateFlow<UserInfoListUiState> = _uiState.asStateFlow()
 
-    /**
-     * Carga los datos del usuario usando Corrutinas y el nuevo Repositorio.
-     */
     fun loadUser(userId: String) {
-        // Evitar recargas si el ID ya coincide con el cargado
+        // Evitar recargas si el ID ya coincide
         if (_uiState.value.userInfo.any { it.id == userId }) return
 
         viewModelScope.launch {
-            // 1. Podrías añadir un estado de carga aquí si tu UiState lo permite
-
-            // 2. Llamada al repo (usando el método read que devuelve Result o DTO)
-            // Nota: He adaptado la llamada al estilo de tu nuevo UsersInfoRepo con Retrofit
             try {
-                // Si tu repo.read ahora es suspend, se usa así:
-                repo.read(userId,
-                    onSuccess = { data ->
-                        data?.let {
+                // LLAMADA CORRECTA: El método 'read' es suspend y devuelve un Result
+                val result = repo.read(userId)
+
+                result.fold(
+                    onSuccess = { dto ->
+                        dto?.let {
                             val mapped = UserInfoUiState(
                                 id = it.id,
                                 email = it.email,
@@ -46,15 +41,18 @@ class UserInfoVM(application: Application) : AndroidViewModel(application) {
                                 lastName = it.lastName,
                                 country = it.country
                             )
-                            _uiState.update { it.copy(userInfo = listOf(mapped)) }
+                            _uiState.update { state ->
+                                state.copy(userInfo = listOf(mapped))
+                            }
                         }
                     },
-                    onError = {
-                        // Manejar error de carga
+                    onFailure = { error ->
+                        Log.e("DEBUG_API", "Error al cargar usuario: ${error.message}")
+                        // Aquí podrías actualizar un estado de error en la UI
                     }
                 )
             } catch (e: Exception) {
-                // Manejar excepción de red
+                Log.e("DEBUG_API", "Fallo de red: ${e.message}")
             }
         }
     }

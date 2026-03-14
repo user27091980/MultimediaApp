@@ -9,6 +9,7 @@ import kotlin.String
  * Esta clase se encarga de la persistencia (Base de datos).
  */
 data class UsersInfoEntity(
+    val id: String,
     val email: String,
     val pass: String,
     val user: String,
@@ -22,6 +23,7 @@ data class UsersInfoEntity(
  * en un DTO para la UI o la API.
  */
 fun UsersInfoEntity.toDTO() = UsersInfoDTO(
+    id="",
     email = this.email,
     pass = this.pass,
     user = this.user,
@@ -35,6 +37,7 @@ fun UsersInfoEntity.toDTO() = UsersInfoDTO(
  * para poder guardarlo en la base de datos.
  */
 fun UsersInfoDTO.toEntity() = UsersInfoEntity(
+    id=this.id,
     email = this.email,
     pass = this.pass,
     user = this.user,

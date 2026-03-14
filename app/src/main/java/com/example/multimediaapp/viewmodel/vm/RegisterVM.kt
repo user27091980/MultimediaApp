@@ -8,6 +8,7 @@ import com.example.multimediaapp.data.repository.UsersInfoRepo
 import com.example.multimediaapp.viewmodel.uistate.RegisterFormUiState
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
+import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 /**
@@ -18,24 +19,24 @@ import kotlinx.coroutines.launch
  *
  * @author: Andrés
  */
-import android.app.Application
-import android.util.Patterns
-import androidx.lifecycle.AndroidViewModel
-import androidx.lifecycle.viewModelScope
-import com.example.multimediaapp.data.repository.UsersInfoRepo
-import com.example.multimediaapp.viewmodel.uistate.RegisterFormUiState
-import kotlinx.coroutines.flow.MutableStateFlow
-import kotlinx.coroutines.flow.StateFlow
-import kotlinx.coroutines.flow.asStateFlow
-import kotlinx.coroutines.flow.update
-import kotlinx.coroutines.launch
+
 
 class RegisterVM(application: Application) : AndroidViewModel(application) {
 
     private val repo = UsersInfoRepo(application.applicationContext)
 
     // Inicialización corregida (sin duplicar el constructor)
-    private val _uiState = MutableStateFlow(RegisterFormUiState())
+    private val _uiState = MutableStateFlow(RegisterFormUiState(
+        errorMessage = "error",
+        lastName = "",
+        user = "",
+        email = "",
+        pass = "",
+        name = "",
+        surname = "",
+        country = "",
+        isLoading = true,
+    ))
     val uiState: StateFlow<RegisterFormUiState> = _uiState.asStateFlow()
 
     // --- ACTUALIZACIÓN DE ESTADOS ---

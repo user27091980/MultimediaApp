@@ -35,13 +35,13 @@ fun TextFieldsComponent(
     pass: String,
     country: String,
     name: String,
-    surname: String,
+    lastName: String,
     onUserChange: (String) -> Unit,
     onEmailChange: (String) -> Unit,
     onPassChange: (String) -> Unit,
     onCountryChange: (String) -> Unit,
     onNameChange: (String) -> Unit,
-    onSurnameChange: (String) -> Unit
+    onLastNameChange: (String) -> Unit
 
 ) {
     // Columna que organiza los campos verticalmente
@@ -66,9 +66,9 @@ fun TextFieldsComponent(
             name=name,
             onNameChange = onNameChange
         )
-        TextFieldSurnameComponent(
-            surname = surname,
-            onSurnameChange = onSurnameChange
+        TextFieldLastNameComponent(
+            lastName=lastName,
+            onLastNameChange = onLastNameChange
         )
 
     }
@@ -171,10 +171,10 @@ fun TextFieldNameComponent(name: String, onNameChange: (String) -> Unit) {
 
 
 @Composable
-fun TextFieldSurnameComponent(surname: String, onSurnameChange: (String) -> Unit) {
+fun TextFieldLastNameComponent(lastName: String, onLastNameChange: (String) -> Unit) {
     OutlinedTextField(
-        value = surname,
-        onValueChange = onSurnameChange,
+        value = lastName,
+        onValueChange = onLastNameChange,
         singleLine = true,
         label = { Text("Apellido", color = Color.White) }
     )

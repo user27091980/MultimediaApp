@@ -5,6 +5,11 @@ plugins {
     alias(libs.plugins.kotlin.android)
     alias(libs.plugins.kotlin.compose)
 }
+configurations {
+    all {
+        exclude(group = "com.google.guava", module = "listenablefuture")
+    }
+}
 
 android {
     namespace = "com.example.multimediaapp"

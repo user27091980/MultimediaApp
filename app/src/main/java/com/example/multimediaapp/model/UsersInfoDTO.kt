@@ -7,6 +7,7 @@ package com.example.multimediaapp.model
  * Todos los campos son inmutables (`val`) para evitar modificaciones accidentales.
  */
 data class UsersInfoDTO(
+    val id : String,
     val email: String,
     val pass: String,
     val user: String,
