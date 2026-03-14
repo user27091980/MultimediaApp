@@ -4,8 +4,6 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.multimediaapp.data.repository.BandsRepo
 import com.example.multimediaapp.model.BandDTO
-//import com.example.multimediaapp.network.ApiService
-import com.example.multimediaapp.network.BandApiService
 import com.example.multimediaapp.retrofit.RetrofitModule
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow

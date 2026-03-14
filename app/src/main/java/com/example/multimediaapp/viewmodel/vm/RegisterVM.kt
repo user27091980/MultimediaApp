@@ -1,14 +1,15 @@
 package com.example.multimediaapp.viewmodel.vm
 
 import android.app.Application
+import android.util.Patterns
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.multimediaapp.data.repository.UsersInfoRepo
 import com.example.multimediaapp.viewmodel.uistate.RegisterFormUiState
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
+import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
-
 /**
  * ViewModel para la pantalla de registro de usuarios.
  *
@@ -17,106 +18,101 @@ import kotlinx.coroutines.launch
  *
  * @author: Andrés
  */
+import android.app.Application
+import android.util.Patterns
+import androidx.lifecycle.AndroidViewModel
+import androidx.lifecycle.viewModelScope
+import com.example.multimediaapp.data.repository.UsersInfoRepo
+import com.example.multimediaapp.viewmodel.uistate.RegisterFormUiState
+import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.StateFlow
+import kotlinx.coroutines.flow.asStateFlow
+import kotlinx.coroutines.flow.update
+import kotlinx.coroutines.launch
+
 class RegisterVM(application: Application) : AndroidViewModel(application) {
-    // Repositorio que maneja la persistencia/lectura de usuarios
+
     private val repo = UsersInfoRepo(application.applicationContext)
 
-    // ESTADO DE LA UI
-    // MutableStateFlow que mantiene el estado actual del formulario de registro
+    // Inicialización corregida (sin duplicar el constructor)
     private val _uiState = MutableStateFlow(RegisterFormUiState())
+    val uiState: StateFlow<RegisterFormUiState> = _uiState.asStateFlow()
 
-    // Exponemos el estado como inmutable para que la UI lo observe
-    val uiState: StateFlow<RegisterFormUiState> = _uiState
+    // --- ACTUALIZACIÓN DE ESTADOS ---
+    fun onUserChange(newUser: String) =
+        _uiState.update { it.copy(user = newUser, errorMessage = null) }
 
-    // Callbacks de los TextFields
-    // Actualiza el campo "usuario" y limpia errores previos
-    fun onUserChange(newUser: String) {
-        _uiState.value = _uiState.value.copy(user = newUser, errorMessage = null)
-    }
+    fun onEmailChange(newEmail: String) =
+        _uiState.update { it.copy(email = newEmail, errorMessage = null) }
 
-    //Actualiza el campo "email" y limpia errores previos
-    fun onEmailChange(newEmail: String) {
-        _uiState.value = _uiState.value.copy(email = newEmail, errorMessage = null)
-    }
+    // CORRECCIÓN: Estaba actualizando el email en lugar del pass
+    fun onPassChange(newPass: String) =
+        _uiState.update { it.copy(pass = newPass, errorMessage = null) }
 
-    //Actualiza el campo "password" y limpia errores previos
-    fun onPassChange(newPass: String) {
-        _uiState.value = _uiState.value.copy(pass = newPass, errorMessage = null)
-    }
+    fun onNameChange(newName: String) =
+        _uiState.update { it.copy(name = newName, errorMessage = null) }
 
-    fun onNameChange(newName: String) {
-        _uiState.value = _uiState.value.copy(name = newName, errorMessage = null)
-    }
+    fun onLastNameChange(newLastname: String) =
+        _uiState.update { it.copy(lastName = newLastname, errorMessage = null) }
 
-    fun onSurnameChange(newSurname: String) {
-        _uiState.value = _uiState.value.copy(surname = newSurname, errorMessage = null)
-    }
+    fun onCountryChange(newCountry: String) =
+        _uiState.update { it.copy(country = newCountry, errorMessage = null) }
 
-    fun onCountryChange(newCountry: String) {
-        _uiState.value = _uiState.value.copy(country = newCountry, errorMessage = null)
-    }
-    // Validación de campos y registro
-    /**
-     * Valida los campos del formulario antes de registrar al usuario.
-     *
-     * @param onSuccess Callback que se ejecuta si la validación y registro son exitosos.
-     */
     fun validateFields(onSuccess: () -> Unit) {
         val state = _uiState.value
+        val error = when {
+            state.user.isBlank() -> "El usuario es obligatorio"
+            !Patterns.EMAIL_ADDRESS.matcher(state.email).matches() -> "Email inválido"
+            state.pass.length < 4 -> "La contraseña debe tener al menos 4 caracteres"
+            state.name.isBlank() || state.lastName.isBlank() -> "Nombre y apellido son obligatorios"
+            else -> null
+        }
 
-        when {
-            state.user.isBlank() -> _uiState.value =
-                state.copy(errorMessage = "El usuario no puede estar vacío")
-
-            state.email.isBlank() || !state.email.contains("@") -> _uiState.value =
-                state.copy(errorMessage = "Email inválido")
-
-            state.pass.length < 4 -> _uiState.value =
-                state.copy(errorMessage = "La contraseña debe tener al menos 4 caracteres")
-            // Si todo está correcto, llamamos a la función que registra al usuario
-            state.name.isBlank() -> _uiState.value =
-                state.copy(errorMessage = "El nombre no puede estar vacío")
-
-            state.surname.isBlank() -> _uiState.value =
-                state.copy(errorMessage = "El apellido no puede estar vacío")
-
-            else -> {
-                _uiState.value = state.copy(errorMessage = null)
-
-                registerUser(
-                    state.user, state.email, state.pass, state.country,
-                    state.name, state.surname, onSuccess
-                )
-            }
+        if (error != null) {
+            _uiState.update { it.copy(errorMessage = error) }
+        } else {
+            // CORRECCIÓN: Quitamos el TODO() y pasamos la lógica correcta
+            registerUser(
+                email = state.email,
+                pass = state.pass,
+                user = state.user,
+                name = state.name,
+                lastName = state.lastName,
+                country = state.country,
+                onSuccess = onSuccess
+            )
         }
     }
 
-    /**
-     * Llama al repositorio para registrar al usuario.
-     *
-     * Maneja el resultado con fold: onSuccess limpia errores y ejecuta el callback,
-     * onFailure actualiza el estado con el mensaje de error.
-     */
     private fun registerUser(
-        user: String,
         email: String,
         pass: String,
-        country: String,
+        user: String,
         name: String,
-        surname: String,
+        lastName: String,
+        country: String,
         onSuccess: () -> Unit
     ) {
         viewModelScope.launch {
-            val result = repo.register(user, email, pass)
+            _uiState.update { it.copy(isLoading = true, errorMessage = null) }
+
+            // CORRECCIÓN: El orden de parámetros debe coincidir con UsersInfoRepo.register
+            val result = repo.register(
+                email = email,
+                user = user,
+                name = name,
+                pass = pass,
+                country = country,
+                lastName = lastName
+            )
+
             result.fold(
                 onSuccess = {
-                    // Registro exitoso: limpiamos errores y ejecutamos callback
-                    _uiState.value = _uiState.value.copy(errorMessage = null)
-                    onSuccess() // Navegar a otra pantalla o mostrar diálogo
+                    _uiState.update { it.copy(isLoading = false) }
+                    onSuccess()
                 },
                 onFailure = { ex ->
-                    // Error en registro: mostramos mensaje
-                    _uiState.value = _uiState.value.copy(errorMessage = ex.message)
+                    _uiState.update { it.copy(isLoading = false, errorMessage = ex.message) }
                 }
             )
         }

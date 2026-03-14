@@ -2,76 +2,57 @@ package com.example.multimediaapp.data.repository
 
 // Importa el modelo de usuario
 import com.example.multimediaapp.model.LoginDTO
-import com.example.multimediaapp.session.SessionManager
-
-/**
- * Repositorio que maneja operaciones CRUD sobre los usuarios.
- *
- * Actualmente utiliza datos en memoria (ArrayList) como "fake database".
- * Puede ser reemplazado por API o base de datos real en el futuro.
- */
+import com.example.multimediaapp.retrofit.RetrofitModule
+import java.io.IOException
 
 class LoginRepo {
 
+    // Usamos la instancia centralizada del módulo de Retrofit
+    private val api = RetrofitModule.loginApi
+
     /**
-     * Companion object para almacenar los usuarios y el contador de IDs
-     * de manera estática, accesible desde cualquier instancia de LoginRepo.
+     * Obtiene un usuario específico por su ID desde el servidor.
      */
-    companion object {
-        // Lista en memoria de usuarios iniciales
-        val users = ArrayList<LoginDTO>(
-            listOf(
-                LoginDTO("0", "aaaa@gmail.com", "user1", "1234"),
-                LoginDTO("1", "bbbb@gmail.com", "user2", "1234"),
-                LoginDTO("2", "cccc@gmail.com", "user3", "1234"),
-                LoginDTO("3", "dddd@gmail.com", "user4", "1234")
-            )
-        )
-        var currId = 4
-
+    suspend fun getUserById(id: String): Result<LoginDTO> {
+        return try {
+            val response = api.getUser(id)
+            if (response.isSuccessful && response.body() != null) {
+                Result.success(response.body()!!)
+            } else {
+                Result.failure(Exception("Usuario no encontrado: ${response.code()}"))
+            }
+        } catch (e: IOException) {
+            Result.failure(Exception("Error de red: Verifica tu conexión"))
+        } catch (e: Exception) {
+            Result.failure(e)
+        }
     }
 
-    //crud
 
-    fun readAll(onSuccess: (List<LoginDTO>) -> Unit, onError: () -> Unit) {
-        onSuccess(users.toList())//evitamos que se pueda modificar desde fuera
+    /**
+     * Intenta realizar el login enviando email y contraseña.
+     * Devuelve el perfil completo del usuario si es exitoso.
+     */
+    suspend fun login(email: String, pass: String): Result<LoginDTO> {
+        return try {
+            // Usamos el endpoint de login que definimos en LoginApiService
+            val response = api.loginUser(email, pass)
+
+            if (response.isSuccessful && response.body() != null) {
+                // Aquí podrías mapear de UsersInfoDTO a LoginDTO si fuera necesario
+                val body = response.body()
+                val loginData = LoginDTO(
+                    id = body!!.id,
+                    email = body.email,
+                    user = body.user,
+                    pass = "" // Por seguridad no solemos persistir la pass tras el login
+                )
+                Result.success(loginData)
+            } else {
+                Result.failure(Exception("Credenciales incorrectas"))
+            }
+        } catch (e: Exception) {
+            Result.failure(e)
+        }
     }
-
-    fun create(
-        est: LoginDTO,
-        onSuccess: (usuarioCreado: LoginDTO) -> Unit,
-        onError: () -> Unit
-    ) {
-
-        val newUser = est.copy(id = currId++.toString())
-        if (users.add(newUser))
-            onSuccess(newUser)
-        else
-            onError()
-
-    }
-
-    fun read(
-        id: String,
-        onSuccess: (LoginDTO?) -> Unit,
-        onError: () -> Unit
-    ) {
-        val user = users.find { it.id == (id) }
-        if (user != null)
-            onSuccess(user)
-        else
-            onError()
-    }
-
-    fun delete(
-        id: String,
-        onSuccess: () -> Unit,
-        onError: () -> Unit
-    ) {
-        if (users.removeIf { it.id == (id) })
-            onSuccess()
-        else
-            onError()
-    }
-
 }

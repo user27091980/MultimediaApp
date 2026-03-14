@@ -29,7 +29,7 @@ data class UserInfoUiState(
     //Nombre de pila del usuario
     val name: String = "",
     //Apellido del usuario
-    val surname: String = ""
+    val lastName: String = ""
 )
 
 

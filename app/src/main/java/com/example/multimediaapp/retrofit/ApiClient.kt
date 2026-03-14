@@ -1,12 +1,14 @@
 package com.example.multimediaapp.retrofit
 
-//import com.example.multimediaapp.network.ApiService
 import com.example.multimediaapp.network.BandApiService
+import com.example.multimediaapp.network.LoginApiService
 import com.example.multimediaapp.network.MainApiService
+import com.example.multimediaapp.network.UserInfoApiService
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 
 object RetrofitModule {
+
     private const val BASE_URL = "http://10.0.2.2:5131/"
 
     // 1. Creamos una única instancia de Retrofit para toda la app
@@ -25,4 +27,13 @@ object RetrofitModule {
     val bandApi: BandApiService by lazy {
         retrofit.create(BandApiService::class.java)
     }
+
+    val loginApi: LoginApiService by lazy {
+        retrofit.create(LoginApiService::class.java)
+    }
+
+    val userInfoApi: UserInfoApiService by lazy {
+        retrofit.create(UserInfoApiService::class.java)
+    }
+
 }
