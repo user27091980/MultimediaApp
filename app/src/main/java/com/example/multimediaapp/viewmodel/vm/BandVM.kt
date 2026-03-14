@@ -6,50 +6,44 @@ import com.example.multimediaapp.data.repository.BandsRepo
 import com.example.multimediaapp.model.BandDTO
 //import com.example.multimediaapp.network.ApiService
 import com.example.multimediaapp.network.BandApiService
+import com.example.multimediaapp.retrofit.RetrofitModule
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
+import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.launch
 
 /**
  * ViewModel para gestionar BandDTO usando BandsRepo.
  * Expone datos de manera reactiva con StateFlow.
  */
-open class BandVM(
-    private val repository: BandsRepo
-) : ViewModel(){
-    val vm = BandVM(BandsRepo(BandApiService.create()))
-    // Lista de bandas observable
+class BandVM : ViewModel() {
+
+    // Usamos el repositorio centralizado
+    private val repository = BandsRepo(RetrofitModule.bandApi)
+    //carga las bandas nada más abrirse
+    init {
+        loadAllBands()
+    }
+
     private val _bandsState = MutableStateFlow<List<BandDTO>>(emptyList())
-    val bandsState: StateFlow<List<BandDTO>> get() = _bandsState
+    val bandsState: StateFlow<List<BandDTO>> = _bandsState.asStateFlow()
 
-    // Banda seleccionada
     private val _selectedBand = MutableStateFlow<BandDTO?>(null)
-    val selectedBand: StateFlow<BandDTO?> get() = _selectedBand
+    val selectedBand: StateFlow<BandDTO?> = _selectedBand.asStateFlow()
 
-    // Estado de error
     private val _error = MutableStateFlow<String?>(null)
-    val error: StateFlow<String?> get() = _error
+    val error: StateFlow<String?> = _error.asStateFlow()
 
     // --- Funciones CRUD ---
 
     fun loadAllBands() {
         viewModelScope.launch {
             try {
+                _error.value = null
                 val bands = repository.getBands()
                 _bandsState.value = bands
             } catch (e: Exception) {
-                _error.value = e.message
-            }
-        }
-    }
-
-    fun getBandById(id: String) {
-        viewModelScope.launch {
-            try {
-                val band = repository.getBandById(id)
-                _selectedBand.value = band
-            } catch (e: Exception) {
-                _error.value = e.message
+                _error.value = e.localizedMessage
             }
         }
     }
@@ -62,7 +56,7 @@ open class BandVM(
                     _bandsState.value = _bandsState.value + it
                 }
             } catch (e: Exception) {
-                _error.value = e.message
+                _error.value = "Error al crear: ${e.localizedMessage}"
             }
         }
     }
@@ -72,7 +66,8 @@ open class BandVM(
             try {
                 val updated = repository.updateBand(id, band)
                 updated?.let { bandUpdated ->
-                    _bandsState.value = _bandsState.value.map { if (it.id == id) bandUpdated else it }
+                    _bandsState.value =
+                        _bandsState.value.map { if (it.id == id) bandUpdated else it }
                 }
             } catch (e: Exception) {
                 _error.value = e.message

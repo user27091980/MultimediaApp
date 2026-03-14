@@ -9,6 +9,7 @@ data class BandDTO(
     val id: String,
     val name: String,
     val description: String,
+    val banner : String,
     val albumImages: List<String>,
     val style: String,
     val recordLabel: String,
@@ -16,7 +17,7 @@ data class BandDTO(
     val discography: List<String>,
     val albumLinks: List<String>,
     val headerLink: String,
-    val banner: String
+
 
 )
 

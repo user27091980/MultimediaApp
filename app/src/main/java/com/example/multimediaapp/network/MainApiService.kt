@@ -10,50 +10,32 @@ import retrofit2.http.GET
 import retrofit2.http.POST
 import retrofit2.http.PUT
 import retrofit2.http.Path
-/**
- * Interfaz que define las operaciones de red (API) para la entidad MainEntity.
- */
-/**
- * Interfaz que define las operaciones de red (API) para la entidad MainEntity.
- */
+
 interface MainApiService {
 
-    // Obtiene la lista completa. Ruta: http://10.0.2.2:5131/main/
-    @GET(".")
+    // 1. Para obtener la LISTA completa, no suele llevar {id}
+    @GET("json/main")
     suspend fun getMainBands(): Response<List<MainEntity>>
 
-    // Obtiene una imagen por ID.
-    // Al empezar con "/", salta a la raíz: http://10.0.2.2{id}/
-    @GET("/images/{id}/")
-    suspend fun getMainImages(@Path("id") id: String): Response<MainEntity>
-
-    // Obtiene una banda por ID. Ruta: http://10.0.2.2:5131/main/{id}/
-    @GET("{id}/")
+    // 2. Obtener una sola banda por ID
+    @GET("json/main/{id}")
     suspend fun getMainBandById(@Path("id") id: String): Response<MainEntity>
 
-    // Crea una nueva banda en la raíz de /main/
-    @POST(".")
+    // 3. Rutas específicas para evitar conflictos
+    // Si quieres buscar por nombre o imagen, la URL debe ser distinta:
+    @GET("json/main/name/{name}")
+    suspend fun getNameBand(@Path("name") name: String): Response<MainEntity>
+
+    @GET("json/main/images/{imageBand}")
+    suspend fun getMainImages(@Path("imageBand") imageBand: String): Response<MainEntity>
+
+    // 4. Operaciones de escritura (CRUD)
+    @POST("json/main")
     suspend fun createMainBand(@Body band: MainEntity): Response<MainEntity>
 
-    // Actualiza una banda. Ruta: http://10.0.2.2:5131/main/{id}
-    @PUT("{id}")
+    @PUT("json/main/{id}")
     suspend fun updateMainBand(@Path("id") id: String, @Body band: MainEntity): Response<MainEntity>
 
-    // Elimina una banda. Ruta: http://10.0.2.2:5131/main/{id}
-    @DELETE("{id}")
+    @DELETE("json/main/{id}")
     suspend fun deleteMainBand(@Path("id") id: String): Response<Unit>
-
-    companion object {
-        // La URL base DEBE terminar en /
-        private const val BASE_URL = "http://10.0.2.2:5131/main/"
-
-        fun create(): MainApiService {
-            val retrofit = Retrofit.Builder()
-                .baseUrl(BASE_URL)
-                .addConverterFactory(GsonConverterFactory.create())
-                .build()
-
-            return retrofit.create(MainApiService::class.java)
-        }
-    }
 }
