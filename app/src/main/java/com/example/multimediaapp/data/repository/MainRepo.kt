@@ -16,7 +16,7 @@ interface IMainRepo {
     suspend fun updateBand(id: String, band: MainDTO): MainDTO?
     suspend fun deleteBand(id: String): Boolean
     // Método específico para recuperar imágenes/galería por ID
-    suspend fun getImages(id: String): MainDTO?
+    suspend fun getImages(id: String): MainDTO
 
 }
 /**
@@ -61,7 +61,7 @@ class MainRepo(private val mainApi: MainApiService) : IMainRepo {
         if (response.isSuccessful) {
             return response.body()?.toDTO() ?: throw Exception("Cuerpo vacío")
         }
-        throw Exception("Error al obtener imágenes")
+        throw Exception("Error al obtener imágenes: ${response.code()}")
     }
 
 }

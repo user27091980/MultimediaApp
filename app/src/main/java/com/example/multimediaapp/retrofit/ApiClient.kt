@@ -7,15 +7,22 @@ import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 
 object RetrofitModule {
-    // La base debe ser solo el dominio y puerto. El resto va en el ApiService.
     private const val BASE_URL = "http://10.0.2.2:5131/"
 
-    // Usamos la función create() que ya definiste en tu companion object de MainApiService
+    // 1. Creamos una única instancia de Retrofit para toda la app
+    private val retrofit: Retrofit by lazy {
+        Retrofit.Builder()
+            .baseUrl(BASE_URL)
+            .addConverterFactory(GsonConverterFactory.create())
+            .build()
+    }
+
+    // 2. Usamos esa instancia para crear cada servicio de forma perezosa (lazy)
     val mainApi: MainApiService by lazy {
-        MainApiService.create()
+        retrofit.create(MainApiService::class.java)
     }
 
     val bandApi: BandApiService by lazy {
-        BandApiService.create()
+        retrofit.create(BandApiService::class.java)
     }
 }

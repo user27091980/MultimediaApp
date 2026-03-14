@@ -31,7 +31,7 @@ data class BandEntity(
  */
 fun BandEntity.toDTO(): BandDTO {
     // CORREGIDO: Apuntamos a la carpeta /images/ que confirmaste
-    val baseUrl = "http://10.0.2.2"
+    val baseUrl = "http://10.0.2.2/"
 
     return BandDTO(
         id = id,

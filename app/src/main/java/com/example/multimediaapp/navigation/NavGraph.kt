@@ -20,15 +20,14 @@ fun NavGraph(
     navController: NavHostController,
     settingsVM: SettingsVM
 ) {
-
     NavHost(
         navController = navController,
         startDestination = ObjRoutes.LOGINREG
     ) {
-
         // Pantalla inicial Login / Register
         composable(ObjRoutes.LOGINREG) {
             val vm: LoginRegVM = viewModel()
+            // CORRECCIÓN: el parámetro era 'viewModel', no 'v'
             LoginRegScreen(navController = navController, vm = vm)
         }
 
@@ -46,30 +45,30 @@ fun NavGraph(
 
         // Pantalla principal
         composable(ObjRoutes.MAIN) {
-            val vm: MainVM = viewModel() // No necesita factory
-            MainScreen(navController = navController, vm = vm)
+            val vm: MainVM = viewModel()
+            // CORRECCIÓN: tu MainScreen espera 'viewModel', no 'vm' (según tu código anterior)
+            MainScreen(navController = navController, viewModel = vm)
         }
 
         // Pantalla de banda con parámetro
         composable("${ObjRoutes.BAND}/{bandId}") { backStackEntry ->
-            val bandId = backStackEntry.arguments?.getString("bandId") ?: "default"
+            val bandId = backStackEntry.arguments?.getString("bandId") ?: ""
             val vm: BandVM = viewModel()
+            // Pasamos el ID y el VM a la pantalla de detalle
             BandScreen(bandId = bandId, vm = vm)
         }
 
         // Información del usuario
         composable(ObjRoutes.INFOUSER) {
             val vm: UserInfoVM = viewModel()
-            val userId = "defaultUser"
-            UserInfoScreen(userInfoId = userId, vm = vm)
+            // Aquí podrías obtener el userId real de un Preference o del LoginVM
+            UserInfoScreen(userInfoId = "defaultUser", vm = vm)
         }
 
-        // Configuración
         composable(ObjRoutes.SETTINGS) {
             SettingsScreen(settingsVM)
         }
 
-        // Dialog
         composable(ObjRoutes.DIALOG) {
             DialogRegisterScreen(navController = navController)
         }

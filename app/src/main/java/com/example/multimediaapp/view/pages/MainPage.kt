@@ -40,16 +40,16 @@ import com.example.multimediaapp.viewmodel.vm.MainVM
  * - Permite navegar al detalle de cada banda
  */
 @Composable
-fun MainScreen(navController: NavController, vm: MainVM = viewModel()) {
+fun MainScreen(navController: NavController, viewModel: MainVM = viewModel()) {
 
     // Observamos el StateFlow del ViewModel.
     // collectAsState convierte el flujo en un estado observable por Compose.
-    val uiState by vm.uiState.collectAsState()
+    val uiState by viewModel.uiState.collectAsState()
     // LaunchedEffect se ejecuta cuando el Composable entra en composición.
     // Unit como clave significa que se ejecutará solo una vez.
     // Aquí llamamos a loadData() para cargar las bandas desde el ViewModel.
     LaunchedEffect(Unit) {
-        vm.loadData()
+        viewModel.loadData()
     }
     /*
     Box es un contenedor que permite superponer elementos.
