@@ -17,4 +17,8 @@
     <string name="discografia">discografía</string>
     <string name="info">información</string>
     <string name="logOut">logout</string>
+    <string name="confirmar">¿confirmar registro?</string>
+    <string name="si">sí</string>
+    <string name="no">no</string>
+    <string name="version">"App Version: 1.0"</string>
 </resources>

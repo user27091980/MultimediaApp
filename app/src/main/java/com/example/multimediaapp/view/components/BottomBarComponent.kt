@@ -90,7 +90,7 @@ fun BottomBar(navController: NavHostController) {
                     selectedItem = index
                     navController.navigate(item.route)
 
-                    { launchSingleTop = true }
+
                 }
             )
         }

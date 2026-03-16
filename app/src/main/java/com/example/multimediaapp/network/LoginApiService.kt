@@ -17,8 +17,8 @@ interface LoginApiService {
 
     // Para el LOGIN: Se suelen pasar como Query o en el Body de un POST
     // Si tu API .NET lo espera por URL:
-    @POST("/user/email")
-    suspend fun loginUser(@Body email: LoginDTO): Response<LoginDTO>
+    @POST("/user/login")
+    suspend fun loginUser(email: String, @Body login: String): Response<LoginDTO>
     companion object {
         private const val BASE_URL = "http://10.0.2.2:5131/"
 

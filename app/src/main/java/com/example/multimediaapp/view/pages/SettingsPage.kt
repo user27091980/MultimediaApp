@@ -16,9 +16,11 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
+import com.example.multimediaapp.R
 import com.example.multimediaapp.viewmodel.vm.SettingsVM
 
 /**
@@ -59,18 +61,13 @@ fun SettingsScreen(vm: SettingsVM = viewModel()) {
 
         // Información sobre la versión de la app
         Text(
-            "App Version: 1.0", style = MaterialTheme.typography.headlineMedium,
+            text = stringResource(R.string.version),
+            style = MaterialTheme.typography.headlineMedium,
             color = MaterialTheme.colorScheme.onBackground
         )
 
         Spacer(modifier = Modifier.height(24.dp))
 
-        Text(
-            "Agradecimientos: 5% a chatGpt,\n 70% a Pedro que le debo unos porteos" +
-                    "\ny 25% a mí mismo por no desquiciarme",
-            style = MaterialTheme.typography.titleMedium,
-            color = MaterialTheme.colorScheme.onBackground
-        )
 
     }
 }

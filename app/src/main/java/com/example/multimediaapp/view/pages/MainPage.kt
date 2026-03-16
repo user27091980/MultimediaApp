@@ -71,6 +71,7 @@ fun MainScreen(navController: NavController, viewModel: MainVM = viewModel()) {
             // Cuando se pulse una banda se navegará a su pantalla de detalle
             onImageClick = { bandId ->
                 navController.navigate("${ObjRoutes.BAND}/$bandId")
+
             }
         )
     }

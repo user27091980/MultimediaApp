@@ -6,10 +6,12 @@ import androidx.compose.material.TextButton
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavController
 import androidx.navigation.compose.rememberNavController
+import com.example.multimediaapp.R
 import com.example.multimediaapp.navigation.ObjRoutes
 import com.example.multimediaapp.viewmodel.vm.DialogVM
 
@@ -36,7 +38,7 @@ fun DialogRegisterScreen(
         onDismissRequest = { vm.hideDialog() },
         // Título del diálogo
         title = {
-            Text("¿Confirmar registro?")
+            Text(stringResource(R.string.registro))
         },
         // Botón de confirmación
         confirmButton = {
@@ -47,7 +49,7 @@ fun DialogRegisterScreen(
                 navController.navigate(ObjRoutes.LOGIN)
             }) {
 
-                Text("sí")
+                Text(stringResource(R.string.si))
             }
 
         },
@@ -59,7 +61,7 @@ fun DialogRegisterScreen(
                 // Vuelve a la pantalla de Login/Register
                 navController.navigate(ObjRoutes.LOGINREG)
             }) {
-                Text("no")
+                Text(stringResource(R.string.no))
             }
         },
 

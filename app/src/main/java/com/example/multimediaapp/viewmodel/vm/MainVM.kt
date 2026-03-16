@@ -21,64 +21,47 @@ import kotlinx.coroutines.launch
  */
 class MainVM : ViewModel() {
 
-    // Repositorio centralizado que se conecta con el servidor vía Retrofit
     private val repo = MainRepo(RetrofitModule.mainApi)
-
-    // StateFlow interno (_uiState) para mantener el estado de la pantalla
     private val _uiState = MutableStateFlow(MainUiState())
-
-    // Exposición solo lectura del estado a la UI
     val uiState: StateFlow<MainUiState> = _uiState.asStateFlow()
 
-    // Al inicializar el ViewModel, cargamos los datos automáticamente
+    private val BASE_URL = "http://10.0.2.2:5131" // base de tu servidor
+
     init {
         loadData()
     }
 
-    /**
-     * loadData():
-     * Función que consulta al repositorio la lista de bandas y actualiza el estado.
-     * - Maneja isLoading para mostrar un indicador mientras se carga.
-     * - Maneja errores de red y vacíos.
-     */
     fun loadData() {
         viewModelScope.launch {
-            // Indicamos que estamos cargando y reseteamos cualquier error previo
             _uiState.update { it.copy(isLoading = true, error = null) }
 
             try {
-                // Llamada suspend a la API para obtener las bandas
-                val bands = repo.getBands()
-
-                // Si no hay bandas, mostramos mensaje de error en UI
-                if (bands.isEmpty()) {
-                    _uiState.update {
-                        it.copy(
-                            isLoading = false,
-                            error = "No se encontraron bandas disponibles"
-                        )
+                val bands = repo.getBands().map { dto ->
+                    // Aseguramos que la URL de la imagen sea completa
+                    val imageUrl = if (dto.imageBand.startsWith("http")) {
+                        dto.imageBand
+                    } else {
+                        "$BASE_URL${dto.imageBand}"
                     }
-                } else {
-                    // Si se obtienen datos, actualizamos la lista y quitamos isLoading/error
-                    _uiState.update {
-                        it.copy(
-                            mainBands = bands,
-                            isLoading = false,
-                            error = null
-                        )
-                    }
-                    Log.d("DEBUG_API", "Carga exitosa: ${bands.size} elementos")
+                    dto.copy(imageBand = imageUrl)
                 }
 
-            } catch (e: Exception) {
-                // Captura de excepciones: problemas de red, parsing o errores inesperados
-                Log.e("DEBUG_API", "Error en loadData: ${e.message}", e)
+                _uiState.update {
+                    it.copy(
+                        mainBands = bands,
+                        isLoading = false,
+                        error = if (bands.isEmpty()) "No se encontraron bandas" else null
+                    )
+                }
 
-                // Actualizamos el estado con el error para que la UI pueda mostrarlo
+                Log.d("DEBUG_API", "Carga exitosa: ${bands.size} elementos")
+
+            } catch (e: Exception) {
+                Log.e("DEBUG_API", "Error en loadData: ${e.message}", e)
                 _uiState.update {
                     it.copy(
                         isLoading = false,
-                        error = e.localizedMessage ?: "Error de conexión desconocido"
+                        error = "Error de conexión: Verifica que el servidor esté activo"
                     )
                 }
             }

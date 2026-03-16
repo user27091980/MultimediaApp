@@ -35,7 +35,6 @@ class RegisterVM(application: Application) : AndroidViewModel(application) {
             email = "",
             pass = "",
             name = "",
-            surname = "",
             country = "",
             isLoading = false, // CORRECCIÓN: iniciar en false, no en true
         )
