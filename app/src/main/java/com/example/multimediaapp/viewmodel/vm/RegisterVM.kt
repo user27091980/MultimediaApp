@@ -12,41 +12,45 @@ import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 /**
- * ViewModel para la pantalla de registro de usuarios.
+ * RegisterVM:
+ * ViewModel encargado de la pantalla de registro.
  *
- * Gestiona el estado del formulario de registro y la lógica de validación/registro.
- * Usa AndroidViewModel para obtener el contexto de la aplicación.
+ * Gestiona el estado reactivo del formulario, validación de campos
+ * y la comunicación con UsersInfoRepo para registrar al usuario.
  *
- * @author: Andrés
+ * Usamos AndroidViewModel para poder obtener el contexto de la app
+ * necesario para SessionManager y Repositorios.
  */
-
-
 class RegisterVM(application: Application) : AndroidViewModel(application) {
 
+    // Repositorio centralizado para operaciones de usuario
     private val repo = UsersInfoRepo(application.applicationContext)
 
-    // Inicialización corregida (sin duplicar el constructor)
-    private val _uiState = MutableStateFlow(RegisterFormUiState(
-        errorMessage = "error",
-        lastName = "",
-        user = "",
-        email = "",
-        pass = "",
-        name = "",
-        surname = "",
-        country = "",
-        isLoading = true,
-    ))
+    // Estado interno del formulario
+    private val _uiState = MutableStateFlow(
+        RegisterFormUiState(
+            errorMessage = null,
+            lastName = "",
+            user = "",
+            email = "",
+            pass = "",
+            name = "",
+            surname = "",
+            country = "",
+            isLoading = false, // CORRECCIÓN: iniciar en false, no en true
+        )
+    )
+
+    // Exposición solo lectura del estado
     val uiState: StateFlow<RegisterFormUiState> = _uiState.asStateFlow()
 
-    // --- ACTUALIZACIÓN DE ESTADOS ---
+    // --- ACTUALIZACIÓN DE CAMPOS ---
     fun onUserChange(newUser: String) =
         _uiState.update { it.copy(user = newUser, errorMessage = null) }
 
     fun onEmailChange(newEmail: String) =
         _uiState.update { it.copy(email = newEmail, errorMessage = null) }
 
-    // CORRECCIÓN: Estaba actualizando el email en lugar del pass
     fun onPassChange(newPass: String) =
         _uiState.update { it.copy(pass = newPass, errorMessage = null) }
 
@@ -59,6 +63,12 @@ class RegisterVM(application: Application) : AndroidViewModel(application) {
     fun onCountryChange(newCountry: String) =
         _uiState.update { it.copy(country = newCountry, errorMessage = null) }
 
+    // --- VALIDACIÓN DE CAMPOS ---
+    /**
+     * Valida todos los campos del formulario antes de enviar a la API.
+     * Si hay error, se actualiza errorMessage.
+     * Si todo está correcto, ejecuta registerUser() y llama a onSuccess.
+     */
     fun validateFields(onSuccess: () -> Unit) {
         val state = _uiState.value
         val error = when {
@@ -72,7 +82,7 @@ class RegisterVM(application: Application) : AndroidViewModel(application) {
         if (error != null) {
             _uiState.update { it.copy(errorMessage = error) }
         } else {
-            // CORRECCIÓN: Quitamos el TODO() y pasamos la lógica correcta
+            // Llamada a la función que hace la petición de registro
             registerUser(
                 email = state.email,
                 pass = state.pass,
@@ -85,6 +95,11 @@ class RegisterVM(application: Application) : AndroidViewModel(application) {
         }
     }
 
+    // --- REGISTRO EN LA API ---
+    /**
+     * Llama a UsersInfoRepo.register() para enviar los datos al servidor.
+     * Actualiza isLoading mientras se realiza la operación y errorMessage si falla.
+     */
     private fun registerUser(
         email: String,
         pass: String,
@@ -97,7 +112,6 @@ class RegisterVM(application: Application) : AndroidViewModel(application) {
         viewModelScope.launch {
             _uiState.update { it.copy(isLoading = true, errorMessage = null) }
 
-            // CORRECCIÓN: El orden de parámetros debe coincidir con UsersInfoRepo.register
             val result = repo.register(
                 email = email,
                 user = user,

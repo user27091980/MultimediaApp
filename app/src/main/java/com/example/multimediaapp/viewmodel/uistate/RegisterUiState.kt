@@ -10,7 +10,6 @@ data class RegisterFormUiState(
     val email: String = "",
     val pass: String = "",
     val name: String = "",
-    val surname: String = "",
     val country: String = "",
     val errorMessage: String? = null,
     val lastName: String,

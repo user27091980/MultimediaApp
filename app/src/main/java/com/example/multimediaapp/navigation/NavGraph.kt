@@ -46,13 +46,14 @@ fun NavGraph(
         // Pantalla principal
         composable(ObjRoutes.MAIN) {
             val vm: MainVM = viewModel()
-            // CORRECCIÓN: tu MainScreen espera 'viewModel', no 'vm' (según tu código anterior)
             MainScreen(navController = navController, viewModel = vm)
         }
 
         // Pantalla de banda con parámetro
         composable("${ObjRoutes.BAND}/{bandId}") { backStackEntry ->
-            val bandId = backStackEntry.arguments?.getString("bandId") ?: ""
+            //val bandId = backStackEntry.arguments?.getString("bandId") ?: ""
+            val bandId = backStackEntry.arguments?.getString("bandId")
+                ?: throw IllegalArgumentException("Band ID no proporcionado")
             val vm: BandVM = viewModel()
             // Pasamos el ID y el VM a la pantalla de detalle
             BandScreen(bandId = bandId, vm = vm)

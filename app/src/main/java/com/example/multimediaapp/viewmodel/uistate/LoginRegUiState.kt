@@ -1,19 +1,28 @@
 package com.example.multimediaapp.viewmodel.uistate
 
 /**
- * UI State para LoginRegScreen
+ * LoginRegUiState:
  *
- * Representa el estado de la pantalla de login/registro.
+ * Representa el estado de la pantalla de Login / Registro.
+ * Se utiliza en un ViewModel para exponer de manera reactiva
+ * la información que la UI debe mostrar.
  *
- * Autor: Andrés
+ * Propiedades:
+ * @property isLoginEnabled Indica si el botón de login está habilitado.
+ * @property isRegisterEnabled Indica si el botón de registro está habilitado.
+ * @property isLoading Indica si se está realizando una operación de red
+ * (por ejemplo, login o registro).
+ * @property errorMessage Mensaje de error a mostrar en la UI. Null si no hay errores.
+ *
+ * Ejemplo de uso:
+ * val state by viewModel.uiState.collectAsState()
+ * Button(enabled = state.isLoginEnabled) { ... }
+ * if (state.isLoading) { CircularProgressIndicator() }
+ * state.errorMessage?.let { Text(it, color = Color.Red) }
  */
 data class LoginRegUiState(
-    // Si el botón login está activo
     val isLoginEnabled: Boolean = true,
-    // Si el botón registro está activo
     val isRegisterEnabled: Boolean = true,
-    // Para mostrar indicador de carga
     val isLoading: Boolean = false,
-    // Mensajes de error
     val errorMessage: String? = null
 )

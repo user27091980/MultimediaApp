@@ -12,5 +12,4 @@ data class MainDTO(
     val bandName: String,
     // imagen de la banda
     val imageBand: String
-
 )

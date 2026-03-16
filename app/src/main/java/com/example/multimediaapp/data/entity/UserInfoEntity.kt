@@ -5,25 +5,28 @@ import com.google.gson.annotations.SerializedName
 import kotlin.String
 
 /**
- * Representación de la información del usuario en la capa de datos.
- * Esta clase se encarga de la persistencia (Base de datos).
+ * UsersInfoEntity
+ *
+ * Representa la información del usuario tal como llega desde la API.
+ * Pertenece a la capa de datos y se convierte en UsersInfoDTO
+ * para ser utilizada dentro de la aplicación.
  */
 data class UsersInfoEntity(
     val id: String,
-    val email: String,
-    val pass: String,
-    val user: String,
-    val name: String,
-    val lastName: String,
-    val country: String
+    @SerializedName("email") val email: String,
+    @SerializedName("pass") val pass: String,
+    @SerializedName("user") val user: String,
+    @SerializedName("name")val name: String,
+    @SerializedName("lastName") val lastName: String,
+    @SerializedName("country") val country: String
 )
 
 /**
- * Función de extensión para convertir una Entity de la base de datos
- * en un DTO para la UI o la API.
+ * Mapper: UsersInfoEntity a UsersInfoDTO
+ * Convierte la entidad de datos en un modelo usado por la aplicación.
  */
 fun UsersInfoEntity.toDTO() = UsersInfoDTO(
-    id="",
+    id=this.id,
     email = this.email,
     pass = this.pass,
     user = this.user,
@@ -33,8 +36,9 @@ fun UsersInfoEntity.toDTO() = UsersInfoDTO(
 )
 
 /**
- * Función de extensión para convertir un DTO en una Entity
- * para poder guardarlo en la base de datos.
+ * Mapper inverso: UsersInfoDTO a UsersInfoEntity
+ * Permite convertir el modelo de la app en entidad
+ * para persistencia o envío a la API.
  */
 fun UsersInfoDTO.toEntity() = UsersInfoEntity(
     id=this.id,

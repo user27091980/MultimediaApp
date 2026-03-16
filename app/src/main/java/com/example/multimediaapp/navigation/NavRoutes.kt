@@ -41,7 +41,9 @@ data class LoginRoute(val email: String) : NavRoute
  */
 @Serializable
 data class RegisterRoute(val email: String, val user: String) : NavRoute
-
+data class BandRoute (val bandId: String) : NavRoute {
+    fun route() = "band/$bandId"
+}
 /**
  * Ruta estática (sin parámetros).
  *
@@ -56,9 +58,9 @@ object LoginRegRoute : NavRoute
 @Serializable
 object MainRoute : NavRoute
 
-@Serializable
+/*@Serializable
 object BandRoute : NavRoute
-
+*/
 @Serializable
 object UserInfoRoute : NavRoute
 

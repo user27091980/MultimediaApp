@@ -16,13 +16,9 @@ import kotlinx.coroutines.launch
  */
 class BandVM : ViewModel() {
 
-    // Usamos el repositorio centralizado
     private val repository = BandsRepo(RetrofitModule.bandApi)
-    //carga las bandas nada más abrirse
-    init {
-        loadAllBands()
-    }
 
+    // --- Estado ---
     private val _bandsState = MutableStateFlow<List<BandDTO>>(emptyList())
     val bandsState: StateFlow<List<BandDTO>> = _bandsState.asStateFlow()
 
@@ -31,6 +27,11 @@ class BandVM : ViewModel() {
 
     private val _error = MutableStateFlow<String?>(null)
     val error: StateFlow<String?> = _error.asStateFlow()
+
+    // --- Inicialización ---
+    init {
+        loadAllBands()
+    }
 
     // --- Funciones CRUD ---
 
@@ -41,7 +42,7 @@ class BandVM : ViewModel() {
                 val bands = repository.getBands()
                 _bandsState.value = bands
             } catch (e: Exception) {
-                _error.value = e.localizedMessage
+                _error.value = e.localizedMessage ?: "Error desconocido"
             }
         }
     }
@@ -54,7 +55,7 @@ class BandVM : ViewModel() {
                     _bandsState.value = _bandsState.value + it
                 }
             } catch (e: Exception) {
-                _error.value = "Error al crear: ${e.localizedMessage}"
+                _error.value = "Error al crear: ${e.localizedMessage ?: "desconocido"}"
             }
         }
     }
@@ -68,7 +69,7 @@ class BandVM : ViewModel() {
                         _bandsState.value.map { if (it.id == id) bandUpdated else it }
                 }
             } catch (e: Exception) {
-                _error.value = e.message
+                _error.value = e.localizedMessage ?: "Error al actualizar"
             }
         }
     }
@@ -81,7 +82,7 @@ class BandVM : ViewModel() {
                     _bandsState.value = _bandsState.value.filter { it.id != id }
                 }
             } catch (e: Exception) {
-                _error.value = e.message
+                _error.value = e.localizedMessage ?: "Error al eliminar"
             }
         }
     }

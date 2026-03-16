@@ -9,16 +9,14 @@ data class BandDTO(
     val id: String,
     val name: String,
     val description: String,
-    val banner : String,
+    val banner: String,
     val albumImages: List<String>,
     val style: String,
     val recordLabel: String,
     val components: String,
     val discography: List<String>,
     val albumLinks: List<String>,
-    val headerLink: String,
-
-
+    val headerLink: String
 )
 
 /**
@@ -35,21 +33,21 @@ data class BandDTO(
  * En tu arquitectura:
  *
  * BandEntity (Data Layer)
- *         ↓
+ *
  *    Mapper (toDTO)
- *         ↓
+ *
  * BandDTO (Model / Domain)
- *         ↓
+ *
  * ViewModel / UI
  *
- * 🧠 ¿Por qué usar DTO?
+ * ¿Por qué usar DTO?
  *
- * ✔ Separa la capa de datos de la UI
- * ✔ Permite cambiar la API sin afectar la interfaz
- * ✔ Evita acoplamiento con Retrofit / Gson
- * ✔ Es más limpio arquitectónicamente
+ * Separa la capa de datos de la UI
+ * Permite cambiar la API sin afectar la interfaz
+ * Evita acoplamiento con Retrofit / Gson
+ * Es más limpio arquitectónicamente
  *
- * 🔎 ¿Por qué es data class?
+ * ¿Por qué es data class?
  *
  * Porque Kotlin genera automáticamente:
  *
@@ -64,11 +62,9 @@ data class BandDTO(
  * Ejemplo útil:
  *
  * val editedBand = band.copy(name = "Nuevo Nombre")
+ *Sin modificar el objeto original (inmutabilidad).
  *
- *
- * Sin modificar el objeto original (inmutabilidad).
- *
- * 🎯 Diferencia con BandEntity
+ * Diferencia con BandEntity:
  * BandEntity	BandDTO
  * Representa datos de la API	Representa datos que usa la app
  * Tiene @SerializedName	No tiene anotaciones

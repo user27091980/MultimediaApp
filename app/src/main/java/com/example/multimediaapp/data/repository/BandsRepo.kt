@@ -1,6 +1,5 @@
 package com.example.multimediaapp.data.repository
 
-import com.example.multimediaapp.data.entity.BandEntity
 import com.example.multimediaapp.data.entity.toDTO
 import com.example.multimediaapp.data.entity.toEntity
 import com.example.multimediaapp.model.BandDTO

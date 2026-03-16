@@ -13,8 +13,7 @@ data class UsersInfoDTO(
     val user: String,
     val name: String,
     val lastName: String,
-    val country: String,
-
+    val country: String
 )
 
 /*====APUNTES====

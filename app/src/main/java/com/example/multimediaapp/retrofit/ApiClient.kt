@@ -7,11 +7,15 @@ import com.example.multimediaapp.network.UserInfoApiService
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 
+/**
+ * Módulo centralizado de Retrofit.
+ * Mantiene un singleton de Retrofit y crea instancias de los servicios de forma perezosa.
+ */
 object RetrofitModule {
 
     private const val BASE_URL = "http://10.0.2.2:5131/"
 
-    // 1. Creamos una única instancia de Retrofit para toda la app
+    // Instancia única de Retrofit para toda la app
     private val retrofit: Retrofit by lazy {
         Retrofit.Builder()
             .baseUrl(BASE_URL)
@@ -19,7 +23,7 @@ object RetrofitModule {
             .build()
     }
 
-    // 2. Usamos esa instancia para crear cada servicio de forma perezosa (lazy)
+    // Servicios de API creados con la misma instancia de Retrofit
     val mainApi: MainApiService by lazy {
         retrofit.create(MainApiService::class.java)
     }
@@ -35,5 +39,4 @@ object RetrofitModule {
     val userInfoApi: UserInfoApiService by lazy {
         retrofit.create(UserInfoApiService::class.java)
     }
-
 }

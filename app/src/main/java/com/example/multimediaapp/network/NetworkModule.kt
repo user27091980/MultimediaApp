@@ -1,5 +1,6 @@
 package com.example.multimediaapp.network
 
+import kotlinx.serialization.builtins.UByteArraySerializer
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
 import retrofit2.Retrofit
@@ -74,7 +75,9 @@ object NetworkModule {
     val bandApi: BandApiService =
         retrofit.create(BandApiService::class.java)
 
-    val userApi: UserInfoApiService =
-        retrofit.create(UserInfoApiService::class.java)
+    val loginApi: LoginApiService =
+        retrofit.create(LoginApiService::class.java)
 
+    val userInfoApi: UserInfoApiService =
+        retrofit.create(UserInfoApiService::class.java)
 }

@@ -30,7 +30,6 @@ class UsersInfoRepo(context: Context) {
         }
     }
 
-
     /**
      * REGISTRO: Construye el DTO y lo envía a la API.
      */

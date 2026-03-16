@@ -4,11 +4,12 @@ import com.example.multimediaapp.data.entity.toDTO
 import com.example.multimediaapp.data.entity.toEntity
 import com.example.multimediaapp.model.MainDTO
 import com.example.multimediaapp.network.MainApiService
+import com.example.multimediaapp.retrofit.RetrofitModule.bandApi
+
 /**
  * Interfaz de repositorio para la entidad Principal (Main).
  * Define las operaciones CRUD y de obtención de recursos multimedia.
  */
-
 interface IMainRepo {
     suspend fun getBands(): List<MainDTO>
     suspend fun getBandById(id: String): MainDTO?
@@ -16,7 +17,7 @@ interface IMainRepo {
     suspend fun updateBand(id: String, band: MainDTO): MainDTO?
     suspend fun deleteBand(id: String): Boolean
     // Método específico para recuperar imágenes/galería por ID
-    suspend fun getImages(id: String): MainDTO
+    suspend fun getImages(id: String): List<String>
 
 }
 /**
@@ -26,7 +27,7 @@ interface IMainRepo {
 class MainRepo(private val mainApi: MainApiService) : IMainRepo {
     // Obtiene todas las bandas y las transforma a DTO (Data Transfer Object)
     override suspend fun getBands(): List<MainDTO> {
-        val response = mainApi.getMainBands() // Tu endpoint de la pantalla principal
+        val response = mainApi.getMainBands() //Endpoint de la pantalla principal
         return if (response.isSuccessful) {
             // Mapea la lista de entidades recibidas a una lista de objetos DTO
             response.body()?.map { it.toDTO() } ?: emptyList()
@@ -56,12 +57,11 @@ class MainRepo(private val mainApi: MainApiService) : IMainRepo {
     }
     // Obtiene información de imágenes específica.
     // Nota: Lanza excepciones manualmente si la respuesta falla o el cuerpo es nulo.
-    override suspend fun getImages(id: String): MainDTO {
-        val response = mainApi.getMainImages(id)
-        if (response.isSuccessful) {
-            return response.body()?.toDTO() ?: throw Exception("Cuerpo vacío")
-        }
-        throw Exception("Error al obtener imágenes: ${response.code()}")
+    override suspend fun getImages(id: String): List<String> {
+        val response = bandApi.getAlbumImages(id)
+        return if (response.isSuccessful) response.body() ?: emptyList()
+        else emptyList()
+
     }
 
 }

@@ -1,32 +1,44 @@
 package com.example.multimediaapp.viewmodel.uistate
 
 /**
- * Representa el estado completo de la pantalla de Login.
+ * LoginUiState:
  *
- * - Contiene toda la información que la UI necesita para renderizar la pantalla.
- * - Permite al ViewModel manejar cambios de forma reactiva.
- * - Incluye campos para email, password, visibilidad de password, estado de carga y errores.
+ * Representa el estado completo de la pantalla de Login.
+ * Se usa en el ViewModel para exponer información de manera reactiva.
+ *
+ * Propiedades:
+ * @property user Nombre del usuario (útil después del login exitoso).
+ * @property email Correo electrónico ingresado en el formulario.
+ * @property password Contraseña ingresada en el formulario.
+ * @property passwordVisible Indica si la contraseña se muestra en texto plano (toggle show/hide).
+ * @property isLoading Indica si hay un proceso de login en curso (para mostrar progress bar, deshabilitar botones, etc.).
+ * @property errorMessage Mensaje de error que se muestra en la UI. Null si no hay errores.
+ *
+ * Computed properties:
+ * @property isLoginButtonEnabled Evalúa si el botón de login debe estar activo:
+ * - Debe haber email y password no vacíos.
+ * - No debe estar en proceso de login.
+ *
+ * Ejemplo de uso en Compose:
+ * val state by loginVM.uiState.collectAsState()
+ * Button(enabled = state.isLoginButtonEnabled) { login() }
+ * if (state.isLoading) { CircularProgressIndicator() }
+ * state.errorMessage?.let { Text(it, color = Color.Red) }
  */
 data class LoginUiState(
-    //Nombre del usuario, útil para mostrar en pantalla tras login exitoso
     val user: String = "",
-    //Correo electrónico ingresado por el usuario
     val email: String = "",
-    //Contraseña ingresada por el usuario
     val password: String = "",
-    //Indica si la contraseña es visible en la UI (toggle show/hide)
     val passwordVisible: Boolean = false,
-    //Indica si hay un proceso de login en curso
     val isLoading: Boolean = false,
-    //Mensaje de error que se muestra en la UI en caso de fallo
     val errorMessage: String? = null
 ) {
-    /*
-     * Computed property para habilitar o deshabilitar el botón de login.
+    /**
+     * Computed property para habilitar/deshabilitar el botón de login.
      *
-     * - El botón solo está habilitado si:
-     *   Email y password no están vacíos
-     *   No hay un proceso de login en curso (`isLoading == false`)
+     * Retorna true solo si:
+     * - Email y password no están vacíos
+     * - No hay un proceso de login en curso
      */
     val isLoginButtonEnabled: Boolean
         get() = email.isNotBlank() && password.isNotBlank() && !isLoading
