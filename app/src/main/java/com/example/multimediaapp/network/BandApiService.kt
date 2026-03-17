@@ -26,7 +26,7 @@ interface BandApiService {
     @GET("/images/albums/{id}")
     suspend fun getAlbumImages(@Path("id") id: String): Response<List<String>>
 
-    @POST("/bands")
+    @POST("/bands/")
     suspend fun createBand(@Body band: BandEntity): Response<BandEntity>
 
     @PUT("/bands/{id}")

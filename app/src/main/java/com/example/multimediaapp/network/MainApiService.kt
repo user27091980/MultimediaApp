@@ -21,7 +21,7 @@ interface MainApiService {
 
     // 3. Rutas específicas para evitar conflictos
     // Si quieres buscar por nombre o imagen, la URL debe ser distinta:
-    @GET("/main/name/{name}")
+    @GET("/main/bandName/{name}")
     suspend fun getNameBand(@Path("name") name: String): Response<MainEntity>
 
     @GET("/main/images/{imageBand}")
