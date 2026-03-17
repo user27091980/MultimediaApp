@@ -3,6 +3,7 @@ package com.example.multimediaapp.view.components
 import android.util.Patterns
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.text.KeyboardOptions
+import androidx.compose.material.MaterialTheme
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Visibility
 import androidx.compose.material.icons.filled.VisibilityOff
@@ -101,6 +102,7 @@ fun TextFieldLoginEmailComponent(email: String, onEmailChange: (String) -> Unit)
     OutlinedTextField(
         value = email,
         onValueChange = onEmailChange,
+        //colors = MaterialTheme.colors.background,
         singleLine = true,
         label = {
             Text("Email", color = Color.White)
