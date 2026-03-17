@@ -70,6 +70,14 @@ fun TextFieldLoginPassComponent(pass: String, onPassChange: (String) -> Unit) {
         onValueChange = onPassChange,
         singleLine = true,
         label = { Text("Password", color = Color.White) },
+        colors = androidx.compose.material3.OutlinedTextFieldDefaults.colors(
+            focusedTextColor = Color.White,
+            unfocusedTextColor = Color.White,
+            cursorColor = Color.White,
+            focusedBorderColor = Color.White,
+            unfocusedBorderColor = Color.Gray
+        ),
+
         visualTransformation = if (passwordVisible) VisualTransformation.None
         else PasswordVisualTransformation(),
         // Cambia el tipo de teclado mostrado
@@ -107,6 +115,11 @@ fun TextFieldLoginEmailComponent(email: String, onEmailChange: (String) -> Unit)
             Text("Email", color = Color.White)
 
         },
+        colors = androidx.compose.material3.OutlinedTextFieldDefaults.colors(
+            focusedTextColor = Color.White,
+            unfocusedTextColor = Color.White,
+            cursorColor = Color.White
+        ),
         // Muestra teclado optimizado para escribir correos
         keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Email),
         // Mensaje de error debajo del campo

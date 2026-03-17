@@ -4,7 +4,6 @@ import androidx.lifecycle.ViewModel
 import com.example.multimediaapp.viewmodel.uistate.SettingsUiState
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
-import kotlinx.coroutines.flow.asStateFlow
 
 /**
  * ViewModel encargado de gestionar la configuración de la app (Settings).
