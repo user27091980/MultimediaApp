@@ -1,11 +1,9 @@
 package com.example.multimediaapp.network
 
-import kotlinx.serialization.builtins.UByteArraySerializer
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
-import kotlin.jvm.java
 
 /**
  * Objeto singleton que centraliza la configuración
