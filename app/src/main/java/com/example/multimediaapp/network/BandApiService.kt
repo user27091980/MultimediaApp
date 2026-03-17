@@ -22,7 +22,7 @@ interface BandApiService {
     @GET("/bands/{id}")
     suspend fun getBandById(@Path("id") id: String): Response<BandEntity>
 
-    // Si tu API realmente tiene endpoints para imágenes específicas:
+    // Para imagenes
     @GET("/images/{id}")
     suspend fun getAlbumImages(@Path("id") id: String): Response<List<String>>
 
