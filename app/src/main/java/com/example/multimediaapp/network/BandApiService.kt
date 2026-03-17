@@ -15,7 +15,7 @@ interface BandApiService {
 
     // BAND ENDPOINTS")
     // Obtener todas las bandas
-    @GET("/bands") // Asegúrate de si llevan "json/" delante o no
+    @GET("/bands/") // Asegúrate de si llevan "json/" delante o no
     suspend fun getBands(): Response<List<BandEntity>>
 
     // Obtener UNA banda completa (aquí ya viene descripción, estilo, etc.)
@@ -23,7 +23,7 @@ interface BandApiService {
     suspend fun getBandById(@Path("id") id: String): Response<BandEntity>
 
     // Si tu API realmente tiene endpoints para imágenes específicas:
-    @GET("/images/albums/{id}")
+    @GET("/images/{id}")
     suspend fun getAlbumImages(@Path("id") id: String): Response<List<String>>
 
     @POST("/bands/")

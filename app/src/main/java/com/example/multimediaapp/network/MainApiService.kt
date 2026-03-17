@@ -24,11 +24,11 @@ interface MainApiService {
     @GET("/main/bandName/{name}")
     suspend fun getNameBand(@Path("name") name: String): Response<MainEntity>
 
-    @GET("/main/images/{imageBand}")
+    @GET("/images/{id}")
     suspend fun getMainImages(@Path("id") id: String): Response<MainEntity>
 
     //(CRUD)
-    @POST("/main")
+    @POST("/main/")
     suspend fun createMainBand(@Body band: MainEntity): Response<MainEntity>
     //actualizar banda
     @PUT("/main/{id}")
