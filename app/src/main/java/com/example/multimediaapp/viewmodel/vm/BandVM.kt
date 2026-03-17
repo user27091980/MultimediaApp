@@ -12,29 +12,37 @@ import kotlinx.coroutines.launch
 
 /**
  * ViewModel para gestionar BandDTO usando BandsRepo.
- * Expone datos de manera reactiva con StateFlow.
+ *
+ * - Se encarga de la lógica de negocio.
+ * - Expone los datos a la UI mediante StateFlow (reactivo).
+ * - Maneja operaciones CRUD de bandas.
  */
 class BandVM : ViewModel() {
 
+    // Repositorio que gestiona acceso a datos (API REST con Retrofit)
     private val repository = BandsRepo(RetrofitModule.bandApi)
 
-    // --- Estado ---
+    //Estado y lista de bandas observable desde la UI
     private val _bandsState = MutableStateFlow<List<BandDTO>>(emptyList())
     val bandsState: StateFlow<List<BandDTO>> = _bandsState.asStateFlow()
-
+    //banda seleccionada
     private val _selectedBand = MutableStateFlow<BandDTO?>(null)
     val selectedBand: StateFlow<BandDTO?> = _selectedBand.asStateFlow()
-
+    // Manejo de errores
     private val _error = MutableStateFlow<String?>(null)
     val error: StateFlow<String?> = _error.asStateFlow()
 
-    // --- Inicialización ---
+    // Inicialización
     init {
+        // Al crear el ViewModel, carga todas las bandas automáticamente
         loadAllBands()
     }
 
-    // --- Funciones CRUD ---
-
+    //Funciones CRUD
+    /**
+     * Obtiene todas las bandas desde el repositorio
+     * y actualiza el estado.
+     */
     fun loadAllBands() {
         viewModelScope.launch {
             try {
@@ -46,7 +54,10 @@ class BandVM : ViewModel() {
             }
         }
     }
-
+    /**
+     * Crea una nueva banda en el backend
+     * y la añade al estado local si tiene éxito.
+     */
     fun createBand(band: BandDTO) {
         viewModelScope.launch {
             try {
@@ -59,7 +70,10 @@ class BandVM : ViewModel() {
             }
         }
     }
-
+    /**
+     * Actualiza una banda existente.
+     * Reemplaza el elemento en la lista local.
+     */
     fun updateBand(id: String, band: BandDTO) {
         viewModelScope.launch {
             try {
@@ -73,7 +87,10 @@ class BandVM : ViewModel() {
             }
         }
     }
-
+    /**
+     * Elimina una banda por ID.
+     * Si el backend confirma, se elimina del estado local.
+     */
     fun deleteBand(id: String) {
         viewModelScope.launch {
             try {
@@ -87,3 +104,13 @@ class BandVM : ViewModel() {
         }
     }
 }
+
+/*
+Un ViewModel es una pieza clave de la arquitectura Android (especialmente en MVVM)
+que sirve como puente entre la UI y los datos.
+Un ViewModel es una clase que:
+Guarda y gestiona datos de la UI
+Sobrevive a cambios como rotación de pantalla
+Separa la lógica de la interfaz
+Es el “cerebro” de tu pantalla.
+ */

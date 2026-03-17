@@ -84,7 +84,6 @@ fun TextFieldLoginPassComponent(pass: String, onPassChange: (String) -> Unit) {
         }
     )
 }
-
 /**
  * Campo de texto para introducir el correo electrónico.
  *
@@ -110,7 +109,6 @@ fun TextFieldLoginEmailComponent(email: String, onEmailChange: (String) -> Unit)
         },
         // Muestra teclado optimizado para escribir correos
         keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Email),
-
         // Mensaje de error debajo del campo
         supportingText = {
             if (email.isNotEmpty() && !isValidEmail) {
