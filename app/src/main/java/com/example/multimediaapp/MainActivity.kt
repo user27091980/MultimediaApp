@@ -46,7 +46,7 @@ class MainActivity : ComponentActivity() {
                 val navController = rememberNavController()
                 // Obtenemos la ruta actual del backstack
                 val currentBackStackEntry = navController.currentBackStackEntryAsState()
-                val currentRoute = currentBackStackEntry.value?.destination?.route
+                val currentRoute = currentBackStackEntry.value?.destination?.route ?: ""
 
                 // Scaffold principal: maneja topBar, bottomBar y contenido central
                 Scaffold(

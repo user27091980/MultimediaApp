@@ -99,12 +99,34 @@ fun MainContent(
     uiState: MainUiState,
     onImageClick: (String) -> Unit
 ) {
-    CardList(
-        main = uiState.mainBands,
-        onImageClick = { main ->
-            onImageClick(main.id)
+    when {
+        uiState.isLoading -> {
+            Box(modifier = Modifier.fillMaxSize()) {
+                androidx.compose.material3.Text("Cargando...")
+            }
         }
-    )
+
+        uiState.error != null -> {
+            Box(modifier = Modifier.fillMaxSize()) {
+                androidx.compose.material3.Text("Error: ${uiState.error}")
+            }
+        }
+
+        uiState.mainBands.isEmpty() -> {
+            Box(modifier = Modifier.fillMaxSize()) {
+                androidx.compose.material3.Text("No hay bandas")
+            }
+        }
+
+        else -> {
+            CardList(
+                main = uiState.mainBands,
+                onImageClick = { main ->
+                    onImageClick(main.id)
+                }
+            )
+        }
+    }
 }
 /**
  * Preview de la pantalla principal.
