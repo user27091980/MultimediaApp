@@ -45,6 +45,9 @@ fun MainScreen(navController: NavController, viewModel: MainVM = viewModel()) {
     // Observamos el StateFlow del ViewModel.
     // collectAsState convierte el flujo en un estado observable por Compose.
     val uiState by viewModel.uiState.collectAsState()
+    LaunchedEffect(Unit) {
+        viewModel.loadData()
+    }
     /*
     Box es un contenedor que permite superponer elementos.
     En este caso lo usamos simplemente como layout base.

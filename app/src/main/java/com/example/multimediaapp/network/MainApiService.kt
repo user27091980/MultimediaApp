@@ -24,7 +24,7 @@ interface MainApiService {
     @GET("api/main/bandName/{name}")
     suspend fun getNameBand(@Path("name") name: String): Response<MainEntity>
 
-    @GET("api/images/{id}")
+    @GET("api/resources/{id}")
     suspend fun getImages(@Path("id") id: String): Response<MainEntity>
 
     //(CRUD)
