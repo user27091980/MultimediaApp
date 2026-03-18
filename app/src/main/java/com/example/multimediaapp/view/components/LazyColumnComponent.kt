@@ -27,6 +27,7 @@ import androidx.compose.ui.unit.dp
 import coil.compose.AsyncImage
 import coil.request.ImageRequest
 import com.example.multimediaapp.model.MainDTO
+import com.example.multimediaapp.network.NetworkModule
 
 /**
  * Composable que muestra una lista vertical de tarjetas con imagen y nombre de banda.
@@ -58,10 +59,7 @@ fun CardList(
                 horizontalAlignment = Alignment.CenterHorizontally // Centra horizontalmente todo dentro de la columna
             ) {
                 AsyncImage(
-                    model = ImageRequest.Builder(LocalContext.current)
-                        .data(main.imageBand)
-                        .crossfade(true)
-                        .build(),
+                    model = main.imageBand,
                     contentDescription = main.bandName,
                     modifier = Modifier
                         .fillMaxWidth()
