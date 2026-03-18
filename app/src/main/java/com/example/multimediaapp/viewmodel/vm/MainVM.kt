@@ -48,16 +48,8 @@ class MainVM : ViewModel() {
 
             try {
                 // Llamada al repositorio para obtener bandas
-                val bands = repo.getBands().map { dto ->
-                    // Aseguramos que la URL de la imagen sea completa
-                    val imageUrl = if (dto.imageBand.startsWith("http")) {
-                        dto.imageBand
-                    } else {
-                        "$BASE_URL${dto.imageBand}"
-                    }
-                    // Se devuelve el DTO con la URL corregida
-                    dto.copy(imageBand = imageUrl)
-                }
+                val bands = repo.getBands()
+
                 // Actualiza el estado con los datos obtenidos
                 _uiState.update {
                     it.copy(

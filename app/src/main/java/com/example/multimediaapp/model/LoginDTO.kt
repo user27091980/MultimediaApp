@@ -10,7 +10,6 @@ package com.example.multimediaapp.model
 data class LoginDTO(
     val id: String,
     val email: String,
-    val user: String,
     val pass: String
 )
 

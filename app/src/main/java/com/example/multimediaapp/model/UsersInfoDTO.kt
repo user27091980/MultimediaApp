@@ -10,7 +10,6 @@ data class UsersInfoDTO(
     val id : String,
     val email: String,
     val pass: String,
-    val user: String,
     val name: String,
     val lastName: String,
     val country: String

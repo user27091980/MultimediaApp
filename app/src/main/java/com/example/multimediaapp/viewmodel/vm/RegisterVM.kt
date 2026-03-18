@@ -113,7 +113,6 @@ class RegisterVM(application: Application) : AndroidViewModel(application) {
 
             val result = repo.register(
                 email = email,
-                user = user,
                 name = name,
                 pass = pass,
                 country = country,

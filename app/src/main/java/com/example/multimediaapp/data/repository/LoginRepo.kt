@@ -44,7 +44,6 @@ class LoginRepo {
                 val loginData = LoginDTO(
                     id = body!!.id,
                     email = body.email,
-                    user = body.user,
                     pass = "" // Por seguridad no solemos persistir la pass tras el login
                 )
                 Result.success(loginData)

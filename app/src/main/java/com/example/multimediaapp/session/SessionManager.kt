@@ -19,7 +19,6 @@ class SessionManager(context: Context) {
     fun saveUser(user: UsersInfoDTO) {
         prefs.edit()
             .putString("id", user.id)
-            .putString("username", user.user)
             .putString("email", user.email)
             .putString("name", user.name)
             .putString("lastName", user.lastName)
@@ -34,7 +33,6 @@ class SessionManager(context: Context) {
     fun getUser(): UsersInfoDTO? {
         val id = prefs.getString("id", null) ?: return null
         val email = prefs.getString("email", "") ?: ""
-        val user = prefs.getString("username", "") ?: ""
         val name = prefs.getString("name", "") ?: ""
         val lastName = prefs.getString("lastName", "") ?: ""
         val country = prefs.getString("country", "") ?: ""
@@ -45,7 +43,6 @@ class SessionManager(context: Context) {
             id = id,
             email = email,
             pass = pass,
-            user = user,
             name = name,
             lastName = lastName,
             country = country
