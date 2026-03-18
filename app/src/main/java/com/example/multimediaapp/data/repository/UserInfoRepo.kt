@@ -35,7 +35,6 @@ class UsersInfoRepo(context: Context) {
      */
     suspend fun register(
         email: String,
-        user: String,
         name: String,
         pass: String,
         lastName: String,
@@ -46,7 +45,6 @@ class UsersInfoRepo(context: Context) {
             val dto = UsersInfoDTO(
                 id = "",
                 email = email,
-                user = user,
                 name = name,
                 pass = pass,
                 lastName = lastName,
@@ -74,7 +72,7 @@ class UsersInfoRepo(context: Context) {
      */
     suspend fun update(dto: UsersInfoDTO): Result<UsersInfoDTO> {
         return try {
-            val response = api.updateUserInfo(dto.user, dto)
+            val response = api.updateUserInfo(dto.email, dto)
             if (response.isSuccessful && response.body() != null) {
                 val updated = response.body()!!.toDTO()
                 session.saveUser(updated)

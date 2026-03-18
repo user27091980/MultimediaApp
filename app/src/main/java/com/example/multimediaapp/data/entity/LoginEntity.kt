@@ -14,7 +14,7 @@ data class UsersEntity(
     val id: String,
     // Campos recibidos desde el JSON de la API
     @SerializedName("email") val email: String,
-    @SerializedName("user") val user: String,
+
     @SerializedName("pass") val pass: String
 )
 
@@ -22,7 +22,6 @@ data class UsersEntity(
 fun UsersEntity.toDTO(): LoginDTO = LoginDTO(
     id = id,
     email = email,
-    user = user,
     pass = pass
 
 )
