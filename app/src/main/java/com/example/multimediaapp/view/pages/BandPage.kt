@@ -71,6 +71,7 @@ fun BandScreen(
                 Text(text = stringResource(R.string.discografia))
                 Spacer(modifier = Modifier.height(8.dp))
                 ImagesRowList(band = band, modifier = Modifier.fillMaxWidth())
+                Spacer(modifier = Modifier.height(8.dp))
             }
         }
     }

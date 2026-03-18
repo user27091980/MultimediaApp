@@ -91,7 +91,8 @@ fun TextFieldUserComponent(user: String, onUserChange: (String) -> Unit) {
             focusedTextColor = Color.White,
             unfocusedTextColor = Color.White,
             cursorColor = Color.White
-        ),
+        )
+
 
         )
 }
@@ -184,7 +185,7 @@ fun TextFieldNameComponent(name: String, onNameChange: (String) -> Unit) {
             focusedTextColor = Color.White,
             unfocusedTextColor = Color.White,
             cursorColor = Color.White
-        ),
+        )
     )
 }
 
@@ -200,7 +201,7 @@ fun TextFieldLastNameComponent(lastName: String, onLastNameChange: (String) -> U
             focusedTextColor = Color.White,
             unfocusedTextColor = Color.White,
             cursorColor = Color.White
-        ),
+        )
     )
 }
 @Composable
@@ -215,6 +216,7 @@ fun TextFieldCountryComponent(country: String, onCountryChange: (String) -> Unit
             unfocusedTextColor = Color.White,
             cursorColor = Color.White
         )
+
     )
 }
 /*

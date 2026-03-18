@@ -3,7 +3,6 @@ package com.example.multimediaapp.view.components
 import android.util.Patterns
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.text.KeyboardOptions
-import androidx.compose.material.MaterialTheme
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Visibility
 import androidx.compose.material.icons.filled.VisibilityOff
@@ -73,11 +72,8 @@ fun TextFieldLoginPassComponent(pass: String, onPassChange: (String) -> Unit) {
         colors = androidx.compose.material3.OutlinedTextFieldDefaults.colors(
             focusedTextColor = Color.White,
             unfocusedTextColor = Color.White,
-            cursorColor = Color.White,
-            focusedBorderColor = Color.White,
-            unfocusedBorderColor = Color.Gray
+            cursorColor = Color.White
         ),
-
         visualTransformation = if (passwordVisible) VisualTransformation.None
         else PasswordVisualTransformation(),
         // Cambia el tipo de teclado mostrado
@@ -92,6 +88,7 @@ fun TextFieldLoginPassComponent(pass: String, onPassChange: (String) -> Unit) {
         }
     )
 }
+
 /**
  * Campo de texto para introducir el correo electrónico.
  *
@@ -109,7 +106,6 @@ fun TextFieldLoginEmailComponent(email: String, onEmailChange: (String) -> Unit)
     OutlinedTextField(
         value = email,
         onValueChange = onEmailChange,
-        //colors = MaterialTheme.colors.background,
         singleLine = true,
         label = {
             Text("Email", color = Color.White)
@@ -122,6 +118,7 @@ fun TextFieldLoginEmailComponent(email: String, onEmailChange: (String) -> Unit)
         ),
         // Muestra teclado optimizado para escribir correos
         keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Email),
+
         // Mensaje de error debajo del campo
         supportingText = {
             if (email.isNotEmpty() && !isValidEmail) {

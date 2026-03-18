@@ -92,10 +92,9 @@ fun RegisterScreen(
             }
             // Botón "Aceptar" que navega al dialog de confirmación
             ButtonAccept(
-
                 onClick = {
                     vm.validateFields {
-                        // Navegar al diálogo o login si el registro fue exitoso
+                        // Navegar al diálogo si el registro fue exitoso
                         navController.navigate(ObjRoutes.DIALOG)
                     }
                 }
