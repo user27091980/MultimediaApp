@@ -29,7 +29,7 @@ data class BandEntity(
  */
 fun BandEntity.toDTO(): BandDTO {
 
-    val baseUrl = NetworkModule.BASE_URL
+    val baseUrl = "http://10.0.2.2:5131/"
 
     return BandDTO(
         id = id,
