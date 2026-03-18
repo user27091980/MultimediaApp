@@ -151,6 +151,11 @@ fun TextFieldPassComponent(pass: String, onPassChange: (String) -> Unit) {
         onValueChange = onPassChange,
         singleLine = true,
         label = { Text("Password", color = Color.White) },
+        colors = androidx.compose.material3.OutlinedTextFieldDefaults.colors(
+            focusedTextColor = Color.White,
+            unfocusedTextColor = Color.White,
+            cursorColor = Color.White
+        ),
         visualTransformation = if (passwordVisible) VisualTransformation.None
         else PasswordVisualTransformation(),
         // Cambia el tipo de teclado mostrado
