@@ -22,8 +22,12 @@ interface BandApiService {
     @GET("json/bands/{id}")
     suspend fun getBandById(@Path("id") id: String): Response<BandEntity>
 
+    @GET("json/bands/{name}")
+    suspend fun getBandByName(@Path("name") id: String): Response<BandEntity>
+
+
     // Para imagenes
-    @GET("json/images/{id}")
+    @GET("json/resources/{id}")
     suspend fun getAlbumImages(@Path("id") id: String): Response<List<String>>
 
     @POST("json/bands")
