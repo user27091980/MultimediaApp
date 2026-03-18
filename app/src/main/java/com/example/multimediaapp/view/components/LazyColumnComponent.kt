@@ -83,25 +83,7 @@ fun CardList(
     }
 }
 
-// Datos de ejemplo para el preview
-val previewMain = listOf(
-    MainDTO("1", "Metallica", "https://via.placeholder.com/300x150.png?text=Metallica"),
-    MainDTO("2", "Iron Maiden", "https://via.placeholder.com/300x150.png?text=Iron+Maiden"),
-    MainDTO("3", "AC/DC", "https://via.placeholder.com/300x150.png?text=ACDC")
-)
 
-/**
- * Preview de CardList en Android Studio
- * Permite visualizar cómo se vería la lista con datos de ejemplo
- */
-@Preview
-@Composable
-fun CardListPreview() {
-    CardList(
-        main = previewMain,
-        onImageClick = {}
-    )
-}
 
 /*
 LazyColumn: lista vertical optimizada, renderiza solo lo visible, mejora rendimiento.

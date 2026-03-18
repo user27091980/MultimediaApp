@@ -95,13 +95,13 @@ fun RegisterScreen(
 
                 onClick = {
                     vm.validateFields {
-                        // Navegar al diálogo o login si el registro fue exitoso
+                        // Navegar al diálogo  si el registro fue exitoso
                         navController.navigate(ObjRoutes.DIALOG)
                     }
                 }
             )
 
-            // Botón "Cancelar" que regresa a la pantalla de login
+            // Botón "Cancelar" que regresa a la pantalla de login y registro
             ButtonCancel(
                 onClick = { navController.navigate(ObjRoutes.LOGINREG) }
             )
