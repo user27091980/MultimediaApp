@@ -1,6 +1,7 @@
 package com.example.multimediaapp.data.entity
 
 import com.example.multimediaapp.model.BandDTO
+import com.example.multimediaapp.network.NetworkModule
 import com.google.gson.annotations.SerializedName
 
 /**
@@ -28,7 +29,7 @@ data class BandEntity(
  */
 fun BandEntity.toDTO(): BandDTO {
 
-    val baseUrl = "http://10.0.2.2/"
+    val baseUrl = NetworkModule.BASE_URL
 
     return BandDTO(
         id = id,

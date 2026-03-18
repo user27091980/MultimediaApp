@@ -27,8 +27,8 @@ package com.example.multimediaapp.viewmodel.uistate
  */
 data class LoginUiState(
     val user: String = "",
-    val email: String = "",
-    val password: String = "",
+    val email: String = "aaa@gmail.com",
+    val password: String = "1234",
     val passwordVisible: Boolean = false,
     val isLoading: Boolean = false,
     val errorMessage: String? = null

@@ -31,7 +31,7 @@ fun MainEntity.toDTO(): MainDTO {
             imageBand
         } else {
             // Usamos removePrefix("/") por si el servidor envía "/foto.jpg" y evitar "//"
-            baseUrl + (imageBand ?: "").removePrefix("/")
+            baseUrl + "images/"+ (imageBand ?: "").removePrefix("/")
         }
     )
 }

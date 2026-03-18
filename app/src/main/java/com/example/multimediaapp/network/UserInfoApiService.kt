@@ -16,7 +16,7 @@ import retrofit2.http.Path
 interface UserInfoApiService {
 
     // Obtener lista completa de usuarios
-    @GET("userInfo") // Quitamos la barra final innecesaria
+    @GET("auth/userInfo") // Quitamos la barra final innecesaria
     suspend fun getUsersInfo(): Response<List<UsersInfoEntity>>
 
     // Obtener un usuario específico por ID

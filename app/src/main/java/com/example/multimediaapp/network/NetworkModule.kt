@@ -20,7 +20,7 @@ object NetworkModule {
      * 10.0.2.2 se usa en Android Emulator
      * para apuntar al localhost del PC.
      */
-    private const val BASE_URL = "http://10.0.2.2:5131/"
+    public const val BASE_URL = "http://10.0.2.2:5131/"
 
     /**
      * Interceptor de logging.
