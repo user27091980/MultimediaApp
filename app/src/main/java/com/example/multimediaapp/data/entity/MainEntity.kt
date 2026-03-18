@@ -11,8 +11,8 @@ import com.google.gson.annotations.SerializedName
  */
 data class MainEntity(
     val id: String,
-    @SerializedName("bandName") val bandName: String,
-    @SerializedName("imageBand") val imageBand: String
+    @SerializedName("bandName") val bandName: String?,
+    @SerializedName("imageBand") val imageBand: String?
 )
 
 /**
@@ -20,18 +20,18 @@ data class MainEntity(
  */
 fun MainEntity.toDTO(): MainDTO {
 
-    val baseUrl = "http://10.0.2.2:5131/images/"
+    val baseUrl = "http://10.0.2.2:5131/"
 
     return MainDTO(
-        id = id,
-        bandName = bandName,
+        id = id?:"",
+        bandName = bandName ?:"",
         // Si la imagen ya es una URL completa la usamos directamente
         // Si no, añadimos la baseUrl
-        imageBand = if (imageBand.startsWith("http")) {
+        imageBand = if (imageBand?.startsWith("http")==true) {
             imageBand
         } else {
             // Usamos removePrefix("/") por si el servidor envía "/foto.jpg" y evitar "//"
-            baseUrl + imageBand.removePrefix("/")
+            baseUrl + (imageBand ?: "").removePrefix("/")
         }
     )
 }

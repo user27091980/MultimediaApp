@@ -6,7 +6,7 @@ import com.example.multimediaapp.model.BandDTO
 import com.example.multimediaapp.network.BandApiService
 import java.io.IOException
 
-// Interfaz del repositorio para BandEntity / BandDTO
+// Interfaz del repositorio para BandEntity / BandDTO(permite testear y cambiar la implementación)
 interface IBandRepo {
 
     suspend fun getBands(): List<BandDTO>

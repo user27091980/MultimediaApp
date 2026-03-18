@@ -45,8 +45,6 @@ fun BottomBar(navController: NavHostController) {
         /*BottomItems.BottomBarItem(
             label = stringResource(R.string.búsqueda),
             Icons.Default.Search,
-
-
         ),*/
         BottomItems.BottomBarItem(
             label = stringResource(R.string.usuario),

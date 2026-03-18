@@ -21,4 +21,8 @@
     <string name="si">sí</string>
     <string name="no">no</string>
     <string name="version">"App Version: 1.0"</string>
+    <string name="errorMail">"Email no válido"</string>
+    <string name="nombrePropio">nombre</string>
+    <string name="apellido">apellido</string>
+    <string name="pais">País</string>
 </resources>

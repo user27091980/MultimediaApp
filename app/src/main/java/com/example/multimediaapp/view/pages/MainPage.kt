@@ -45,9 +45,6 @@ fun MainScreen(navController: NavController, viewModel: MainVM = viewModel()) {
     // Observamos el StateFlow del ViewModel.
     // collectAsState convierte el flujo en un estado observable por Compose.
     val uiState by viewModel.uiState.collectAsState()
-    // LaunchedEffect se ejecuta cuando el Composable entra en composición.
-    // Unit como clave significa que se ejecutará solo una vez.
-    // Aquí llamamos a loadData() para cargar las bandas desde el ViewModel.
     LaunchedEffect(Unit) {
         viewModel.loadData()
     }
@@ -99,12 +96,34 @@ fun MainContent(
     uiState: MainUiState,
     onImageClick: (String) -> Unit
 ) {
-    CardList(
-        main = uiState.mainBands,
-        onImageClick = { main ->
-            onImageClick(main.id)
+    when {
+        uiState.isLoading -> {
+            Box(modifier = Modifier.fillMaxSize()) {
+                androidx.compose.material3.Text("Cargando...")
+            }
         }
-    )
+
+        uiState.error != null -> {
+            Box(modifier = Modifier.fillMaxSize()) {
+                androidx.compose.material3.Text("Error: ${uiState.error}")
+            }
+        }
+
+        uiState.mainBands.isEmpty() -> {
+            Box(modifier = Modifier.fillMaxSize()) {
+                androidx.compose.material3.Text("No hay bandas")
+            }
+        }
+
+        else -> {
+            CardList(
+                main = uiState.mainBands,
+                onImageClick = { main ->
+                    onImageClick(main.id)
+                }
+            )
+        }
+    }
 }
 /**
  * Preview de la pantalla principal.

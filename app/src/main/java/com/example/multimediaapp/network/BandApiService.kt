@@ -15,24 +15,24 @@ interface BandApiService {
 
     // BAND ENDPOINTS")
     // Obtener todas las bandas
-    @GET("/bands") // Asegúrate de si llevan "json/" delante o no
+    @GET("api/bands") // Asegúrate de si llevan "json/" delante o no
     suspend fun getBands(): Response<List<BandEntity>>
 
     // Obtener UNA banda completa (aquí ya viene descripción, estilo, etc.)
-    @GET("/bands/{id}")
+    @GET("api/bands/{id}")
     suspend fun getBandById(@Path("id") id: String): Response<BandEntity>
 
-    // Si tu API realmente tiene endpoints para imágenes específicas:
-    @GET("/images/albums/{id}")
+    // Para imagenes
+    @GET("api/images/{id}")
     suspend fun getAlbumImages(@Path("id") id: String): Response<List<String>>
 
-    @POST("/bands")
+    @POST("api/bands")
     suspend fun createBand(@Body band: BandEntity): Response<BandEntity>
 
-    @PUT("/bands/{id}")
+    @PUT("api/bands/{id}")
     suspend fun updateBand(@Path("id") id: String, @Body band: BandEntity): Response<BandEntity>
 
-    @DELETE("/bands/{id}")
+    @DELETE("api/bands/{id}")
     suspend fun deleteBand(@Path("id") id: String): Response<Unit>
 
 
