@@ -61,15 +61,15 @@ fun BandScreen(
                 verticalArrangement = Arrangement.spacedBy(10.dp)
             ) {
                 BandHeader(band = band)
-
+                Spacer(modifier = Modifier.height(8.dp))
                 CardRowComponent(band = band)
-
+                Spacer(modifier = Modifier.height(8.dp))
                 Text(text = stringResource(R.string.info))
-
+                Spacer(modifier = Modifier.height(8.dp))
                 BandTags(band = band)
-
+                Spacer(modifier = Modifier.height(8.dp))
                 Text(text = stringResource(R.string.discografia))
-
+                Spacer(modifier = Modifier.height(8.dp))
                 ImagesRowList(band = band, modifier = Modifier.fillMaxWidth())
             }
         }
