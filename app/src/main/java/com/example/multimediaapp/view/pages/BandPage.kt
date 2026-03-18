@@ -93,11 +93,7 @@ fun BandScreenPreview() {
         style = "Rock Alternativo",
         recordLabel = "Parlophone",
         components = "Chris Martin, Jonny Buckland, Guy Berryman, Will Champion",
-        discography = listOf(
-            "Parachutes",
-            "A Rush of Blood to the Head",
-            "X&Y"
-        ),
+
         albumLinks = listOf(
             "https://example.com/album1",
             "https://example.com/album2"

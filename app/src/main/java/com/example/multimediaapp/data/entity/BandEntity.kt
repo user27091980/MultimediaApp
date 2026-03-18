@@ -1,31 +1,47 @@
 package com.example.multimediaapp.data.entity
 
 import com.example.multimediaapp.model.BandDTO
-import com.example.multimediaapp.network.NetworkModule
 import com.google.gson.annotations.SerializedName
 
 /**
  * BandEntity representa cómo llegan los datos de una banda desde la API.
- * Vive en la capa de datos (Data Layer) y se convierte a BandDTO para la app.
+ * (Data Layer)
  */
 data class BandEntity(
+
+    @SerializedName("id")
     val id: String,
 
-    //Los nombres en @SerializedName deben coincidir con las llaves del JSON de tu API
-    @SerializedName("name") val name: String,
-    @SerializedName("description") val description: String,
-    @SerializedName("banner") val banner: String,
-    @SerializedName("albumImages") val albumImages: List<String>,
-    @SerializedName("style") val style: String,
-    @SerializedName("recordLabel") val recordLabel: String,
-    @SerializedName("components") val components: String,
-    @SerializedName("discography") val discography: List<String>,
-    @SerializedName("albumLinks") val albumLinks: List<String>,
-    @SerializedName("headerLink") val headerLink: String
+    @SerializedName("name")
+    val name: String,
+
+    @SerializedName("description")
+    val description: String,
+
+    @SerializedName("banner")
+    val banner: String,
+
+    @SerializedName("albumImages")
+    val albumImages: List<String>,
+
+    @SerializedName("style")
+    val style: String,
+
+    @SerializedName("recordLabel")
+    val recordLabel: String,
+
+    @SerializedName("components")
+    val components: String,
+
+    @SerializedName("albumLinks")
+    val albumLinks: List<String>,
+
+    @SerializedName("headerLink")
+    val headerLink: String
 )
 
 /**
- * Mapper de BandEntity a BandDTO
+ * Mapper: Entity → DTO
  */
 fun BandEntity.toDTO(): BandDTO {
 
@@ -35,23 +51,19 @@ fun BandEntity.toDTO(): BandDTO {
         id = id,
         name = name,
         description = description,
-        // Limpiamos barras iniciales con removePrefix para evitar "//"
-        banner = if (banner.startsWith("http")) banner else baseUrl + banner.removePrefix("/"),
-        albumImages = albumImages.map { url ->
-            if (url.startsWith("http")) url else baseUrl + url.removePrefix("/")
-        },
+        banner = buildUrl(baseUrl, banner),
+        albumImages = albumImages.map { buildUrl(baseUrl, it) },
         style = style,
         recordLabel = recordLabel,
         components = components,
-        discography = discography,
         albumLinks = albumLinks,
-        headerLink = if (headerLink.startsWith("http")) headerLink else baseUrl + headerLink.removePrefix("/")
+        headerLink = buildUrl(baseUrl, headerLink),
+
     )
 }
 
 /**
- * Mapper inverso:de BandDTO a BandEntity
- * Se usa para enviar datos al servidor (POST / PUT).
+ * Mapper inverso: DTO → Entity
  */
 fun BandDTO.toEntity(): BandEntity {
     return BandEntity(
@@ -63,8 +75,18 @@ fun BandDTO.toEntity(): BandEntity {
         style = style,
         recordLabel = recordLabel,
         components = components,
-        discography = discography,
         albumLinks = albumLinks,
         headerLink = headerLink
     )
+}
+
+/**
+ * Helper para construir URLs correctamente
+ */
+private fun buildUrl(baseUrl: String, path: String): String {
+    return if (path.startsWith("http")) {
+        path
+    } else {
+        baseUrl + path.removePrefix("/")
+    }
 }
