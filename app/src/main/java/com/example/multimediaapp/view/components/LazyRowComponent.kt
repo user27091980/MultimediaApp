@@ -16,6 +16,7 @@ import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.unit.dp
 import coil.compose.rememberAsyncImagePainter
 import androidx.core.net.toUri
+import coil.compose.AsyncImage
 import com.example.multimediaapp.model.BandDTO
 
 /* Componente Jetpack Compose que muestra las imágenes de los álbumes de una banda en una fila horizontal.
@@ -42,8 +43,7 @@ fun ImagesRowList(
         LazyRow(modifier = modifier) {
             // Itera sobre la lista de URLs de imágenes de los álbumes.
             // 'albumImage' es cada URL de la lista.
-            itemsIndexed(band.albumImages) { index, albumImages ->
-
+            itemsIndexed(band.albumImages) { index, albumImage ->
                 Image(
                     // Cargamos la imagen desde la URL usando Coil y rememberAsyncImagePainter
                     painter = rememberAsyncImagePainter(band.albumImages),

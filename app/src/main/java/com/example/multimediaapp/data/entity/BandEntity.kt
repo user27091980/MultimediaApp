@@ -51,8 +51,13 @@ fun BandEntity.toDTO(): BandDTO {
         id = id,
         name = name,
         description = description,
-        banner = buildUrl(baseUrl, banner),
-        albumImages = albumImages.map { buildUrl(baseUrl, it) },
+        banner = if (banner?.startsWith("http")==true) {
+            banner
+        } else {
+            // Usamos removePrefix("/") por si el servidor envía "/foto.jpg" y evitar "//"
+            baseUrl + "images/"+ (banner ?: "").removePrefix("/")
+        },
+        albumImages = albumImages,
         style = style,
         recordLabel = recordLabel,
         components = components,
