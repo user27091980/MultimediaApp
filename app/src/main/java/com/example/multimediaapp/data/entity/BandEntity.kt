@@ -59,7 +59,7 @@ fun BandEntity.toDTO(): BandDTO {
         albumLinks = albumLinks,
         headerLink = buildUrl(baseUrl, headerLink),
 
-    )
+        )
 }
 
 /**
