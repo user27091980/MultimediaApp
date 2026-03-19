@@ -46,10 +46,10 @@ fun UserInfoScreen(
                 UserCardComponent(
                     id = user.id,
                     email = user.email,
-                    country = user.country,
-                    user = user.user,
                     name = user.name,
-                    surname = user.lastName
+                    surname = user.lastName,
+                    country = user.country,
+
                 )
             } else {
                 // Estado de carga o error
