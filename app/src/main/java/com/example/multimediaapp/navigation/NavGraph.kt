@@ -5,6 +5,7 @@ import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
+import androidx.navigation.compose.dialog
 import com.example.multimediaapp.ui.viewmodel.BandVM
 import com.example.multimediaapp.view.pages.*
 import com.example.multimediaapp.viewmodel.vm.*
@@ -70,7 +71,7 @@ fun NavGraph(
             SettingsScreen(settingsVM)
         }
 
-        composable(ObjRoutes.DIALOG) {
+        dialog(ObjRoutes.DIALOG) {
             DialogRegisterScreen(navController = navController)
         }
     }

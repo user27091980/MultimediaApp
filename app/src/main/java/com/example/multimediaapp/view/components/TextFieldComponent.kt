@@ -16,12 +16,9 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.text.input.PasswordVisualTransformation
 import androidx.compose.ui.text.input.VisualTransformation
-import androidx.datastore.preferences.core.stringPreferencesKey
-import com.example.multimediaapp.R
 
 /**
  * Composable principal que agrupa todos los TextFields de login/registro.
@@ -89,12 +86,13 @@ fun TextFieldUserComponent(user: String, onUserChange: (String) -> Unit) {
         value = user,
         onValueChange = onUserChange,
         singleLine = true,
-        label = { Text(stringResource(R.string.usuario), color = Color.White) },
+        label = { Text("Usuario", color = Color.White) },
         colors = androidx.compose.material3.OutlinedTextFieldDefaults.colors(
             focusedTextColor = Color.White,
             unfocusedTextColor = Color.White,
             cursorColor = Color.White
-        ),
+        )
+
 
         )
 }
@@ -117,7 +115,7 @@ fun TextFieldEmailComponent(email: String, onEmailChange: (String) -> Unit) {
         onValueChange = onEmailChange,
         singleLine = true,
         label = {
-            Text(stringResource(R.string.correo), color = Color.White)
+            Text("Email", color = Color.White)
         },
         colors = androidx.compose.material3.OutlinedTextFieldDefaults.colors(
             focusedTextColor = Color.White,
@@ -153,7 +151,7 @@ fun TextFieldPassComponent(pass: String, onPassChange: (String) -> Unit) {
         value = pass,
         onValueChange = onPassChange,
         singleLine = true,
-        label = { Text(stringResource(R.string.contraseña), color = Color.White) },
+        label = { Text("Password", color = Color.White) },
         colors = androidx.compose.material3.OutlinedTextFieldDefaults.colors(
             focusedTextColor = Color.White,
             unfocusedTextColor = Color.White,
@@ -182,12 +180,12 @@ fun TextFieldNameComponent(name: String, onNameChange: (String) -> Unit) {
         value = name,
         onValueChange = onNameChange,
         singleLine = true,
-        label = { Text(stringResource(R.string.nombrePropio), color = Color.White) },
+        label = { Text("Nombre", color = Color.White) },
         colors = androidx.compose.material3.OutlinedTextFieldDefaults.colors(
             focusedTextColor = Color.White,
             unfocusedTextColor = Color.White,
             cursorColor = Color.White
-        ),
+        )
     )
 }
 
@@ -198,12 +196,12 @@ fun TextFieldLastNameComponent(lastName: String, onLastNameChange: (String) -> U
         value = lastName,
         onValueChange = onLastNameChange,
         singleLine = true,
-        label = { Text(stringResource(R.string.apellido), color = Color.White) },
+        label = { Text("Apellido", color = Color.White) },
         colors = androidx.compose.material3.OutlinedTextFieldDefaults.colors(
             focusedTextColor = Color.White,
             unfocusedTextColor = Color.White,
             cursorColor = Color.White
-        ),
+        )
     )
 }
 @Composable
@@ -212,12 +210,13 @@ fun TextFieldCountryComponent(country: String, onCountryChange: (String) -> Unit
         value = country,
         onValueChange = onCountryChange,
         singleLine = true,
-        label = { Text(stringResource(R.string.pais), color = Color.White) },
+        label = { Text("País", color = Color.White) },
         colors = androidx.compose.material3.OutlinedTextFieldDefaults.colors(
             focusedTextColor = Color.White,
             unfocusedTextColor = Color.White,
             cursorColor = Color.White
         )
+
     )
 }
 /*

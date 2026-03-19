@@ -44,7 +44,7 @@ fun DialogRegisterScreen(
         confirmButton = {
             // Lógica de confirmación en el ViewModel
             TextButton(onClick = {
-                vm.confirmAction()
+                vm.showDialog()
                 // Navega a la pantalla de login
                 navController.navigate(ObjRoutes.LOGIN)
             }) {
@@ -63,9 +63,9 @@ fun DialogRegisterScreen(
             }) {
                 Text(stringResource(R.string.no))
             }
-        },
+        }
 
-        )
+    )
 }
 
 /**

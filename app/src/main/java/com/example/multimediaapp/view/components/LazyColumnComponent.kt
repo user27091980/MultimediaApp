@@ -27,6 +27,7 @@ import androidx.compose.ui.unit.dp
 import coil.compose.AsyncImage
 import coil.request.ImageRequest
 import com.example.multimediaapp.model.MainDTO
+import com.example.multimediaapp.network.NetworkModule
 
 /**
  * Composable que muestra una lista vertical de tarjetas con imagen y nombre de banda.
@@ -58,10 +59,7 @@ fun CardList(
                 horizontalAlignment = Alignment.CenterHorizontally // Centra horizontalmente todo dentro de la columna
             ) {
                 AsyncImage(
-                    model = ImageRequest.Builder(LocalContext.current)
-                        .data(main.imageBand)
-                        .crossfade(true)
-                        .build(),
+                    model = main.imageBand,
                     contentDescription = main.bandName,
                     modifier = Modifier
                         .fillMaxWidth()
@@ -83,25 +81,7 @@ fun CardList(
     }
 }
 
-// Datos de ejemplo para el preview
-val previewMain = listOf(
-    MainDTO("1", "Metallica", "https://via.placeholder.com/300x150.png?text=Metallica"),
-    MainDTO("2", "Iron Maiden", "https://via.placeholder.com/300x150.png?text=Iron+Maiden"),
-    MainDTO("3", "AC/DC", "https://via.placeholder.com/300x150.png?text=ACDC")
-)
 
-/**
- * Preview de CardList en Android Studio
- * Permite visualizar cómo se vería la lista con datos de ejemplo
- */
-@Preview
-@Composable
-fun CardListPreview() {
-    CardList(
-        main = previewMain,
-        onImageClick = {}
-    )
-}
 
 /*
 LazyColumn: lista vertical optimizada, renderiza solo lo visible, mejora rendimiento.

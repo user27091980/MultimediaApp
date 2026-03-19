@@ -35,6 +35,8 @@ class BandsRepo(private val bandApi: BandApiService) : IBandRepo {
         val response = bandApi.getBandById(id)
         return if (response.isSuccessful) response.body()?.toDTO() else null
     }
+
+
     // Crea una nueva banda. Nota: Aquí se realiza el mapeo manual de DTO
     override suspend fun createBand(band: BandDTO): BandDTO? {
         val entity = band.toEntity()

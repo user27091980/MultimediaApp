@@ -12,28 +12,28 @@ import retrofit2.http.Path
 interface MainApiService {
 
     //Para obtener la lista completa
-    @GET("api/main")
+    @GET("json/main")
     suspend fun getMainBands(): Response<List<MainEntity>>
 
     //Obtener una sola banda por ID
-    @GET("api/main/id/{id}")
+    @GET("json/main/{id}")
     suspend fun getMainBandById(@Path("id") id: String): Response<MainEntity>
 
-    // Rutas específicas para evitar conflictos
+    /* Rutas específicas para evitar conflictos
     // Si quieres buscar por nombre o imagen, la URL debe ser distinta:
-    @GET("api/main/bandName/{name}")
+    @GET("json/main/bandName/{name}")
     suspend fun getNameBand(@Path("name") name: String): Response<MainEntity>
 
-    @GET("api/resources/{id}")
+    @GET("json/resources/{id}")
     suspend fun getImages(@Path("id") id: String): Response<MainEntity>
-
+    */
     //(CRUD)
-    @POST("api/main")
+    @POST("json/main")
     suspend fun createMainBand(@Body band: MainEntity): Response<MainEntity>
     //actualizar banda
-    @PUT("/main/{id}")
+    @PUT("json/main/{id}")
     suspend fun updateMainBand(@Path("id") id: String, @Body band: MainEntity): Response<MainEntity>
     //eliminar banda
-    @DELETE("/main/{id}")
+    @DELETE("json/main/{id}")
     suspend fun deleteMainBand(@Path("id") id: String): Response<Unit>
 }

@@ -14,6 +14,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import com.example.multimediaapp.R
+import com.example.multimediaapp.model.BandDTO
 import com.example.multimediaapp.ui.theme.bandColumnModifier
 import com.example.multimediaapp.ui.viewmodel.BandVM
 import com.example.multimediaapp.view.components.BandHeader
@@ -60,18 +61,65 @@ fun BandScreen(
                 verticalArrangement = Arrangement.spacedBy(10.dp)
             ) {
                 BandHeader(band = band)
-
+                Spacer(modifier = Modifier.height(8.dp))
                 CardRowComponent(band = band)
-
+                Spacer(modifier = Modifier.height(8.dp))
                 Text(text = stringResource(R.string.info))
-
+                Spacer(modifier = Modifier.height(8.dp))
                 BandTags(band = band)
-
+                Spacer(modifier = Modifier.height(8.dp))
                 Text(text = stringResource(R.string.discografia))
-
+                Spacer(modifier = Modifier.height(8.dp))
                 ImagesRowList(band = band, modifier = Modifier.fillMaxWidth())
+                Spacer(modifier = Modifier.height(8.dp))
             }
         }
     }
 }
+@Preview(showBackground = true)
+@Composable
+fun BandScreenPreview() {
 
+    // Creamos un BandDTO “default” para preview
+    val defaultBand = BandDTO(
+        id = "1",
+        name = "Coldplay",
+        description = "Banda británica de rock alternativo formada en Londres.",
+        banner = "https://via.placeholder.com/600x300",
+        albumImages = listOf(
+            "https://via.placeholder.com/150",
+            "https://via.placeholder.com/150"
+        ),
+        style = "Rock Alternativo",
+        recordLabel = "Parlophone",
+        components = "Chris Martin, Jonny Buckland, Guy Berryman, Will Champion",
+
+        albumLinks = listOf(
+            "https://example.com/album1",
+            "https://example.com/album2"
+        ),
+        headerLink = "https://example.com"
+    )
+
+    // Preview directamente con la UI, sin ViewModel
+    Box(modifier = Modifier.fillMaxSize().background(MaterialTheme.colorScheme.background)) {
+        Column(
+            modifier = bandColumnModifier
+                .verticalScroll(rememberScrollState())
+                .padding(16.dp),
+            verticalArrangement = Arrangement.spacedBy(10.dp)
+        ) {
+            BandHeader(band = defaultBand)
+            Spacer(modifier = Modifier.height(8.dp))
+            CardRowComponent(band = defaultBand)
+            Spacer(modifier = Modifier.height(8.dp))
+            Text(text = "Info")
+            Spacer(modifier = Modifier.height(8.dp))
+            BandTags(band = defaultBand)
+            Spacer(modifier = Modifier.height(8.dp))
+            Text(text = "Discografía")
+            Spacer(modifier = Modifier.height(8.dp))
+            ImagesRowList(band = defaultBand, modifier = Modifier.fillMaxWidth())
+        }
+    }
+}
