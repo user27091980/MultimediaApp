@@ -42,11 +42,11 @@ fun ImagesRowList(
         LazyRow(modifier = modifier) {
             // Itera sobre la lista de URLs de imágenes de los álbumes.
             // 'albumImage' es cada URL de la lista.
-            itemsIndexed(band.albumImages) { index, albumImage ->
+            itemsIndexed(band.albumImages) { index, albumImages ->
 
                 Image(
                     // Cargamos la imagen desde la URL usando Coil y rememberAsyncImagePainter
-                    painter = rememberAsyncImagePainter(albumImage),
+                    painter = rememberAsyncImagePainter(band.albumImages),
                     // Descripción para accesibilidad
                     contentDescription = "album image",
                     // Modificadores de la imagen
