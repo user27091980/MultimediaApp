@@ -19,14 +19,14 @@ interface MainApiService {
     @GET("json/main/{id}")
     suspend fun getMainBandById(@Path("id") id: String): Response<MainEntity>
 
-    /* Rutas específicas para evitar conflictos
+    // Rutas específicas para evitar conflictos
     // Si quieres buscar por nombre o imagen, la URL debe ser distinta:
     @GET("json/main/bandName/{name}")
     suspend fun getNameBand(@Path("name") name: String): Response<MainEntity>
 
     @GET("json/resources/{id}")
     suspend fun getImages(@Path("id") id: String): Response<MainEntity>
-    */
+
     //(CRUD)
     @POST("json/main")
     suspend fun createMainBand(@Body band: MainEntity): Response<MainEntity>
