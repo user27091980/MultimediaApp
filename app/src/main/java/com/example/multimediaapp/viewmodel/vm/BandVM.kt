@@ -54,6 +54,8 @@ class BandVM : ViewModel() {
             }
         }
     }
+    
+
     /**
      * Crea una nueva banda en el backend
      * y la añade al estado local si tiene éxito.
