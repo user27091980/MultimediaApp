@@ -12,55 +12,44 @@ import kotlinx.serialization.Serializable
  * Serializable → permite que la ruta pueda convertirse
  * a String para usarla en Navigation Compose.
  */
+/**
+ * Base sealed interface para todas las rutas
+ */
 @Serializable
 sealed interface NavRoute
 
-/**
- * Ruta hacia Login que recibe parámetros.
- *
- * Se usa data class porque contiene datos (email).
- *
- * data class genera automáticamente:
- * - equals()
- * - hashCode()
- * - toString()
- * - copy()
- * - componentN()
- *
- * Esto es importante porque Navigation compara rutas.
- */
+// ----------------------
+// RUTAS CON PARÁMETROS
+// ----------------------
 
 @Serializable
-data class LoginRoute(val email: String) : NavRoute
+data class LoginRoute(
+    val email: String? = null
+) : NavRoute
 
-/**
- * Ruta hacia Register con parámetros.
- *
- * Como tiene datos (email y user),
- * usamos data class.
- */
 @Serializable
-data class RegisterRoute(val email: String, val user: String) : NavRoute
-data class BandRoute (val bandId: String) : NavRoute {
+data class RegisterRoute(
+    val email: String? = null,
+    val user: String? = null
+) : NavRoute
+
+@Serializable
+data class BandRoute(
+    val bandId: String
+) : NavRoute {
     fun route() = "band/$bandId"
 }
-/**
- * Ruta estática (sin parámetros).
- *
- * Se usa object porque:
- * - No contiene datos
- * - Solo existe una instancia
- * - Es más eficiente
- */
+
+// ----------------------
+// RUTAS SIN PARÁMETROS
+// ----------------------
+
 @Serializable
 object LoginRegRoute : NavRoute
 
 @Serializable
 object MainRoute : NavRoute
 
-/*@Serializable
-object BandRoute : NavRoute
-*/
 @Serializable
 object UserInfoRoute : NavRoute
 
@@ -69,7 +58,6 @@ object DialogRoute : NavRoute
 
 @Serializable
 object SettingsRoute : NavRoute
-
 
 /**
  * ===APUNTES====

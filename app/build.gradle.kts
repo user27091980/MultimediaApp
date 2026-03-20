@@ -89,6 +89,7 @@ dependencies {
     implementation(libs.androidx.benchmark.common)
     implementation(libs.material3)
     implementation(libs.androidx.compiler)
+    implementation(libs.androidx.tracing.perfetto.handshake)
 
     // Testing
     testImplementation(libs.junit)

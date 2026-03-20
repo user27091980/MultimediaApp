@@ -1,9 +1,8 @@
 package com.example.multimediaapp.retrofit
 
 import com.example.multimediaapp.network.BandApiService
-import com.example.multimediaapp.network.LoginApiService
 import com.example.multimediaapp.network.MainApiService
-import com.example.multimediaapp.network.UserInfoApiService
+import com.example.multimediaapp.network.UserApiService
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 
@@ -32,11 +31,9 @@ object RetrofitModule {
         retrofit.create(BandApiService::class.java)
     }
 
-    val loginApi: LoginApiService by lazy {
-        retrofit.create(LoginApiService::class.java)
+    val UserApi: UserApiService by lazy {
+        retrofit.create(UserApiService::class.java)
     }
 
-    val userInfoApi: UserInfoApiService by lazy {
-        retrofit.create(UserInfoApiService::class.java)
-    }
+
 }

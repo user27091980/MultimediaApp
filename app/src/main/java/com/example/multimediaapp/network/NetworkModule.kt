@@ -74,9 +74,7 @@ object NetworkModule {
     val bandApi: BandApiService =
         retrofit.create(BandApiService::class.java)
 
-    val loginApi: LoginApiService =
-        retrofit.create(LoginApiService::class.java)
+    val userApi : UserApiService = retrofit.create(UserApiService::class.java)
 
-    val userInfoApi: UserInfoApiService =
-        retrofit.create(UserInfoApiService::class.java)
+
 }

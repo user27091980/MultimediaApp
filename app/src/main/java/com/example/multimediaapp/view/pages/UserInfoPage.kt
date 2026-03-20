@@ -16,7 +16,7 @@ import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.lifecycle.viewmodel.compose.viewModel
 import com.example.multimediaapp.view.components.FloatCamera
 import com.example.multimediaapp.view.components.UserCardComponent
-import com.example.multimediaapp.viewmodel.vm.UserInfoVM
+import com.example.multimediaapp.viewmodel.vm.UserVM
 
 /**
  * Pantalla que muestra la información de un usuario específico.
@@ -27,32 +27,32 @@ import com.example.multimediaapp.viewmodel.vm.UserInfoVM
 @Composable
 fun UserInfoScreen(
     userInfoId: String,
-    vm: UserInfoVM = viewModel()
+    vm: UserVM = viewModel()
 ) {
-    // Usamos collectAsStateWithLifecycle para mayor eficiencia en Android
     val uiState by vm.uiState.collectAsStateWithLifecycle()
 
-    // Carga los datos cuando cambia el ID
+    // Cargar usuario al entrar
     LaunchedEffect(userInfoId) {
-        vm.loadUser(userInfoId)
+        if (userInfoId.isNotBlank()) {
+            vm.loadUserById(userInfoId)
+        }
     }
 
     Box(modifier = Modifier.fillMaxSize()) {
+
         Column(modifier = Modifier.padding(16.dp)) {
-            // Obtenemos el usuario de la lista filtrando por el ID actual
-            val user = uiState.userInfo.find { it.id == userInfoId }
+
+            val user = uiState.user
 
             if (user != null) {
                 UserCardComponent(
-                    id = user.id,
+                    id = user.id ?: "",
                     email = user.email,
-                    country = user.country,
-                    user = user.user,
-                    name = user.name,
-                    surname = user.lastName
+                    name = user.name ?: "",
+                    surname = user.lastName ?: "",
+                    country = user.country ?: ""
                 )
             } else {
-                // Estado de carga o error
                 Text(
                     text = "Buscando información del usuario...",
                     style = MaterialTheme.typography.bodyLarge,
@@ -61,7 +61,6 @@ fun UserInfoScreen(
             }
         }
 
-        // Botón flotante
         FloatCamera(
             onClick = { /* Lógica de cámara */ },
             modifier = Modifier

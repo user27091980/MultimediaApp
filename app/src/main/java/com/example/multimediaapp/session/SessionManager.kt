@@ -1,7 +1,7 @@
 package com.example.multimediaapp.session
 
 import android.content.Context
-import com.example.multimediaapp.model.UsersInfoDTO
+import com.example.multimediaapp.model.UserDTO
 
 /**
  * SessionManager:
@@ -16,7 +16,7 @@ class SessionManager(context: Context) {
     /**
      * Guarda los datos del usuario al iniciar sesión o registrarse.
      */
-    fun saveUser(user: UsersInfoDTO) {
+    fun saveUser(user: UserDTO) {
         prefs.edit()
             .putString("id", user.id)
             .putString("email", user.email)
@@ -30,7 +30,7 @@ class SessionManager(context: Context) {
      * Recupera los datos del usuario guardados.
      * Retorna null si no hay sesión activa.
      */
-    fun getUser(): UsersInfoDTO? {
+    fun getUser(): UserDTO? {
         val id = prefs.getString("id", null) ?: return null
         val email = prefs.getString("email", "") ?: ""
         val name = prefs.getString("name", "") ?: ""
@@ -39,7 +39,7 @@ class SessionManager(context: Context) {
         // La contraseña no se guarda por seguridad
         val pass = ""
 
-        return UsersInfoDTO(
+        return UserDTO(
             id = id,
             email = email,
             pass = pass,

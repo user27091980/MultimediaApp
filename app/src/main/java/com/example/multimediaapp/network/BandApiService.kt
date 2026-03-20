@@ -29,7 +29,7 @@ interface BandApiService {
     suspend fun getBandDescription(@Path("description") id: String): Response<BandEntity>
 
     // Para imagenes
-    @GET("json/resources/{id}")
+    @GET("json/images/{id}")
     suspend fun getAlbumImages(@Path("id") id: String): Response<List<String>>
 
     @POST("json/bands")

@@ -28,7 +28,6 @@ fun UserCardComponent(
     id: String,
     email: String,
     country: String,
-    user: String,
     name: String,
     surname: String
 ) {
@@ -66,17 +65,6 @@ fun UserCardComponent(
                 )
 
             }
-
-            /// Card para el usuario
-            Card(cardModifier) {
-
-                Text(
-                    text = user,
-                    style = MaterialTheme.typography.titleMedium,
-                    color = MaterialTheme.colorScheme.primary
-                )
-            }
-
             //card para el nombre
             Card(cardModifier) {
 

@@ -44,9 +44,9 @@ fun ImagesRowList(
             // Itera sobre la lista de URLs de imágenes de los álbumes.
             // 'albumImage' es cada URL de la lista.
             itemsIndexed(band.albumImages) { index, albumImage ->
-                Image(
+                AsyncImage(
                     // Cargamos la imagen desde la URL usando Coil y rememberAsyncImagePainter
-                    painter = rememberAsyncImagePainter(band.albumImages),
+                    model = albumImage,
                     // Descripción para accesibilidad
                     contentDescription = "album image",
                     // Modificadores de la imagen
@@ -63,7 +63,7 @@ fun ImagesRowList(
 
                         },// Espacio entre imágenes horizontales
                     // Escala de la imagen para que llene su contenedor y recorte lo sobrante
-                    contentScale = ContentScale.Crop,
+                    contentScale = ContentScale.Crop
 
                     )
             }
