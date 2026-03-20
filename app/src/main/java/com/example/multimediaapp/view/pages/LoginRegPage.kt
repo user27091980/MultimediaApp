@@ -1,7 +1,5 @@
 package com.example.multimediaapp.view.pages
 
-import com.example.multimediaapp.view.components.ButtonLogin
-import com.example.multimediaapp.view.components.ButtonRegister
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
@@ -15,11 +13,11 @@ import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavController
 import androidx.navigation.compose.rememberNavController
 import com.example.multimediaapp.navigation.ObjRoutes
-import com.example.multimediaapp.viewmodel.vm.LoginRegVM
+import com.example.multimediaapp.view.components.ButtonLogin
+import com.example.multimediaapp.view.components.ButtonRegister
 
 /**
  * Pantalla inicial que ofrece opciones de Login o Registro.
@@ -27,40 +25,41 @@ import com.example.multimediaapp.viewmodel.vm.LoginRegVM
  * @param navController Controlador de navegación para moverse entre pantallas.
  * @param vm ViewModel que maneja el estado de la pantalla Login/Registro.
  */
+/**
+ * Pantalla inicial que ofrece opciones de Login o Registro.
+ */
 @Composable
 fun LoginRegScreen(
-    navController: NavController,
-    vm: LoginRegVM = viewModel()// obtiene automáticamente el ViewModel asociado al ciclo de vida
+    navController: NavController
 ) {
-    // Caja principal que ocupa toda la pantalla
-    // Se aplica un fondo degradado de oscuro a negro
     Box(
         modifier = Modifier
             .fillMaxSize()
             .background(
                 Brush.verticalGradient(
-                    colors = listOf(Color.DarkGray, Color.Black) // verde Spotify → negro
+                    colors = listOf(Color.DarkGray, Color.Black)
                 )
             ),
         contentAlignment = Alignment.Center
     ) {
-        // Columna que contiene los botones de login y registro
         Column(
             horizontalAlignment = Alignment.CenterHorizontally,
             verticalArrangement = Arrangement.spacedBy(20.dp),
-            modifier = Modifier
-                .padding(horizontal = 32.dp)
-
+            modifier = Modifier.padding(horizontal = 32.dp)
         ) {
-            //boton de Login
+
+            // Botón Login
             ButtonLogin(
-                onClick = { navController.navigate(ObjRoutes.LOGIN) }
+                onClick = {
+                    navController.navigate(ObjRoutes.LOGIN)
+                }
             )
+
             // Botón Registro
             ButtonRegister(
-
-                onClick = { navController.navigate(ObjRoutes.REGISTER) }
-
+                onClick = {
+                    navController.navigate(ObjRoutes.REGISTER)
+                }
             )
         }
     }
@@ -69,15 +68,13 @@ fun LoginRegScreen(
 /**
  * Preview para mostrar cómo se ve la pantalla en Android Studio sin ejecutar la app.
  */
-@Preview()
+@Preview
 @Composable
 fun LoginRegScreenPreview() {
-
     val navController = rememberNavController()
 
     LoginRegScreen(
-        navController = navController,
-        vm = LoginRegVM() //solo si tu VM tiene constructor vacío
+        navController = navController
     )
 }
 

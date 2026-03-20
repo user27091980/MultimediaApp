@@ -7,6 +7,8 @@ import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
+import androidx.compose.material3.CircularProgressIndicator
+import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
@@ -23,10 +25,8 @@ import com.example.multimediaapp.navigation.ObjRoutes
 import com.example.multimediaapp.ui.theme.boxModifier
 import com.example.multimediaapp.view.components.ButtonAccept
 import com.example.multimediaapp.view.components.ButtonCancel
-import com.example.multimediaapp.view.components.TextFieldsComponent
 import com.example.multimediaapp.view.components.TextFieldsLoginComponent
-import com.example.multimediaapp.viewmodel.vm.LoginVM
-import com.example.multimediaapp.viewmodel.vm.RegisterVM
+import com.example.multimediaapp.viewmodel.vm.UserVM
 
 
 /**
@@ -38,76 +38,75 @@ import com.example.multimediaapp.viewmodel.vm.RegisterVM
 @Composable
 fun LoginScreen(
     navController: NavController,
-    // obtiene automáticamente el ViewModel asociado al ciclo de vida
-    vm: LoginVM = viewModel()
+    vm: UserVM = viewModel()
 ) {
-    // Obtenemos el estado actual del ViewModel
     val uiState by vm.uiState.collectAsState()
 
-    // Caja principal que ocupa toda la pantalla
-    // Se aplica un fondo degradado vertical de gris oscuro a negro
     Box(
         modifier = boxModifier
             .fillMaxSize()
             .background(
                 Brush.verticalGradient(
-                    colors = listOf(Color.DarkGray, Color.Black) // verde Spotify → negro
+                    colors = listOf(Color.DarkGray, Color.Black)
                 )
             ),
         contentAlignment = Alignment.Center
     ) {
-        // Columna principal que contiene los campos de texto y botones
         Column(
             Modifier
                 .fillMaxWidth()
                 .padding(40.dp),
             verticalArrangement = Arrangement.Center,
             horizontalAlignment = Alignment.CenterHorizontally
-
         ) {
+
             Column(
                 modifier = Modifier.weight(1f),
                 verticalArrangement = Arrangement.Center
             ) {
-                TextFieldsLoginComponent(// Pasamos los valores y callbacks al ViewModel
+
+                TextFieldsLoginComponent(
                     email = uiState.email,
-                    pass = uiState.password,
+                    pass = uiState.pass,
                     onEmailChange = vm::onEmailChange,
-                    onPassChange = vm::onPasswordChange
+                    onPassChange = vm::onPassChange
                 )
-                // Mostramos error si existe
+
                 uiState.errorMessage?.let { error ->
-                    androidx.compose.material3.Text(
+                    Text(
                         text = error,
                         color = Color.Red,
                         modifier = Modifier.padding(top = 8.dp)
                     )
                 }
+
+                if (uiState.isLoading) {
+                    CircularProgressIndicator(modifier = Modifier.padding(top = 16.dp))
+                }
             }
-            // Botón "Aceptar" que navega al dialog de confirmación
+
             ButtonAccept(
                 onClick = {
-                    if (vm.validateFieldsLogin()) {
-                        // Si todo es correcto, navega al dialog
-                        navController.navigate(ObjRoutes.MAIN)
+                    vm.login {
+                        navController.navigate(ObjRoutes.MAIN) {
+                            popUpTo(ObjRoutes.LOGINREG) { inclusive = true }
+                        }
                     }
                 }
             )
-            // Botón "Cancelar" que regresa a la pantalla de login
+
             ButtonCancel(
-                onClick = { navController.navigate(ObjRoutes.LOGINREG) }
+                onClick = {
+                    navController.navigate(ObjRoutes.LOGINREG)
+                }
             )
         }
     }
 }
 
-/**
- * Preview para mostrar la pantalla de registro en Android Studio sin ejecutar la app.
- */
 @Preview
 @Composable
 fun LoginScreenPreview() {
-
     val navController = rememberNavController()
 
     LoginScreen(

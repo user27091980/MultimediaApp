@@ -26,6 +26,7 @@ firebaseAppdistributionGradle = "5.2.1"
 benchmarkCommon = "1.4.1"
 material3Version = "1.4.0"
 compiler = "3.2.0-alpha11"
+tracingPerfettoHandshake = "1.0.1"
 
 [libraries]
 androidx-core-ktx = { group = "androidx.core", name = "core-ktx", version.ref = "coreKtx" }
@@ -63,6 +64,7 @@ firebase-appdistribution-gradle = { group = "com.google.firebase", name = "fireb
 androidx-benchmark-common = { group = "androidx.benchmark", name = "benchmark-common", version.ref = "benchmarkCommon" }
 material3 = { group = "androidx.compose.material3", name = "material3", version.ref = "material3Version" }
 androidx-compiler = { group = "androidx.databinding", name = "compiler", version.ref = "compiler" }
+androidx-tracing-perfetto-handshake = { group = "androidx.tracing", name = "tracing-perfetto-handshake", version.ref = "tracingPerfettoHandshake" }
 
 [plugins]
 android-application = { id = "com.android.application", version.ref = "agp" }

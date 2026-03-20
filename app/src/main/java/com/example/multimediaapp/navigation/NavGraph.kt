@@ -25,52 +25,73 @@ fun NavGraph(
         navController = navController,
         startDestination = ObjRoutes.LOGINREG
     ) {
-        // Pantalla inicial Login / Register
+
+        // Pantalla inicial
         composable(ObjRoutes.LOGINREG) {
-            val vm: LoginRegVM = viewModel()
-            // CORRECCIÓN: el parámetro era 'viewModel', no 'v'
-            LoginRegScreen(navController = navController, vm = vm)
+            LoginRegScreen(navController = navController)
         }
 
-        // Pantalla de login
+        // LOGIN
         composable(ObjRoutes.LOGIN) {
-            val vm: LoginVM = viewModel()
-            LoginScreen(navController = navController, vm = vm)
+            val vm: UserVM = viewModel()
+
+            LoginScreen(
+                navController = navController,
+                vm = vm
+            )
         }
 
-        // Pantalla de registro
+        // REGISTER
         composable(ObjRoutes.REGISTER) {
-            val vm: RegisterVM = viewModel()
-            RegisterScreen(navController = navController, vm = vm)
+            val vm: UserVM = viewModel()
+
+            RegisterScreen(
+                navController = navController,
+                vm = vm
+            )
         }
 
-        // Pantalla principal
+        // MAIN
         composable(ObjRoutes.MAIN) {
             val vm: MainVM = viewModel()
-            MainScreen(navController = navController, viewModel = vm)
+
+            MainScreen(
+                navController = navController,
+                viewModel = vm
+            )
         }
 
-        // Pantalla de banda con parámetro
+        // BAND
         composable("${ObjRoutes.BAND}/{bandId}") { backStackEntry ->
-            //val bandId = backStackEntry.arguments?.getString("bandId") ?: ""
             val bandId = backStackEntry.arguments?.getString("bandId")
                 ?: throw IllegalArgumentException("Band ID no proporcionado")
+
             val vm: BandVM = viewModel()
-            // Pasamos el ID y el VM a la pantalla de detalle
-            BandScreen(bandId = bandId, vm = vm)
+
+            BandScreen(
+                bandId = bandId,
+                vm = vm
+            )
         }
 
-        // Información del usuario
+        // USER INFO (perfil)
         composable(ObjRoutes.INFOUSER) {
-            val vm: UserInfoVM = viewModel()
-            // Aquí podrías obtener el userId real de un Preference o del LoginVM
-            UserInfoScreen(userInfoId = "defaultUser", vm = vm)
+            val vm: UserVM = viewModel()
+
+            // 👇 Aquí ya no usamos "defaultUser"
+            // Se asume que el usuario ya está en el VM tras login
+            UserInfoScreen(
+                userInfoId = vm.uiState.value.user?.id ?: "",
+                vm = vm
+            )
         }
 
+        // SETTINGS
         composable(ObjRoutes.SETTINGS) {
             SettingsScreen(settingsVM)
         }
 
+        // DIALOG
         dialog(ObjRoutes.DIALOG) {
             DialogRegisterScreen(navController = navController)
         }
