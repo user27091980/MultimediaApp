@@ -31,7 +31,7 @@ fun BandTags(band: BandDTO) {
     Column(
         modifier = Modifier
             .padding(8.dp)
-            .background(MaterialTheme.colorScheme.background),
+            .background(MaterialTheme.colorScheme.surface),
         verticalArrangement = Arrangement.spacedBy(10.dp)
     ) {
 
@@ -59,13 +59,12 @@ fun BandTags(band: BandDTO) {
 fun TagItem(tag: String) {
     Surface(
         shape = RoundedCornerShape(50),
-        color = Color.LightGray,
-        tonalElevation = 2.dp
+        color = MaterialTheme.colorScheme.surface,
+        tonalElevation = 40.dp
     ) {
         Text(
             text = tag,
-            modifier = Modifier.padding(horizontal = 12.dp, vertical = 6.dp),
-            color = Color.Black
+            modifier = Modifier.padding(horizontal = 14.dp, vertical = 6.dp),
         )
     }
 }

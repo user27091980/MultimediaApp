@@ -12,12 +12,12 @@ import retrofit2.http.Path
 interface LoginApiService {
 
 
-    @GET("/user/{id}")
+    @GET("json/user/{id}")
     suspend fun getUser(@Path("id",) id: String): Response<LoginDTO>
 
     // Para el LOGIN: Se suelen pasar como Query o en el Body de un POST
     // Si tu API .NET lo espera por URL:
-    @POST("/user/login")
+    @POST("json/user/login")
     suspend fun loginUser(email: String, @Body login: String): Response<LoginDTO>
     companion object {
         private const val BASE_URL = "http://10.0.2.2:5131/"
