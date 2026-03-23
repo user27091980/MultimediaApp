@@ -25,6 +25,7 @@ fun NavGraph(
         navController = navController,
         startDestination = ObjRoutes.LOGINREG
     ) {
+
         // Pantalla inicial Login / Register
         composable(ObjRoutes.LOGINREG) {
             val vm: LoginRegVM = viewModel()

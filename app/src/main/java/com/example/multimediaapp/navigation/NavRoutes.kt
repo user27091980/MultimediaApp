@@ -30,6 +30,7 @@ sealed interface NavRoute
  * Esto es importante porque Navigation compara rutas.
  */
 
+
 @Serializable
 data class LoginRoute(val email: String) : NavRoute
 
@@ -52,6 +53,7 @@ data class BandRoute (val bandId: String) : NavRoute {
  * - Solo existe una instancia
  * - Es más eficiente
  */
+
 @Serializable
 object LoginRegRoute : NavRoute
 
