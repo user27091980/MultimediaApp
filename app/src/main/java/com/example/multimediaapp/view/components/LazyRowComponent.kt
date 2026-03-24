@@ -1,7 +1,6 @@
 package com.example.multimediaapp.view.components
 
 import android.content.Intent
-import androidx.compose.foundation.Image
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.height
@@ -14,7 +13,6 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.unit.dp
-import coil.compose.rememberAsyncImagePainter
 import androidx.core.net.toUri
 import coil.compose.AsyncImage
 import com.example.multimediaapp.model.BandDTO

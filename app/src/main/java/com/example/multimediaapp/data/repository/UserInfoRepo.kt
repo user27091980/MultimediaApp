@@ -6,7 +6,6 @@ import com.example.multimediaapp.model.UsersInfoDTO
 import com.example.multimediaapp.retrofit.RetrofitModule
 import com.example.multimediaapp.retrofit.RetrofitModule.userInfoApi
 import com.example.multimediaapp.session.SessionManager
-import java.io.IOException
 
 class UsersInfoRepo(context: Context) {
 

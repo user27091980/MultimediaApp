@@ -13,7 +13,6 @@ import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
@@ -24,10 +23,8 @@ import com.example.multimediaapp.navigation.ObjRoutes
 import com.example.multimediaapp.ui.theme.boxModifier
 import com.example.multimediaapp.view.components.ButtonAccept
 import com.example.multimediaapp.view.components.ButtonCancel
-import com.example.multimediaapp.view.components.TextFieldsComponent
 import com.example.multimediaapp.view.components.TextFieldsLoginComponent
 import com.example.multimediaapp.viewmodel.vm.LoginVM
-import com.example.multimediaapp.viewmodel.vm.RegisterVM
 
 
 /**
