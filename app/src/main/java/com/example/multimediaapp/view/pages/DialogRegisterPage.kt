@@ -46,7 +46,7 @@ fun DialogRegisterScreen(
             TextButton(onClick = {
                 vm.showDialog()
                 // Navega a la pantalla de login
-                navController.navigate(ObjRoutes.LOGIN)
+                navController.navigate(ObjRoutes.INFOUSER)
             }) {
 
                 Text(stringResource(R.string.si))

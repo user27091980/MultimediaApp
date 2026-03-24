@@ -37,7 +37,7 @@ object ObjRoutes {
      */
     const val BAND = "BandRoute"
     const val DIALOG = "DialogRoute"
-
+    const val ADDBAND = "AddBandRoute"
     // RUTAS CON PARÁMETROS
     /**
      * Ruta de Login que recibe:

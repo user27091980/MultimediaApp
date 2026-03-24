@@ -21,10 +21,13 @@ class BandVM : ViewModel() {
 
     // Repositorio que gestiona acceso a datos (API REST con Retrofit)
     private val repository = BandsRepo(RetrofitModule.bandApi)
+    private val _isCreated = MutableStateFlow(false)
+    val isCreated: StateFlow<Boolean> = _isCreated.asStateFlow()
 
     //Estado y lista de bandas observable desde la UI
     private val _bandsState = MutableStateFlow<List<BandDTO>>(emptyList())
     val bandsState: StateFlow<List<BandDTO>> = _bandsState.asStateFlow()
+
     //banda seleccionada
     private val _selectedBand = MutableStateFlow<BandDTO?>(null)
     val selectedBand: StateFlow<BandDTO?> = _selectedBand.asStateFlow()
@@ -63,10 +66,16 @@ class BandVM : ViewModel() {
     fun createBand(band: BandDTO) {
         viewModelScope.launch {
             try {
+                _error.value = null
+                _isCreated.value = false
+
                 val created = repository.createBand(band)
+
                 created?.let {
                     _bandsState.value = _bandsState.value + it
+                    _isCreated.value = true // clave para UI
                 }
+
             } catch (e: Exception) {
                 _error.value = "Error al crear: ${e.localizedMessage ?: "desconocido"}"
             }
@@ -106,7 +115,6 @@ class BandVM : ViewModel() {
         }
     }
 }
-
 /*
 Un ViewModel es una pieza clave de la arquitectura Android (especialmente en MVVM)
 que sirve como puente entre la UI y los datos.

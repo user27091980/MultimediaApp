@@ -111,6 +111,17 @@ fun TopBar(navController: NavHostController) {
                     }
                 }
             )
+            DropdownMenuItem(
+                text = { Text(text = stringResource(R.string.add)) },
+                onClick = {
+                    isExpanded = false
+                    sessionManager.logout()
+
+                    navController.navigate(ObjRoutes.ADDBAND) {
+                        popUpTo(0)
+                    }
+                }
+            )
             // Logout
             DropdownMenuItem(
                 text = { Text(text = stringResource(R.string.logout)) },
