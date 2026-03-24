@@ -35,7 +35,7 @@ fun AddBandScreen(
     onRegister: (BandDTO) -> Unit
 ) {
 
-    //Estados
+    // 🧠 Estados
     var name by remember { mutableStateOf("") }
     var description by remember { mutableStateOf("") }
     var style by remember { mutableStateOf("") }
@@ -49,21 +49,21 @@ fun AddBandScreen(
 
     var error by remember { mutableStateOf<String?>(null) }
 
-    // 📸 Launcher imagen principal
+    // 📸 Selector imagen principal
     val bannerLauncher = rememberLauncherForActivityResult(
         ActivityResultContracts.GetContent()
     ) { uri ->
         bannerImage = uri
     }
 
-    //Launcher múltiples imágenes
+    // 📸 Selector múltiples imágenes (álbum)
     val albumLauncher = rememberLauncherForActivityResult(
         ActivityResultContracts.GetMultipleContents()
     ) { uris ->
         albumImages = uris
     }
 
-    //UI
+    // 🎨 UI
     Column(
         modifier = Modifier
             .fillMaxSize()
@@ -100,7 +100,7 @@ fun AddBandScreen(
 
         Spacer(modifier = Modifier.height(16.dp))
 
-        //Álbum
+        // 📸 Álbum
         Button(
             onClick = { albumLauncher.launch("image/*") },
             modifier = Modifier.fillMaxWidth()
@@ -123,7 +123,7 @@ fun AddBandScreen(
 
         Spacer(modifier = Modifier.height(16.dp))
 
-        //Formulario
+        // 📝 Formulario
         TextFieldAdd(
             name = name,
             description = description,
@@ -144,7 +144,7 @@ fun AddBandScreen(
 
         Spacer(modifier = Modifier.height(12.dp))
 
-        //Error
+        // ⚠️ Error
         error?.let {
             Text(
                 text = it,
@@ -154,7 +154,7 @@ fun AddBandScreen(
 
         Spacer(modifier = Modifier.height(20.dp))
 
-        //Botón registrar
+        // 🚀 Botón registrar
         Button(
             onClick = {
 
@@ -176,16 +176,12 @@ fun AddBandScreen(
                     headerLink = headerLink
                 )
 
-                //Entity (si lo usas)
                 val entity = bandDTO.toEntity()
 
-                //MainDTO (para pantalla principal)
-                val mainDTO = bandDTO.toMainDTO()
-
-                //enviar banda
+                // 📤 enviar a VM
                 onRegister(bandDTO)
 
-                // 🧹 limpiar formulario
+                // 🧹 limpiar
                 name = ""
                 description = ""
                 style = ""

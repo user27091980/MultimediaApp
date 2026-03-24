@@ -20,58 +20,33 @@ import kotlinx.coroutines.launch
  * Usa StateFlow para exponer los datos de manera reactiva a la UI.
  */
 class MainVM : ViewModel() {
-    // Repositorio que obtiene datos desde la API (Retrofit)
-    private val repo = MainRepo(RetrofitModule.mainApi)
 
-    // Estado interno mutable (solo el ViewModel lo puede modificar)s
+    private val repository = MainRepo(RetrofitModule.mainApi)
+
     private val _uiState = MutableStateFlow(MainUiState())
-    // Estado público inmutable (la UI solo puede observar)
-    val uiState: StateFlow<MainUiState> = _uiState.asStateFlow()
-    // URL base del backend (necesaria para completar rutas relativas de imágenes)
-    private val BASE_URL = "http://10.0.2.2:5131/" // base de tu servidor
-    // Se ejecuta al crear el ViewModel
+    val uiState = _uiState.asStateFlow()
+
     init {
         loadData()
     }
-    /**
-     * Carga los datos desde la API.
-     * Maneja:
-     * - loading
-     * - éxito
-     * - error
-     */
+
     fun loadData() {
-        // Lanza una corrutina (no bloquea la UI)
         viewModelScope.launch {
-            // Activa estado de carga y limpia errores previos
-            _uiState.update { it.copy(isLoading = true, error = null) }
-
             try {
-                // Llamada al repositorio para obtener bandas
-                val bands = repo.getBands()
+                _uiState.value = _uiState.value.copy(isLoading = true)
 
-                // Actualiza el estado con los datos obtenidos
-                _uiState.update {
-                    it.copy(
-                        mainBands = bands,
-                        isLoading = false,
-                        // Si la lista está vacía se muestra mensaje de error
-                        error = if (bands.isEmpty()) "No se encontraron bandas" else null
-                    )
-                }
-                // Log para debugging
-                Log.d("DEBUG_API", "Carga exitosa: ${bands.size} elementos")
+                val bands = repository.getBands()
+
+                _uiState.value = _uiState.value.copy(
+                    mainBands = bands,
+                    isLoading = false
+                )
 
             } catch (e: Exception) {
-                // Log de error detallado
-                Log.e("DEBUG_API", "Error en loadData: ${e.message}", e)
-                // Actualiza estado con error
-                _uiState.update {
-                    it.copy(
-                        isLoading = false,
-                        error = "Error de conexión: Verifica que el servidor esté activo"
-                    )
-                }
+                _uiState.value = _uiState.value.copy(
+                    isLoading = false,
+                    error = e.message
+                )
             }
         }
     }
