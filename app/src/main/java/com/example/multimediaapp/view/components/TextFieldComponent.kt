@@ -36,7 +36,6 @@ fun TextFieldsComponent(
     country: String,
     name: String,
     lastName: String,
-    onUserChange: (String) -> Unit,
     onEmailChange: (String) -> Unit,
     onPassChange: (String) -> Unit,
     onCountryChange: (String) -> Unit,
