@@ -28,6 +28,7 @@ class UserInfoVM(application: Application) : AndroidViewModel(application) {
 
     // Estado interno mutable
     private val _uiState = MutableStateFlow(UserInfoListUiState())
+
     // Exposición pública como solo lectura para la UI
     val uiState: StateFlow<UserInfoListUiState> = _uiState.asStateFlow()
 
@@ -54,7 +55,6 @@ class UserInfoVM(application: Application) : AndroidViewModel(application) {
                             val mapped = UserInfoUiState(
                                 id = it.id,
                                 email = it.email,
-
                                 name = it.name,
                                 lastName = it.lastName,
                                 country = it.country

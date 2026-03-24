@@ -70,19 +70,26 @@ fun BandEntity.toDTO(): BandDTO {
         albumLinks = albumLinks,
         headerLink = buildUrl(baseUrl, headerLink),
 
-    )
+        )
 }
 
 /**
  * Mapper inverso: DTO → Entity
  */
 fun BandDTO.toEntity(): BandEntity {
+    val baseUrl = "http://10.0.2.2:5131/"
     return BandEntity(
         id = id,
         name = name,
         description = description,
         banner = banner,
-        albumImages = albumImages,
+        albumImages = albumImages.map { image ->
+            if (image.startsWith("http")) {
+                image
+            } else {
+                baseUrl + "images/" + image.removePrefix("/")
+            }
+        },
         style = style,
         recordLabel = recordLabel,
         components = components,

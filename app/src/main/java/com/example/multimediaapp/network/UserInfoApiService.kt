@@ -16,21 +16,21 @@ import retrofit2.http.Path
 interface UserInfoApiService {
 
     // Obtener lista completa de usuarios
-    @GET("auth/userInfo") // Quitamos la barra final innecesaria
+    @GET("json/auth/userInfo") // Quitamos la barra final innecesaria
     suspend fun getUsersInfo(): Response<List<UsersInfoEntity>>
 
     // Obtener un usuario específico por ID
-    @GET("userInfo/{id}")
+    @GET("json/userInfo/{id}")
     suspend fun getUserInfoById(@Path("id") id: String): Response<UsersInfoEntity>
 
     // Registrar un nuevo usuario
-    @POST("userInfo/register")
+    @POST("json/userInfo/register")
     suspend fun registerUser(
         @Body user: UsersInfoDTO
     ): Response<UsersInfoEntity>
 
     // Actualizar un usuario existente por ID
-    @PUT("userInfo/{id}") // Unificamos el prefijo para que sea consistente
+    @PUT("json/userInfo/{id}") // Unificamos el prefijo para que sea consistente
     suspend fun updateUserInfo(
         @Path("id") id: String,
         @Body user: UsersInfoDTO

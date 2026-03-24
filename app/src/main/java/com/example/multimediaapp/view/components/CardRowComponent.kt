@@ -10,6 +10,7 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.unit.dp
 import com.example.multimediaapp.model.BandDTO
 import com.example.multimediaapp.ui.theme.cardColumnModifier
 
@@ -34,11 +35,12 @@ fun CardRowComponent(
         ) {
             // Tarjeta principal con la información de la banda
             Card(
-                cardColumnModifier.background(MaterialTheme.colorScheme.background)// Modifier personalizado desde el tema, puede incluir padding, shape, elevation
+                cardColumnModifier.background(MaterialTheme.colorScheme.surface),
+                // Modifier personalizado desde el tema, puede incluir padding, shape, elevation
+
             ) {
 // Texto dentro de la tarjeta que muestra la descripción de la banda
                 Text(text = band.description) // Extrae el texto descriptivo de BandUiState
-
             }
         }
     }
