@@ -30,7 +30,7 @@ import androidx.compose.ui.text.input.VisualTransformation
  */
 @Composable
 fun TextFieldsComponent(
-    user: String,
+
     email: String,
     pass: String,
     country: String,
@@ -46,56 +46,32 @@ fun TextFieldsComponent(
 ) {
     // Columna que organiza los campos verticalmente
     Column {
-        TextFieldUserComponent(
-            user = user,
-            onUserChange = onUserChange
+        TextFieldEmailComponent(
+            email = email,
+            onEmailChange = onEmailChange
         )
         TextFieldPassComponent(
             pass = pass,
             onPassChange = onPassChange
         )
-        TextFieldEmailComponent(
-            email = email,
-            onEmailChange = onEmailChange
-        )
+
         TextFieldCountryComponent(
-            country=country,
-            onCountryChange=onCountryChange
+            country = country,
+            onCountryChange = onCountryChange
         )
         TextFieldNameComponent(
-            name=name,
+            name = name,
             onNameChange = onNameChange
         )
         TextFieldLastNameComponent(
-            lastName=lastName,
+            lastName = lastName,
             onLastNameChange = onLastNameChange
         )
 
     }
 }
 
-/**
- * Campo de texto para introducir el nombre de usuario.
- *
- * @param user texto actual del campo
- * @param onUserChange callback que se ejecuta al modificar el texto
- */
-@Composable
-fun TextFieldUserComponent(user: String, onUserChange: (String) -> Unit) {
-    OutlinedTextField(
-        value = user,
-        onValueChange = onUserChange,
-        singleLine = true,
-        label = { Text("Usuario", color = Color.White) },
-        colors = androidx.compose.material3.OutlinedTextFieldDefaults.colors(
-            focusedTextColor = Color.White,
-            unfocusedTextColor = Color.White,
-            cursorColor = Color.White
-        )
 
-
-        )
-}
 /**
  * Campo de texto para introducir el correo electrónico.
  *
@@ -173,7 +149,6 @@ fun TextFieldPassComponent(pass: String, onPassChange: (String) -> Unit) {
 }
 
 
-
 @Composable
 fun TextFieldNameComponent(name: String, onNameChange: (String) -> Unit) {
     OutlinedTextField(
@@ -204,6 +179,7 @@ fun TextFieldLastNameComponent(lastName: String, onLastNameChange: (String) -> U
         )
     )
 }
+
 @Composable
 fun TextFieldCountryComponent(country: String, onCountryChange: (String) -> Unit) {
     OutlinedTextField(
