@@ -8,6 +8,7 @@ import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
+import androidx.compose.material.MaterialTheme
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -19,6 +20,7 @@ import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavController
 import androidx.navigation.compose.rememberNavController
 import com.example.multimediaapp.navigation.ObjRoutes
+import com.example.multimediaapp.ui.theme.boxModifier
 import com.example.multimediaapp.viewmodel.vm.LoginRegVM
 
 /**
@@ -35,12 +37,10 @@ fun LoginRegScreen(
     // Caja principal que ocupa toda la pantalla
     // Se aplica un fondo degradado de oscuro a negro
     Box(
-        modifier = Modifier
+        modifier = boxModifier
             .fillMaxSize()
             .background(
-                Brush.verticalGradient(
-                    colors = listOf(Color.DarkGray, Color.Black) // verde Spotify → negro
-                )
+                androidx.compose.material3.MaterialTheme.colorScheme.background
             ),
         contentAlignment = Alignment.Center
     ) {

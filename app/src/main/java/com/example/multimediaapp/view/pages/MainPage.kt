@@ -52,11 +52,10 @@ fun MainScreen(navController: NavController, viewModel: MainVM = viewModel()) {
     Box es un contenedor que permite superponer elementos.
     En este caso lo usamos simplemente como layout base.
     */
-
     Box(
         modifier = Modifier
-            .background(MaterialTheme.colorScheme.background)
             .fillMaxSize()
+            .background(MaterialTheme.colorScheme.secondary)
 
     ) {
         /*

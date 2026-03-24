@@ -14,10 +14,11 @@ import androidx.compose.ui.unit.dp
 //value para el estilo de texto
 
 val bandColumnModifier = Modifier
-    .padding(16.dp)//internal padding
+    .padding(8.dp)//internal padding
 val cardColumnModifier = Modifier
     .fillMaxWidth()
-    .padding(10.dp)
+    .padding(5.dp)
+
 //internal padding
 
 val boxModifier = Modifier
@@ -33,4 +34,5 @@ val rowModifier = Modifier
 val cardModifier = Modifier
     .size(width = 300.dp, height = 100.dp)
     .padding(15.dp)
+
 

@@ -58,13 +58,13 @@ fun BandTags(band: BandDTO) {
 @Composable
 fun TagItem(tag: String) {
     Surface(
-        shape = RoundedCornerShape(50),
-        color = MaterialTheme.colorScheme.surface,
+        shape = RoundedCornerShape(70),
+        color = MaterialTheme.colorScheme.primary,
         tonalElevation = 40.dp
     ) {
         Text(
             text = tag,
-            modifier = Modifier.padding(horizontal = 14.dp, vertical = 6.dp),
+            modifier = Modifier.padding(horizontal = 10.dp, vertical = 5.dp),
         )
     }
 }

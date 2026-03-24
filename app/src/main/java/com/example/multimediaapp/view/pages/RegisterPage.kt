@@ -7,6 +7,7 @@ import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
@@ -48,11 +49,11 @@ fun RegisterScreen(
         modifier = boxModifier
             .fillMaxSize()
             .background(
-                Brush.verticalGradient(
-                    colors = listOf(Color.DarkGray, Color.Black) // verde Spotify → negro
-                )
+
+                MaterialTheme.colorScheme.background
             ),
         contentAlignment = Alignment.Center
+
     ) {
         // Columna principal que contiene los campos de texto y botones
         Column(

@@ -8,6 +8,7 @@ import androidx.compose.material.icons.filled.Visibility
 import androidx.compose.material.icons.filled.VisibilityOff
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -68,11 +69,11 @@ fun TextFieldLoginPassComponent(pass: String, onPassChange: (String) -> Unit) {
         value = pass,
         onValueChange = onPassChange,
         singleLine = true,
-        label = { Text("Password", color = Color.White) },
+        label = { Text("Password", color = MaterialTheme.colorScheme.secondary) },
         colors = androidx.compose.material3.OutlinedTextFieldDefaults.colors(
-            focusedTextColor = Color.White,
-            unfocusedTextColor = Color.White,
-            cursorColor = Color.White
+            focusedTextColor = MaterialTheme.colorScheme.secondary,
+            unfocusedTextColor = MaterialTheme.colorScheme.secondary,
+            cursorColor = MaterialTheme.colorScheme.secondary
         ),
         visualTransformation = if (passwordVisible) VisualTransformation.None
         else PasswordVisualTransformation(),
@@ -108,13 +109,13 @@ fun TextFieldLoginEmailComponent(email: String, onEmailChange: (String) -> Unit)
         onValueChange = onEmailChange,
         singleLine = true,
         label = {
-            Text("Email", color = Color.White)
+            Text("Email", color = MaterialTheme.colorScheme.secondary)
 
         },
         colors = androidx.compose.material3.OutlinedTextFieldDefaults.colors(
-            focusedTextColor = Color.White,
-            unfocusedTextColor = Color.White,
-            cursorColor = Color.White
+            focusedTextColor = MaterialTheme.colorScheme.secondary,
+            unfocusedTextColor = MaterialTheme.colorScheme.secondary,
+            cursorColor = MaterialTheme.colorScheme.secondary
         ),
         // Muestra teclado optimizado para escribir correos
         keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Email),

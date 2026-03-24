@@ -49,7 +49,6 @@ fun BandHeader(band: BandDTO) {
                 .height(headerHeight * 0.9f)
                 .clickable {
                     if (band.headerLink.isNotEmpty()) {
-
                         val intent = Intent(Intent.ACTION_VIEW, band.headerLink.toUri())
                         context.startActivity(intent)
                     }

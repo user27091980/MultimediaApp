@@ -23,6 +23,6 @@ package com.example.multimediaapp.viewmodel.uistate
  * }
  */
 data class DialogUiState(
-    val isVisible: Boolean = false,
+    val isVisible: Boolean = true,
     val isConfirmed: Boolean = false
 )

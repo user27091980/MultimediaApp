@@ -5,7 +5,10 @@ import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.FlowRow
 import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Card
+import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -21,26 +24,29 @@ import com.example.multimediaapp.ui.theme.cardColumnModifier
  * @param band Objeto BandUiState con toda la información de la banda
  */
 @Composable
+
 fun CardRowComponent(
     band: BandDTO
 ) {
-
-    //Columna que organiza las cards verticalmente
-    Box {
-        // FlowRow organiza los elementos horizontalmente y envuelve automáticamente si no caben
+    Box(
+        modifier = Modifier.background(MaterialTheme.colorScheme.background)
+    ) {
         FlowRow(
             modifier = Modifier
-                .fillMaxWidth() //ocupa todo el ancho disponible
-                .fillMaxHeight()// Ocupa toda la altura disponible
+                .fillMaxWidth()
+                .fillMaxHeight()
         ) {
-            // Tarjeta principal con la información de la banda
             Card(
-                cardColumnModifier.background(MaterialTheme.colorScheme.surface),
-                // Modifier personalizado desde el tema, puede incluir padding, shape, elevation
-
+                modifier = cardColumnModifier,
+                shape = RoundedCornerShape(10),//no más de 50
+                colors = CardDefaults.cardColors(
+                    containerColor = MaterialTheme.colorScheme.primary
+                )
             ) {
-// Texto dentro de la tarjeta que muestra la descripción de la banda
-                Text(text = band.description) // Extrae el texto descriptivo de BandUiState
+                Text(
+                    text = band.description,
+                    modifier = Modifier.padding(16.dp)
+                )
             }
         }
     }

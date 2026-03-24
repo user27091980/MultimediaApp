@@ -11,6 +11,7 @@ import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
+
 /**
  * RegisterVM:
  * ViewModel encargado de la pantalla de registro.
@@ -31,7 +32,6 @@ class RegisterVM(application: Application) : AndroidViewModel(application) {
         RegisterFormUiState(
             errorMessage = null,
             lastName = "",
-            user = "",
             email = "",
             pass = "",
             name = "",
@@ -42,10 +42,6 @@ class RegisterVM(application: Application) : AndroidViewModel(application) {
 
     // Exposición solo lectura del estado
     val uiState: StateFlow<RegisterFormUiState> = _uiState.asStateFlow()
-
-    // --- ACTUALIZACIÓN DE CAMPOS ---
-    fun onUserChange(newUser: String) =
-        _uiState.update { it.copy(user = newUser, errorMessage = null) }
 
     fun onEmailChange(newEmail: String) =
         _uiState.update { it.copy(email = newEmail, errorMessage = null) }
@@ -71,7 +67,7 @@ class RegisterVM(application: Application) : AndroidViewModel(application) {
     fun validateFields(onSuccess: () -> Unit) {
         val state = _uiState.value
         val error = when {
-            state.user.isBlank() -> "El usuario es obligatorio"
+
             !Patterns.EMAIL_ADDRESS.matcher(state.email).matches() -> "Email inválido"
             state.pass.length < 4 -> "La contraseña debe tener al menos 4 caracteres"
             state.name.isBlank() || state.lastName.isBlank() -> "Nombre y apellido son obligatorios"
@@ -85,7 +81,6 @@ class RegisterVM(application: Application) : AndroidViewModel(application) {
             registerUser(
                 email = state.email,
                 pass = state.pass,
-                user = state.user,
                 name = state.name,
                 lastName = state.lastName,
                 country = state.country,
@@ -102,7 +97,7 @@ class RegisterVM(application: Application) : AndroidViewModel(application) {
     private fun registerUser(
         email: String,
         pass: String,
-        user: String,
+
         name: String,
         lastName: String,
         country: String,

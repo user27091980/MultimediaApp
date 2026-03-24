@@ -8,6 +8,7 @@ import androidx.compose.material.icons.filled.Visibility
 import androidx.compose.material.icons.filled.VisibilityOff
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -90,12 +91,12 @@ fun TextFieldEmailComponent(email: String, onEmailChange: (String) -> Unit) {
         onValueChange = onEmailChange,
         singleLine = true,
         label = {
-            Text("Email", color = Color.White)
+            Text("Email", color = MaterialTheme.colorScheme.secondary)
         },
         colors = androidx.compose.material3.OutlinedTextFieldDefaults.colors(
-            focusedTextColor = Color.White,
-            unfocusedTextColor = Color.White,
-            cursorColor = Color.White
+            focusedTextColor = MaterialTheme.colorScheme.secondary,
+            unfocusedTextColor = MaterialTheme.colorScheme.secondary,
+            cursorColor = MaterialTheme.colorScheme.secondary
         ),
         // Muestra teclado optimizado para escribir correos
         keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Email),
@@ -126,11 +127,11 @@ fun TextFieldPassComponent(pass: String, onPassChange: (String) -> Unit) {
         value = pass,
         onValueChange = onPassChange,
         singleLine = true,
-        label = { Text("Password", color = Color.White) },
+        label = { Text("Password", color = MaterialTheme.colorScheme.secondary) },
         colors = androidx.compose.material3.OutlinedTextFieldDefaults.colors(
-            focusedTextColor = Color.White,
-            unfocusedTextColor = Color.White,
-            cursorColor = Color.White
+            focusedTextColor = MaterialTheme.colorScheme.secondary,
+            unfocusedTextColor = MaterialTheme.colorScheme.secondary,
+            cursorColor = MaterialTheme.colorScheme.secondary
         ),
         visualTransformation = if (passwordVisible) VisualTransformation.None
         else PasswordVisualTransformation(),
@@ -154,11 +155,11 @@ fun TextFieldNameComponent(name: String, onNameChange: (String) -> Unit) {
         value = name,
         onValueChange = onNameChange,
         singleLine = true,
-        label = { Text("Nombre", color = Color.White) },
+        label = { Text("Nombre", color=MaterialTheme.colorScheme.secondary) },
         colors = androidx.compose.material3.OutlinedTextFieldDefaults.colors(
-            focusedTextColor = Color.White,
-            unfocusedTextColor = Color.White,
-            cursorColor = Color.White
+            focusedTextColor = MaterialTheme.colorScheme.secondary,
+            unfocusedTextColor = MaterialTheme.colorScheme.secondary,
+            cursorColor = MaterialTheme.colorScheme.secondary
         )
     )
 }
@@ -170,11 +171,11 @@ fun TextFieldLastNameComponent(lastName: String, onLastNameChange: (String) -> U
         value = lastName,
         onValueChange = onLastNameChange,
         singleLine = true,
-        label = { Text("Apellido", color = Color.White) },
+        label = { Text("Apellido", color = MaterialTheme.colorScheme.secondary) },
         colors = androidx.compose.material3.OutlinedTextFieldDefaults.colors(
-            focusedTextColor = Color.White,
-            unfocusedTextColor = Color.White,
-            cursorColor = Color.White
+            focusedTextColor = MaterialTheme.colorScheme.secondary,
+            unfocusedTextColor = MaterialTheme.colorScheme.secondary,
+            cursorColor = MaterialTheme.colorScheme.secondary
         )
     )
 }
@@ -185,11 +186,11 @@ fun TextFieldCountryComponent(country: String, onCountryChange: (String) -> Unit
         value = country,
         onValueChange = onCountryChange,
         singleLine = true,
-        label = { Text("País", color = Color.White) },
+        label = { Text("País", color = MaterialTheme.colorScheme.secondary) },
         colors = androidx.compose.material3.OutlinedTextFieldDefaults.colors(
-            focusedTextColor = Color.White,
-            unfocusedTextColor = Color.White,
-            cursorColor = Color.White
+            focusedTextColor = MaterialTheme.colorScheme.secondary,
+            unfocusedTextColor = MaterialTheme.colorScheme.secondary,
+            cursorColor = MaterialTheme.colorScheme.secondary
         )
 
     )
