@@ -28,102 +28,41 @@ import coil.compose.AsyncImage
 import com.example.multimediaapp.R
 import com.example.multimediaapp.data.entity.toEntity
 import com.example.multimediaapp.model.BandDTO
+import com.example.multimediaapp.view.components.ButtonGallery
+import com.example.multimediaapp.view.components.ButtonImage
 import com.example.multimediaapp.view.components.TextFieldAdd
 import java.util.UUID
 
 /**
- * Pantalla de registro de una nueva banda.
+ * Pantalla para registrar una banda.
  *
- * Esta pantalla permite al usuario introducir toda la información necesaria para crear una banda,
- * incluyendo:
- * - Datos básicos (nombre, descripción, estilo, discográfica)
- * - Componentes del grupo
- * - Enlaces de álbum y cabecera
- * - Imágenes (banner, imagen de la banda y galería de álbum)
- *
- * Al completar el formulario y pulsar el botón de registro,
- * se construye un objeto [BandDTO] con todos los datos introducidos
- * y se envía mediante el callback [onRegister].
- *
- * @param onRegister Callback que se ejecuta al registrar la banda.
- * Recibe un objeto [BandDTO] con todos los datos introducidos por el usuario.
+ * @param onRegister función que recibe el objeto BandDTO con los datos introducidos.
  */
 @Composable
 fun AddBandScreen(
     onRegister: (BandDTO) -> Unit
 ) {
 
-    // =========================
-    // Estados del formulario
-    // =========================
-
-    /** Nombre de la banda */
+    // Estado del formulario
     var name by remember { mutableStateOf("") }
-
-    /** Descripción de la banda */
     var description by remember { mutableStateOf("") }
-
-    /** Estilo musical */
     var style by remember { mutableStateOf("") }
-
-    /** Discográfica */
     var recordLabel by remember { mutableStateOf("") }
-
-    /** Componentes de la banda */
     var components by remember { mutableStateOf("") }
-
-    /** Enlaces de álbum */
     var albumLinks by remember { mutableStateOf(listOf<String>()) }
-
-    /** Enlace principal */
     var headerLink by remember { mutableStateOf("") }
 
-    // =========================
-    // Estados de imágenes
-    // =========================
-
-    /** Imagen principal (banner) */
+    // Estado de imágenes
     var bannerImage by remember { mutableStateOf<Uri?>(null) }
-
-    /** Imagen de la banda */
     var imageBand by remember { mutableStateOf<Uri?>(null) }
-
-    /** Galería de imágenes del álbum */
     var albumImages by remember { mutableStateOf<List<Uri>>(emptyList()) }
 
-    // =========================
     // Estado de error
-    // =========================
-
-    /** Mensaje de error de validación */
     var error by remember { mutableStateOf<String?>(null) }
 
-    // =========================
-    // Launchers de imágenes
-    // =========================
-
-    val bannerLauncher = rememberLauncherForActivityResult(
-        ActivityResultContracts.GetContent()
-    ) { uri ->
-        bannerImage = uri
-    }
-
-    val bandImageLauncher = rememberLauncherForActivityResult(
-        ActivityResultContracts.GetContent()
-    ) { uri ->
-        imageBand = uri
-    }
-
-    val albumLauncher = rememberLauncherForActivityResult(
-        ActivityResultContracts.GetMultipleContents()
-    ) { uris ->
-        albumImages = uris
-    }
-
-    // =========================
-    // UI
-    // =========================
-
+    /**
+     * Layout principal de la pantalla.
+     */
     Column(
         modifier = Modifier
             .fillMaxSize()
@@ -159,7 +98,7 @@ fun AddBandScreen(
             Spacer(modifier = Modifier.height(10.dp))
             AsyncImage(
                 model = it,
-                contentDescription = "Imagen de la banda",
+                contentDescription = "Imagen banda",
                 modifier = Modifier
                     .fillMaxWidth()
                     .height(150.dp)
@@ -186,7 +125,7 @@ fun AddBandScreen(
         albumImages.forEach { uri ->
             AsyncImage(
                 model = uri,
-                contentDescription = "Imagen del álbum",
+                contentDescription = "Imagen álbum",
                 modifier = Modifier
                     .fillMaxWidth()
                     .height(150.dp)
@@ -233,9 +172,9 @@ fun AddBandScreen(
         /**
          * Botón de registro.
          *
-         * Valida los campos obligatorios y crea un objeto [BandDTO].
+         * Valida campos obligatorios y crea un objeto BandDTO.
          */
-        Button(
+        androidx.compose.material3.Button(
             onClick = {
 
                 if (name.isBlank() || description.isBlank()) {
@@ -258,7 +197,7 @@ fun AddBandScreen(
 
                 onRegister(bandDTO)
 
-                // Reset del formulario
+                // Reset de estado
                 name = ""
                 description = ""
                 style = ""
@@ -273,16 +212,51 @@ fun AddBandScreen(
             },
             modifier = Modifier.fillMaxWidth()
         ) {
-            Text("Registrar Banda")
+            Text(stringResource(R.string.registro))
         }
     }
 }
 
 /**
- * Vista previa de la pantalla en Android Studio.
+ * Preview de la pantalla.
  */
 @Preview(showBackground = true, showSystemUi = true)
 @Composable
 fun AddBandScreenPreview() {
-    AddBandScreen(onRegister = {})
+    AddBandScreen(
+        onRegister = {}
+    )
 }
+
+/*
+ * Esta pantalla permite registrar una nueva banda introduciendo sus datos principales.
+ *
+ * El usuario puede completar un formulario con información como:
+ * - Nombre de la banda
+ * - Descripción
+ * - Estilo musical
+ * - Discográfica
+ * - Componentes del grupo
+ * - Enlaces de álbum y enlace principal
+ *
+ * Además, la pantalla permite seleccionar diferentes imágenes:
+ * - Una imagen de banner (portada)
+ * - Una imagen representativa de la banda
+ * - Varias imágenes del álbum
+ *
+ * Todas las imágenes seleccionadas se almacenan como Uri en estado local
+ * y se muestran como vista previa en la pantalla.
+ *
+ * El formulario está controlado mediante estados de Compose (remember + mutableStateOf),
+ * lo que permite actualizar la UI automáticamente al cambiar los valores.
+ *
+ * Cuando el usuario pulsa el botón de registro:
+ * - Se valida que los campos obligatorios estén completos (nombre y descripción).
+ * - Se crea un objeto BandDTO con toda la información introducida.
+ * - Se envía este objeto mediante el callback onRegister.
+ *
+ * Finalmente, se limpian todos los campos del formulario y los estados,
+ * dejando la pantalla lista para un nuevo registro.
+ *
+ * En caso de error de validación, se muestra un mensaje en pantalla.
+ */

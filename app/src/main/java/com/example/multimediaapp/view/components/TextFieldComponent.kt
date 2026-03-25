@@ -226,16 +226,94 @@ fun TextFieldCountryComponent(country: String, onCountryChange: (String) -> Unit
     )
 }
 /*
-remember { mutableStateOf("") } nos guarda el estado local de cada TextField, Compose lo recuerda entre recomposiciones.
-
-TextField campo de texto editable con propiedades para controlar estilo, teclado, visualización de texto, etc.
-
-VisualTransformation  transforma cómo se muestra el texto; útil para ocultar contraseñas.
-
-trailingIcon permite colocar un icono dentro del TextField.
-
-IconButton + Icon es el botón interactivo dentro del TextField que alterna visibilidad.
-
-stringResource nos permite usar strings desde res/values/strings.xml, útil para internacionalización.
-
+ * Este archivo define un conjunto de campos de texto reutilizables en Jetpack Compose
+ * para formularios de autenticación como login o registro de usuario.
+ *
+ * COMPONENTE PRINCIPAL:
+ *
+ * TextFieldsComponent(...)
+ *
+ * - Agrupa varios campos de entrada:
+ *   - Email
+ *   - Contraseña
+ *   - País
+ *   - Nombre
+ *   - Apellido
+ *
+ * - Recibe los valores actuales (estado) y callbacks para actualizar cada campo.
+ * - Sigue el patrón de "state hoisting":
+ *   - El estado vive fuera del composable (normalmente en un ViewModel).
+ *   - Este componente solo muestra la UI.
+ *
+ * ESTRUCTURA:
+ *
+ * Column:
+ * - Organiza los campos de forma vertical.
+ *
+ * CAMPOS INDIVIDUALES:
+ *
+ * TextFieldEmailComponent:
+ * - Campo para email.
+ * - Usa KeyboardType.Email para facilitar la escritura.
+ * - Valida el formato del email usando Patterns.EMAIL_ADDRESS.
+ * - Muestra un mensaje de error si el email no es válido.
+ *
+ * TextFieldPassComponent:
+ * - Campo para contraseña.
+ * - Permite mostrar u ocultar el texto mediante un icono.
+ * - Usa VisualTransformation:
+ *   - PasswordVisualTransformation() oculta el texto.
+ *   - VisualTransformation.None lo muestra.
+ * - Incluye un IconButton para alternar la visibilidad.
+ *
+ * TextFieldNameComponent:
+ * - Campo para el nombre del usuario.
+ *
+ * TextFieldLastNameComponent:
+ * - Campo para el apellido del usuario.
+ *
+ * TextFieldCountryComponent:
+ * - Campo para el país del usuario.
+ *
+ * ESTADO LOCAL:
+ *
+ * remember { mutableStateOf(false) }
+ * - Se utiliza para mantener el estado de visibilidad de la contraseña.
+ * - El estado se conserva durante recomposiciones.
+ *
+ * COMPONENTES DE UI:
+ *
+ * OutlinedTextField:
+ * - Campo de texto con borde.
+ * - Muy utilizado en Material Design.
+ *
+ * Icon + IconButton:
+ * - Permiten añadir interacción dentro del campo de texto.
+ * - Se usan para mostrar/ocultar la contraseña.
+ *
+ * KeyboardOptions:
+ * - Permite definir el tipo de teclado:
+ *   - Email
+ *   - Password
+ *
+ * VisualTransformation:
+ * - Controla cómo se muestra el texto (visible u oculto).
+ *
+ * VALIDACIÓN:
+ *
+ * - Email:
+ *   - Se valida en tiempo real.
+ *   - Se muestra mensaje si no es válido.
+ *
+ * BENEFICIOS:
+ *
+ * - Código modular y reutilizable.
+ * - UI consistente.
+ * - Separación de lógica y presentación.
+ * - Fácil de mantener y extender.
+ *
+ * IMPORTANTE:
+ *
+ * - Este componente NO gestiona el estado global.
+ * - El estado debe manejarse en un ViewModel.
  */

@@ -149,19 +149,101 @@ fun TopBar(navController: NavHostController) {
 }
 
 /*
-remember { mutableStateOf(false) } mantiene el estado abierto/cerrado del menú entre recomposiciones.
-
-LocalContext.current  obtiene el contexto de Compose, necesario para abrir enlaces web o interactuar con la Activity.
-
-Row organiza los iconos de manera horizontal.
-
-IconButton + Icon botones interactivos con iconos, aquí para menú y ajustes.
-
-DropdownMenu menú desplegable que se muestra sobre otros elementos.
-
-DropdownMenuItem cada opción del menú; puede ejecutar acciones como abrir URL o cerrar app.
-
-finishAffinity() cierra todas las actividades y termina la app de manera segura.
-
-stringResource() obtiene texto desde strings.xml para internacionalización.
+ * Este archivo define la barra superior de la aplicación (TopBar)
+ * utilizando Jetpack Compose.
+ *
+ * COMPONENTE PRINCIPAL:
+ *
+ * TopBar(navController)
+ *
+ * - Proporciona acceso a navegación y acciones rápidas.
+ * - Incluye un menú desplegable con varias opciones.
+ *
+ * ELEMENTOS PRINCIPALES:
+ *
+ * 1. Icono de menú (Menu)
+ *    - Abre un DropdownMenu con opciones adicionales.
+ *
+ * 2. Icono de configuración (Settings)
+ *    - Navega a la pantalla de ajustes usando NavController.
+ *
+ * 3. DropdownMenu
+ *    - Se muestra al pulsar el icono de menú.
+ *    - Contiene varias acciones:
+ *
+ *      a) Abrir página web de Last.fm
+ *         - Usa Intent.ACTION_VIEW para abrir navegador.
+ *
+ *      b) Abrir página web de Discogs
+ *         - También usa Intent para abrir un enlace externo.
+ *
+ *      c) Añadir banda
+ *         - Navega a la pantalla de añadir banda (ADDBAND).
+ *         - También ejecuta logout (cierra sesión actual).
+ *
+ *      d) Logout
+ *         - Elimina la sesión del usuario mediante SessionManager.
+ *         - Redirige al login.
+ *
+ *      e) Salir de la aplicación
+ *         - Usa activity?.finishAffinity() para cerrar la app completamente.
+ *
+ * ESTADO:
+ *
+ * isExpanded:
+ * - Controla si el menú está visible o no.
+ * - Se gestiona con remember { mutableStateOf(false) }.
+ *
+ * CONTEXTO:
+ *
+ * LocalContext.current:
+ * - Permite acceder al contexto Android.
+ * - Necesario para:
+ *   - Abrir URLs
+ *   - Obtener Activity
+ *
+ * Activity:
+ * - Se usa para cerrar la aplicación.
+ *
+ * NAVEGACIÓN:
+ *
+ * NavHostController:
+ * - Permite cambiar de pantalla dentro de la app.
+ * - Se usa para:
+ *   - SETTINGS
+ *   - ADDBAND
+ *   - LOGIN
+ *
+ * UI:
+ *
+ * Row:
+ * - Organiza los elementos horizontalmente.
+ *
+ * IconButton + Icon:
+ * - Botones con iconos (menú y configuración).
+ *
+ * DropdownMenu + DropdownMenuItem:
+ * - Menú flotante con opciones seleccionables.
+ *
+ * INTERNACIONALIZACIÓN:
+ *
+ * stringResource(R.string.*):
+ * - Permite usar textos desde resources.
+ * - Facilita soporte multi-idioma.
+ *
+ * MANEJO DE ERRORES:
+ *
+ * - Los intents están dentro de try-catch para evitar crashes.
+ *
+ * BUENAS PRÁCTICAS:
+ *
+ * - Separación de lógica y UI.
+ * - Uso de Navigation Component.
+ * - Uso de estado reactivo con Compose.
+ * - Reutilización de componentes.
+ *
+ * NOTA:
+ *
+ * - Este componente actúa como punto central de interacción del usuario.
+ * - Controla navegación, sesión y acceso a funciones clave.
  */
