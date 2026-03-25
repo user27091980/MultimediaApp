@@ -21,9 +21,11 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import coil.compose.AsyncImage
+import com.example.multimediaapp.R
 import com.example.multimediaapp.data.entity.toEntity
 import com.example.multimediaapp.model.BandDTO
 import com.example.multimediaapp.view.components.TextFieldAdd
@@ -104,31 +106,13 @@ fun AddBandScreen(
 
         //Título de la pantalla
         Text(
-            text = "Registro de Banda",
+            text = stringResource(R.string.bandRegister),
             style = MaterialTheme.typography.headlineMedium
         )
 
         Spacer(modifier = Modifier.height(16.dp))
 
-        //BOTÓN PARA SELECCIONAR BANNER
-        Button(
-            onClick = { bannerLauncher.launch("image/*") },
-            modifier = Modifier.fillMaxWidth()
-        ) {
-            Text("Seleccionar banner (portada)")
-        }
 
-        //Vista previa del banner
-        bannerImage?.let {
-            Spacer(modifier = Modifier.height(10.dp))
-            AsyncImage(
-                model = it,
-                contentDescription = "Banner de la banda",
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .height(180.dp)
-            )
-        }
 
         Spacer(modifier = Modifier.height(16.dp))
 
@@ -137,7 +121,7 @@ fun AddBandScreen(
             onClick = { bandImageLauncher.launch("image/*") },
             modifier = Modifier.fillMaxWidth()
         ) {
-            Text("Seleccionar imagen de la banda")
+            Text(stringResource(R.string.selBand))
         }
 
         //Vista previa imagen de la banda
@@ -159,7 +143,7 @@ fun AddBandScreen(
             onClick = { albumLauncher.launch("image/*") },
             modifier = Modifier.fillMaxWidth()
         ) {
-            Text("Añadir imágenes del álbum")
+            Text(stringResource(R.string.selAlbum))
         }
 
         Spacer(modifier = Modifier.height(10.dp))

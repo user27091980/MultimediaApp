@@ -1,7 +1,10 @@
 package com.example.multimediaapp.view.components
 
+import android.R.attr.description
+import android.R.attr.name
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.FilledTonalButton
 import androidx.compose.material3.MaterialTheme
@@ -9,6 +12,8 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
+import com.example.multimediaapp.model.BandDTO
+import java.util.UUID
 
 /**
  * Composable base para todos los botones de la aplicación.
@@ -122,6 +127,8 @@ fun ButtonRegister(
         modifier = modifier
     )
 }
+
+
 
 /*
 BaseButton: botón genérico reutilizable con estilo consistente (colores, bordes, ancho completo).
