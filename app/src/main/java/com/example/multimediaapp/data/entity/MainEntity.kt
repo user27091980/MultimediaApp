@@ -1,4 +1,5 @@
 package com.example.multimediaapp.data.entity
+import com.example.multimediaapp.model.BandDTO
 import com.example.multimediaapp.model.MainDTO
 import com.google.gson.annotations.SerializedName
 
@@ -45,3 +46,11 @@ fun MainDTO.toEntity(): MainEntity = MainEntity(
     bandName = bandName,
     imageBand = imageBand
 )
+
+fun BandDTO.toMainDTO(): MainDTO {
+    return MainDTO(
+        id = id,
+        bandName = name,
+        imageBand = banner // 👈 aquí decides qué imagen usar
+    )
+}

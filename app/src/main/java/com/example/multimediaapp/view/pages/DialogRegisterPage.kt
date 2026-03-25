@@ -46,7 +46,7 @@ fun DialogRegisterScreen(
             TextButton(onClick = {
                 vm.showDialog()
                 // Navega a la pantalla de login
-                navController.navigate(ObjRoutes.LOGIN)
+                navController.navigate(ObjRoutes.INFOUSER)
             }) {
 
                 Text(stringResource(R.string.si))
@@ -63,9 +63,7 @@ fun DialogRegisterScreen(
             }) {
                 Text(stringResource(R.string.no))
             }
-        }
-
-    )
+        })
 }
 
 /**
@@ -78,7 +76,6 @@ fun DialogPrev() {
 
     DialogRegisterScreen(
         navController = rememberNavController(),
-
         )
 }
 /**NOTAS:

@@ -23,6 +23,7 @@ class LoginRegVM : ViewModel() {
      * Se utiliza MutableSharedFlow porque los eventos son de un solo uso.
      */
     private val _events = MutableSharedFlow<LoginRegEvent>()
+
     /**
      * SharedFlow público inmutable que la UI puede observar.
      * Compose puede recogerlo usando `collectAsState` o `LaunchedEffect`.
@@ -39,6 +40,7 @@ class LoginRegVM : ViewModel() {
             _events.emit(LoginRegEvent.NavigateToLogin)
         }
     }
+
     /**
      * Llamada cuando el usuario pulsa el botón de "Register".
      * Emite el evento NavigateToRegister en el SharedFlow.
@@ -51,13 +53,13 @@ class LoginRegVM : ViewModel() {
 }
 
 /**
-* Sealed class que representa los eventos de navegación de la pantalla Login/Registro.
-*
-* - NavigateToLogin: Navegar a la pantalla de login.
-* - NavigateToRegister: Navegar a la pantalla de registro.
-*
-* Al ser sealed, permite un manejo seguro y tipado de eventos en la UI.
-*/
+ * Sealed class que representa los eventos de navegación de la pantalla Login/Registro.
+ *
+ * - NavigateToLogin: Navegar a la pantalla de login.
+ * - NavigateToRegister: Navegar a la pantalla de registro.
+ *
+ * Al ser sealed, permite un manejo seguro y tipado de eventos en la UI.
+ */
 sealed class LoginRegEvent {
     object NavigateToLogin : LoginRegEvent()
     object NavigateToRegister : LoginRegEvent()

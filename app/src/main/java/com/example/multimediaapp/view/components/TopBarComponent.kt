@@ -34,7 +34,7 @@ import com.example.multimediaapp.session.SessionManager
  * Incluye:
  * - Icono de menú para desplegar opciones
  * - Icono de ajustes para navegar a la pantalla de configuración
- * - Menú desplegable con enlaces externos y opción de cerrar la app
+ * - Menú desplegable con enlaces externos,añadir banda, logout y opción de cerrar la app
  *
  * @param navController Controlador de navegación de Compose
  */
@@ -108,6 +108,18 @@ fun TopBar(navController: NavHostController) {
                         )
                     } catch (e: Exception) {
                         e.printStackTrace()
+                    }
+                }
+            )
+            //añadir  banda
+            DropdownMenuItem(
+                text = { Text(text = stringResource(R.string.add)) },
+                onClick = {
+                    isExpanded = false
+                    sessionManager.logout()
+
+                    navController.navigate(ObjRoutes.ADDBAND) {
+                        popUpTo(0)
                     }
                 }
             )

@@ -23,72 +23,90 @@ import com.example.multimediaapp.view.components.TopBar
 import com.example.multimediaapp.viewmodel.vm.SettingsVM
 
 /**
- * MainActivity: Actividad principal de la app que contiene la navegación,
- * top bar, bottom bar y aplica el tema según la configuración de usuario.
+ * Main activity of the application.
+ *
+ * Acts as the entry point of the app and is responsible for:
+ * - Setting up the navigation graph
+ * - Applying the global theme
+ * - Managing the top and bottom bars
+ * - Observing application settings
+ *
+ * Uses Jetpack Compose as the UI framework and follows an MVVM architecture.
  */
-
 class MainActivity : ComponentActivity() {
+
+    /**
+     * Initializes the activity and sets up the Compose UI.
+     *
+     * Enables edge-to-edge rendering and configures the main scaffold
+     * with navigation and UI components.
+     */
     @SuppressLint("UnusedMaterial3ScaffoldPaddingParameter")
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        // Habilita el modo Edge-to-Edge (contenido se dibuja detrás de status & navigation bars)
+
+        // Enable edge-to-edge layout (draw behind system bars)
         enableEdgeToEdge()
-        // Composable principal de la app
+
         setContent {
-            // Instanciamos el ViewModel de Settings
+
+            // ViewModel responsible for app settings
             val settingsVM: SettingsVM = viewModel()
-            // Observamos el estado actual del ViewModel
+
+            // Observe UI state reactively
             val uiState by settingsVM.uiState.collectAsState()
 
-            // Aplicamos el tema de la app, ajustando modo oscuro según SettingsVM
+            // Apply global theme based on user settings
             MultimediaAppTheme(darkTheme = uiState.darkMode) {
-                // Controlador de navegación para Compose Navigation
+
+                // Navigation controller
                 val navController = rememberNavController()
-                // Obtenemos la ruta actual del backstack
+
+                // Current route from navigation stack
                 val currentBackStackEntry = navController.currentBackStackEntryAsState()
                 val currentRoute = currentBackStackEntry.value?.destination?.route ?: ""
 
-                // Scaffold principal: maneja topBar, bottomBar y contenido central
                 Scaffold(
                     modifier = Modifier.fillMaxSize(),
-                    //TopBar personalizada: se oculta en pantallas de login/registro
+
+                    // Top bar visible only in specific screens
                     topBar = {
                         if (currentRoute !in listOf(
-
                                 ObjRoutes.LOGINREG,
                                 ObjRoutes.REGISTER,
                                 ObjRoutes.LOGIN
                             )
-                        ) TopBar(navController)
+                        ) {
+                            TopBar(navController)
+                        }
                     },
-                    // BottomBar personalizada: se oculta en pantallas de login/registro
+
+                    // Bottom bar visible only in specific screens
                     bottomBar = {
                         if (currentRoute !in listOf(
                                 ObjRoutes.LOGINREG,
                                 ObjRoutes.REGISTER,
                                 ObjRoutes.LOGIN
-
                             )
                         ) {
                             BottomBar(navController)
                         }
-                    },
-                    // Contenido principal de la app
-                    content = { innerPadding ->
-                        // Box para envolver el contenido y aplicar padding automático de Scaffold
-                        Box(
-                            modifier = Modifier
-                                .fillMaxSize()
-                                .padding(innerPadding)
-                        ) {
-                            // NavGraph contiene toda la navegación interna de la app
-                            NavGraph(
-                                navController = navController,
-                                settingsVM
-                            )
-                        }
                     }
-                )
+                ) { innerPadding ->
+
+                    // Container for the main content
+                    Box(
+                        modifier = Modifier
+                            .fillMaxSize()
+                            .padding(innerPadding)
+                    ) {
+                        // Navigation graph of the application
+                        NavGraph(
+                            navController = navController,
+                            settingsVM
+                        )
+                    }
+                }
             }
         }
     }

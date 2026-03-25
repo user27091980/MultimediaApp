@@ -11,102 +11,82 @@ import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.launch
 
 /**
- * ViewModel para gestionar BandDTO usando BandsRepo.
+ * ViewModel encargado de gestionar la lógica de negocio relacionada con las bandas.
  *
- * - Se encarga de la lógica de negocio.
- * - Expone los datos a la UI mediante StateFlow (reactivo).
- * - Maneja operaciones CRUD de bandas.
+ * Actúa como intermediario entre la UI y la capa de datos.
+ *
+ * Responsabilidades:
+ * - Obtener datos desde el repositorio
+ * - Exponer el estado mediante [StateFlow]
+ * - Manejar operaciones como carga y creación de bandas
+ *
+ * @property repository Repositorio que gestiona las operaciones de red.
  */
 class BandVM : ViewModel() {
 
-    // Repositorio que gestiona acceso a datos (API REST con Retrofit)
+    /**
+     * Instancia del repositorio de bandas.
+     */
     private val repository = BandsRepo(RetrofitModule.bandApi)
 
-    //Estado y lista de bandas observable desde la UI
-    private val _bandsState = MutableStateFlow<List<BandDTO>>(emptyList())
-    val bandsState: StateFlow<List<BandDTO>> = _bandsState.asStateFlow()
-    //banda seleccionada
-    private val _selectedBand = MutableStateFlow<BandDTO?>(null)
-    val selectedBand: StateFlow<BandDTO?> = _selectedBand.asStateFlow()
-    // Manejo de errores
-    private val _error = MutableStateFlow<String?>(null)
-    val error: StateFlow<String?> = _error.asStateFlow()
-
-    // Inicialización
-    init {
-        // Al crear el ViewModel, carga todas las bandas automáticamente
-        loadAllBands()
-    }
-
-    //Funciones CRUD
     /**
-     * Obtiene todas las bandas desde el repositorio
-     * y actualiza el estado.
+     * Estado interno de la lista de bandas.
+     */
+    private val _bandsState = MutableStateFlow<List<BandDTO>>(emptyList())
+
+    /**
+     * Estado público de la lista de bandas observable desde la UI.
+     */
+    val bandsState = _bandsState.asStateFlow()
+
+    /**
+     * Estado de error observable desde la UI.
+     */
+    private val _error = MutableStateFlow<String?>(null)
+
+    /**
+     * Estado público de error observable desde la UI.
+     */
+    val error = _error.asStateFlow()
+
+    /**
+     * Carga todas las bandas desde el repositorio.
+     *
+     * Actualiza el estado [bandsState] en caso de éxito.
+     * En caso de error, actualiza [error].
      */
     fun loadAllBands() {
         viewModelScope.launch {
             try {
-                _error.value = null
                 val bands = repository.getBands()
                 _bandsState.value = bands
             } catch (e: Exception) {
-                _error.value = e.localizedMessage ?: "Error desconocido"
+                _error.value = e.message
             }
         }
     }
-    
 
     /**
-     * Crea una nueva banda en el backend
-     * y la añade al estado local si tiene éxito.
+     * Crea una nueva banda.
+     *
+     * Después de crearla, recarga la lista de bandas.
+     *
+     * @param band Objeto [BandDTO] con los datos de la nueva banda.
      */
     fun createBand(band: BandDTO) {
         viewModelScope.launch {
             try {
-                val created = repository.createBand(band)
-                created?.let {
-                    _bandsState.value = _bandsState.value + it
-                }
+                repository.createBand(band)
+
+                // Recargar datos tras crear la banda
+                loadAllBands()
+
             } catch (e: Exception) {
-                _error.value = "Error al crear: ${e.localizedMessage ?: "desconocido"}"
-            }
-        }
-    }
-    /**
-     * Actualiza una banda existente.
-     * Reemplaza el elemento en la lista local.
-     */
-    fun updateBand(id: String, band: BandDTO) {
-        viewModelScope.launch {
-            try {
-                val updated = repository.updateBand(id, band)
-                updated?.let { bandUpdated ->
-                    _bandsState.value =
-                        _bandsState.value.map { if (it.id == id) bandUpdated else it }
-                }
-            } catch (e: Exception) {
-                _error.value = e.localizedMessage ?: "Error al actualizar"
-            }
-        }
-    }
-    /**
-     * Elimina una banda por ID.
-     * Si el backend confirma, se elimina del estado local.
-     */
-    fun deleteBand(id: String) {
-        viewModelScope.launch {
-            try {
-                val deleted = repository.deleteBand(id)
-                if (deleted) {
-                    _bandsState.value = _bandsState.value.filter { it.id != id }
-                }
-            } catch (e: Exception) {
-                _error.value = e.localizedMessage ?: "Error al eliminar"
+                _error.value = "Error creando banda"
             }
         }
     }
 }
-
 /*
 Un ViewModel es una pieza clave de la arquitectura Android (especialmente en MVVM)
 que sirve como puente entre la UI y los datos.
