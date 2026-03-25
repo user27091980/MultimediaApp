@@ -83,4 +83,107 @@ class UserInfoVM(application: Application) : AndroidViewModel(application) {
         }
     }
 }
-
+/**
+ * UserInfoVM (ViewModel de información de usuario):
+ *
+ * Este ViewModel gestiona la obtención y el estado de la información
+ * de uno o varios usuarios, actuando como intermediario entre la UI
+ * y el repositorio de datos (UsersInfoRepo).
+ *
+ * HEREDA DE AndroidViewModel:
+ *
+ * - Permite acceder al contexto de la aplicación.
+ * - Necesario para inicializar el repositorio.
+ *
+ * ARQUITECTURA (MVVM):
+ *
+ * UI (Compose)
+ *     ↓
+ * UserInfoVM
+ *     ↓
+ * UsersInfoRepo
+ *     ↓
+ * Fuente de datos (API / BD)
+ *
+ * ESTADO:
+ *
+ * _uiState:
+ * - MutableStateFlow interno.
+ * - Contiene un objeto UserInfoListUiState con:
+ *      • lista de usuarios (userInfo)
+ *      • estado de carga (isLoading)
+ *      • posibles errores
+ *
+ * uiState:
+ * - StateFlow público (solo lectura).
+ * - La UI lo observa con collectAsStateWithLifecycle().
+ * - Permite recomposición automática al cambiar los datos.
+ *
+ * FUNCIÓN PRINCIPAL:
+ *
+ * loadUser(userId: String):
+ *
+ * - Carga la información de un usuario específico.
+ *
+ * OPTIMIZACIÓN:
+ * - Antes de hacer la llamada, comprueba si el usuario ya está cargado:
+ *
+ *      if (_uiState.value.userInfo.any { it.id == userId }) return
+ *
+ * - Evita llamadas innecesarias al repositorio.
+ *
+ * FLUJO:
+ *
+ * 1. Se lanza una corrutina en viewModelScope.
+ *
+ * 2. Se llama al repositorio:
+ *      repo.read(userId)
+ *
+ * 3. Se maneja el resultado con fold():
+ *
+ *      onSuccess:
+ *          • Se transforma el DTO a UserInfoUiState
+ *          • Se actualiza el estado con el usuario obtenido
+ *
+ *      onFailure:
+ *          • Se registra el error en Logcat
+ *
+ * 4. Manejo adicional de errores con try-catch (fallos de red, etc.).
+ *
+ * TRANSFORMACIÓN DE DATOS:
+ *
+ * DTO → UI STATE
+ *
+ * - Se mapea manualmente:
+ *
+ *      UserInfoUiState(
+ *          id = it.id,
+ *          email = it.email,
+ *          name = it.name,
+ *          lastName = it.lastName,
+ *          country = it.country
+ *      )
+ *
+ * - Esto desacopla la capa de datos de la UI.
+ *
+ * viewModelScope:
+ *
+ * - Permite ejecutar corrutinas seguras.
+ * - Se cancela automáticamente al destruir el ViewModel.
+ *
+ * BENEFICIOS:
+ *
+ * - Evita duplicar llamadas a la API.
+ * - Mantiene la UI reactiva y actualizada.
+ * - Separa claramente modelo de datos y modelo de UI.
+ * - Manejo seguro de errores.
+ *
+ * NOTAS:
+ *
+ * - Actualmente reemplaza la lista con un solo usuario:
+ *      state.copy(userInfo = listOf(mapped))
+ *
+ * - Se podría ampliar para manejar múltiples usuarios acumulados.
+ *
+ * - collectAsStateWithLifecycle mejora eficiencia frente a collectAsState.
+ */

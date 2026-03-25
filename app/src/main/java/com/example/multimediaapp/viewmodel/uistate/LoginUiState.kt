@@ -43,3 +43,106 @@ data class LoginUiState(
     val isLoginButtonEnabled: Boolean
         get() = email.isNotBlank() && password.isNotBlank() && !isLoading
 }
+/*
+ * LoginUiState:
+ *
+ * CLASE DE ESTADO (UI STATE)
+ *
+ * Representa todo el estado de la pantalla de Login.
+ * Se utiliza dentro del patrón MVVM para mantener la UI reactiva
+ * y separar la lógica del ViewModel de la interfaz.
+ *
+ * OBJETIVO:
+ *
+ * - Gestionar los datos introducidos por el usuario.
+ * - Controlar la visibilidad de la contraseña.
+ * - Manejar estados de carga y errores.
+ * - Determinar cuándo habilitar el botón de login.
+ *
+ * PROPIEDADES:
+ *
+ * user:
+ * - Nombre del usuario.
+ * - Se puede usar tras un login exitoso.
+ *
+ * email:
+ * - Correo electrónico introducido en el formulario.
+ * - Puede inicializarse con un valor por defecto (ejemplo: testing).
+ *
+ * password:
+ * - Contraseña introducida por el usuario.
+ *
+ * passwordVisible:
+ * - Controla si la contraseña se muestra o está oculta.
+ * - true → se muestra en texto plano.
+ * - false → se oculta (modo seguro).
+ *
+ * isLoading:
+ * - Indica si se está realizando el login.
+ * - true → se puede mostrar un ProgressBar y deshabilitar botones.
+ *
+ * errorMessage:
+ * - Mensaje de error a mostrar en la UI.
+ * - null → no hay error.
+ *
+ * PROPIEDADES COMPUTADAS:
+ *
+ * isLoginButtonEnabled:
+ * - Determina si el botón de login está activo.
+ *
+ * LÓGICA:
+ *
+ * - email no vacío
+ * - password no vacío
+ * - no estar en estado de carga
+ *
+ * IMPLEMENTACIÓN:
+ *
+ * val isLoginButtonEnabled: Boolean
+ *     get() = email.isNotBlank() && password.isNotBlank() && !isLoading
+ *
+ * FLUJO DE USO:
+ *
+ * 1. El usuario escribe en los campos:
+ *      email / password
+ *
+ * 2. El ViewModel actualiza el estado:
+ *      uiState = uiState.copy(...)
+ *
+ * 3. La UI observa cambios:
+ *      val state by loginVM.uiState.collectAsState()
+ *
+ * 4. La UI reacciona:
+ *
+ *    - Habilita/deshabilita botón:
+ *        Button(enabled = state.isLoginButtonEnabled)
+ *
+ *    - Muestra loading:
+ *        if (state.isLoading)
+ *
+ *    - Muestra error:
+ *        state.errorMessage?.let { Text(it) }
+ *
+ * BENEFICIOS:
+ *
+ * - Estado centralizado.
+ * - UI completamente reactiva.
+ * - Separación de responsabilidades.
+ * - Fácil mantenimiento y testing.
+ *
+ * INMUTABILIDAD:
+ *
+ * - Es un data class.
+ * - Sus propiedades son inmutables (val).
+ * - Se actualiza mediante:
+ *      copy()
+ *
+ * NOTAS IMPORTANTES:
+ *
+ * - passwordVisible se usa junto con:
+ *      VisualTransformation
+ *   para mostrar/ocultar la contraseña.
+ *
+ * - Los valores por defecto (email y password) pueden usarse
+ *   para pruebas o desarrollo.
+ */

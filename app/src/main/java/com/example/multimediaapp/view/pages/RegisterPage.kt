@@ -114,18 +114,106 @@ fun RegisterScreenPreview() {
         navController = navController
     )
 }
-/**
- * notas:
+/*
+ * Pantalla de registro de usuario.
  *
- * - Box: Contenedor que permite centrar y superponer elementos.
- * - Column: Organiza los hijos verticalmente.
- * - Modifier.fillMaxSize(): La UI ocupa todo el espacio disponible.
- * - Modifier.padding(): Aplica márgenes internos para separar los elementos de los bordes.
- * - TextFieldsComponent(): Contiene los campos de entrada de usuario, email y contraseña.
- * - ButtonAcept / ButtonCancel: Botones reutilizables para aceptar o cancelar la acción.
- * - navController.navigate(route): Navega a la ruta definida dentro de la navegación de Compose.
- * - @Preview: Permite previsualizar la UI en el IDE sin ejecutar la app.
+ * OBJETIVO:
  *
- * Nota: Se puede conectar con el ViewModel para validar campos antes de navegar.
+ * - Permitir al usuario crear una cuenta nueva.
+ * - Recoger datos como:
+ *   - Email
+ *   - Contraseña
+ *   - País
+ *   - Nombre
+ *   - Apellido
+ * - Validar los datos antes de continuar.
+ *
+ * ARQUITECTURA:
+ *
+ * - Sigue el patrón MVVM.
+ * - RegisterVM gestiona la lógica y el estado.
+ * - RegisterScreen solo se encarga de la UI.
+ *
+ * FLUJO DE DATOS:
+ *
+ * 1. Se observa el estado del ViewModel:
+ *      val uiState by vm.uiState.collectAsState()
+ *
+ * 2. Los campos del formulario se enlazan al ViewModel:
+ *      onEmailChange = vm::onEmailChange
+ *
+ * 3. Cuando el usuario pulsa "Aceptar":
+ *      - Se validan los campos con:
+ *          vm.validateFields { ... }
+ *      - Si todo es correcto, se navega al diálogo de confirmación.
+ *
+ * ESTRUCTURA DE LA UI:
+ *
+ * 1. Box:
+ *    - Contenedor principal.
+ *    - Ocupa toda la pantalla.
+ *    - Aplica fondo con MaterialTheme.
+ *
+ * 2. Column principal:
+ *    - Centra los elementos.
+ *    - Aplica padding para separar del borde.
+ *
+ * 3. Subcolumn:
+ *    - Contiene los campos de texto.
+ *    - Usa weight(1f) para ocupar el espacio disponible.
+ *
+ * COMPONENTES:
+ *
+ * TextFieldsComponent:
+ * - Agrupa todos los campos del formulario.
+ * - Recibe:
+ *   - valores actuales (estado)
+ *   - callbacks para actualizar el estado
+ *
+ * ButtonAccept:
+ * - Ejecuta la validación del formulario.
+ * - Si es correcto → navega a:
+ *      ObjRoutes.DIALOG
+ *
+ * ButtonCancel:
+ * - Cancela el registro.
+ * - Vuelve a:
+ *      ObjRoutes.LOGINREG
+ *
+ * MANEJO DE ERRORES:
+ *
+ * uiState.errorMessage:
+ * - Si existe, se muestra en rojo debajo del formulario.
+ *
+ * NAVEGACIÓN:
+ *
+ * navController.navigate(route)
+ * - Permite cambiar de pantalla dentro de la app.
+ *
+ * PREVIEW:
+ *
+ * RegisterScreenPreview:
+ * - Permite ver la UI sin ejecutar la app.
+ * - Usa rememberNavController() como controlador simulado.
+ *
+ * BENEFICIOS:
+ *
+ * - Separación clara entre UI y lógica.
+ * - Reutilización de componentes.
+ * - Validación centralizada en el ViewModel.
+ * - UI reactiva gracias a Compose.
+ *
+ * NOTAS IMPORTANTES:
+ *
+ * - collectAsState():
+ *   Convierte el estado del ViewModel en observable.
+ *
+ * - viewModel():
+ *   Obtiene la instancia del ViewModel ligada al ciclo de vida.
+ *
+ * - LaunchedEffect:
+ *   (no usado aquí, pero típico en pantallas similares)
+ *
+ * - La validación se ejecuta antes de permitir la navegación.
  */
 

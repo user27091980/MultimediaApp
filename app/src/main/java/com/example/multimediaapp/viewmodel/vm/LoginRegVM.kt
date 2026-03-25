@@ -64,3 +64,91 @@ sealed class LoginRegEvent {
     object NavigateToLogin : LoginRegEvent()
     object NavigateToRegister : LoginRegEvent()
 }
+/**
+ * LoginRegVM (ViewModel de Login / Registro):
+ *
+ * Este ViewModel se encarga de gestionar los eventos de la pantalla
+ * inicial de autenticación (Login / Registro).
+ *
+ * OBJETIVO:
+ *
+ * - Separar la lógica de navegación de la UI.
+ * - Gestionar eventos de un solo uso (one-shot events).
+ * - Mantener una arquitectura limpia basada en MVVM.
+ *
+ * ARQUITECTURA:
+ *
+ * UI (Compose)
+ *     ↓
+ * LoginRegVM
+ *     ↓
+ * Eventos (SharedFlow)
+ *
+ * DIFERENCIA CLAVE:
+ *
+ * - StateFlow → estado persistente (ej: datos, loading, errores)
+ * - SharedFlow → eventos únicos (ej: navegación, mensajes)
+ *
+ * FLUJO DE FUNCIONAMIENTO:
+ *
+ * 1. La UI observa los eventos:
+ *      viewModel.events.collect { event -> ... }
+ *
+ * 2. Cuando el usuario interactúa:
+ *      - click en Login → onLoginClick()
+ *      - click en Register → onRegisterClick()
+ *
+ * 3. El ViewModel emite un evento:
+ *      _events.emit(...)
+ *
+ * 4. La UI reacciona:
+ *      - Navega a la pantalla correspondiente
+ *
+ * VARIABLES:
+ *
+ * _events:
+ * - MutableSharedFlow interno.
+ * - Canal de comunicación desde el ViewModel hacia la UI.
+ *
+ * events:
+ * - Versión pública (solo lectura).
+ * - La UI se suscribe a este flujo.
+ *
+ * viewModelScope:
+ * - Scope de corrutinas ligado al ciclo de vida del ViewModel.
+ * - Evita fugas de memoria.
+ *
+ * MÉTODOS:
+ *
+ * onLoginClick():
+ * - Emite el evento NavigateToLogin.
+ *
+ * onRegisterClick():
+ * - Emite el evento NavigateToRegister.
+ *
+ * LoginRegEvent (sealed class):
+ *
+ * - Representa los posibles eventos de navegación.
+ * - Permite un manejo seguro y tipado.
+ *
+ * TIPOS DE EVENTOS:
+ *
+ * NavigateToLogin:
+ * - Indica que la UI debe navegar a la pantalla de login.
+ *
+ * NavigateToRegister:
+ * - Indica que la UI debe navegar a la pantalla de registro.
+ *
+ * BENEFICIOS:
+ *
+ * - Eventos desacoplados de la UI.
+ * - Arquitectura limpia.
+ * - Evita problemas de recomposición duplicada.
+ * - Manejo seguro gracias a sealed class.
+ *
+ * NOTA:
+ *
+ * - SharedFlow se usa en lugar de StateFlow porque:
+ *   → los eventos no deben persistir en el estado.
+ *   → solo deben emitirse una vez.
+ */

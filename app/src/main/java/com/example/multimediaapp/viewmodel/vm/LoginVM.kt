@@ -160,4 +160,130 @@ sealed class LoginEvent {
     object HideError : LoginEvent()
 }
 
-
+/**
+ * LoginVM (ViewModel de Login):
+ *
+ * Este ViewModel gestiona toda la lógica de la pantalla de inicio de sesión
+ * dentro del patrón MVVM.
+ *
+ * RESPONSABILIDADES:
+ *
+ * - Gestionar el estado del formulario (email, password, loading, errores).
+ * - Validar los datos del usuario.
+ * - Simular el proceso de login.
+ * - Emitir eventos de navegación o errores.
+ * - Mantener la UI desacoplada de la lógica de negocio.
+ *
+ * ARQUITECTURA:
+ *
+ * UI (Compose)
+ *     ↓
+ * LoginVM
+ *     ↓
+ * Repository / Lógica interna (simulada en este caso)
+ *
+ * TIPOS DE ESTADO:
+ *
+ * 1. StateFlow (estado persistente)
+ *    → _uiState
+ *    → Contiene los datos visibles en la UI.
+ *
+ * 2. SharedFlow (eventos de un solo uso)
+ *    → _events
+ *    → Navegación, errores, acciones puntuales.
+ *
+ * FLUJO GENERAL:
+ *
+ * 1. El usuario escribe en los campos:
+ *      → onEmailChange()
+ *      → onPasswordChange()
+ *
+ * 2. El ViewModel actualiza el estado:
+ *      → _uiState.update { ... }
+ *
+ * 3. La UI se recompone automáticamente.
+ *
+ * 4. Al pulsar "Login":
+ *      → login()
+ *
+ * 5. El ViewModel:
+ *      - Valida datos
+ *      - Simula llamada (delay)
+ *      - Actualiza estado
+ *      - Emite evento (navegación o error)
+ *
+ * VARIABLES:
+ *
+ * _uiState:
+ * - Estado interno mutable.
+ * - Tipo: MutableStateFlow<LoginUiState>
+ *
+ * uiState:
+ * - Estado público (solo lectura).
+ * - Observado por la UI.
+ *
+ * _events:
+ * - Canal de eventos de un solo uso.
+ * - Tipo: MutableSharedFlow<LoginEvent>
+ *
+ * events:
+ * - Versión pública del flujo de eventos.
+ *
+ * viewModelScope:
+ * - Scope de corrutinas ligado al ciclo de vida del ViewModel.
+ * - Evita fugas de memoria.
+ *
+ * MÉTODOS:
+ *
+ * onEmailChange(email):
+ * - Actualiza el email.
+ * - Limpia errores.
+ *
+ * onPasswordChange(password):
+ * - Actualiza la contraseña.
+ * - Limpia errores.
+ *
+ * togglePasswordVisibility():
+ * - Alterna mostrar/ocultar contraseña.
+ *
+ * login():
+ * - Simula el proceso de autenticación.
+ * - Verifica si el botón está habilitado.
+ * - Cambia estado a loading.
+ * - Simula delay (llamada a API).
+ * - Valida credenciales.
+ * - Emite evento de navegación o error.
+ *
+ * validateFieldsLogin():
+ * - Valida email y password antes del login.
+ * - Email debe contener '@'.
+ * - Password mínimo 4 caracteres.
+ *
+ * clearError():
+ * - Limpia el mensaje de error en la UI.
+ *
+ * LOGIN SIMULADO:
+ *
+ * Credenciales válidas:
+ * - email: admin@test.com
+ * - password: 1234
+ *
+ * Si coinciden:
+ * - Se considera login exitoso.
+ * - Se emite NavigateToHome.
+ *
+ * Si no coinciden:
+ * - Se muestra error: "Credenciales incorrectas".
+ *
+ * BENEFICIOS:
+ *
+ * - Separación de lógica y UI.
+ * - Estado reactivo con StateFlow.
+ * - Manejo de eventos con SharedFlow.
+ * - Código limpio y mantenible.
+ *
+ * NOTA IMPORTANTE:
+ *
+ * - _uiState se usa para datos persistentes.
+ * - _events se usa para acciones de un solo uso.
+ */

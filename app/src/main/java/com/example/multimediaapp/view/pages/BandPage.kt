@@ -212,3 +212,86 @@ fun BandScreenPreview() {
         }
     }
 }
+/*
+ * Este archivo define la pantalla de detalle de una banda (BandScreen)
+ * utilizando Jetpack Compose.
+ *
+ * OBJETIVO:
+ *
+ * - Mostrar toda la información de una banda seleccionada.
+ * - Obtener los datos desde un ViewModel.
+ * - Presentar la información organizada en secciones visuales.
+ *
+ * FLUJO DE DATOS:
+ *
+ * 1. Se recibe el bandId como parámetro.
+ * 2. Se obtienen las bandas desde el ViewModel (BandVM).
+ * 3. Se busca la banda correspondiente con:
+ *      bands.find { it.id == bandId }
+ * 4. Si no existe → se muestra mensaje de error.
+ * 5. Si existe → se muestra la información completa.
+ *
+ * ESTADO:
+ *
+ * bands:
+ * - Se obtiene con collectAsState().
+ * - Representa la lista reactiva de bandas.
+ *
+ * LaunchedEffect:
+ * - Ejecuta una acción cuando la pantalla se crea.
+ * - En este caso, carga todas las bandas:
+ *      vm.loadAllBands()
+ *
+ * UI PRINCIPAL:
+ *
+ * 1. Box:
+ *    - Contenedor principal.
+ *    - Permite controlar fondo y alineación.
+ *
+ * 2. Column:
+ *    - Organiza el contenido verticalmente.
+ *    - Permite scroll con verticalScroll().
+ *
+ * SECCIONES DE LA PANTALLA:
+ *
+ * - BandHeader:
+ *   Muestra imagen principal y nombre de la banda.
+ *
+ * - CardRowComponent:
+ *   Muestra información en tarjetas (descripcion).
+ *
+ * - BandTags:
+ *   Muestra etiquetas como estilo, discográfica y componentes.
+ *
+ * - ImagesRowList:
+ *   Muestra imágenes de álbumes en formato horizontal.
+ *
+ * - Text (Info / Discografía):
+ *   Separadores de secciones usando textos de recursos.
+ *
+ * - Spacer:
+ *   Añade espacio visual entre componentes.
+ *
+ * CASO SIN DATOS:
+ *
+ * - Si band == null:
+ *   → Se muestra una pantalla simple con un mensaje informativo.
+ *
+ * PREVIEW:
+ *
+ * BandScreenPreview:
+ * - Permite visualizar la UI sin necesidad de backend.
+ * - Usa un objeto BandDTO de ejemplo (mock).
+ *
+ * BENEFICIOS:
+ *
+ * - Separación entre UI y lógica (MVVM).
+ * - Uso de componentes reutilizables.
+ * - UI reactiva basada en estado.
+ * - Fácil de testear y mantener.
+ *
+ * NOTA:
+ *
+ * - El ViewModel (BandVM) gestiona los datos.
+ * - Esta pantalla solo se encarga de mostrar la información.
+ */

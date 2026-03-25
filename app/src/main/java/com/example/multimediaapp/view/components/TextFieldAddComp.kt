@@ -232,3 +232,82 @@ fun TextFieldAddHeaderLinkComponent(
         label = { Text("Header link") }
     )
 }
+/*
+ * Este archivo define un formulario en Jetpack Compose para crear o editar
+ * información de una banda.
+ *
+ * COMPONENTE PRINCIPAL:
+ *
+ * TextFieldAdd(...)
+ *
+ * - Es un formulario compuesto por múltiples campos de texto.
+ * - Recibe todos los datos como parámetros (estado).
+ * - Utiliza callbacks para actualizar el estado desde el ViewModel.
+ *
+ * ARQUITECTURA:
+ *
+ * - Este enfoque sigue el patrón de "state hoisting":
+ *   - El estado NO se guarda dentro del composable.
+ *   - Se recibe desde fuera (ViewModel).
+ *   - Se actualiza mediante callbacks.
+ *
+ * - Esto hace que los componentes sean:
+ *   - Reutilizables
+ *   - Testeables
+ *   - Independientes del estado
+ *
+ * CAMPOS DEL FORMULARIO:
+ *
+ * - name → nombre de la banda
+ * - description → descripción
+ * - style → estilo musical
+ * - recordLabel → discográfica
+ * - components → integrantes
+ * - albumLinks → lista de enlaces (convertidos a String y viceversa)
+ * - headerLink → enlace principal
+ *
+ * CONVERSIÓN IMPORTANTE:
+ *
+ * albumLinks:
+ * - Se muestra como String: joinToString(", ")
+ * - Se convierte a lista al guardar:
+ *   split(",").map { it.trim() }
+ *
+ * COMPONENTES INDIVIDUALES:
+ *
+ * Cada campo está separado en su propio composable:
+ * - TextFieldAddNameComponent
+ * - TextFieldAddDescriptionComponent
+ * - TextFieldAddStyleComponent
+ * - TextFieldAddRecordLabelComponent
+ * - TextFieldAddComponentsComponent
+ * - TextFieldAddAlbumLinksComponent
+ * - TextFieldAddHeaderLinkComponent
+ *
+ * BENEFICIOS DE ESTA ESTRUCTURA:
+ *
+ * - Código modular y organizado
+ * - Reutilización de componentes
+ * - Separación de responsabilidades
+ * - Fácil mantenimiento y escalabilidad
+ *
+ * UI:
+ *
+ * Column:
+ * - Organiza todos los campos verticalmente.
+ *
+ * OutlinedTextField:
+ * - Campo de texto con borde (Material Design).
+ * - Permite entrada de datos del usuario.
+ *
+ * PERSONALIZACIÓN:
+ *
+ * - Se pueden modificar colores usando MaterialTheme.
+ * - Se pueden añadir validaciones en cada campo.
+ * - Se pueden extender fácilmente nuevos campos.
+ *
+ * NOTA:
+ *
+ * - El estado (name, description, etc.) debe venir desde un ViewModel.
+ * - Este composable solo se encarga de la UI.
+ */

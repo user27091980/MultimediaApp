@@ -180,3 +180,66 @@ modifier  permite añadir padding, peso o cualquier otra modificación externa e
 
 enabled se puede desactivar el botón si es necesario (por ejemplo, mientras se hace login).
  */
+/*
+ * Este archivo define un conjunto de componentes reutilizables de botones
+ * en Jetpack Compose, diseñados para mantener un estilo consistente en toda la aplicación.
+ *
+ * COMPONENTE PRINCIPAL:
+ *
+ * BaseButton
+ * - Es un botón genérico reutilizable.
+ * - Recibe:
+ *   - text: texto que se muestra en el botón
+ *   - onClick: acción al pulsar el botón
+ *   - modifier: permite personalizar la UI desde fuera
+ *   - enabled: controla si el botón está activo o deshabilitado
+ *
+ * - Características visuales:
+ *   - Usa FilledTonalButton de Material 3
+ *   - Ocupa todo el ancho disponible (fillMaxWidth)
+ *   - Bordes redondeados (RoundedCornerShape)
+ *   - Colores definidos por el MaterialTheme
+ *
+ * VENTAJAS DE BaseButton:
+ * - Evita duplicación de código
+ * - Mantiene coherencia visual
+ * - Facilita cambios globales de estilo
+ *
+ * BOTONES ESPECÍFICOS:
+ *
+ * ButtonLogin, ButtonAccept, ButtonCancel, ButtonRegister
+ * - Son componentes que reutilizan BaseButton
+ * - Solo cambian el texto del botón
+ * - Se usan para acciones concretas de la UI
+ *
+ * BOTONES CON SELECCIÓN DE IMÁGENES:
+ *
+ * ButtonImage
+ * - Permite seleccionar una imagen desde la galería
+ * - Usa rememberLauncherForActivityResult
+ * - Lanza un intent para obtener contenido tipo "image/*"
+ * - Devuelve una Uri a través del callback onImageSelected
+ *
+ * ButtonGallery
+ * - Permite seleccionar múltiples imágenes
+ * - Utiliza ActivityResultContracts.GetMultipleContents()
+ * - Devuelve una lista de Uri
+ *
+ * CONCEPTOS IMPORTANTES:
+ *
+ * rememberLauncherForActivityResult:
+ * - Gestiona la respuesta de actividades externas (como galería)
+ * - Mantiene el launcher durante recomposiciones
+ *
+ * Uri:
+ * - Representa la ubicación del recurso seleccionado (imagen)
+ *
+ * USO:
+ * - Estos botones se utilizan en formularios, pantallas de registro,
+ *   carga de imágenes, etc.
+ *
+ * BENEFICIOS GENERALES:
+ * - Código modular y reutilizable
+ * - Separación de responsabilidades
+ * - UI consistente y fácil de mantener
+ */

@@ -110,3 +110,39 @@ private fun buildUrl(baseUrl: String, path: String): String {
     }
 }
 
+/*
+ * Este archivo define la clase BandEntity, que representa cómo se reciben los datos de una banda
+ * desde una API (capa de datos).
+ *
+ * La anotación @SerializedName se utiliza para mapear los campos del JSON recibido con los atributos
+ * de la clase, permitiendo que los nombres coincidan aunque sean diferentes en la API.
+ *
+ * Esta clase contiene toda la información de una banda, incluyendo:
+ * - Datos básicos (id, nombre, descripción)
+ * - Imágenes (banner e imágenes del álbum)
+ * - Información musical (estilo, discográfica, componentes)
+ * - Enlaces (albumLinks y headerLink)
+ *
+ * Además, se incluyen funciones de mapeo (mappers) para transformar datos entre capas:
+ *
+ * 1. toDTO():
+ *    Convierte un objeto BandEntity (datos de la API) a BandDTO (modelo que usa la aplicación).
+ *    - Se encarga de transformar las URLs relativas en URLs completas.
+ *    - Añade un baseUrl cuando la imagen no contiene "http".
+ *    - Aplica lógica para asegurar que los enlaces sean válidos.
+ *
+ * 2. toEntity():
+ *    Convierte un BandDTO en BandEntity.
+ *    - Se usa cuando se envían datos hacia la API.
+ *    - Mantiene o transforma los datos a formato compatible con el backend.
+ *
+ * 3. buildUrl():
+ *    Función auxiliar que construye correctamente una URL.
+ *    - Si la ruta ya es una URL completa, la devuelve sin cambios.
+ *    - Si no, concatena el baseUrl con la ruta proporcionada.
+ *
+ * Este enfoque de mapeo ayuda a separar responsabilidades:
+ * - La API trabaja con BandEntity
+ * - La app trabaja con BandDTO
+ * - Se evita acoplar directamente la lógica de red con la UI
+ */
