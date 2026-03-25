@@ -21,12 +21,25 @@ import androidx.compose.ui.text.input.PasswordVisualTransformation
 import androidx.compose.ui.text.input.VisualTransformation
 
 /**
- * Composable principal que agrupa todos los TextFields de login/registro.
+ * Composable principal que agrupa los campos de texto para registro o login.
  *
- * Contiene:
- * - TextFieldUserComponent_ para ingresar el nombre de usuario
- * - TextFieldPassComponent:para ingresar la contraseña con toggle de visibilidad
- * - TextFieldEmailComponent: para ingresar el correo electrónico
+ * Contiene campos para:
+ * - Email
+ * - Contraseña
+ * - País
+ * - Nombre
+ * - Apellido
+ *
+ * @param email Email actual del usuario.
+ * @param pass Contraseña actual del usuario.
+ * @param country País del usuario.
+ * @param name Nombre del usuario.
+ * @param lastName Apellido del usuario.
+ * @param onEmailChange Callback que se ejecuta al modificar el email.
+ * @param onPassChange Callback que se ejecuta al modificar la contraseña.
+ * @param onCountryChange Callback que se ejecuta al modificar el país.
+ * @param onNameChange Callback que se ejecuta al modificar el nombre.
+ * @param onLastNameChange Callback que se ejecuta al modificar el apellido.
  */
 @Composable
 fun TextFieldsComponent(
@@ -147,6 +160,12 @@ fun TextFieldPassComponent(pass: String, onPassChange: (String) -> Unit) {
     )
 }
 
+/**
+ * Campo de texto para el nombre del usuario.
+ *
+ * @param name Nombre actual.
+ * @param onNameChange Callback que se ejecuta al modificar el nombre.
+ */
 
 @Composable
 fun TextFieldNameComponent(name: String, onNameChange: (String) -> Unit) {
@@ -154,7 +173,7 @@ fun TextFieldNameComponent(name: String, onNameChange: (String) -> Unit) {
         value = name,
         onValueChange = onNameChange,
         singleLine = true,
-        label = { Text("Nombre", color=MaterialTheme.colorScheme.secondary) },
+        label = { Text("Nombre", color = MaterialTheme.colorScheme.secondary) },
         colors = androidx.compose.material3.OutlinedTextFieldDefaults.colors(
             focusedTextColor = MaterialTheme.colorScheme.secondary,
             unfocusedTextColor = MaterialTheme.colorScheme.secondary,
@@ -163,6 +182,12 @@ fun TextFieldNameComponent(name: String, onNameChange: (String) -> Unit) {
     )
 }
 
+/**
+ * Campo de texto para el apellido del usuario.
+ *
+ * @param lastName Apellido actual.
+ * @param onLastNameChange Callback que se ejecuta al modificar el apellido.
+ */
 
 @Composable
 fun TextFieldLastNameComponent(lastName: String, onLastNameChange: (String) -> Unit) {
@@ -179,6 +204,12 @@ fun TextFieldLastNameComponent(lastName: String, onLastNameChange: (String) -> U
     )
 }
 
+/**
+ * Campo de texto para seleccionar el país.
+ *
+ * @param country País actual.
+ * @param onCountryChange Callback que se ejecuta al modificar el país.
+ */
 @Composable
 fun TextFieldCountryComponent(country: String, onCountryChange: (String) -> Unit) {
     OutlinedTextField(

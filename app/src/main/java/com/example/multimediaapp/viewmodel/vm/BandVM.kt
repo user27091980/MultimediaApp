@@ -11,22 +11,50 @@ import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.launch
 
 /**
- * ViewModel para gestionar BandDTO usando BandsRepo.
+ * ViewModel encargado de gestionar la lógica de negocio relacionada con las bandas.
  *
- * - Se encarga de la lógica de negocio.
- * - Expone los datos a la UI mediante StateFlow (reactivo).
- * - Maneja operaciones CRUD de bandas.
+ * Actúa como intermediario entre la UI y la capa de datos.
+ *
+ * Responsabilidades:
+ * - Obtener datos desde el repositorio
+ * - Exponer el estado mediante [StateFlow]
+ * - Manejar operaciones como carga y creación de bandas
+ *
+ * @property repository Repositorio que gestiona las operaciones de red.
  */
 class BandVM : ViewModel() {
 
+    /**
+     * Instancia del repositorio de bandas.
+     */
     private val repository = BandsRepo(RetrofitModule.bandApi)
 
+    /**
+     * Estado interno de la lista de bandas.
+     */
     private val _bandsState = MutableStateFlow<List<BandDTO>>(emptyList())
+
+    /**
+     * Estado público de la lista de bandas observable desde la UI.
+     */
     val bandsState = _bandsState.asStateFlow()
 
+    /**
+     * Estado de error observable desde la UI.
+     */
     private val _error = MutableStateFlow<String?>(null)
+
+    /**
+     * Estado público de error observable desde la UI.
+     */
     val error = _error.asStateFlow()
 
+    /**
+     * Carga todas las bandas desde el repositorio.
+     *
+     * Actualiza el estado [bandsState] en caso de éxito.
+     * En caso de error, actualiza [error].
+     */
     fun loadAllBands() {
         viewModelScope.launch {
             try {
@@ -38,12 +66,19 @@ class BandVM : ViewModel() {
         }
     }
 
+    /**
+     * Crea una nueva banda.
+     *
+     * Después de crearla, recarga la lista de bandas.
+     *
+     * @param band Objeto [BandDTO] con los datos de la nueva banda.
+     */
     fun createBand(band: BandDTO) {
         viewModelScope.launch {
             try {
                 repository.createBand(band)
 
-                // 👇 IMPORTANTE: recargar lista
+                // Recargar datos tras crear la banda
                 loadAllBands()
 
             } catch (e: Exception) {

@@ -1,6 +1,7 @@
 package com.example.multimediaapp.data.entity
 
 import com.example.multimediaapp.model.BandDTO
+
 import com.google.gson.annotations.SerializedName
 
 /**
@@ -108,3 +109,4 @@ private fun buildUrl(baseUrl: String, path: String): String {
         baseUrl + path.removePrefix("/")
     }
 }
+

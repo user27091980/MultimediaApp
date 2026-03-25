@@ -13,23 +13,46 @@ import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 
 /**
- * MainVM:
- * ViewModel encargado de la pantalla principal de la app,
- * gestionando la lista de bandas que se muestran en MainScreen.
+ * ViewModel de la pantalla principal.
  *
- * Usa StateFlow para exponer los datos de manera reactiva a la UI.
+ * Gestiona la obtención y el estado de la lista de bandas mostradas en la UI.
+ *
+ * Expone el estado mediante [StateFlow] para permitir una UI reactiva.
+ *
+ * @property repository Repositorio encargado de obtener los datos.
  */
 class MainVM : ViewModel() {
 
+    /**
+     * Repositorio de datos para obtener la información de las bandas.
+     */
     private val repository = MainRepo(RetrofitModule.mainApi)
 
+    /**
+     * Estado interno de la UI.
+     */
     private val _uiState = MutableStateFlow(MainUiState())
-    val uiState = _uiState.asStateFlow()
 
+    /**
+     * Estado observable de la UI.
+     */
+    val uiState: StateFlow<MainUiState> = _uiState.asStateFlow()
+
+    /**
+     * Inicializa la carga de datos al crear el ViewModel.
+     */
     init {
         loadData()
     }
 
+    /**
+     * Carga la lista de bandas desde el repositorio.
+     *
+     * Actualiza el estado de la UI:
+     * - [MainUiState.isLoading] durante la carga
+     * - [MainUiState.mainBands] con los datos obtenidos
+     * - [MainUiState.error] en caso de fallo
+     */
     fun loadData() {
         viewModelScope.launch {
             try {

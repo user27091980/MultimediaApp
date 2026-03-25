@@ -51,7 +51,7 @@ fun SettingsScreen(vm: SettingsVM = viewModel()) {
             "Apariencia", style = MaterialTheme.typography.headlineMedium,
             color = MaterialTheme.colorScheme.onBackground
         )// Subtítulo
-// Switch para el modo oscuro
+        // Switch para el modo oscuro
         SettingSwitch(
             title = "Modo óscuro",// Texto del switch
             checked = uiState.darkMode,// Estado del switch

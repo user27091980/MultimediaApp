@@ -22,12 +22,29 @@ import kotlinx.coroutines.launch
  * Usamos AndroidViewModel para poder obtener el contexto de la app
  * necesario para SessionManager y Repositorios.
  */
+/**
+ * ViewModel encargado de la pantalla de registro de usuario.
+ *
+ * Gestiona:
+ * - El estado reactivo del formulario
+ * - La validación de los campos
+ * - La comunicación con el repositorio de usuarios
+ *
+ * Utiliza [AndroidViewModel] para disponer del contexto de la aplicación,
+ * necesario para operaciones relacionadas con almacenamiento o sesión.
+ *
+ * @property application Contexto de la aplicación.
+ */
 class RegisterVM(application: Application) : AndroidViewModel(application) {
 
-    // Repositorio centralizado para operaciones de usuario
+    /**
+     * Repositorio encargado de las operaciones de usuario.
+     */
     private val repo = UsersInfoRepo(application.applicationContext)
 
-    // Estado interno del formulario
+    /**
+     * Estado interno del formulario.
+     */
     private val _uiState = MutableStateFlow(
         RegisterFormUiState(
             errorMessage = null,
@@ -36,38 +53,67 @@ class RegisterVM(application: Application) : AndroidViewModel(application) {
             pass = "",
             name = "",
             country = "",
-            isLoading = false, // CORRECCIÓN: iniciar en false, no en true
+            isLoading = false
         )
     )
 
-    // Exposición solo lectura del estado
+    /**
+     * Estado observable del formulario.
+     */
     val uiState: StateFlow<RegisterFormUiState> = _uiState.asStateFlow()
 
+    /**
+     * Actualiza el email en el estado.
+     *
+     * @param newEmail Nuevo valor del email.
+     */
     fun onEmailChange(newEmail: String) =
         _uiState.update { it.copy(email = newEmail, errorMessage = null) }
 
+    /**
+     * Actualiza la contraseña en el estado.
+     *
+     * @param newPass Nueva contraseña.
+     */
     fun onPassChange(newPass: String) =
         _uiState.update { it.copy(pass = newPass, errorMessage = null) }
 
+    /**
+     * Actualiza el nombre en el estado.
+     *
+     * @param newName Nuevo nombre.
+     */
     fun onNameChange(newName: String) =
         _uiState.update { it.copy(name = newName, errorMessage = null) }
 
+    /**
+     * Actualiza el apellido en el estado.
+     *
+     * @param newLastname Nuevo apellido.
+     */
     fun onLastNameChange(newLastname: String) =
         _uiState.update { it.copy(lastName = newLastname, errorMessage = null) }
 
+    /**
+     * Actualiza el país en el estado.
+     *
+     * @param newCountry Nuevo país.
+     */
     fun onCountryChange(newCountry: String) =
         _uiState.update { it.copy(country = newCountry, errorMessage = null) }
 
-    // --- VALIDACIÓN DE CAMPOS ---
     /**
-     * Valida todos los campos del formulario antes de enviar a la API.
-     * Si hay error, se actualiza errorMessage.
-     * Si todo está correcto, ejecuta registerUser() y llama a onSuccess.
+     * Valida los campos del formulario.
+     *
+     * Si los datos son válidos, se ejecuta el registro del usuario.
+     * En caso contrario, se actualiza [RegisterFormUiState.errorMessage].
+     *
+     * @param onSuccess Callback que se ejecuta si el registro es exitoso.
      */
     fun validateFields(onSuccess: () -> Unit) {
         val state = _uiState.value
-        val error = when {
 
+        val error = when {
             !Patterns.EMAIL_ADDRESS.matcher(state.email).matches() -> "Email inválido"
             state.pass.length < 4 -> "La contraseña debe tener al menos 4 caracteres"
             state.name.isBlank() || state.lastName.isBlank() -> "Nombre y apellido son obligatorios"
@@ -77,7 +123,6 @@ class RegisterVM(application: Application) : AndroidViewModel(application) {
         if (error != null) {
             _uiState.update { it.copy(errorMessage = error) }
         } else {
-            // Llamada a la función que hace la petición de registro
             registerUser(
                 email = state.email,
                 pass = state.pass,
@@ -89,15 +134,21 @@ class RegisterVM(application: Application) : AndroidViewModel(application) {
         }
     }
 
-    // --- REGISTRO EN LA API ---
     /**
-     * Llama a UsersInfoRepo.register() para enviar los datos al servidor.
-     * Actualiza isLoading mientras se realiza la operación y errorMessage si falla.
+     * Realiza el registro del usuario en el servidor.
+     *
+     * Gestiona el estado de carga y maneja posibles errores.
+     *
+     * @param email Email del usuario.
+     * @param pass Contraseña del usuario.
+     * @param name Nombre del usuario.
+     * @param lastName Apellido del usuario.
+     * @param country País del usuario.
+     * @param onSuccess Callback que se ejecuta si el registro es exitoso.
      */
     private fun registerUser(
         email: String,
         pass: String,
-
         name: String,
         lastName: String,
         country: String,
@@ -120,7 +171,9 @@ class RegisterVM(application: Application) : AndroidViewModel(application) {
                     onSuccess()
                 },
                 onFailure = { ex ->
-                    _uiState.update { it.copy(isLoading = false, errorMessage = ex.message) }
+                    _uiState.update {
+                        it.copy(isLoading = false, errorMessage = ex.message)
+                    }
                 }
             )
         }

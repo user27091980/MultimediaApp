@@ -31,64 +31,64 @@ import com.example.multimediaapp.viewmodel.uistate.MainUiState
 import com.example.multimediaapp.viewmodel.vm.MainVM
 
 /**
- * Pantalla principal de la aplicación
+ * Pantalla principal de la aplicación.
  *
- * Esta pantalla:
- * - Obtiene los datos desde el ViewModel
- * - Observa cambios en el estado de la UI
- * - Muestra una lista de bandas
- * - Permite navegar al detalle de cada banda
+ * Se encarga de:
+ * - Obtener los datos desde el ViewModel
+ * - Observar el estado de la UI
+ * - Mostrar una lista de bandas
+ * - Gestionar la navegación al detalle de cada banda
+ *
+ * @param navController Controlador de navegación para cambiar de pantalla.
+ * @param viewModel ViewModel que gestiona los datos y la lógica de la pantalla.
  */
 @Composable
-fun MainScreen(navController: NavController, viewModel: MainVM = viewModel()) {
+fun MainScreen(
+    navController: NavController,
+    viewModel: MainVM = viewModel()
+) {
 
-    // Observamos el StateFlow del ViewModel.
-    // collectAsState convierte el flujo en un estado observable por Compose.
+    /**
+     * Estado observable de la UI proveniente del ViewModel.
+     */
     val uiState by viewModel.uiState.collectAsState()
+
+    /**
+     * Carga inicial de datos al crear la pantalla.
+     */
     LaunchedEffect(Unit) {
         viewModel.loadData()
     }
-    /*
-    Box es un contenedor que permite superponer elementos.
-    En este caso lo usamos simplemente como layout base.
-    */
+
+    /**
+     * Contenedor principal de la pantalla.
+     */
     Box(
         modifier = Modifier
             .fillMaxSize()
             .background(MaterialTheme.colorScheme.secondary)
-
     ) {
-        /*
-        Llamamos al composable que dibuja el contenido real
-        separando la lógica de UI de la lógica de estado.
-        */
+
+        /**
+         * Contenido principal de la pantalla.
+         */
         MainContent(
             uiState = uiState,
-            // Cuando se pulse una banda se navegará a su pantalla de detalle
             onImageClick = { bandId ->
                 navController.navigate("${ObjRoutes.BAND}/$bandId")
-
             }
         )
     }
 }
 
 /**
- * Composable encargado de mostrar el contenido principal de la pantalla.
+ * Composable que representa el contenido principal de la pantalla.
  *
- * Separa la lógica de UI de MainScreen para mantener la arquitectura más limpia
- * y facilitar el uso de previews o pruebas.
+ * Se encarga de renderizar la UI en función del estado recibido.
  *
- * @param uiState Estado actual de la pantalla principal.
- * Contiene la lista de bandas obtenidas desde el ViewModel.
- *
- * @param onImageClick Lambda que se ejecuta cuando el usuario pulsa
- * sobre la imagen de una banda. Recibe el id de la banda seleccionada
- * para poder navegar a su pantalla de detalle.
- */
-
-/**
- * Composable que dibuja la lista de bandas
+ * @param uiState Estado actual de la pantalla.
+ * @param onImageClick Callback que se ejecuta al pulsar una banda.
+ * Recibe el identificador de la banda seleccionada.
  */
 @Composable
 fun MainContent(
@@ -96,24 +96,37 @@ fun MainContent(
     onImageClick: (String) -> Unit
 ) {
     when {
+
+        /**
+         * Estado de carga.
+         */
         uiState.isLoading -> {
             Box(modifier = Modifier.fillMaxSize()) {
                 androidx.compose.material3.Text("Cargando...")
             }
         }
 
+        /**
+         * Estado de error.
+         */
         uiState.error != null -> {
             Box(modifier = Modifier.fillMaxSize()) {
                 androidx.compose.material3.Text("Error: ${uiState.error}")
             }
         }
 
+        /**
+         * Estado sin datos.
+         */
         uiState.mainBands.isEmpty() -> {
             Box(modifier = Modifier.fillMaxSize()) {
                 androidx.compose.material3.Text("No hay bandas")
             }
         }
 
+        /**
+         * Estado con datos disponibles.
+         */
         else -> {
             CardList(
                 main = uiState.mainBands,
@@ -124,29 +137,32 @@ fun MainContent(
         }
     }
 }
-/**
- * Preview de la pantalla principal.
- *
- * Permite visualizar la UI en Android Studio
- * sin necesidad de ejecutar la aplicación.
- */
 
+/**
+ * Vista previa de la pantalla principal.
+ *
+ * Permite visualizar la UI sin necesidad de ejecutar la app.
+ */
 @Preview(showBackground = true)
 @Composable
 fun MainScreenPreview() {
-    /*
-     Usamos datos de prueba (mock data)
-     para simular las bandas que normalmente vendrían del ViewModel.
+
+    /**
+     * Datos simulados para el preview.
+     */
+    val fakeState = MainUiState(
+        mainBands = listOf(
+            MainDTO("1", "Autechre", "https://via.placeholder.com/150"),
+            MainDTO("2", "Aphex Twin", "https://via.placeholder.com/150"),
+            MainDTO("3", "Boards of Canada", "https://via.placeholder.com/150")
+        )
+    )
+
+    /**
+     * Contenido del preview.
      */
     MainContent(
-        uiState = MainUiState(
-            mainBands = listOf(
-                MainDTO("1", "Autechre", "https://via.placeholder.com/150"),
-                MainDTO("2", "Aphex Twin", "https://via.placeholder.com/150"),
-                MainDTO("3", "Boards of Canada", "https://via.placeholder.com/150")
-            )
-        ),
-        // En el preview no necesitamos navegar
+        uiState = fakeState,
         onImageClick = {}
     )
 }

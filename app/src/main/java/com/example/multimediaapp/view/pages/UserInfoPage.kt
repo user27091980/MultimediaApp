@@ -50,7 +50,7 @@ fun UserInfoScreen(
                     surname = user.lastName,
                     country = user.country,
 
-                )
+                    )
             } else {
                 // Estado de carga o error
                 Text(

@@ -50,8 +50,7 @@ fun RegisterScreen(
             .background(
 
                 MaterialTheme.colorScheme.background
-            ),
-        contentAlignment = Alignment.Center
+            ), contentAlignment = Alignment.Center
 
     ) {
         // Columna principal que contiene los campos de texto y botones
@@ -64,15 +63,14 @@ fun RegisterScreen(
 
         ) {
             Column(
-                modifier = Modifier.weight(1f),
-                verticalArrangement = Arrangement.Center
+                modifier = Modifier.weight(1f), verticalArrangement = Arrangement.Center
             ) {
                 TextFieldsComponent(// Pasamos los valores y callbacks al ViewModel
                     email = uiState.email,
                     pass = uiState.pass,
                     country = uiState.country,
-                    name=uiState.name,
-                    lastName=uiState.lastName,
+                    name = uiState.name,
+                    lastName = uiState.lastName,
                     onEmailChange = vm::onEmailChange,
                     onPassChange = vm::onPassChange,
                     onCountryChange = vm::onCountryChange,
@@ -82,9 +80,7 @@ fun RegisterScreen(
                 // Mostramos error si existe
                 uiState.errorMessage?.let { error ->
                     Text(
-                        text = error,
-                        color = Color.Red,
-                        modifier = Modifier.padding(top = 8.dp)
+                        text = error, color = Color.Red, modifier = Modifier.padding(top = 8.dp)
                     )
                 }
             }
@@ -96,13 +92,11 @@ fun RegisterScreen(
                         // Navegar al diálogo  si el registro fue exitoso
                         navController.navigate(ObjRoutes.DIALOG)
                     }
-                }
-            )
+                })
 
             // Botón "Cancelar" que regresa a la pantalla de login y registro
             ButtonCancel(
-                onClick = { navController.navigate(ObjRoutes.LOGINREG) }
-            )
+                onClick = { navController.navigate(ObjRoutes.LOGINREG) })
         }
     }
 }

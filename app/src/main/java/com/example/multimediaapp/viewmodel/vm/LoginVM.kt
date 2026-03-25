@@ -12,7 +12,6 @@ import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 
-
 /**
  * ViewModel encargado de gestionar la pantalla de login.
  *
@@ -33,12 +32,14 @@ class LoginVM : ViewModel() {
     // ESTADO DE LA UI
     // MutableStateFlow que contiene el estado de la pantalla de login
     private val _uiState = MutableStateFlow(LoginUiState())
+
     // Exponemos el estado como inmutable para que la UI lo observe
     val uiState: StateFlow<LoginUiState> = _uiState.asStateFlow()
 
     // Eventos de un solo uso (navegación)
     // MutableSharedFlow para eventos de un solo uso (como navegación o errores)
     private val _events = MutableSharedFlow<LoginEvent>()
+
     // Exponemos el flujo inmutable de eventos
     val events = _events.asSharedFlow()
 
@@ -50,12 +51,14 @@ class LoginVM : ViewModel() {
             it.copy(email = email, errorMessage = null)
         }
     }
+
     // Actualiza el campo password y limpia errores previos
     fun onPasswordChange(password: String) {
         _uiState.update {
             it.copy(password = password, errorMessage = null)
         }
     }
+
     //Alterna la visibilidad de la contraseña
     fun togglePasswordVisibility() {
         _uiState.update {
@@ -110,12 +113,14 @@ class LoginVM : ViewModel() {
             }
         }
     }
+
     //Limpia cualquier mensaje de error visible en la UI
     fun clearError() {
         _uiState.update {
             it.copy(errorMessage = null)
         }
     }
+
     /**
      * Valida los campos antes de intentar login.
      *
@@ -137,6 +142,7 @@ class LoginVM : ViewModel() {
         return true
     }
 }
+
 /**
  * Eventos de un solo uso para la pantalla de Login.
  *

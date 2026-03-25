@@ -4,29 +4,37 @@ import androidx.lifecycle.ViewModel
 import com.example.multimediaapp.viewmodel.uistate.SettingsUiState
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
+import kotlinx.coroutines.flow.asStateFlow
 
 /**
- * ViewModel encargado de gestionar la configuración de la app (Settings).
+ * ViewModel encargado de gestionar la configuración de la aplicación.
  *
- * - Expone un StateFlow observable para la UI.
- * - Mantiene el estado de las opciones de usuario.
- * - Ideal para MVVM limpio y reactivo.
+ * Gestiona el estado de las preferencias del usuario y las expone mediante
+ * [StateFlow] para que la UI pueda observar cambios de forma reactiva.
+ *
+ * Ejemplo de configuración:
+ * - Modo oscuro
  */
 class SettingsVM : ViewModel() {
 
-    //Estado interno mutable
+    /**
+     * Estado interno mutable de la configuración.
+     */
     private val _uiState = MutableStateFlow(SettingsUiState(darkMode = false))
 
-    //Estado expuesto como solo lectura
-    val uiState: StateFlow<SettingsUiState> = _uiState
+    /**
+     * Estado observable expuesto a la UI.
+     */
+    val uiState: StateFlow<SettingsUiState> = _uiState.asStateFlow()
 
     /**
-     * Cambia el modo oscuro de la aplicación.
+     * Actualiza el estado del modo oscuro.
      *
-     * @param enabled true si el modo oscuro está activado, false si está desactivado.
+     * @param enabled Indica si el modo oscuro está activado.
+     * - true: modo oscuro activado
+     * - false: modo oscuro desactivado
      */
     fun onDarkModeChange(enabled: Boolean) {
         _uiState.value = _uiState.value.copy(darkMode = enabled)
-
     }
 }

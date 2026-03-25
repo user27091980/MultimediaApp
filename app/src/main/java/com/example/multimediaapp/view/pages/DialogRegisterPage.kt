@@ -63,9 +63,7 @@ fun DialogRegisterScreen(
             }) {
                 Text(stringResource(R.string.no))
             }
-        }
-
-    )
+        })
 }
 
 /**
@@ -78,7 +76,6 @@ fun DialogPrev() {
 
     DialogRegisterScreen(
         navController = rememberNavController(),
-
         )
 }
 /**NOTAS:
