@@ -1,5 +1,8 @@
 package com.example.multimediaapp.view.components
 
+import android.net.Uri
+import androidx.activity.compose.rememberLauncherForActivityResult
+import androidx.activity.result.contract.ActivityResultContracts
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.ButtonDefaults
@@ -122,7 +125,51 @@ fun ButtonRegister(
         modifier = modifier
     )
 }
+/**
+ * Botón para seleccionar una imagen de la galería.
+ *
+ * @param text Texto del botón
+ * @param onImageSelected Callback con la Uri seleccionada
+ */
+@Composable
+fun ButtonImage(
+    text: String,
+    onImageSelected: (Uri?) -> Unit
+) {
+    val launcher = rememberLauncherForActivityResult(
+        ActivityResultContracts.GetContent()
+    ) { uri ->
+        onImageSelected(uri)
+    }
 
+    BaseButton(
+        text = text,
+        onClick = { launcher.launch("image/*") }
+    )
+}
+
+/**
+ * Botón para seleccionar múltiples imágenes.
+ *
+ * @param text Texto del botón
+ * @param onImagesSelected Callback con lista de Uri
+ */
+@Composable
+fun ButtonGallery(
+    text: String,
+    onImagesSelected: (List<Uri>) -> Unit
+) {
+    val launcher = rememberLauncherForActivityResult(
+        ActivityResultContracts.GetMultipleContents()
+    ) { uris ->
+        onImagesSelected(uris)
+    }
+
+    BaseButton(
+        text = text,
+        onClick = { launcher.launch("image/*") }
+    )
+}
 /*
 BaseButton: botón genérico reutilizable con estilo consistente (colores, bordes, ancho completo).
 

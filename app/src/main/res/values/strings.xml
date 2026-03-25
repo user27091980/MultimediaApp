@@ -26,4 +26,7 @@
     <string name="apellido">apellido</string>
     <string name="pais">País</string>
     <string name="add">añadir banda</string>
+    <string name="addBanner">añadir banner</string>
+    <string name="addBand">añadir imagen banda</string>
+    <string name="addAlbums">añadir imagen albums</string>
 </resources>

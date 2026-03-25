@@ -21,11 +21,15 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import coil.compose.AsyncImage
+import com.example.multimediaapp.R
 import com.example.multimediaapp.data.entity.toEntity
 import com.example.multimediaapp.model.BandDTO
+import com.example.multimediaapp.view.components.ButtonGallery
+import com.example.multimediaapp.view.components.ButtonImage
 import com.example.multimediaapp.view.components.TextFieldAdd
 import java.util.UUID
 
@@ -49,51 +53,21 @@ fun AddBandScreen(
 ) {
 
     // Estados del formulario
-    var name by remember { mutableStateOf("") }              // Nombre de la banda
-    var description by remember { mutableStateOf("") }       // Descripción
-    var style by remember { mutableStateOf("") }             // Estilo musical
-    var recordLabel by remember { mutableStateOf("") }       // Discográfica
-    var components by remember { mutableStateOf("") }        // Componentes
-    var albumLinks by remember { mutableStateOf(listOf<String>()) } // Links de álbum
-    var headerLink by remember { mutableStateOf("") }        // Link principal
+    var name by remember { mutableStateOf("") }
+    var description by remember { mutableStateOf("") }
+    var style by remember { mutableStateOf("") }
+    var recordLabel by remember { mutableStateOf("") }
+    var components by remember { mutableStateOf("") }
+    var albumLinks by remember { mutableStateOf(listOf<String>()) }
+    var headerLink by remember { mutableStateOf("") }
 
     // Estados de imágenes
-    var bannerImage by remember { mutableStateOf<Uri?>(null) }   // Imagen principal
-    var imageBand by remember { mutableStateOf<Uri?>(null) }     // Imagen de la banda
-    var albumImages by remember { mutableStateOf<List<Uri>>(emptyList()) } // Galería
+    var bannerImage by remember { mutableStateOf<Uri?>(null) }
+    var imageBand by remember { mutableStateOf<Uri?>(null) }
+    var albumImages by remember { mutableStateOf<List<Uri>>(emptyList()) }
 
-    //  Estado de error
     var error by remember { mutableStateOf<String?>(null) }
 
-    //  Selector de imagen para el banner
-    val bannerLauncher = rememberLauncherForActivityResult(
-        ActivityResultContracts.GetContent()
-    ) { uri ->
-        bannerImage = uri
-    }
-
-    //  Selector de imagen para la banda
-    val bandImageLauncher = rememberLauncherForActivityResult(
-        ActivityResultContracts.GetContent()
-    ) { uri ->
-        imageBand = uri
-    }
-
-    //Selector de múltiples imágenes (álbum)
-    val albumLauncher = rememberLauncherForActivityResult(
-        ActivityResultContracts.GetMultipleContents()
-    ) { uris ->
-        albumImages = uris
-    }
-
-    /**
-     * UI principal de la pantalla.
-     *
-     * Contiene:
-     * - Selección de imágenes
-     * - Formulario de datos
-     * - Botón de registro
-     */
     Column(
         modifier = Modifier
             .fillMaxSize()
@@ -102,7 +76,6 @@ fun AddBandScreen(
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
 
-        //Título de la pantalla
         Text(
             text = "Registro de Banda",
             style = MaterialTheme.typography.headlineMedium
@@ -110,20 +83,17 @@ fun AddBandScreen(
 
         Spacer(modifier = Modifier.height(16.dp))
 
-        //BOTÓN PARA SELECCIONAR BANNER
-        Button(
-            onClick = { bannerLauncher.launch("image/*") },
-            modifier = Modifier.fillMaxWidth()
-        ) {
-            Text("Seleccionar banner (portada)")
-        }
+        // ================= BANNER =================
+        ButtonImage(
+            text = stringResource(R.string.addBanner),
+            onImageSelected = { bannerImage = it }
+        )
 
-        //Vista previa del banner
         bannerImage?.let {
             Spacer(modifier = Modifier.height(10.dp))
             AsyncImage(
                 model = it,
-                contentDescription = "Banner de la banda",
+                contentDescription = "Banner",
                 modifier = Modifier
                     .fillMaxWidth()
                     .height(180.dp)
@@ -132,20 +102,17 @@ fun AddBandScreen(
 
         Spacer(modifier = Modifier.height(16.dp))
 
-        //BOTÓN PARA IMAGEN DE LA BANDA
-        Button(
-            onClick = { bandImageLauncher.launch("image/*") },
-            modifier = Modifier.fillMaxWidth()
-        ) {
-            Text("Seleccionar imagen de la banda")
-        }
+        // ================= IMAGEN BANDA =================
+        ButtonImage(
+            text = stringResource(R.string.addBand),
+            onImageSelected = { imageBand = it }
+        )
 
-        //Vista previa imagen de la banda
         imageBand?.let {
             Spacer(modifier = Modifier.height(10.dp))
             AsyncImage(
                 model = it,
-                contentDescription = "Imagen de la banda",
+                contentDescription = "Imagen banda",
                 modifier = Modifier
                     .fillMaxWidth()
                     .height(150.dp)
@@ -154,21 +121,18 @@ fun AddBandScreen(
 
         Spacer(modifier = Modifier.height(16.dp))
 
-        //BOTÓN PARA GALERÍA DE IMÁGENES
-        Button(
-            onClick = { albumLauncher.launch("image/*") },
-            modifier = Modifier.fillMaxWidth()
-        ) {
-            Text("Añadir imágenes del álbum")
-        }
+        // ================= ALBUM =================
+        ButtonGallery(
+            text = stringResource(R.string.addAlbums),
+            onImagesSelected = { albumImages = it }
+        )
 
         Spacer(modifier = Modifier.height(10.dp))
 
-        //Vista previa de la galería
         albumImages.forEach { uri ->
             AsyncImage(
                 model = uri,
-                contentDescription = "Imagen del álbum",
+                contentDescription = "Imagen álbum",
                 modifier = Modifier
                     .fillMaxWidth()
                     .height(150.dp)
@@ -178,9 +142,7 @@ fun AddBandScreen(
 
         Spacer(modifier = Modifier.height(16.dp))
 
-        /**
-         * Formulario reutilizable con todos los campos de texto.
-         */
+        // ================= FORMULARIO =================
         TextFieldAdd(
             name = name,
             description = description,
@@ -201,7 +163,7 @@ fun AddBandScreen(
 
         Spacer(modifier = Modifier.height(12.dp))
 
-        //Mensaje de error
+        // ================= ERROR =================
         error?.let {
             Text(
                 text = it,
@@ -211,22 +173,15 @@ fun AddBandScreen(
 
         Spacer(modifier = Modifier.height(20.dp))
 
-        /**
-         * Botón para registrar la banda.
-         *
-         * Valida los campos obligatorios y crea un [BandDTO]
-         * con todos los datos introducidos.
-         */
-        Button(
+        // ================= REGISTRO =================
+        androidx.compose.material3.Button(
             onClick = {
 
-                // Validación básica
                 if (name.isBlank() || description.isBlank()) {
                     error = "Nombre y descripción son obligatorios"
                     return@Button
                 }
 
-                // Crear DTO
                 val bandDTO = BandDTO(
                     id = UUID.randomUUID().toString(),
                     name = name,
@@ -240,10 +195,9 @@ fun AddBandScreen(
                     headerLink = headerLink
                 )
 
-                // Enviar datos a la capa superior
                 onRegister(bandDTO)
 
-                // Limpiar formulario
+                // Reset
                 name = ""
                 description = ""
                 style = ""
@@ -258,18 +212,15 @@ fun AddBandScreen(
             },
             modifier = Modifier.fillMaxWidth()
         ) {
-            Text("Registrar Banda")
+            Text(stringResource(R.string.registro))
         }
     }
 }
 
-/**
- * Vista previa de la pantalla en modo diseño (Preview).
- */
 @Preview(showBackground = true, showSystemUi = true)
 @Composable
 fun AddBandScreenPreview() {
     AddBandScreen(
-        onRegister = { }
+        onRegister = {}
     )
 }
