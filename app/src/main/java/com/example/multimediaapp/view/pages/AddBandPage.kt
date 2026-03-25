@@ -71,42 +71,29 @@ fun AddBandScreen(
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
 
+        /**
+         * Título de la pantalla.
+         */
         Text(
-            text = "Registro de Banda",
+            text = stringResource(R.string.bandRegister),
             style = MaterialTheme.typography.headlineMedium
         )
 
         Spacer(modifier = Modifier.height(16.dp))
 
         /**
-         * Selección de imagen para banner.
+         * Botón para seleccionar imagen de la banda.
          */
-        ButtonImage(
-            text = stringResource(R.string.addBanner),
-            onImageSelected = { bannerImage = it }
-        )
-
-        bannerImage?.let {
-            Spacer(modifier = Modifier.height(10.dp))
-            AsyncImage(
-                model = it,
-                contentDescription = "Banner",
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .height(180.dp)
-            )
+        Button(
+            onClick = { bandImageLauncher.launch("image/*") },
+            modifier = Modifier.fillMaxWidth()
+        ) {
+            Text(stringResource(R.string.selBand))
         }
 
-        Spacer(modifier = Modifier.height(16.dp))
-
         /**
-         * Selección de imagen de la banda.
+         * Vista previa de la imagen de la banda.
          */
-        ButtonImage(
-            text = stringResource(R.string.addBand),
-            onImageSelected = { imageBand = it }
-        )
-
         imageBand?.let {
             Spacer(modifier = Modifier.height(10.dp))
             AsyncImage(
@@ -121,15 +108,20 @@ fun AddBandScreen(
         Spacer(modifier = Modifier.height(16.dp))
 
         /**
-         * Selección de múltiples imágenes del álbum.
+         * Botón para seleccionar imágenes del álbum.
          */
-        ButtonGallery(
-            text = stringResource(R.string.addAlbums),
-            onImagesSelected = { albumImages = it }
-        )
+        Button(
+            onClick = { albumLauncher.launch("image/*") },
+            modifier = Modifier.fillMaxWidth()
+        ) {
+            Text(stringResource(R.string.selAlbum))
+        }
 
         Spacer(modifier = Modifier.height(10.dp))
 
+        /**
+         * Vista previa de las imágenes del álbum.
+         */
         albumImages.forEach { uri ->
             AsyncImage(
                 model = uri,
@@ -154,7 +146,6 @@ fun AddBandScreen(
             components = components,
             albumLinks = albumLinks,
             headerLink = headerLink,
-
             onAddNameChange = { name = it },
             onDescriptionChange = { description = it },
             onStyleChange = { style = it },
@@ -167,7 +158,7 @@ fun AddBandScreen(
         Spacer(modifier = Modifier.height(12.dp))
 
         /**
-         * Mensaje de error.
+         * Mensaje de error si existe.
          */
         error?.let {
             Text(
@@ -179,7 +170,7 @@ fun AddBandScreen(
         Spacer(modifier = Modifier.height(20.dp))
 
         /**
-         * Botón para registrar la banda.
+         * Botón de registro.
          *
          * Valida campos obligatorios y crea un objeto BandDTO.
          */
