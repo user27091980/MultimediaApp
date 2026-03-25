@@ -78,10 +78,85 @@ fun DialogPrev() {
         navController = rememberNavController(),
         )
 }
-/**NOTAS:
- * 1. **AlertDialog: Componente de Jetpack Compose que permite mostrar un diálogo modal.
- * 2. **onDismissRequest: Callback que se ejecuta cuando el usuario toca fuera del diálogo.
- * 3. **confirmButton / dismissButton: Botones que ejecutan acciones de confirmación o cancelación.
- * 4. **collectAsState()**: Convierte un StateFlow del ViewModel en un estado observable por Compose.
- * 5. **Preview**: Permite ver el diálogo en tiempo de diseño sin ejecutar la app.
+/*
+ * Este archivo define un diálogo de confirmación en Jetpack Compose
+ * para el proceso de registro de usuario.
+ *
+ * COMPONENTE PRINCIPAL:
+ *
+ * DialogRegisterScreen(...)
+ *
+ * - Muestra un AlertDialog con opciones de confirmación.
+ * - Está conectado a un ViewModel (DialogVM).
+ * - Permite navegar entre pantallas según la acción del usuario.
+ *
+ * ESTADO:
+ *
+ * uiState:
+ * - Se obtiene del ViewModel usando collectAsState().
+ * - Permite que la UI sea reactiva a cambios de estado.
+ *
+ * AlertDialog:
+ *
+ * - Componente de Material Design para mostrar diálogos modales.
+ * - Bloquea la interacción con el resto de la pantalla hasta que se cierre.
+ *
+ * ELEMENTOS DEL DIÁLOGO:
+ *
+ * 1. onDismissRequest:
+ *    - Se ejecuta cuando el usuario toca fuera del diálogo.
+ *    - Llama a vm.hideDialog() para cerrar el diálogo.
+ *
+ * 2. title:
+ *    - Título del diálogo (texto "registro").
+ *
+ * 3. confirmButton:
+ *    - Botón de confirmación ("sí").
+ *    - Acciones:
+ *        - Llama a vm.showDialog()
+ *        - Navega a la pantalla INFOUSER
+ *
+ * 4. dismissButton:
+ *    - Botón de cancelación ("no").
+ *    - Acciones:
+ *        - Llama a vm.hideDialog()
+ *        - Navega de vuelta a LOGINREG
+ *
+ * NAVEGACIÓN:
+ *
+ * NavController:
+ * - Permite cambiar de pantalla dentro de la app.
+ * - Se utiliza para:
+ *   - INFOUSER
+ *   - LOGINREG
+ *
+ * INTERNACIONALIZACIÓN:
+ *
+ * stringResource(R.string.*):
+ * - Permite usar textos desde archivos de recursos.
+ * - Facilita soporte multi-idioma.
+ *
+ * VIEWMODEL:
+ *
+ * DialogVM:
+ * - Gestiona la lógica del diálogo.
+ * - Controla si se muestra o se oculta.
+ *
+ * PREVIEW:
+ *
+ * DialogPrev:
+ * - Permite visualizar el diálogo sin ejecutar la app.
+ * - Usa rememberNavController() como controlador ficticio.
+ *
+ * BENEFICIOS:
+ *
+ * - Separación de lógica y UI.
+ * - UI reactiva basada en estado.
+ * - Código reutilizable y mantenible.
+ * - Integración con navegación de forma sencilla.
+ *
+ * NOTA:
+ *
+ * - Este componente sigue el patrón MVVM.
+ * - La UI depende completamente del estado del ViewModel.
  */

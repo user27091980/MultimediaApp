@@ -74,3 +74,88 @@ class MainVM : ViewModel() {
         }
     }
 }
+/**
+ * MainVM (ViewModel de la pantalla principal):
+ *
+ * Este ViewModel gestiona la lógica de la pantalla principal (MainScreen),
+ * encargándose de obtener y mantener la lista de bandas que se muestran en la UI.
+ *
+ * FORMA PARTE DE MVVM:
+ *
+ * - Actúa como intermediario entre la UI y la capa de datos.
+ * - Obtiene datos desde el repositorio.
+ * - Expone el estado mediante StateFlow.
+ * - Permite que la UI sea reactiva.
+ *
+ * ARQUITECTURA:
+ *
+ * UI (Compose)
+ *     ↓
+ * MainVM
+ *     ↓
+ * MainRepo
+ *     ↓
+ * Retrofit API
+ *
+ * VARIABLES:
+ *
+ * repository:
+ * - Instancia de MainRepo.
+ * - Se encarga de obtener los datos desde la API.
+ *
+ * _uiState:
+ * - Estado interno mutable.
+ * - Tipo: MutableStateFlow<MainUiState>.
+ * - Contiene:
+ *      • lista de bandas
+ *      • estado de carga
+ *      • errores
+ *
+ * uiState:
+ * - Estado público (solo lectura).
+ * - Observado por la UI.
+ *
+ * FLUJO DE FUNCIONAMIENTO:
+ *
+ * 1. El ViewModel se crea.
+ *
+ * 2. En el init:
+ *      → se llama automáticamente a loadData().
+ *
+ * 3. loadData():
+ *      - Marca la UI como cargando (isLoading = true).
+ *      - Llama al repositorio para obtener datos.
+ *      - Actualiza el estado con la lista obtenida.
+ *      - Maneja errores si ocurren.
+ *
+ * 4. La UI observa uiState:
+ *      → collectAsState()
+ *      → se recompone automáticamente al cambiar el estado.
+ *
+ * MÉTODO PRINCIPAL:
+ *
+ * loadData():
+ * - Ejecuta una corrutina en viewModelScope.
+ * - Llama a repository.getBands().
+ * - Actualiza el estado:
+ *      • isLoading = true durante la carga
+ *      • mainBands = lista obtenida
+ *      • isLoading = false al finalizar
+ * - Captura errores con try-catch.
+ *
+ * viewModelScope:
+ * - Scope de corrutinas asociado al ciclo de vida del ViewModel.
+ * - Se cancela automáticamente al destruirse.
+ *
+ * BENEFICIOS:
+ *
+ * - UI completamente desacoplada de la lógica de datos.
+ * - Estado centralizado y observable.
+ * - Manejo limpio de errores.
+ * - Código más mantenible y escalable.
+ *
+ * NOTA:
+ *
+ * - StateFlow garantiza que la UI siempre tenga el estado más reciente.
+ * - El uso de copy() evita mutaciones directas (inmutabilidad).
+ */

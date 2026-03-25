@@ -106,3 +106,106 @@ fun SettingSwitch(
 fun SettingsPreview() {
     SettingsScreen()
 }
+/*
+ * Pantalla de configuración de la aplicación.
+ *
+ * OBJETIVO:
+ *
+ * - Permitir al usuario ajustar preferencias de la app.
+ * - Mostrar información básica como la versión.
+ * - Gestionar opciones visuales (como modo oscuro).
+ *
+ * ARQUITECTURA:
+ *
+ * - Sigue el patrón MVVM.
+ * - SettingsVM gestiona el estado y la lógica.
+ * - La UI observa el estado y responde a cambios.
+ *
+ * FLUJO DE DATOS:
+ *
+ * 1. Se obtiene el estado desde el ViewModel:
+ *      val uiState by vm.uiState.collectAsState()
+ *
+ * 2. El switch refleja el estado:
+ *      checked = uiState.darkMode
+ *
+ * 3. Cuando el usuario cambia el switch:
+ *      vm.onDarkModeChange(it)
+ *
+ * ESTRUCTURA DE LA UI:
+ *
+ * Column principal:
+ * - Ocupa toda la pantalla (fillMaxSize)
+ * - Aplica fondo con MaterialTheme
+ * - Añade padding interno de 16dp
+ *
+ * SECCIONES:
+ *
+ * 1. Título:
+ *    - "configuración"
+ *
+ * 2. Sección de apariencia:
+ *    - Subtítulo "Apariencia"
+ *    - Switch para activar/desactivar modo oscuro
+ *
+ * 3. Información:
+ *    - Muestra la versión de la app desde strings.xml
+ *
+ * COMPONENTES:
+ *
+ * SettingSwitch:
+ * - Componente reutilizable.
+ * - Muestra:
+ *   - Texto a la izquierda
+ *   - Switch a la derecha
+ * - Usa Row con:
+ *     Arrangement.SpaceBetween
+ *   para separar ambos elementos.
+ *
+ * Switch:
+ * - Componente de Material3.
+ * - Permite alternar entre:
+ *     true (activado)
+ *     false (desactivado)
+ *
+ * GESTIÓN DEL MODO OSCURO:
+ *
+ * uiState.darkMode:
+ * - Guarda el estado actual.
+ *
+ * vm.onDarkModeChange(it):
+ * - Actualiza el estado en el ViewModel.
+ *
+ * RECURSOS:
+ *
+ * stringResource(R.string.version):
+ * - Obtiene textos desde res/values/strings.xml.
+ * - Permite internacionalización.
+ *
+ * PREVIEW:
+ *
+ * SettingsPreview:
+ * - Permite visualizar la UI en Android Studio.
+ * - No necesita ejecutar la app.
+ *
+ * BENEFICIOS:
+ *
+ * - UI simple y clara.
+ * - Separación de responsabilidades.
+ * - Reutilización del componente SettingSwitch.
+ * - Estado centralizado en el ViewModel.
+ *
+ * NOTAS IMPORTANTES:
+ *
+ * - collectAsState():
+ *   Hace observable el estado del ViewModel.
+ *
+ * - Row:
+ *   Permite organizar elementos en horizontal.
+ *
+ * - Spacer:
+ *   Añade separación entre secciones.
+ *
+ * - MaterialTheme:
+ *   Garantiza coherencia visual en toda la app.
+ */

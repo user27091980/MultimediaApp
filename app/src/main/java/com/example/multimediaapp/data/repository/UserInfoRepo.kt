@@ -87,3 +87,55 @@ class UsersInfoRepo(context: Context) {
     fun getLoggedUser(): UsersInfoDTO? = session.getUser()
     fun logout() = session.logout()
 }
+
+/*
+ * Este archivo define el repositorio de usuarios (UsersInfoRepo),
+ * encargado de gestionar las operaciones relacionadas con el perfil del usuario
+ * y la comunicación con la API.
+ *
+ * Utiliza Retrofit para realizar las peticiones al servidor y SessionManager
+ * para gestionar la sesión del usuario en local.
+ *
+ * Este repositorio actúa como intermediario entre:
+ * - La capa de red (API)
+ * - La capa de datos (Entity)
+ * - La capa de presentación (DTO)
+ * - La gestión de sesión (SessionManager)
+ *
+ * Métodos principales:
+ *
+ * 1. read(id):
+ *    - Obtiene la información de un usuario por su ID.
+ *    - Llama al endpoint correspondiente de la API.
+ *    - Convierte la respuesta (Entity) a DTO.
+ *    - Devuelve un Result con éxito o fallo.
+ *
+ * 2. register(email, name, pass, lastName, country):
+ *    - Construye un objeto UsersInfoDTO con los datos proporcionados.
+ *    - Envía el DTO al servidor para registrar un nuevo usuario.
+ *    - Si el registro es exitoso:
+ *        - Convierte la respuesta a DTO.
+ *        - Guarda el usuario en sesión mediante SessionManager.
+ *    - Si falla, devuelve el error correspondiente.
+ *
+ * 3. update(dto):
+ *    - Actualiza los datos del usuario enviando el DTO a la API.
+ *    - Usa el email como identificador del usuario.
+ *    - Si tiene éxito:
+ *        - Convierte la respuesta a DTO.
+ *        - Actualiza la sesión guardada.
+ *
+ * 4. getLoggedUser():
+ *    - Devuelve el usuario actualmente guardado en sesión.
+ *
+ * 5. logout():
+ *    - Elimina la información del usuario de la sesión.
+ *
+ * Uso de Result:
+ * - Permite manejar de forma segura tanto el éxito como los errores.
+ * - Evita el uso de valores nulos y mejora el control de errores.
+ *
+ * SessionManager:
+ * - Se utiliza para guardar y recuperar el usuario autenticado.
+ * - Permite mantener la sesión incluso después de cerrar la app.
+ */

@@ -60,22 +60,66 @@ fun BandHeader(band: BandDTO) {
     }
 }
 
-/**
- * Teoría.
+/*
+ * Este archivo define un componente de UI en Jetpack Compose que muestra
+ * la cabecera (banner) de una banda.
  *
- * @Composable: Permite usar esta función dentro de otros componentes de Compose y renderizar UI declarativa.
+ * COMPONENTE PRINCIPAL:
  *
- * rememberAsyncImagePainter: Carga imágenes desde URLs y recuerda el resultado para optimizar rendimiento y evitar recargas innecesarias.
+ * BandHeader(band: BandDTO)
+ * - Recibe un objeto BandDTO con la información de la banda.
+ * - Muestra la imagen del banner de la banda.
  *
- * Modifier.fillMaxWidth(): Hace que la imagen se extienda a lo ancho de la pantalla o contenedor padre.
+ * ESTRUCTURA:
  *
- * Modifier.height(200.dp): Define la altura del banner de la banda.
+ * Box:
+ * - Contenedor principal que permite posicionar elementos.
+ * - Se utiliza para aplicar tamaño, bordes y alineación.
+ * - Incluye:
+ *   - fillMaxWidth(): ocupa todo el ancho disponible
+ *   - height(): define la altura del banner
+ *   - padding(): márgenes laterales
+ *   - clip(): recorta la imagen con bordes redondeados
  *
- * ContentScale.Crop: Ajusta la imagen para llenar el espacio disponible, recortando lo que sobresalga si es necesario.
+ * Image:
+ * - Componente que muestra la imagen del banner.
+ * - Usa rememberAsyncImagePainter para cargar imágenes desde URL.
  *
- * contentDescription: Muy importante para accesibilidad, describe la imagen para lectores de pantalla.
+ * rememberAsyncImagePainter (Coil):
+ * - Carga imágenes de forma asíncrona.
+ * - Mejora el rendimiento evitando recargas innecesarias.
+ * - Muy usado en apps modernas con imágenes remotas.
+ *
+ * contentScale = ContentScale.Crop:
+ * - Ajusta la imagen al contenedor.
+ * - Recorta partes de la imagen si no encaja exactamente.
+ *
+ * click en la imagen:
+ * - La imagen es clickable.
+ * - Si existe un headerLink:
+ *   - Se abre un Intent ACTION_VIEW.
+ *   - Se lanza el navegador con la URL asociada.
+ *
+ * LocalContext:
+ * - Permite acceder al contexto de Android dentro de Compose.
+ * - Se utiliza para lanzar intents.
+ *
+ * IMPORTANTE:
+ *
+ * - contentDescription:
+ *   - Mejora la accesibilidad.
+ *   - Permite que lectores de pantalla describan la imagen.
+ *
+ * - Uri.toUri():
+ *   - Convierte un String en un objeto Uri para usarlo en intents.
+ *
+ * BENEFICIOS:
+ *
+ * - UI declarativa con Compose.
+ * - Carga eficiente de imágenes con Coil.
+ * - Interactividad (click en banner).
+ * - Código limpio, reutilizable y fácil de mantener.
  */
-
 
 
 

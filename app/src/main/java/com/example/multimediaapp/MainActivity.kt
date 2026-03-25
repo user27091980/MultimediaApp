@@ -129,3 +129,117 @@ Scaffold es un componente de Material3 que facilita layout con top bar, bottom b
 
 NavGraph ontiene todas las rutas y pantallas de la aplicación
  */
+/**
+ * MainActivity:
+ *
+ * Es la actividad principal y punto de entrada de la aplicación.
+ * Se encarga de inicializar toda la UI usando Jetpack Compose
+ * y de configurar los elementos globales como:
+ *
+ * - Tema de la aplicación
+ * - Navegación
+ * - Barras superiores e inferiores
+ *
+ * ARQUITECTURA GENERAL:
+ *
+ * MainActivity
+ *     ↓
+ * Theme (MultimediaAppTheme)
+ *     ↓
+ * Scaffold (estructura base UI)
+ *     ↓
+ * NavGraph (pantallas)
+ *
+ * onCreate():
+ *
+ * - Método principal que se ejecuta al iniciar la Activity.
+ * - Aquí se configura toda la UI con setContent {}.
+ *
+ * enableEdgeToEdge():
+ *
+ * - Permite que la UI se dibuje detrás de las barras del sistema
+ *   (status bar y navigation bar).
+ * - Mejora la apariencia moderna de la app.
+ *
+ * VIEWMODEL:
+ *
+ * settingsVM:
+ * - ViewModel global para gestionar preferencias (modo oscuro).
+ *
+ * uiState:
+ * - Se obtiene con collectAsState().
+ * - Permite que la UI reaccione automáticamente a cambios.
+ *
+ * TEMA:
+ *
+ * MultimediaAppTheme:
+ *
+ * - Aplica estilos globales (colores, tipografía, etc.).
+ * - Usa darkTheme = uiState.darkMode para activar modo oscuro.
+ *
+ * NAVEGACIÓN:
+ *
+ * navController:
+ * - Controlador principal de navegación.
+ * - Se recuerda con rememberNavController().
+ *
+ * currentRoute:
+ * - Obtiene la ruta actual desde el back stack.
+ * - Se usa para mostrar/ocultar elementos UI.
+ *
+ * SCAFFOLD:
+ *
+ * - Componente base de Material3 que estructura la pantalla:
+ *      • topBar
+ *      • bottomBar
+ *      • contenido principal
+ *
+ * TOP BAR:
+ *
+ * - Se muestra solo si NO estamos en:
+ *      • Login
+ *      • Register
+ *      • Pantalla inicial
+ *
+ * - Se controla con:
+ *
+ *      if (currentRoute !in listOf(...))
+ *
+ * BOTTOM BAR:
+ *
+ * - Mismo comportamiento que TopBar.
+ *
+ * CONTENIDO:
+ *
+ * Box:
+ * - Contenedor principal.
+ * - Aplica padding interno del Scaffold.
+ *
+ * NavGraph:
+ * - Define todas las pantallas y rutas de la app.
+ * - Recibe:
+ *      • navController (para navegar)
+ *      • settingsVM (para acceso global a configuración)
+ *
+ * FLUJO GENERAL:
+ *
+ * 1. Se inicia la app → MainActivity.
+ * 2. Se aplica el tema según preferencias.
+ * 3. Se crea el NavController.
+ * 4. Se renderiza el Scaffold.
+ * 5. NavGraph muestra la pantalla actual.
+ * 6. La UI cambia automáticamente según navegación o estado.
+ *
+ * BENEFICIOS:
+ *
+ * - Punto central de configuración de la app.
+ * - Navegación desacoplada y organizada.
+ * - UI reactiva gracias a StateFlow.
+ * - Fácil control de elementos globales (TopBar / BottomBar).
+ *
+ * NOTAS:
+ *
+ * - collectAsState() permite recomposición automática.
+ * - rememberNavController() mantiene el estado de navegación.
+ * - currentBackStackEntryAsState() permite reaccionar a cambios de ruta.
+ */
