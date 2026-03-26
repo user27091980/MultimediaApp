@@ -1,10 +1,13 @@
 package com.example.multimediaapp.view.components
 
+import android.R.attr.description
+import android.R.attr.name
 import android.net.Uri
 import androidx.activity.compose.rememberLauncherForActivityResult
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.FilledTonalButton
 import androidx.compose.material3.MaterialTheme
@@ -12,6 +15,8 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
+import com.example.multimediaapp.model.BandDTO
+import java.util.UUID
 
 /**
  * Composable base para todos los botones de la aplicación.
@@ -148,28 +153,8 @@ fun ButtonImage(
     )
 }
 
-/**
- * Botón para seleccionar múltiples imágenes.
- *
- * @param text Texto del botón
- * @param onImagesSelected Callback con lista de Uri
- */
-@Composable
-fun ButtonGallery(
-    text: String,
-    onImagesSelected: (List<Uri>) -> Unit
-) {
-    val launcher = rememberLauncherForActivityResult(
-        ActivityResultContracts.GetMultipleContents()
-    ) { uris ->
-        onImagesSelected(uris)
-    }
 
-    BaseButton(
-        text = text,
-        onClick = { launcher.launch("image/*") }
-    )
-}
+
 /*
 BaseButton: botón genérico reutilizable con estilo consistente (colores, bordes, ancho completo).
 
@@ -179,4 +164,67 @@ Botones específicos (ButtonLogin, ButtonAcept, etc.) → reutilizan BaseButton 
 modifier  permite añadir padding, peso o cualquier otra modificación externa en Compose.
 
 enabled se puede desactivar el botón si es necesario (por ejemplo, mientras se hace login).
+ */
+/*
+ * Este archivo define un conjunto de componentes reutilizables de botones
+ * en Jetpack Compose, diseñados para mantener un estilo consistente en toda la aplicación.
+ *
+ * COMPONENTE PRINCIPAL:
+ *
+ * BaseButton
+ * - Es un botón genérico reutilizable.
+ * - Recibe:
+ *   - text: texto que se muestra en el botón
+ *   - onClick: acción al pulsar el botón
+ *   - modifier: permite personalizar la UI desde fuera
+ *   - enabled: controla si el botón está activo o deshabilitado
+ *
+ * - Características visuales:
+ *   - Usa FilledTonalButton de Material 3
+ *   - Ocupa todo el ancho disponible (fillMaxWidth)
+ *   - Bordes redondeados (RoundedCornerShape)
+ *   - Colores definidos por el MaterialTheme
+ *
+ * VENTAJAS DE BaseButton:
+ * - Evita duplicación de código
+ * - Mantiene coherencia visual
+ * - Facilita cambios globales de estilo
+ *
+ * BOTONES ESPECÍFICOS:
+ *
+ * ButtonLogin, ButtonAccept, ButtonCancel, ButtonRegister
+ * - Son componentes que reutilizan BaseButton
+ * - Solo cambian el texto del botón
+ * - Se usan para acciones concretas de la UI
+ *
+ * BOTONES CON SELECCIÓN DE IMÁGENES:
+ *
+ * ButtonImage
+ * - Permite seleccionar una imagen desde la galería
+ * - Usa rememberLauncherForActivityResult
+ * - Lanza un intent para obtener contenido tipo "image/*"
+ * - Devuelve una Uri a través del callback onImageSelected
+ *
+ * ButtonGallery
+ * - Permite seleccionar múltiples imágenes
+ * - Utiliza ActivityResultContracts.GetMultipleContents()
+ * - Devuelve una lista de Uri
+ *
+ * CONCEPTOS IMPORTANTES:
+ *
+ * rememberLauncherForActivityResult:
+ * - Gestiona la respuesta de actividades externas (como galería)
+ * - Mantiene el launcher durante recomposiciones
+ *
+ * Uri:
+ * - Representa la ubicación del recurso seleccionado (imagen)
+ *
+ * USO:
+ * - Estos botones se utilizan en formularios, pantallas de registro,
+ *   carga de imágenes, etc.
+ *
+ * BENEFICIOS GENERALES:
+ * - Código modular y reutilizable
+ * - Separación de responsabilidades
+ * - UI consistente y fácil de mantener
  */
