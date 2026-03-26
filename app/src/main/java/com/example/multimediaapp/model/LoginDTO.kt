@@ -7,6 +7,13 @@ package com.example.multimediaapp.model
  * evitando cambios accidentales después de la creación.
  */
 //usar val para evitar mutabilidad
+// package com.example.multimediaapp.model
+
+data class LoginRequestDTO(
+    val email: String,
+    val pass: String
+)
+
 data class LoginDTO(
     val id: String,
     val email: String,

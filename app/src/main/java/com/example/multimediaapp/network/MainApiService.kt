@@ -36,4 +36,6 @@ interface MainApiService {
     //eliminar banda
     @DELETE("json/main/{id}")
     suspend fun deleteMainBand(@Path("id") id: String): Response<Unit>
+
+
 }

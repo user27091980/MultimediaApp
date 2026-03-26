@@ -109,4 +109,31 @@ private fun buildUrl(baseUrl: String, path: String): String {
         baseUrl + path.removePrefix("/")
     }
 }
+/*
+
+* BandEntity
+*
+* Esta clase representa los datos de una banda tal y como llegan desde la API.
+* Pertenece a la capa de datos (Data Layer) y se utiliza para mapear la respuesta JSON.
+*
+* Cada propiedad está anotada con @SerializedName para asociar los campos del JSON
+* con las variables del modelo.
+*
+* Incluye funciones de conversión (mappers) para transformar entre Entity y DTO:
+*
+* * toDTO():
+* Convierte un BandEntity en un BandDTO para su uso en otras capas de la aplicación.
+* También se encarga de construir correctamente las URLs de imágenes y recursos.
+* Si una URL no es absoluta, se le añade una baseUrl.
+*
+* * toEntity():
+* Convierte un BandDTO de vuelta a BandEntity.
+* Se utiliza cuando se necesita enviar o almacenar datos en el formato de la API.
+*
+* Además, incluye una función auxiliar (buildUrl) que construye URLs completas,
+* evitando errores cuando las rutas son relativas.
+*
+* Este enfoque permite separar la lógica de red (Entity) de la lógica de aplicación (DTO),
+* facilitando el mantenimiento y la escalabilidad del proyecto.
+  */
 

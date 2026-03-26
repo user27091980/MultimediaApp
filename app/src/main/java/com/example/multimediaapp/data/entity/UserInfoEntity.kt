@@ -46,3 +46,32 @@ fun UsersInfoDTO.toEntity() = UsersInfoEntity(
     lastName = this.lastName,
     country = this.country
 )
+
+
+/*
+
+* UsersInfoEntity
+*
+* Esta clase representa la información completa del usuario tal como llega desde la API.
+* Pertenece a la capa de datos y se utiliza para mapear la respuesta JSON.
+*
+* Contiene campos como id, email, contraseña, nombre, apellidos y país,
+* utilizando @SerializedName para asegurar la correspondencia con el JSON.
+*
+* Incluye funciones de conversión (mappers):
+*
+* * toDTO():
+* Convierte UsersInfoEntity en UsersInfoDTO, que es el modelo utilizado
+* en la lógica de la aplicación.
+*
+* * toEntity():
+* Convierte UsersInfoDTO en UsersInfoEntity.
+* Se utiliza cuando se necesita enviar datos al servidor o almacenarlos
+* en el formato de la API.
+*
+* Este enfoque permite separar la capa de datos de la lógica de la aplicación,
+* facilitando el mantenimiento, la organización y la escalabilidad del código.
+*
+* Nota: aunque se incluye el campo pass, no es recomendable almacenar
+* contraseñas en texto plano por motivos de seguridad.
+  */

@@ -1,14 +1,11 @@
 package com.example.multimediaapp.data.repository
 
-// Importa el modelo de usuario
 import com.example.multimediaapp.model.LoginDTO
-import com.example.multimediaapp.retrofit.RetrofitModule
+import com.example.multimediaapp.model.LoginRequestDTO
+import com.example.multimediaapp.network.LoginApiService
 import java.io.IOException
 
-class LoginRepo {
-
-    // Usamos la instancia centralizada del módulo de Retrofit
-    private val api = RetrofitModule.loginApi
+class LoginRepo(private val api: LoginApiService = LoginApiService.create()) {
 
     /**
      * Obtiene un usuario específico por su ID desde el servidor.
@@ -28,30 +25,22 @@ class LoginRepo {
         }
     }
 
-
     /**
      * Intenta realizar el login enviando email y contraseña.
      * Devuelve el perfil completo del usuario si es exitoso.
      */
-    suspend fun login(email: String, pass: String): Result<LoginDTO> {
+    suspend fun login(email: String, pass: String): LoginDTO {
         return try {
-            // Usamos el endpoint de login que definimos en LoginApiService
-            val response = api.loginUser(email, pass)
-
+            val response = api.loginUser(LoginRequestDTO(email, pass))
             if (response.isSuccessful && response.body() != null) {
-                // Aquí podrías mapear de UsersInfoDTO a LoginDTO si fuera necesario
-                val body = response.body()
-                val loginData = LoginDTO(
-                    id = body!!.id,
-                    email = body.email,
-                    pass = "" // Por seguridad no solemos persistir la pass tras el login
-                )
-                Result.success(loginData)
+                response.body()!!
             } else {
-                Result.failure(Exception("Credenciales incorrectas"))
+                throw Exception("Usuario o contraseña incorrecta")
             }
+        } catch (e: IOException) {
+            throw Exception("Error de red: Verifica tu conexión")
         } catch (e: Exception) {
-            Result.failure(e)
+            throw Exception(e.message ?: "Error al iniciar sesión")
         }
     }
 }

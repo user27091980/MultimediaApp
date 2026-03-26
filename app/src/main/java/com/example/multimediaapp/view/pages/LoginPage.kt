@@ -1,140 +1,135 @@
 package com.example.multimediaapp.view.pages
 
 import androidx.compose.foundation.background
-import androidx.compose.foundation.layout.Arrangement
-import androidx.compose.foundation.layout.Box
-import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.foundation.layout.padding
-import androidx.compose.material3.MaterialTheme
-import androidx.compose.runtime.Composable
-import androidx.compose.runtime.collectAsState
-import androidx.compose.runtime.getValue
+import androidx.compose.foundation.layout.*
+import androidx.compose.material3.*
+import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavController
-import androidx.navigation.compose.rememberNavController
+import com.example.multimediaapp.data.repository.LoginRepo
 import com.example.multimediaapp.navigation.ObjRoutes
-import com.example.multimediaapp.ui.theme.boxModifier
+import com.example.multimediaapp.session.DataStoreManager
 import com.example.multimediaapp.view.components.ButtonAccept
 import com.example.multimediaapp.view.components.ButtonCancel
 import com.example.multimediaapp.view.components.TextFieldsLoginComponent
+import com.example.multimediaapp.viewmodel.vm.LoginEvent
 import com.example.multimediaapp.viewmodel.vm.LoginVM
+import com.example.multimediaapp.viewmodel.vm.LoginVMFactory
+import kotlinx.coroutines.flow.collectLatest
+import kotlinx.coroutines.flow.combine
+import kotlinx.coroutines.launch
 
-
-/**
- * Pantalla de login.
- *
- * @param navController Controlador de navegación para moverse entre pantallas.
- * @param vm ViewModel que maneja el estado y la lógica del login.
- */
 @Composable
 fun LoginScreen(
     navController: NavController,
-    // obtiene automáticamente el ViewModel asociado al ciclo de vida
-    vm: LoginVM = viewModel()
+    dataStore: DataStoreManager,
+    repository: LoginRepo,
 ) {
-    // Obtenemos el estado actual del ViewModel
+    val factory = LoginVMFactory(dataStore, repository)
+    val vm: LoginVM = viewModel(factory = factory)
     val uiState by vm.uiState.collectAsState()
+    val scope = rememberCoroutineScope()
 
-    // Caja principal que ocupa toda la pantalla
-    // Se aplica un fondo degradado vertical de gris oscuro a negro
+    var rememberUser by remember { mutableStateOf(false) }
+
+    // Inicializar checkbox y email desde DataStore
+    LaunchedEffect(Unit) {
+        dataStore.rememberUserFlow
+            .combine(dataStore.userFlow) { remember, user -> remember to user }
+            .collectLatest { (remember, user) ->
+                rememberUser = remember
+                if (remember && user != null) {
+                    vm.onEmailChange(user.email)
+                }
+            }
+    }
+
+    // Recolectar eventos de navegación o errores
+    LaunchedEffect(vm) {
+        vm.events.collect { event ->
+            when (event) {
+                is LoginEvent.NavigateToHome -> {
+                    navController.navigate(ObjRoutes.MAIN) {
+                        popUpTo(ObjRoutes.LOGINREG) { inclusive = true }
+                    }
+                }
+
+                is LoginEvent.ShowError -> {
+                    println("Error: ${event.message}") // aquí podrías mostrar un Snackbar
+                }
+
+            }
+        }
+    }
+
     Box(
-        modifier = boxModifier
+        modifier = Modifier
             .fillMaxSize()
-            .background(
-                MaterialTheme.colorScheme.background
-            ),
+            .background(MaterialTheme.colorScheme.background),
         contentAlignment = Alignment.Center
     ) {
-        // Columna principal que contiene los campos de texto y botones
         Column(
-            Modifier
+            modifier = Modifier
                 .fillMaxWidth()
                 .padding(40.dp),
             verticalArrangement = Arrangement.Center,
             horizontalAlignment = Alignment.CenterHorizontally
-
         ) {
             Column(
                 modifier = Modifier.weight(1f),
                 verticalArrangement = Arrangement.Center
             ) {
-                TextFieldsLoginComponent(// Pasamos los valores y callbacks al ViewModel
+                TextFieldsLoginComponent(
                     email = uiState.email,
                     pass = uiState.password,
                     onEmailChange = vm::onEmailChange,
-                    onPassChange = vm::onPasswordChange
+                    onPassChange = vm::onPasswordChange,
+                    passwordVisible = uiState.passwordVisible,
+                    togglePasswordVisibility = vm::togglePasswordVisibility
                 )
-                // Mostramos error si existe
+
+                Spacer(modifier = Modifier.height(8.dp))
+
+                Row(verticalAlignment = Alignment.CenterVertically) {
+                    Checkbox(
+                        checked = rememberUser,
+                        onCheckedChange = { rememberUser = it }
+                    )
+                    Text(text = "Recordarme")
+                }
+
                 uiState.errorMessage?.let { error ->
-                    androidx.compose.material3.Text(
+                    Text(
                         text = error,
                         color = Color.Red,
                         modifier = Modifier.padding(top = 8.dp)
                     )
                 }
             }
-            // Botón "Aceptar" que navega al dialog de confirmación
+
             ButtonAccept(
                 onClick = {
+
                     if (vm.validateFieldsLogin()) {
-                        // Si todo es correcto, navega al dialog
-                        navController.navigate(ObjRoutes.MAIN)
+                        scope.launch {
+                            // Guardar preferencias
+                            dataStore.saveRememberUser(rememberUser)
+                            if (rememberUser) dataStore.saveUserEmail(uiState.email)
+
+                            // Llamada al ViewModel, NO pasamos rememberUser
+                            vm.login()
+                        }
                     }
                 }
             )
-            // Botón "Cancelar" que regresa a la pantalla de login
+
             ButtonCancel(
                 onClick = { navController.navigate(ObjRoutes.LOGINREG) }
             )
         }
     }
 }
-
-/**
- * Preview para mostrar la pantalla de registro en Android Studio sin ejecutar la app.
- */
-@Preview
-@Composable
-fun LoginScreenPreview() {
-
-    val navController = rememberNavController()
-
-    LoginScreen(
-        navController = navController
-    )
-}
-/**
- * notas:
- *
- * - Box: Contenedor que permite centrar y superponer elementos.
- * - Column: Organiza los hijos verticalmente.
- * - Modifier.fillMaxSize(): La UI ocupa todo el espacio disponible.
- * - Modifier.padding(): Aplica márgenes internos para separar los elementos de los bordes.
- * - TextFieldsComponent(): Contiene los campos de entrada de usuario, email y contraseña.
- * - ButtonAcept / ButtonCancel: Botones reutilizables para aceptar o cancelar la acción.
- * - navController.navigate(route): Navega a la ruta definida dentro de la navegación de Compose.
- * - @Preview: Permite previsualizar la UI en el IDE sin ejecutar la app.
- *
- * Nota: Se puede conectar con el ViewModel para validar campos antes de navegar.
- */
-
-
-/**
- * NOTAS
- *
- * - OutlinedTextField: Campo de texto con borde, permite customizar colores y visibilidad de la contraseña.
- * - TextFieldDefaults.outlinedTextFieldColors: Personaliza colores de texto, borde, cursor y label.
- * - LaunchedEffect(Unit): Ejecuta código solo una vez al entrar en composición; aquí escucha eventos del ViewModel.
- * - collectAsState(): Convierte un StateFlow en un estado observable en Compose.
- * - Row / Column: Organiza elementos horizontal o verticalmente.
- * - Spacer: Añade espacio entre elementos.
- * - ButtonAcept / ButtonCancel: Componentes reutilizables para acciones principales y secundarias.
- */
-

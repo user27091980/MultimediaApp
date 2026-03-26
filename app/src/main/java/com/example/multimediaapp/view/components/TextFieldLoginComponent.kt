@@ -33,7 +33,9 @@ fun TextFieldsLoginComponent(
     email: String,
     pass: String,
     onEmailChange: (String) -> Unit,
-    onPassChange: (String) -> Unit
+    onPassChange: (String) -> Unit,
+    passwordVisible: Boolean = false,
+    togglePasswordVisibility: () -> Unit = {}
 ) {
     // Columna que organiza los campos verticalmente
     Column {
