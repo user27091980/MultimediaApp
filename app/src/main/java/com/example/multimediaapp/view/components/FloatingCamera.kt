@@ -36,64 +36,14 @@ fun FloatCamera(modifier: Modifier = Modifier, onClick: () -> Unit) {
     }
 }
 
-
 /*
- * Este archivo define componentes relacionados con la funcionalidad de cámara
- * y captura de imágenes dentro de la aplicación.
- *
- * CLASE PRINCIPAL:
- *
- * PicCatcher : ComponentActivity
- * - Es una actividad vacía que actualmente actúa como placeholder.
- * - Se puede utilizar en el futuro para integrar funcionalidades de cámara
- *   o manejo avanzado de imágenes.
- * - Hereda de ComponentActivity, lo que permite usar Jetpack Compose si se necesita.
- *
- * COMPONENTE COMPOSABLE:
- *
- * FloatCamera(modifier: Modifier = Modifier, onClick: () -> Unit)
- *
- * - Representa un FloatingActionButton (FAB) con icono de cámara.
- * - Se utiliza comúnmente para acciones principales como tomar fotos.
- *
- * FloatingActionButton:
- * - Botón flotante típico de Material Design.
- * - Se posiciona sobre la UI para acciones importantes.
- *
- * Icon:
- * - Muestra el icono AddAPhoto, representando la acción de capturar imagen.
- * - Incluye una descripción ("Sacar foto") para accesibilidad (TalkBack).
- *
- * PARÁMETROS:
- *
- * modifier:
- * - Permite personalizar el comportamiento visual del botón.
- * - Ejemplo: posición, tamaño, padding, animaciones, etc.
- *
- * onClick:
- * - Callback que se ejecuta cuando el usuario presiona el botón.
- * - Normalmente se utiliza para abrir la cámara o lanzar un intent de captura.
- *
- * CONCEPTOS IMPORTANTES:
- *
- * ComponentActivity:
- * - Clase base para actividades modernas en Android con soporte para Compose.
- *
- * Composable:
- * - Función que define elementos de UI en Jetpack Compose.
- *
- * FloatingActionButton:
- * - Botón de acción principal en interfaces modernas.
- *
- * USO:
- * - Este componente se puede integrar en pantallas donde el usuario necesite:
- *   - Tomar fotos
- *   - Subir imágenes
- *   - Capturar contenido multimedia
- *
- * BENEFICIOS:
- * - Código reutilizable
- * - Separación de UI y lógica
- * - Fácil integración en distintas pantallas
- * - Diseño consistente con Material Design
+PicCatcher: placeholder para futuras actividades relacionadas con la cámara. Actualmente está vacío.
+
+FloatCamera: Composable que crea un FloatingActionButton con un icono de cámara.
+
+modifier_ permite ajustar posición, tamaño o animaciones externas.
+
+onClick: callback para abrir la cámara o ejecutar cualquier acción al presionar el botón.
+
+Icon: usa un icono del paquete Material Icons (AddAPhoto) y proporciona descripción para accesibilidad.
  */

@@ -78,85 +78,19 @@ fun CardList(
 }
 
 
+
 /*
- * Este archivo define un componente de UI en Jetpack Compose que muestra
- * una lista vertical de bandas, cada una representada por una imagen y su nombre.
- *
- * COMPONENTE PRINCIPAL:
- *
- * CardList(main: List<MainDTO>, onImageClick: (MainDTO) -> Unit)
- *
- * - Recibe una lista de objetos MainDTO (bandas).
- * - Recibe un callback (onImageClick) que se ejecuta cuando el usuario
- *   hace clic en una imagen.
- *
- * ESTRUCTURA DE LA UI:
- *
- * LazyColumn:
- * - Lista vertical optimizada para rendimiento.
- * - Solo renderiza los elementos visibles en pantalla.
- * - Ideal para listas grandes.
- *
- * - Modifier:
- *   - fillMaxSize(): ocupa toda la pantalla.
- *   - background(): aplica el color de fondo del tema.
- *   - padding(): añade espacio vertical entre elementos.
- *
- * items(main):
- * - Itera sobre la lista de bandas.
- * - Cada elemento de la lista se representa individualmente.
- *
- * Column:
- * - Organiza los elementos de cada ítem en vertical.
- * - Centra el contenido horizontalmente.
- *
- * COMPONENTES INTERNOS:
- *
- * AsyncImage (Coil):
- * - Carga imágenes desde una URL de forma asíncrona.
- * - Optimiza el rendimiento y la gestión de imágenes.
- *
- * - model: URL de la imagen (main.imageBand)
- * - contentDescription: accesibilidad (nombre de la banda)
- * - contentScale = Crop: ajusta la imagen al tamaño recortando si es necesario
- *
- * - placeholder: imagen mientras carga (color gris)
- * - error: imagen si falla la carga (color rojo)
- *
- * clickable:
- * - Permite detectar cuando el usuario toca la imagen.
- * - Ejecuta la función onImageClick pasando la banda seleccionada.
- *
- * Text:
- * - Muestra el nombre de la banda.
- * - Se estiliza con:
- *   - color del tema
- *   - estilo tipográfico grande (headlineMedium)
- *   - negrita (FontWeight.Bold)
- *
- * Spacer:
- * - Añade espacio visual entre elementos para mejorar la UI.
- *
- * LOG:
- * - Log.d("CARD_LIST", ...) permite depurar y verificar que los datos llegan correctamente.
- *
- * CONCEPTOS IMPORTANTES:
- *
- * LazyColumn:
- * - Clave para rendimiento en listas grandes.
- *
- * Composable:
- * - Permite definir UI declarativa en Compose.
- *
- * Coil:
- * - Librería para carga eficiente de imágenes.
- *
- * Callback (onImageClick):
- * - Permite comunicar la interacción del usuario hacia capas superiores.
- *
- * BENEFICIOS:
- * - UI dinámica y eficiente.
- * - Separación de lógica y presentación.
- * - Interactividad con eventos de usuario.
- * - Optimización de rendimiento en listas.
+LazyColumn: lista vertical optimizada, renderiza solo lo visible, mejora rendimiento.
+
+items(bands): itera sobre la lista de bandas. Cada mainBand representa un elemento.
+
+Column: organiza la imagen y el nombre verticalmente, centrado horizontalmente.
+
+Image + rememberAsyncImagePainter: carga imágenes desde URLs de forma asíncrona usando Coil.
+
+clickable: permite que la imagen responda a clicks y ejecute un callback.
+
+Spacer: agrega separación visual entre elementos.
+
+@Preview: permite ver un ejemplo visual de la lista sin ejecutar la app.
  */

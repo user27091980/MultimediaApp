@@ -126,104 +126,15 @@ fun LoginScreenPreview() {
  */
 
 
-/*
- * Este archivo define la pantalla de login de la aplicación utilizando Jetpack Compose.
+/**
+ * NOTAS
  *
- * OBJETIVO:
- *
- * - Permitir al usuario iniciar sesión.
- * - Validar los campos (email y contraseña).
- * - Navegar a otras pantallas según la acción del usuario.
- *
- * ARQUITECTURA:
- *
- * - Sigue el patrón MVVM.
- * - La lógica está en LoginVM.
- * - La UI se encarga solo de mostrar datos y reaccionar a eventos.
- *
- * ESTADO:
- *
- * uiState:
- * - Se obtiene del ViewModel mediante collectAsState().
- * - Contiene:
- *   - email
- *   - password
- *   - errorMessage
- *
- * INTERACCIÓN CON VIEWMODEL:
- *
- * - onEmailChange → vm::onEmailChange
- * - onPassChange → vm::onPasswordChange
- *
- * Esto permite actualizar el estado en tiempo real.
- *
- * UI PRINCIPAL:
- *
- * 1. Box:
- *    - Contenedor principal.
- *    - Centra el contenido en pantalla.
- *    - Aplica fondo usando MaterialTheme.
- *
- * 2. Column:
- *    - Organiza los elementos verticalmente.
- *    - Añade padding para separación visual.
- *
- * 3. TextFieldsLoginComponent:
- *    - Muestra los campos de email y contraseña.
- *
- * VALIDACIÓN:
- *
- * - Se realiza al pulsar el botón "Aceptar".
- * - Se llama a:
- *      vm.validateFieldsLogin()
- *
- * - Si los datos son correctos:
- *      → Navega a la pantalla MAIN.
- * - Si no:
- *      → Muestra mensaje de error.
- *
- * MENSAJE DE ERROR:
- *
- * - Se muestra si uiState.errorMessage != null.
- * - Se renderiza en color rojo.
- *
- * BOTONES:
- *
- * ButtonAccept:
- * - Ejecuta la validación.
- * - Navega a MAIN si todo es correcto.
- *
- * ButtonCancel:
- * - Navega a LOGINREG (volver o cancelar).
- *
- * NAVEGACIÓN:
- *
- * NavController:
- * - Gestiona el flujo entre pantallas.
- * - Se usa con rutas definidas en ObjRoutes.
- *
- * PREVIEW:
- *
- * LoginScreenPreview:
- * - Permite visualizar la pantalla sin ejecutar la app.
- * - Usa rememberNavController() como controlador simulado.
- *
- * DISEÑO:
- *
- * - Fondo con MaterialTheme.colorScheme.background.
- * - Contenido centrado.
- * - Uso de paddings para separación.
- *
- * BENEFICIOS:
- *
- * - Código limpio y modular.
- * - Separación de UI y lógica.
- * - UI reactiva basada en estado.
- * - Fácil de mantener y escalar.
- *
- * NOTA:
- *
- * - La lógica de autenticación no está aquí, sino en el ViewModel.
- * - Esta pantalla es puramente declarativa.
+ * - OutlinedTextField: Campo de texto con borde, permite customizar colores y visibilidad de la contraseña.
+ * - TextFieldDefaults.outlinedTextFieldColors: Personaliza colores de texto, borde, cursor y label.
+ * - LaunchedEffect(Unit): Ejecuta código solo una vez al entrar en composición; aquí escucha eventos del ViewModel.
+ * - collectAsState(): Convierte un StateFlow en un estado observable en Compose.
+ * - Row / Column: Organiza elementos horizontal o verticalmente.
+ * - Spacer: Añade espacio entre elementos.
+ * - ButtonAcept / ButtonCancel: Componentes reutilizables para acciones principales y secundarias.
  */
 

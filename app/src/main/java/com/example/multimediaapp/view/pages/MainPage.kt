@@ -166,95 +166,27 @@ fun MainScreenPreview() {
         onImageClick = {}
     )
 }
-/*
- * Pantalla principal de la aplicación.
+/**
+ * Teoría:
  *
- * FUNCIÓN PRINCIPAL:
+ * viewModel()
  *
- * - Mostrar la lista de bandas disponibles.
- * - Gestionar los distintos estados de la UI:
- *   - Carga
- *   - Error
- *   - Lista vacía
- *   - Lista con datos
- * - Permitir navegar al detalle de cada banda.
+ * Obtiene la instancia del BandVM asociada al ciclo de vida actual (Activity o NavGraph).
  *
- * ARQUITECTURA:
+ * LaunchedEffect(Unit)
  *
- * - Sigue el patrón MVVM.
- * - MainVM gestiona la lógica y los datos.
- * - MainUiState representa el estado de la UI.
+ * Se ejecuta una sola vez.
  *
- * FLUJO DE DATOS:
+ * Ideal para cargar datos iniciales.
  *
- * 1. La pantalla observa el estado del ViewModel:
- *      uiState by viewModel.uiState.collectAsState()
+ * Evita que loadData() se llame en cada recomposición.
  *
- * 2. Se cargan los datos al entrar en la pantalla:
- *      LaunchedEffect(Unit) { viewModel.loadData() }
+ * collectAsState()
  *
- * 3. Cuando cambia el estado:
- *      Compose vuelve a recomponer automáticamente la UI.
+ * Convierte un StateFlow en un estado observable por Compose.
+ * Cada vez que cambie uiState, la pantalla se vuelve a dibujar automáticamente.
  *
- * ESTRUCTURA DE LA UI:
+ * CardList
  *
- * MainScreen:
- * - Contenedor principal (Box).
- * - Aplica fondo con MaterialTheme.
- * - Llama a MainContent para renderizar el contenido.
- *
- * MainContent:
- * - Controla qué mostrar según el estado:
- *
- *   🔹 isLoading = true
- *   → Muestra "Cargando..."
- *
- *   🔹 error != null
- *   → Muestra el mensaje de error
- *
- *   🔹 Lista vacía
- *   → Muestra "No hay bandas"
- *
- *   🔹 Lista con datos
- *   → Muestra CardList con las bandas
- *
- * COMPONENTES:
- *
- * CardList:
- * - Componente reutilizable que muestra la lista de bandas.
- * - Recibe:
- *   - lista de bandas (mainBands)
- *   - callback onImageClick
- *
- * NAVEGACIÓN:
- *
- * navController.navigate("${ObjRoutes.BAND}/$bandId")
- * - Permite ir a la pantalla de detalle de la banda.
- * - Se envía el ID como parámetro.
- *
- * PREVIEW:
- *
- * MainScreenPreview:
- * - Permite visualizar la UI sin ejecutar la app.
- * - Usa datos simulados (fakeState).
- *
- * BENEFICIOS:
- *
- * - UI reactiva (se actualiza automáticamente).
- * - Separación de responsabilidades.
- * - Código modular y reutilizable.
- * - Manejo claro de estados (loading, error, data).
- *
- * NOTAS IMPORTANTES:
- *
- * - LaunchedEffect(Unit):
- *   Se ejecuta solo una vez al entrar en la pantalla.
- *
- * - collectAsState():
- *   Convierte un StateFlow en estado observable para Compose.
- *
- * - viewModel():
- *   Obtiene el ViewModel asociado al ciclo de vida.
- *
- * - El uso de MainUiState permite centralizar el estado de la UI.
+ * Recibe la lista bands y muestra cada banda (según lo implementado en tu componente).
  */

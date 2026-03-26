@@ -16,12 +16,10 @@ interface IMainRepo {
     suspend fun createBand(band: MainDTO): MainDTO?
     suspend fun updateBand(id: String, band: MainDTO): MainDTO?
     suspend fun deleteBand(id: String): Boolean
-
     // Método específico para recuperar imágenes/galería por ID
     suspend fun getImages(id: String): List<String>
 
 }
-
 /**
  * Implementación de IMainRepo que utiliza MainApiService (Retrofit)
  * para la comunicación con el servidor.
@@ -37,31 +35,26 @@ class MainRepo(private val mainApi: MainApiService) : IMainRepo {
             emptyList()
         }
     }
-
     // Obtiene una banda específica buscando por su identificador único
     override suspend fun getBandById(id: String): MainDTO? {
         val response = mainApi.getMainBandById(id)
         return if (response.isSuccessful) response.body()?.toDTO() else null
     }
-
     // Crea una nueva banda convirtiendo primero el DTO a Entity para la API
     override suspend fun createBand(band: MainDTO): MainDTO? {
         val response = mainApi.createMainBand(band.toEntity())
         return if (response.isSuccessful) response.body()?.toDTO() else null
     }
-
     // Actualiza una banda existente enviando el ID y el objeto convertido a Entity
     override suspend fun updateBand(id: String, band: MainDTO): MainDTO? {
         val response = mainApi.updateMainBand(id, band.toEntity())
         return if (response.isSuccessful) response.body()?.toDTO() else null
     }
-
     // Elimina un registro y retorna un booleano indicando el éxito de la operación
     override suspend fun deleteBand(id: String): Boolean {
         val response = mainApi.deleteMainBand(id)
         return response.isSuccessful
     }
-
     // Obtiene información de imágenes específica.
     // Nota: Lanza excepciones manualmente si la respuesta falla o el cuerpo es nulo.
     override suspend fun getImages(id: String): List<String> {
@@ -72,59 +65,3 @@ class MainRepo(private val mainApi: MainApiService) : IMainRepo {
     }
 
 }
-/*
- * Este archivo define el repositorio principal (MainRepo), encargado de gestionar
- * la comunicación entre la aplicación y la API para la pantalla principal.
- *
- * La interfaz IMainRepo define las operaciones disponibles:
- * - Obtener todas las bandas
- * - Obtener una banda por ID
- * - Crear una banda
- * - Actualizar una banda
- * - Eliminar una banda
- * - Obtener imágenes asociadas a una banda
- *
- * Esta interfaz permite desacoplar la lógica de la implementación concreta,
- * facilitando pruebas y posibles cambios futuros en la fuente de datos.
- *
- * La clase MainRepo implementa esta interfaz utilizando un servicio de red
- * basado en Retrofit (MainApiService).
- *
- * Funcionamiento de los métodos:
- *
- * 1. getBands():
- *    - Llama al endpoint de la API para obtener la lista de bandas.
- *    - Convierte cada MainEntity a MainDTO.
- *    - Devuelve una lista vacía si la respuesta falla.
- *
- * 2. getBandById(id):
- *    - Obtiene una banda específica por su identificador.
- *    - Convierte el resultado a DTO si la respuesta es correcta.
- *
- * 3. createBand(band):
- *    - Convierte el DTO a Entity antes de enviarlo al servidor.
- *    - Llama al endpoint de creación.
- *    - Devuelve el objeto creado convertido a DTO.
- *
- * 4. updateBand(id, band):
- *    - Convierte el DTO a Entity.
- *    - Envía los datos actualizados junto con el ID.
- *    - Devuelve el resultado convertido a DTO.
- *
- * 5. deleteBand(id):
- *    - Llama al endpoint para eliminar una banda.
- *    - Devuelve true si la operación fue exitosa.
- *
- * 6. getImages(id):
- *    - Obtiene la lista de imágenes asociadas a una banda.
- *    - Usa directamente el servicio bandApi.
- *    - Devuelve una lista vacía si falla.
- *
- * Este repositorio actúa como intermediario entre:
- * - La capa de red (API)
- * - La capa de datos (Entity)
- * - La capa de presentación (DTO)
- *
- * Permite mantener una arquitectura limpia, separando responsabilidades
- * y facilitando el mantenimiento y escalabilidad del sistema.
- */

@@ -130,88 +130,16 @@ fun TextFieldLoginEmailComponent(email: String, onEmailChange: (String) -> Unit)
 
 
 /*
- * Este archivo contiene los campos de texto específicos para el proceso de LOGIN
- * en la aplicación usando Jetpack Compose.
- *
- * COMPONENTE PRINCIPAL:
- *
- * TextFieldsLoginComponent(...)
- *
- * - Agrupa los campos necesarios para iniciar sesión:
- *   - Email
- *   - Contraseña
- *
- * - Recibe el estado desde el exterior (ViewModel).
- * - Usa callbacks para actualizar los valores.
- * - Sigue el patrón de "state hoisting".
- *
- * ESTRUCTURA:
- *
- * Column:
- * - Organiza los campos verticalmente en la pantalla.
- *
- * CAMPOS:
- *
- * TextFieldLoginEmailComponent:
- * - Campo para introducir el email del usuario.
- * - Usa:
- *   - KeyboardType.Email → teclado optimizado.
- *   - Validación con Patterns.EMAIL_ADDRESS.
- * - Muestra un mensaje de error si el formato no es válido.
- *
- * TextFieldLoginPassComponent:
- * - Campo para introducir la contraseña.
- * - Incluye:
- *   - VisualTransformation → oculta el texto.
- *   - IconButton → permite mostrar/ocultar la contraseña.
- *   - Icons.Filled.Visibility / VisibilityOff.
- *
- * ESTADO LOCAL:
- *
- * passwordVisible:
- * - Se gestiona con remember { mutableStateOf(false) }.
- * - Permite alternar entre mostrar u ocultar la contraseña.
- *
- * VALIDACIÓN:
- *
- * Email:
- * - Se valida en tiempo real.
- * - Si está vacío o inválido, se muestra:
- *   "Email no válido"
- *
- * UI / COMPONENTES:
- *
- * OutlinedTextField:
- * - Campo de texto con borde.
- * - Permite personalizar:
- *   - colores
- *   - teclado
- *   - transformación del texto
- *
- * Icon + IconButton:
- * - Añaden interacción dentro del campo de contraseña.
- * - Permiten cambiar la visibilidad del texto.
- *
- * KeyboardOptions:
- * - Controla el tipo de teclado:
- *   - Email → teclado con @ y .com
- *   - Password → teclado adaptado a contraseña
- *
- * VisualTransformation:
- * - Controla cómo se muestra el texto:
- *   - PasswordVisualTransformation() → oculta
- *   - VisualTransformation.None → muestra
- *
- * BENEFICIOS:
- *
- * - Código modular y reutilizable
- * - Separación clara de responsabilidades
- * - Fácil mantenimiento
- * - UI consistente
- *
- * NOTA:
- *
- * - Este componente no gestiona estado global.
- * - El estado debe controlarse desde un ViewModel.
- * - Este archivo solo se encarga de la capa de presentación.
+remember { mutableStateOf("") } nos guarda el estado local de cada TextField, Compose lo recuerda entre recomposiciones.
+
+TextField campo de texto editable con propiedades para controlar estilo, teclado, visualización de texto, etc.
+
+VisualTransformation  transforma cómo se muestra el texto; útil para ocultar contraseñas.
+
+trailingIcon permite colocar un icono dentro del TextField.
+
+IconButton + Icon es el botón interactivo dentro del TextField que alterna visibilidad.
+
+stringResource nos permite usar strings desde res/values/strings.xml, útil para internacionalización.
+
  */

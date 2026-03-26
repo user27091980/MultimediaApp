@@ -80,81 +80,14 @@ fun LoginRegScreenPreview() {
     )
 }
 
-/*
- * Este archivo define la pantalla inicial de la aplicación,
- * donde el usuario puede elegir entre iniciar sesión o registrarse.
+/**
+ * notas:
  *
- * OBJETIVO:
- *
- * - Ofrecer dos opciones principales:
- *   - Login
- *   - Registro
- *
- * - Es la pantalla de entrada al flujo de autenticación.
- *
- * ARQUITECTURA:
- *
- * - Sigue el patrón MVVM.
- * - La lógica se gestiona en LoginRegVM.
- * - La UI solo muestra botones y responde a eventos.
- *
- * UI PRINCIPAL:
- *
- * 1. Box:
- *    - Contenedor principal de toda la pantalla.
- *    - Permite centrar el contenido.
- *    - Aplica fondo usando MaterialTheme.
- *
- * 2. Column:
- *    - Organiza los botones de forma vertical.
- *    - Centra los elementos horizontalmente.
- *    - Añade separación entre botones con:
- *        Arrangement.spacedBy(20.dp)
- *
- * COMPONENTES:
- *
- * ButtonLogin:
- * - Navega a la pantalla de login.
- *
- * ButtonRegister:
- * - Navega a la pantalla de registro.
- *
- * NAVEGACIÓN:
- *
- * NavController:
- * - Permite cambiar de pantalla dentro de la app.
- * - Se usa con rutas definidas en ObjRoutes:
- *   - LOGIN
- *   - REGISTER
- *
- * ESTADO:
- *
- * vm: LoginRegVM
- * - Se obtiene mediante viewModel().
- * - Actualmente no gestiona estado visible en esta pantalla,
- *   pero se mantiene para futuras ampliaciones.
- *
- * PREVIEW:
- *
- * LoginRegScreenPreview:
- * - Permite visualizar la UI sin ejecutar la app.
- * - Usa rememberNavController() como controlador simulado.
- *
- * DISEÑO:
- *
- * - Fondo con MaterialTheme.colorScheme.background.
- * - Contenido centrado en pantalla.
- * - Uso de padding horizontal para mejorar estética.
- *
- * BENEFICIOS:
- *
- * - Pantalla simple y clara.
- * - Fácil navegación.
- * - Código reutilizable y mantenible.
- * - Separación de UI y lógica.
- *
- * NOTA:
- *
- * - Esta pantalla actúa como punto de entrada de la autenticación.
- * - No contiene lógica compleja, solo navegación.
+ * - Box Contenedor que permite posicionar elementos con alineación y superposición.
+ * - Column: Organiza elementos de manera vertical.
+ * - horizontalAlignment / verticalArrangement: Controlan alineación y separación de los hijos.
+ * - Modifier.padding / fillMaxSize / background: Permiten ajustar tamaño, márgenes y fondo.
+ * - ButtonLogin / ButtonRegister: Componentes reutilizables para acciones principales.
+ * - navController.navigate(route): Permite cambiar de pantalla dentro de la navegación de Compose.
+ * - @Preview: Permite ver la UI en el IDE sin ejecutar la app.
  */
