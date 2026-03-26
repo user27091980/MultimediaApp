@@ -36,7 +36,7 @@ object ObjRoutes {
      * Pantalla relacionada con bandas
      */
     const val BAND = "BandRoute"
-    const val DIALOG = "DialogRoute"
+
 
     // RUTAS CON PARÁMETROS
     /**

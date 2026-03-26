@@ -67,9 +67,6 @@ object MainRoute : NavRoute
 object UserInfoRoute : NavRoute
 
 @Serializable
-object DialogRoute : NavRoute
-
-@Serializable
 object SettingsRoute : NavRoute
 
 /**

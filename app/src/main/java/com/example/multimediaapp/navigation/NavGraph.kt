@@ -71,12 +71,6 @@ fun NavGraph(
         composable(ObjRoutes.SETTINGS) {
             SettingsScreen(settingsVM)
         }
-
-        dialog(ObjRoutes.DIALOG) {
-            DialogRegisterScreen(navController = navController)
-        }
-
-
     }
 }
 
