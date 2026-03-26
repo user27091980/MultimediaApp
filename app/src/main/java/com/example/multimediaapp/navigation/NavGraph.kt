@@ -76,14 +76,7 @@ fun NavGraph(
             DialogRegisterScreen(navController = navController)
         }
 
-        composable(ObjRoutes.ADDBAND){
-           val vm: BandVM = viewModel()
-            AddBandScreen(
-                onRegister = { band ->
-                    vm.createBand(band)
-                }
-            )
-        }
+
     }
 }
 

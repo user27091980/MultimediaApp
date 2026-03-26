@@ -2,6 +2,9 @@ package com.example.multimediaapp.view.components
 
 import android.R.attr.description
 import android.R.attr.name
+import android.net.Uri
+import androidx.activity.compose.rememberLauncherForActivityResult
+import androidx.activity.result.contract.ActivityResultContracts
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Button

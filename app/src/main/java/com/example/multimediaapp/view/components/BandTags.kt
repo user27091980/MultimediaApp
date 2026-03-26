@@ -4,6 +4,7 @@ package com.example.multimediaapp.view.components
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.ExperimentalLayoutApi
 import androidx.compose.foundation.layout.FlowRow
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.shape.RoundedCornerShape
@@ -24,6 +25,7 @@ import com.example.multimediaapp.model.BandDTO
  * - Estilo musical
  * - Discografía
  */
+@OptIn(ExperimentalLayoutApi::class)
 @Composable
 fun BandTags(band: BandDTO) {
 
