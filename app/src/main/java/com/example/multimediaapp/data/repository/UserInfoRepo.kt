@@ -5,21 +5,27 @@ import com.example.multimediaapp.data.entity.toDTO
 import com.example.multimediaapp.model.UsersInfoDTO
 import com.example.multimediaapp.retrofit.RetrofitModule
 import com.example.multimediaapp.retrofit.RetrofitModule.userInfoApi
-import com.example.multimediaapp.session.SessionManager
+import com.example.multimediaapp.session.DataStoreManager
+import kotlinx.coroutines.flow.Flow
 
 class UsersInfoRepo(context: Context) {
 
-    private val session = SessionManager(context)
+    private val session = DataStoreManager(context)
     private val api = RetrofitModule.userInfoApi
 
     /**
-     * Obtiene la información de un usuario por su ID.
+     * Flujo que emite el usuario actualmente guardado en DataStore.
+     * Retorna null si no hay usuario logueado.
+     */
+    val loggedUserFlow: Flow<UsersInfoDTO?> = session.userFlow
+
+    /**
+     * Obtiene la información de un usuario por su ID desde la API.
      */
     suspend fun read(id: String): Result<UsersInfoDTO?> {
         return try {
-            val response = userInfoApi.getUserInfoById(id)
+            val response = api.getUserInfoById(id)
             if (response.isSuccessful) {
-                // Importante: toDTO() debe estar definido en tu Entity
                 Result.success(response.body()?.toDTO())
             } else {
                 Result.failure(Exception("Error: ${response.code()}"))
@@ -40,7 +46,6 @@ class UsersInfoRepo(context: Context) {
         country: String
     ): Result<UsersInfoDTO> {
         return try {
-            // 1. Creamos el DTO con los datos recibidos del VM
             val dto = UsersInfoDTO(
                 id = "",
                 email = email,
@@ -50,12 +55,11 @@ class UsersInfoRepo(context: Context) {
                 country = country
             )
 
-            // 2. Enviamos el objeto completo al Body de la petición
             val response = api.registerUser(dto)
 
             if (response.isSuccessful && response.body() != null) {
                 val registeredUser = response.body()!!.toDTO()
-                session.saveUser(registeredUser)
+                session.saveUser(registeredUser) // guardamos usuario en DataStore
                 Result.success(registeredUser)
             } else {
                 val errorMsg = response.errorBody()?.string() ?: "Error en el registro"
@@ -84,8 +88,10 @@ class UsersInfoRepo(context: Context) {
         }
     }
 
-    fun getLoggedUser(): UsersInfoDTO? = session.getUser()
-    fun logout() = session.logout()
+    /**
+     * Cierra la sesión del usuario eliminando los datos de DataStore.
+     */
+    suspend fun logout() = session.logout()
 }
 
 /*

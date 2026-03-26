@@ -7,17 +7,8 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Menu
 import androidx.compose.material.icons.filled.Settings
-import androidx.compose.material3.DropdownMenu
-import androidx.compose.material3.DropdownMenuItem
-import androidx.compose.material3.Icon
-import androidx.compose.material3.IconButton
-import androidx.compose.material3.MaterialTheme
-import androidx.compose.material3.Text
-import androidx.compose.runtime.Composable
-import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.remember
-import androidx.compose.runtime.setValue
+import androidx.compose.material3.*
+import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
@@ -27,69 +18,54 @@ import androidx.navigation.NavHostController
 import com.example.multimediaapp.R
 import com.example.multimediaapp.navigation.ObjRoutes
 import com.example.multimediaapp.ui.theme.rowModifier
-import com.example.multimediaapp.session.SessionManager
-/**
- * Composable que representa la barra superior de la aplicación (TopBar)
- *
- * Incluye:
- * - Icono de menú para desplegar opciones
- * - Icono de ajustes para navegar a la pantalla de configuración
- * - Menú desplegable con enlaces externos,añadir banda, logout y opción de cerrar la app
- *
- * @param navController Controlador de navegación de Compose
- */
+import com.example.multimediaapp.session.DataStoreManager
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
+
 @Composable
 fun TopBar(navController: NavHostController) {
-    // Estado que indica si el menú desplegable está abierto o cerrado
     var isExpanded by remember { mutableStateOf(false) }
-    // Contexto actual (necesario para abrir enlaces o finalizar la app)
     val context = LocalContext.current
-    // Intenta obtener la Activity actual desde el contexto, útil para cerrar la app
     val activity = context as? Activity
-    val sessionManager = SessionManager(context)
-    // Fila horizontal que contiene los iconos y la barra superior
+    val dataStore = DataStoreManager(context)
+    val coroutineScope = rememberCoroutineScope()
+
     Row(
         rowModifier,
         verticalAlignment = Alignment.CenterVertically
-    )
-    {
+    ) {
         // Botón de menú
         IconButton(onClick = { isExpanded = true }) {
-
             Icon(
                 imageVector = Icons.Default.Menu,
                 contentDescription = "menú",
-                tint =
-                    MaterialTheme.colorScheme.primary,
-
-                )
-
+                tint = MaterialTheme.colorScheme.primary
+            )
         }
-        //Configuración button
-        IconButton(onClick = { navController.navigate(ObjRoutes.SETTINGS) }) {
 
+        // Botón de ajustes
+        IconButton(onClick = { navController.navigate(ObjRoutes.SETTINGS) }) {
             Icon(
                 imageVector = Icons.Default.Settings,
                 contentDescription = "ajustes",
-                tint =
-                    MaterialTheme.colorScheme.primary,
-
-                )
+                tint = MaterialTheme.colorScheme.primary
+            )
         }
-        //Dropdown menu, se muestra en la esquina superior izquierda
+
+        // DropdownMenu
         DropdownMenu(
             expanded = isExpanded,
             onDismissRequest = { isExpanded = false },
             modifier = Modifier.fillMaxWidth()
         ) {
-            //Opción para abrir last.fm web
+            // Abrir Last.fm
             DropdownMenuItem(
                 text = { Text(text = stringResource(R.string.link_last)) },
                 onClick = {
                     isExpanded = false
                     try {
                         context.startActivity(
-
                             Intent(Intent.ACTION_VIEW, "https://www.last.fm/".toUri())
                         )
                     } catch (e: Exception) {
@@ -97,7 +73,8 @@ fun TopBar(navController: NavHostController) {
                     }
                 }
             )
-            //opción para abrir  discogs web
+
+            // Abrir Discogs
             DropdownMenuItem(
                 text = { Text(text = stringResource(R.string.link_disc)) },
                 onClick = {
@@ -111,139 +88,29 @@ fun TopBar(navController: NavHostController) {
                     }
                 }
             )
-            //añadir  banda
-            DropdownMenuItem(
-                text = { Text(text = stringResource(R.string.add)) },
-                onClick = {
-                    isExpanded = false
-                    sessionManager.logout()
 
-                    navController.navigate(ObjRoutes.ADDBAND) {
-                        popUpTo(0)
-                    }
-                }
-            )
-            // Logout
+            // Logout (coroutine)
             DropdownMenuItem(
                 text = { Text(text = stringResource(R.string.logout)) },
                 onClick = {
                     isExpanded = false
-                    sessionManager.logout()
-
-                    navController.navigate(ObjRoutes.LOGIN) {
-                        popUpTo(0)
+                    coroutineScope.launch {
+                        dataStore.logout() // suspend function
+                        navController.navigate(ObjRoutes.LOGIN) {
+                            popUpTo(0)
+                        }
                     }
                 }
             )
-            //para cerrar la app
+
+            // Salir de la app
             DropdownMenuItem(
                 text = { Text(text = stringResource(R.string.salir)) },
                 onClick = {
                     isExpanded = false
-                    activity?.finishAffinity() // cerrar app
+                    activity?.finishAffinity()
                 }
             )
-
         }
     }
 }
-
-/*
- * Este archivo define la barra superior de la aplicación (TopBar)
- * utilizando Jetpack Compose.
- *
- * COMPONENTE PRINCIPAL:
- *
- * TopBar(navController)
- *
- * - Proporciona acceso a navegación y acciones rápidas.
- * - Incluye un menú desplegable con varias opciones.
- *
- * ELEMENTOS PRINCIPALES:
- *
- * 1. Icono de menú (Menu)
- *    - Abre un DropdownMenu con opciones adicionales.
- *
- * 2. Icono de configuración (Settings)
- *    - Navega a la pantalla de ajustes usando NavController.
- *
- * 3. DropdownMenu
- *    - Se muestra al pulsar el icono de menú.
- *    - Contiene varias acciones:
- *
- *      a) Abrir página web de Last.fm
- *         - Usa Intent.ACTION_VIEW para abrir navegador.
- *
- *      b) Abrir página web de Discogs
- *         - También usa Intent para abrir un enlace externo.
- *
- *      c) Añadir banda
- *         - Navega a la pantalla de añadir banda (ADDBAND).
- *         - También ejecuta logout (cierra sesión actual).
- *
- *      d) Logout
- *         - Elimina la sesión del usuario mediante SessionManager.
- *         - Redirige al login.
- *
- *      e) Salir de la aplicación
- *         - Usa activity?.finishAffinity() para cerrar la app completamente.
- *
- * ESTADO:
- *
- * isExpanded:
- * - Controla si el menú está visible o no.
- * - Se gestiona con remember { mutableStateOf(false) }.
- *
- * CONTEXTO:
- *
- * LocalContext.current:
- * - Permite acceder al contexto Android.
- * - Necesario para:
- *   - Abrir URLs
- *   - Obtener Activity
- *
- * Activity:
- * - Se usa para cerrar la aplicación.
- *
- * NAVEGACIÓN:
- *
- * NavHostController:
- * - Permite cambiar de pantalla dentro de la app.
- * - Se usa para:
- *   - SETTINGS
- *   - ADDBAND
- *   - LOGIN
- *
- * UI:
- *
- * Row:
- * - Organiza los elementos horizontalmente.
- *
- * IconButton + Icon:
- * - Botones con iconos (menú y configuración).
- *
- * DropdownMenu + DropdownMenuItem:
- * - Menú flotante con opciones seleccionables.
- *
- * INTERNACIONALIZACIÓN:
- *
- * stringResource(R.string.*):
- * - Permite usar textos desde resources.
- * - Facilita soporte multi-idioma.
- *
- * MANEJO DE ERRORES:
- *
- * - Los intents están dentro de try-catch para evitar crashes.
- *
- * BUENAS PRÁCTICAS:
- *
- * - Separación de lógica y UI.
- * - Uso de Navigation Component.
- * - Uso de estado reactivo con Compose.
- * - Reutilización de componentes.
- *
- * NOTA:
- *
- * - Este componente actúa como punto central de interacción del usuario.
- * - Controla navegación, sesión y acceso a funciones clave.
- */
