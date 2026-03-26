@@ -11,18 +11,13 @@ import kotlinx.coroutines.flow.map
  * DataStoreManager: gestiona los datos del usuario de forma segura.
  * Guarda solo nombre y email, no guarda contraseña.
  */
+val Context.dataStore by preferencesDataStore(name = "user_prefs")
+
 class DataStoreManager(private val context: Context) {
 
-    // Nombre del DataStore
-    private val Context.dataStore by preferencesDataStore(name = "user_prefs")
-
-    // Keys
     private val NAME_KEY = stringPreferencesKey("user_name")
     private val EMAIL_KEY = stringPreferencesKey("user_email")
 
-    /**
-     * Guardar usuario (solo nombre y email)
-     */
     suspend fun saveUser(name: String, email: String) {
         context.dataStore.edit { prefs ->
             prefs[NAME_KEY] = name
@@ -30,33 +25,11 @@ class DataStoreManager(private val context: Context) {
         }
     }
 
-    /**
-     * Recuperar nombre
-     */
-    val getName: Flow<String> = context.dataStore.data
-        .map { prefs -> prefs[NAME_KEY] ?: "" }
+    val getName = context.dataStore.data.map { prefs -> prefs[NAME_KEY] ?: "" }
+    val getEmail = context.dataStore.data.map { prefs -> prefs[EMAIL_KEY] ?: "" }
+    val isLogged = context.dataStore.data.map { prefs -> (prefs[EMAIL_KEY] ?: "").isNotBlank() }
 
-    /**
-     * Recuperar email
-     */
-    val getEmail: Flow<String> = context.dataStore.data
-        .map { prefs -> prefs[EMAIL_KEY] ?: "" }
-
-    /**
-     * Verifica si hay un usuario logueado
-     */
-    val isLogged: Flow<Boolean> = context.dataStore.data
-        .map { prefs ->
-            val email = prefs[EMAIL_KEY] ?: ""
-            email.isNotBlank()
-        }
-
-    /**
-     * Logout: limpia datos
-     */
     suspend fun logout() {
-        context.dataStore.edit { prefs ->
-            prefs.clear()
-        }
+        context.dataStore.edit { it.clear() }
     }
 }

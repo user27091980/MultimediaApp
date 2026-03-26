@@ -35,42 +35,40 @@ fun SettingsScreen(vm: SettingsVM = viewModel()) {
     Column(
         modifier = Modifier
             .fillMaxSize()
-            .background(MaterialTheme.colorScheme.background)// Ocupa todo el espacio disponible
-            .padding(16.dp)// Margen interno de 16dp en todos los lados
+            .background(MaterialTheme.colorScheme.background)
+            .padding(16.dp)
     ) {
-        // Título de la pantalla
         Text(
-            text = "configuración",
-            style = MaterialTheme.typography.headlineMedium// Estilo de título principal de Material3
-        )
-
-        Spacer(modifier = Modifier.height(24.dp))// Separación vertical de 24dp
-
-        // Sección de apariencia
-        Text(
-            "Apariencia", style = MaterialTheme.typography.headlineMedium,
-            color = MaterialTheme.colorScheme.onBackground
-        )// Subtítulo
-        // Switch para el modo oscuro
-        SettingSwitch(
-            title = "Modo óscuro",// Texto del switch
-            checked = uiState.darkMode,// Estado del switch
-            onCheckedChange = { vm.onDarkModeChange(it) },
-        )
-        Spacer(modifier = Modifier.height(24.dp))// Separación vertical de 24dp
-
-        // Información sobre la versión de la app
-        Text(
-            text = stringResource(R.string.version),
+            text = "Configuración",
             style = MaterialTheme.typography.headlineMedium,
             color = MaterialTheme.colorScheme.onBackground
         )
 
         Spacer(modifier = Modifier.height(24.dp))
 
+        Text(
+            "Apariencia",
+            style = MaterialTheme.typography.headlineMedium,
+            color = MaterialTheme.colorScheme.onBackground
+        )
 
+        SettingSwitch(
+            title = "Modo oscuro",
+            checked = uiState.darkMode,
+            onCheckedChange = { vm.onDarkModeChange(it) },
+        )
+
+        Spacer(modifier = Modifier.height(24.dp))
+
+        Text(
+            text = stringResource(R.string.version),
+            style = MaterialTheme.typography.headlineMedium,
+            color = MaterialTheme.colorScheme.onBackground
+        )
     }
+
 }
+
 
 /**
  * Componente genérico para un switch con título.

@@ -7,19 +7,8 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Menu
 import androidx.compose.material.icons.filled.Settings
-import androidx.compose.material3.DropdownMenu
-import androidx.compose.material3.DropdownMenuItem
-import androidx.compose.material3.Icon
-import androidx.compose.material3.IconButton
-import androidx.compose.material3.MaterialTheme
-import androidx.compose.material3.Text
-import androidx.compose.runtime.Composable
-import androidx.compose.runtime.collectAsState
-import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.remember
-import androidx.compose.runtime.rememberCoroutineScope
-import androidx.compose.runtime.setValue
+import androidx.compose.material3.*
+import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
@@ -33,19 +22,21 @@ import com.example.multimediaapp.ui.theme.rowModifier
 import kotlinx.coroutines.launch
 
 @Composable
-fun TopBar(navController: NavHostController,dataStore: DataStoreManager) {
+fun TopBar(navController: NavHostController, dataStore: DataStoreManager) {
+
     var isExpanded by remember { mutableStateOf(false) }
     val context = LocalContext.current
     val activity = context as? Activity
     val scope = rememberCoroutineScope()
 
-
-    // Convertimos el Flow a State para usarlo en Compose
+    // Convertimos Flow a State para Compose
     val userName by dataStore.getName.collectAsState(initial = "")
+
     Row(
         rowModifier,
         verticalAlignment = Alignment.CenterVertically
     ) {
+        // Botón menú
         IconButton(onClick = { isExpanded = true }) {
             Icon(
                 imageVector = Icons.Default.Menu,
@@ -54,6 +45,7 @@ fun TopBar(navController: NavHostController,dataStore: DataStoreManager) {
             )
         }
 
+        // Botón ajustes
         IconButton(onClick = { navController.navigate(ObjRoutes.SETTINGS) }) {
             Icon(
                 imageVector = Icons.Default.Settings,
@@ -62,6 +54,7 @@ fun TopBar(navController: NavHostController,dataStore: DataStoreManager) {
             )
         }
 
+        // Menú desplegable
         DropdownMenu(
             expanded = isExpanded,
             onDismissRequest = { isExpanded = false },
@@ -70,7 +63,7 @@ fun TopBar(navController: NavHostController,dataStore: DataStoreManager) {
             if (userName.isNotBlank()) {
                 DropdownMenuItem(
                     text = { Text(text = "Hola, $userName") },
-                    onClick = { /* solo saludo */ }
+                    onClick = { }
                 )
             }
 
@@ -78,13 +71,9 @@ fun TopBar(navController: NavHostController,dataStore: DataStoreManager) {
                 text = { Text(text = stringResource(R.string.link_last)) },
                 onClick = {
                     isExpanded = false
-                    try {
-                        context.startActivity(
-                            Intent(Intent.ACTION_VIEW, "https://www.last.fm/".toUri())
-                        )
-                    } catch (e: Exception) {
-                        e.printStackTrace()
-                    }
+                    context.startActivity(
+                        Intent(Intent.ACTION_VIEW, "https://www.last.fm/".toUri())
+                    )
                 }
             )
 
@@ -92,13 +81,9 @@ fun TopBar(navController: NavHostController,dataStore: DataStoreManager) {
                 text = { Text(text = stringResource(R.string.link_disc)) },
                 onClick = {
                     isExpanded = false
-                    try {
-                        context.startActivity(
-                            Intent(Intent.ACTION_VIEW, "https://www.discogs.com/".toUri())
-                        )
-                    } catch (e: Exception) {
-                        e.printStackTrace()
-                    }
+                    context.startActivity(
+                        Intent(Intent.ACTION_VIEW, "https://www.discogs.com/".toUri())
+                    )
                 }
             )
 
