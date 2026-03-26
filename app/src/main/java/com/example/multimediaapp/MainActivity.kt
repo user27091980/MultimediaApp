@@ -15,6 +15,7 @@ import androidx.compose.ui.Modifier
 import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.rememberNavController
+import com.example.multimediaapp.data.datastore.DataStoreManager
 import com.example.multimediaapp.navigation.NavGraph
 import com.example.multimediaapp.navigation.ObjRoutes
 import com.example.multimediaapp.ui.theme.MultimediaAppTheme
@@ -49,62 +50,36 @@ class MainActivity : ComponentActivity() {
         enableEdgeToEdge()
 
         setContent {
-
-            // ViewModel responsible for app settings
             val settingsVM: SettingsVM = viewModel()
-
-            // Observe UI state reactively
             val uiState by settingsVM.uiState.collectAsState()
+            val navController = rememberNavController()
 
-            // Apply global theme based on user settings
+            // Crear DataStoreManager
+            val dataStore = DataStoreManager(this)
+
             MultimediaAppTheme(darkTheme = uiState.darkMode) {
-
-                // Navigation controller
-                val navController = rememberNavController()
-
-                // Current route from navigation stack
                 val currentBackStackEntry = navController.currentBackStackEntryAsState()
                 val currentRoute = currentBackStackEntry.value?.destination?.route ?: ""
 
                 Scaffold(
                     modifier = Modifier.fillMaxSize(),
-
-                    // Top bar visible only in specific screens
                     topBar = {
-                        if (currentRoute !in listOf(
-                                ObjRoutes.LOGINREG,
-                                ObjRoutes.REGISTER,
-                                ObjRoutes.LOGIN
-                            )
-                        ) {
-                            TopBar(navController)
+                        if (currentRoute !in listOf(ObjRoutes.LOGINREG, ObjRoutes.REGISTER, ObjRoutes.LOGIN)) {
+                            TopBar(navController = navController, dataStore = dataStore)
                         }
                     },
-
-                    // Bottom bar visible only in specific screens
                     bottomBar = {
-                        if (currentRoute !in listOf(
-                                ObjRoutes.LOGINREG,
-                                ObjRoutes.REGISTER,
-                                ObjRoutes.LOGIN
-                            )
-                        ) {
-                            BottomBar(navController)
+                        if (currentRoute !in listOf(ObjRoutes.LOGINREG, ObjRoutes.REGISTER, ObjRoutes.LOGIN)) {
+                            BottomBar(navController = navController)
                         }
                     }
                 ) { innerPadding ->
-
-                    // Container for the main content
                     Box(
                         modifier = Modifier
                             .fillMaxSize()
                             .padding(innerPadding)
                     ) {
-                        // Navigation graph of the application
-                        NavGraph(
-                            navController = navController,
-                            settingsVM
-                        )
+                        NavGraph(navController = navController, settingsVM)
                     }
                 }
             }

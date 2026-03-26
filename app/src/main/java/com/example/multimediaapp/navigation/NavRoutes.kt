@@ -45,16 +45,7 @@ data class RegisterRoute(val email: String, val user: String) : NavRoute
 data class BandRoute (val bandId: String) : NavRoute {
     fun route() = "band/$bandId"
 }
-data class AddBandRoute(val id: String,
-                        val name: String,
-                        val description: String,
-                        val banner: String,
-                        val albumImages: List<String>,
-                        val style: String,
-                        val recordLabel: String,
-                        val components: String,
-                        val albumLinks: List<String>,
-                        val headerLink: String ): NavRoute
+
 /**
  * Ruta estática (sin parámetros).
  *
@@ -70,9 +61,8 @@ object LoginRegRoute : NavRoute
 @Serializable
 object MainRoute : NavRoute
 
-/*@Serializable
-object BandRoute : NavRoute
-*/
+
+
 @Serializable
 object UserInfoRoute : NavRoute
 

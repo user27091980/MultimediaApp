@@ -14,9 +14,11 @@ import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
+import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -25,71 +27,59 @@ import androidx.compose.ui.res.stringResource
 import androidx.core.net.toUri
 import androidx.navigation.NavHostController
 import com.example.multimediaapp.R
+import com.example.multimediaapp.data.datastore.DataStoreManager
 import com.example.multimediaapp.navigation.ObjRoutes
 import com.example.multimediaapp.ui.theme.rowModifier
-import com.example.multimediaapp.session.SessionManager
-/**
- * Composable que representa la barra superior de la aplicación (TopBar)
- *
- * Incluye:
- * - Icono de menú para desplegar opciones
- * - Icono de ajustes para navegar a la pantalla de configuración
- * - Menú desplegable con enlaces externos,añadir banda, logout y opción de cerrar la app
- *
- * @param navController Controlador de navegación de Compose
- */
+import kotlinx.coroutines.launch
+
 @Composable
-fun TopBar(navController: NavHostController) {
-    // Estado que indica si el menú desplegable está abierto o cerrado
+fun TopBar(navController: NavHostController,dataStore: DataStoreManager) {
     var isExpanded by remember { mutableStateOf(false) }
-    // Contexto actual (necesario para abrir enlaces o finalizar la app)
     val context = LocalContext.current
-    // Intenta obtener la Activity actual desde el contexto, útil para cerrar la app
     val activity = context as? Activity
-    val sessionManager = SessionManager(context)
-    // Fila horizontal que contiene los iconos y la barra superior
+    val scope = rememberCoroutineScope()
+
+
+    // Convertimos el Flow a State para usarlo en Compose
+    val userName by dataStore.getName.collectAsState(initial = "")
     Row(
         rowModifier,
         verticalAlignment = Alignment.CenterVertically
-    )
-    {
-        // Botón de menú
+    ) {
         IconButton(onClick = { isExpanded = true }) {
-
             Icon(
                 imageVector = Icons.Default.Menu,
                 contentDescription = "menú",
-                tint =
-                    MaterialTheme.colorScheme.primary,
-
-                )
-
+                tint = MaterialTheme.colorScheme.primary
+            )
         }
-        //Configuración button
-        IconButton(onClick = { navController.navigate(ObjRoutes.SETTINGS) }) {
 
+        IconButton(onClick = { navController.navigate(ObjRoutes.SETTINGS) }) {
             Icon(
                 imageVector = Icons.Default.Settings,
                 contentDescription = "ajustes",
-                tint =
-                    MaterialTheme.colorScheme.primary,
-
-                )
+                tint = MaterialTheme.colorScheme.primary
+            )
         }
-        //Dropdown menu, se muestra en la esquina superior izquierda
+
         DropdownMenu(
             expanded = isExpanded,
             onDismissRequest = { isExpanded = false },
             modifier = Modifier.fillMaxWidth()
         ) {
-            //Opción para abrir last.fm web
+            if (userName.isNotBlank()) {
+                DropdownMenuItem(
+                    text = { Text(text = "Hola, $userName") },
+                    onClick = { /* solo saludo */ }
+                )
+            }
+
             DropdownMenuItem(
                 text = { Text(text = stringResource(R.string.link_last)) },
                 onClick = {
                     isExpanded = false
                     try {
                         context.startActivity(
-
                             Intent(Intent.ACTION_VIEW, "https://www.last.fm/".toUri())
                         )
                     } catch (e: Exception) {
@@ -97,7 +87,7 @@ fun TopBar(navController: NavHostController) {
                     }
                 }
             )
-            //opción para abrir  discogs web
+
             DropdownMenuItem(
                 text = { Text(text = stringResource(R.string.link_disc)) },
                 onClick = {
@@ -111,39 +101,27 @@ fun TopBar(navController: NavHostController) {
                     }
                 }
             )
-            //añadir  banda
-            DropdownMenuItem(
-                text = { Text(text = stringResource(R.string.add)) },
-                onClick = {
-                    isExpanded = false
-                    sessionManager.logout()
 
-                    navController.navigate(ObjRoutes.ADDBAND) {
-                        popUpTo(0)
-                    }
-                }
-            )
-            // Logout
             DropdownMenuItem(
                 text = { Text(text = stringResource(R.string.logout)) },
                 onClick = {
                     isExpanded = false
-                    sessionManager.logout()
-
-                    navController.navigate(ObjRoutes.LOGIN) {
-                        popUpTo(0)
+                    scope.launch {
+                        dataStore.logout()
+                        navController.navigate(ObjRoutes.LOGIN) {
+                            popUpTo(0)
+                        }
                     }
                 }
             )
-            //para cerrar la app
+
             DropdownMenuItem(
                 text = { Text(text = stringResource(R.string.salir)) },
                 onClick = {
                     isExpanded = false
-                    activity?.finishAffinity() // cerrar app
+                    activity?.finishAffinity()
                 }
             )
-
         }
     }
 }

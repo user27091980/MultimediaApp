@@ -2,6 +2,9 @@ package com.example.multimediaapp.view.components
 
 import android.R.attr.description
 import android.R.attr.name
+import android.net.Uri
+import androidx.activity.compose.rememberLauncherForActivityResult
+import androidx.activity.result.contract.ActivityResultContracts
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Button
@@ -127,28 +130,7 @@ fun ButtonRegister(
         modifier = modifier
     )
 }
-/**
- * Botón para seleccionar una imagen de la galería.
- *
- * @param text Texto del botón
- * @param onImageSelected Callback con la Uri seleccionada
- */
-@Composable
-fun ButtonImage(
-    text: String,
-    onImageSelected: (Uri?) -> Unit
-) {
-    val launcher = rememberLauncherForActivityResult(
-        ActivityResultContracts.GetContent()
-    ) { uri ->
-        onImageSelected(uri)
-    }
 
-    BaseButton(
-        text = text,
-        onClick = { launcher.launch("image/*") }
-    )
-}
 
 
 

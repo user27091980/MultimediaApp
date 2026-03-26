@@ -1,25 +1,25 @@
 package com.example.multimediaapp.data.repository
 
 import android.content.Context
+import com.example.multimediaapp.data.datastore.DataStoreManager
+
 import com.example.multimediaapp.data.entity.toDTO
 import com.example.multimediaapp.model.UsersInfoDTO
 import com.example.multimediaapp.retrofit.RetrofitModule
-import com.example.multimediaapp.retrofit.RetrofitModule.userInfoApi
-import com.example.multimediaapp.session.SessionManager
+import kotlinx.coroutines.flow.first
 
 class UsersInfoRepo(context: Context) {
 
-    private val session = SessionManager(context)
     private val api = RetrofitModule.userInfoApi
+    private val dataStore = DataStoreManager(context) // corregido: DataStoreManager
 
     /**
-     * Obtiene la información de un usuario por su ID.
+     * Obtiene la información de un usuario por su ID desde la API.
      */
     suspend fun read(id: String): Result<UsersInfoDTO?> {
         return try {
-            val response = userInfoApi.getUserInfoById(id)
+            val response = api.getUserInfoById(id)
             if (response.isSuccessful) {
-                // Importante: toDTO() debe estar definido en tu Entity
                 Result.success(response.body()?.toDTO())
             } else {
                 Result.failure(Exception("Error: ${response.code()}"))
@@ -31,6 +31,7 @@ class UsersInfoRepo(context: Context) {
 
     /**
      * REGISTRO: Construye el DTO y lo envía a la API.
+     * Guarda usuario en DataStore si el registro fue exitoso.
      */
     suspend fun register(
         email: String,
@@ -40,7 +41,6 @@ class UsersInfoRepo(context: Context) {
         country: String
     ): Result<UsersInfoDTO> {
         return try {
-            // 1. Creamos el DTO con los datos recibidos del VM
             val dto = UsersInfoDTO(
                 id = "",
                 email = email,
@@ -49,13 +49,14 @@ class UsersInfoRepo(context: Context) {
                 lastName = lastName,
                 country = country
             )
-
-            // 2. Enviamos el objeto completo al Body de la petición
             val response = api.registerUser(dto)
-
             if (response.isSuccessful && response.body() != null) {
                 val registeredUser = response.body()!!.toDTO()
-                session.saveUser(registeredUser)
+                // Guardar en DataStore (solo email y name)
+                dataStore.saveUser(
+                    name = registeredUser.name,
+                    email = registeredUser.email
+                )
                 Result.success(registeredUser)
             } else {
                 val errorMsg = response.errorBody()?.string() ?: "Error en el registro"
@@ -67,15 +68,19 @@ class UsersInfoRepo(context: Context) {
     }
 
     /**
-     * Actualiza el perfil del usuario.
+     * Actualiza el perfil del usuario en la API y DataStore
      */
     suspend fun update(dto: UsersInfoDTO): Result<UsersInfoDTO> {
         return try {
             val response = api.updateUserInfo(dto.email, dto)
             if (response.isSuccessful && response.body() != null) {
-                val updated = response.body()!!.toDTO()
-                session.saveUser(updated)
-                Result.success(updated)
+                val updatedUser = response.body()!!.toDTO()
+                // Actualizar datos en DataStore (solo email y name)
+                dataStore.saveUser(
+                    name = updatedUser.name,
+                    email = updatedUser.email
+                )
+                Result.success(updatedUser)
             } else {
                 Result.failure(Exception("No se pudo actualizar el perfil"))
             }
@@ -84,58 +89,28 @@ class UsersInfoRepo(context: Context) {
         }
     }
 
-    fun getLoggedUser(): UsersInfoDTO? = session.getUser()
-    fun logout() = session.logout()
-}
+    /**
+     * Devuelve el usuario actualmente logueado desde DataStore
+     */
+    suspend fun getLoggedUser(): UsersInfoDTO? {
+        val name = dataStore.getName.first()   // suspend
+        val email = dataStore.getEmail.first() // suspend
+        return if (email.isNotBlank() && name.isNotBlank()) {
+            UsersInfoDTO(
+                id = "",
+                name = name,
+                email = email,
+                pass = "", // no guardamos password
+                lastName = "",
+                country = ""
+            )
+        } else null
+    }
 
-/*
- * Este archivo define el repositorio de usuarios (UsersInfoRepo),
- * encargado de gestionar las operaciones relacionadas con el perfil del usuario
- * y la comunicación con la API.
- *
- * Utiliza Retrofit para realizar las peticiones al servidor y SessionManager
- * para gestionar la sesión del usuario en local.
- *
- * Este repositorio actúa como intermediario entre:
- * - La capa de red (API)
- * - La capa de datos (Entity)
- * - La capa de presentación (DTO)
- * - La gestión de sesión (SessionManager)
- *
- * Métodos principales:
- *
- * 1. read(id):
- *    - Obtiene la información de un usuario por su ID.
- *    - Llama al endpoint correspondiente de la API.
- *    - Convierte la respuesta (Entity) a DTO.
- *    - Devuelve un Result con éxito o fallo.
- *
- * 2. register(email, name, pass, lastName, country):
- *    - Construye un objeto UsersInfoDTO con los datos proporcionados.
- *    - Envía el DTO al servidor para registrar un nuevo usuario.
- *    - Si el registro es exitoso:
- *        - Convierte la respuesta a DTO.
- *        - Guarda el usuario en sesión mediante SessionManager.
- *    - Si falla, devuelve el error correspondiente.
- *
- * 3. update(dto):
- *    - Actualiza los datos del usuario enviando el DTO a la API.
- *    - Usa el email como identificador del usuario.
- *    - Si tiene éxito:
- *        - Convierte la respuesta a DTO.
- *        - Actualiza la sesión guardada.
- *
- * 4. getLoggedUser():
- *    - Devuelve el usuario actualmente guardado en sesión.
- *
- * 5. logout():
- *    - Elimina la información del usuario de la sesión.
- *
- * Uso de Result:
- * - Permite manejar de forma segura tanto el éxito como los errores.
- * - Evita el uso de valores nulos y mejora el control de errores.
- *
- * SessionManager:
- * - Se utiliza para guardar y recuperar el usuario autenticado.
- * - Permite mantener la sesión incluso después de cerrar la app.
- */
+    /**
+     * Logout seguro: limpia DataStore
+     */
+    suspend fun logout() {
+        dataStore.logout()
+    }
+}
