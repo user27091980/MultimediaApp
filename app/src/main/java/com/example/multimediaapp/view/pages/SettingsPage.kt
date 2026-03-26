@@ -94,22 +94,4 @@ fun SettingSwitch(
         )
     }
 }
-@Preview(showBackground = true)
-@Composable
-fun SettingsScreenPreview() {
-    // ViewModel simulado para preview
-    val fakeVM = object : SettingsVM() {
-        override val uiState = MutableStateFlow(
-            SettingsUiState(
-                darkMode = true // modo oscuro activado
-            )
-        )
 
-        override fun onDarkModeChange(enabled: Boolean) {
-            // Actualiza el estado para que el switch cambie en el preview
-            uiState.value = uiState.value.copy(darkMode = enabled)
-        }
-    }
-
-    SettingsScreen(vm = fakeVM)
-}
