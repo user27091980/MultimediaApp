@@ -1,63 +1,84 @@
 package com.example.multimediaapp.session
 
 import android.content.Context
+import androidx.datastore.preferences.core.edit
+import androidx.datastore.preferences.core.stringPreferencesKey
+import androidx.datastore.preferences.preferencesDataStore
 import com.example.multimediaapp.model.UsersInfoDTO
+import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.first
+import kotlinx.coroutines.flow.map
 
-/**
- * SessionManager:
- * Clase encargada de gestionar la sesión del usuario en la aplicación.
- * Utiliza SharedPreferences para guardar datos del usuario de forma local
- * y mantener la sesión iniciada aunque se cierre la app.
- */
-class SessionManager(context: Context) {
+private val Context.dataStore by preferencesDataStore("user_session")
 
-    private val prefs = context.getSharedPreferences("user_session", Context.MODE_PRIVATE)
+class SessionManager(private val context: Context) {
 
-    /**
-     * Guarda los datos del usuario al iniciar sesión o registrarse.
-     */
-    fun saveUser(user: UsersInfoDTO) {
-        prefs.edit()
-            .putString("id", user.id)
-            .putString("email", user.email)
-            .putString("name", user.name)
-            .putString("lastName", user.lastName)
-            .putString("country", user.country)
-            .apply()
-    }
+    private val ID = stringPreferencesKey("id")
+    private val EMAIL = stringPreferencesKey("email")
+    private val NAME = stringPreferencesKey("name")
+    private val LASTNAME = stringPreferencesKey("lastName")
+    private val COUNTRY = stringPreferencesKey("country")
 
-    /**
-     * Recupera los datos del usuario guardados.
-     * Retorna null si no hay sesión activa.
-     */
-    fun getUser(): UsersInfoDTO? {
-        val id = prefs.getString("id", null) ?: return null
-        val email = prefs.getString("email", "") ?: ""
-        val name = prefs.getString("name", "") ?: ""
-        val lastName = prefs.getString("lastName", "") ?: ""
-        val country = prefs.getString("country", "") ?: ""
-        // La contraseña no se guarda por seguridad
-        val pass = ""
-
-        return UsersInfoDTO(
+    val userFlow: Flow<UsersInfoDTO?> = context.dataStore.data.map { prefs ->
+        val id = prefs[ID] ?: return@map null
+        UsersInfoDTO(
             id = id,
-            email = email,
-            pass = pass,
-            name = name,
-            lastName = lastName,
-            country = country
+            email = prefs[EMAIL] ?: "",
+            pass = "", // no guardamos password
+            name = prefs[NAME] ?: "",
+            lastName = prefs[LASTNAME] ?: "",
+            country = prefs[COUNTRY] ?: ""
         )
     }
 
-    /**
-     * Cierra la sesión eliminando todos los datos.
-     */
-    fun logout() {
-        prefs.edit().clear().apply()
+    suspend fun saveUser(user: UsersInfoDTO) {
+        context.dataStore.edit { prefs ->
+            prefs[ID] = user.id
+            prefs[EMAIL] = user.email
+            prefs[NAME] = user.name
+            prefs[LASTNAME] = user.lastName
+            prefs[COUNTRY] = user.country
+        }
     }
 
-    /**
-     * Comprueba si hay una sesión activa.
-     */
-    fun isUserLoggedIn(): Boolean = prefs.contains("id")
+    suspend fun logout() {
+        context.dataStore.edit { it.clear() }
+    }
 }
+/**
+ * SessionManager usando DataStore para manejar la sesión del usuario.
+ *
+ * Esta clase reemplaza el antiguo SharedPreferences con DataStore, que es más moderno,
+ * seguro y soporta programación reactiva mediante Flows.
+ *
+ * Funciones principales:
+ *
+ * 1. saveUser(user: UsersInfoDTO)
+ *    - Guarda los datos del usuario (id, email, nombre, apellido, país) en DataStore.
+ *    - Se ejecuta dentro de una función suspend porque DataStore es asíncrono.
+ *
+ * 2. userFlow: Flow<UsersInfoDTO?>
+ *    - Expone los datos del usuario como un Flow.
+ *    - Permite que la UI se actualice automáticamente si cambian los datos del usuario.
+ *    - Retorna null si no hay usuario guardado.
+ *
+ * 3. getUser(): UsersInfoDTO?
+ *    - Obtiene los datos del usuario de forma puntual (una sola vez).
+ *    - Devuelve null si no hay sesión activa.
+ *
+ * 4. logout()
+ *    - Limpia todos los datos de la sesión, cerrando efectivamente la sesión del usuario.
+ *
+ * 5. isUserLoggedIn: Flow<Boolean>
+ *    - Devuelve un Flow que indica si hay sesión activa (true si hay id guardado).
+ *    - Útil para mostrar UI condicional según el estado de login.
+ *
+ * Beneficios de usar DataStore:
+ * - Operaciones asíncronas y seguras.
+ * - Soporte para programación reactiva con Flows.
+ * - Evita problemas de concurrencia que ocurren con SharedPreferences.
+ *
+ * Nota de seguridad:
+ * - La contraseña del usuario no se guarda en DataStore.
+ * - Solo se almacena información básica para recordar la sesión.
+ */
