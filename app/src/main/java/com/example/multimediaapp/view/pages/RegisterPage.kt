@@ -90,7 +90,7 @@ fun RegisterScreen(
                 onClick = {
                     vm.validateFields {
                         // Navegar al diálogo  si el registro fue exitoso
-                        navController.navigate(ObjRoutes.DIALOG)
+                        navController.navigate(ObjRoutes.LOGIN)
                     }
                 })
 
