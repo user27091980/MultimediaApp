@@ -15,12 +15,14 @@ import androidx.compose.ui.Modifier
 import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.rememberNavController
+import com.example.multimediaapp.data.datastore.DataStoreManager
 import com.example.multimediaapp.navigation.NavGraph
 import com.example.multimediaapp.navigation.ObjRoutes
 import com.example.multimediaapp.ui.theme.MultimediaAppTheme
 import com.example.multimediaapp.view.components.BottomBar
 import com.example.multimediaapp.view.components.TopBar
 import com.example.multimediaapp.viewmodel.vm.SettingsVM
+import com.example.multimediaapp.viewmodel.vm.SettingsVMFactory
 
 /**
  * Main activity of the application.
@@ -49,62 +51,40 @@ class MainActivity : ComponentActivity() {
         enableEdgeToEdge()
 
         setContent {
+            // Crear DataStoreManager
+            val dataStore = DataStoreManager(this)
 
-            // ViewModel responsible for app settings
-            val settingsVM: SettingsVM = viewModel()
+            // Usar Factory para instanciar SettingsVM con parámetros
+            val settingsVM: SettingsVM = viewModel(
+                factory = SettingsVMFactory(dataStore)
+            )
 
-            // Observe UI state reactively
             val uiState by settingsVM.uiState.collectAsState()
+            val navController = rememberNavController()
 
-            // Apply global theme based on user settings
             MultimediaAppTheme(darkTheme = uiState.darkMode) {
-
-                // Navigation controller
-                val navController = rememberNavController()
-
-                // Current route from navigation stack
                 val currentBackStackEntry = navController.currentBackStackEntryAsState()
                 val currentRoute = currentBackStackEntry.value?.destination?.route ?: ""
 
                 Scaffold(
                     modifier = Modifier.fillMaxSize(),
-
-                    // Top bar visible only in specific screens
                     topBar = {
-                        if (currentRoute !in listOf(
-                                ObjRoutes.LOGINREG,
-                                ObjRoutes.REGISTER,
-                                ObjRoutes.LOGIN
-                            )
-                        ) {
-                            TopBar(navController)
+                        if (currentRoute !in listOf(ObjRoutes.LOGINREG, ObjRoutes.REGISTER, ObjRoutes.LOGIN)) {
+                            TopBar(navController = navController, dataStore = dataStore)
                         }
                     },
-
-                    // Bottom bar visible only in specific screens
                     bottomBar = {
-                        if (currentRoute !in listOf(
-                                ObjRoutes.LOGINREG,
-                                ObjRoutes.REGISTER,
-                                ObjRoutes.LOGIN
-                            )
-                        ) {
-                            BottomBar(navController)
+                        if (currentRoute !in listOf(ObjRoutes.LOGINREG, ObjRoutes.REGISTER, ObjRoutes.LOGIN)) {
+                            BottomBar(navController = navController)
                         }
                     }
                 ) { innerPadding ->
-
-                    // Container for the main content
                     Box(
                         modifier = Modifier
                             .fillMaxSize()
                             .padding(innerPadding)
                     ) {
-                        // Navigation graph of the application
-                        NavGraph(
-                            navController = navController,
-                            settingsVM
-                        )
+                        NavGraph(navController = navController, settingsVM)
                     }
                 }
             }

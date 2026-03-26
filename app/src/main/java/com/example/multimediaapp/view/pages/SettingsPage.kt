@@ -19,58 +19,56 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import androidx.lifecycle.viewmodel.compose.viewModel
 import com.example.multimediaapp.R
+import com.example.multimediaapp.viewmodel.uistate.SettingsUiState
 import com.example.multimediaapp.viewmodel.vm.SettingsVM
+import kotlinx.coroutines.flow.MutableStateFlow
 
 /**
  * Pantalla de configuración de la app.
  * Permite cambiar preferencias como el modo oscuro y mostrar información básica de la app.
  */
 @Composable
-fun SettingsScreen(vm: SettingsVM = viewModel()) {
+fun SettingsScreen(vm: SettingsVM) {
     // Estado local para el switch de modo oscuro
-    val uiState by vm.uiState.collectAsState()// Columna principal que organiza todos los elementos de la pantalla
+    val uiState by vm.uiState.collectAsState()
 
     Column(
         modifier = Modifier
             .fillMaxSize()
-            .background(MaterialTheme.colorScheme.background)// Ocupa todo el espacio disponible
-            .padding(16.dp)// Margen interno de 16dp en todos los lados
+            .background(MaterialTheme.colorScheme.background)
+            .padding(16.dp)
     ) {
-        // Título de la pantalla
         Text(
-            text = "configuración",
-            style = MaterialTheme.typography.headlineMedium// Estilo de título principal de Material3
-        )
-
-        Spacer(modifier = Modifier.height(24.dp))// Separación vertical de 24dp
-
-        // Sección de apariencia
-        Text(
-            "Apariencia", style = MaterialTheme.typography.headlineMedium,
-            color = MaterialTheme.colorScheme.onBackground
-        )// Subtítulo
-        // Switch para el modo oscuro
-        SettingSwitch(
-            title = "Modo óscuro",// Texto del switch
-            checked = uiState.darkMode,// Estado del switch
-            onCheckedChange = { vm.onDarkModeChange(it) },
-        )
-        Spacer(modifier = Modifier.height(24.dp))// Separación vertical de 24dp
-
-        // Información sobre la versión de la app
-        Text(
-            text = stringResource(R.string.version),
+            text = "Configuración",
             style = MaterialTheme.typography.headlineMedium,
             color = MaterialTheme.colorScheme.onBackground
         )
 
         Spacer(modifier = Modifier.height(24.dp))
 
+        Text(
+            "Apariencia",
+            style = MaterialTheme.typography.headlineMedium,
+            color = MaterialTheme.colorScheme.onBackground
+        )
 
+        SettingSwitch(
+            title = "Modo oscuro",
+            checked = uiState.darkMode,
+            onCheckedChange = { vm.onDarkModeChange(it) },
+        )
+
+        Spacer(modifier = Modifier.height(24.dp))
+
+        Text(
+            text = stringResource(R.string.version),
+            style = MaterialTheme.typography.headlineMedium,
+            color = MaterialTheme.colorScheme.onBackground
+        )
     }
 }
+
 
 /**
  * Componente genérico para un switch con título.
@@ -87,125 +85,31 @@ fun SettingSwitch(
 
     Row(
         modifier = Modifier.fillMaxWidth(),
-        horizontalArrangement = Arrangement.SpaceBetween// Distribuye el texto y el switch a los extremos
+        horizontalArrangement = Arrangement.SpaceBetween
     ) {
-        Text(title)// Título a la izquierda
+        Text(title)
         Switch(
             checked = checked,
             onCheckedChange = onCheckedChange
         )
     }
 }
-
-/**
- * Preview de la pantalla de configuración.
- * Permite ver cómo se renderiza en el editor de Compose sin ejecutar la app.
- */
 @Preview(showBackground = true)
 @Composable
-fun SettingsPreview() {
-    SettingsScreen()
+fun SettingsScreenPreview() {
+    // ViewModel simulado para preview
+    val fakeVM = object : SettingsVM() {
+        override val uiState = MutableStateFlow(
+            SettingsUiState(
+                darkMode = true // modo oscuro activado
+            )
+        )
+
+        override fun onDarkModeChange(enabled: Boolean) {
+            // Actualiza el estado para que el switch cambie en el preview
+            uiState.value = uiState.value.copy(darkMode = enabled)
+        }
+    }
+
+    SettingsScreen(vm = fakeVM)
 }
-/*
- * Pantalla de configuración de la aplicación.
- *
- * OBJETIVO:
- *
- * - Permitir al usuario ajustar preferencias de la app.
- * - Mostrar información básica como la versión.
- * - Gestionar opciones visuales (como modo oscuro).
- *
- * ARQUITECTURA:
- *
- * - Sigue el patrón MVVM.
- * - SettingsVM gestiona el estado y la lógica.
- * - La UI observa el estado y responde a cambios.
- *
- * FLUJO DE DATOS:
- *
- * 1. Se obtiene el estado desde el ViewModel:
- *      val uiState by vm.uiState.collectAsState()
- *
- * 2. El switch refleja el estado:
- *      checked = uiState.darkMode
- *
- * 3. Cuando el usuario cambia el switch:
- *      vm.onDarkModeChange(it)
- *
- * ESTRUCTURA DE LA UI:
- *
- * Column principal:
- * - Ocupa toda la pantalla (fillMaxSize)
- * - Aplica fondo con MaterialTheme
- * - Añade padding interno de 16dp
- *
- * SECCIONES:
- *
- * 1. Título:
- *    - "configuración"
- *
- * 2. Sección de apariencia:
- *    - Subtítulo "Apariencia"
- *    - Switch para activar/desactivar modo oscuro
- *
- * 3. Información:
- *    - Muestra la versión de la app desde strings.xml
- *
- * COMPONENTES:
- *
- * SettingSwitch:
- * - Componente reutilizable.
- * - Muestra:
- *   - Texto a la izquierda
- *   - Switch a la derecha
- * - Usa Row con:
- *     Arrangement.SpaceBetween
- *   para separar ambos elementos.
- *
- * Switch:
- * - Componente de Material3.
- * - Permite alternar entre:
- *     true (activado)
- *     false (desactivado)
- *
- * GESTIÓN DEL MODO OSCURO:
- *
- * uiState.darkMode:
- * - Guarda el estado actual.
- *
- * vm.onDarkModeChange(it):
- * - Actualiza el estado en el ViewModel.
- *
- * RECURSOS:
- *
- * stringResource(R.string.version):
- * - Obtiene textos desde res/values/strings.xml.
- * - Permite internacionalización.
- *
- * PREVIEW:
- *
- * SettingsPreview:
- * - Permite visualizar la UI en Android Studio.
- * - No necesita ejecutar la app.
- *
- * BENEFICIOS:
- *
- * - UI simple y clara.
- * - Separación de responsabilidades.
- * - Reutilización del componente SettingSwitch.
- * - Estado centralizado en el ViewModel.
- *
- * NOTAS IMPORTANTES:
- *
- * - collectAsState():
- *   Hace observable el estado del ViewModel.
- *
- * - Row:
- *   Permite organizar elementos en horizontal.
- *
- * - Spacer:
- *   Añade separación entre secciones.
- *
- * - MaterialTheme:
- *   Garantiza coherencia visual en toda la app.
- */

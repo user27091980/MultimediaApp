@@ -130,28 +130,7 @@ fun ButtonRegister(
         modifier = modifier
     )
 }
-/**
- * Botón para seleccionar una imagen de la galería.
- *
- * @param text Texto del botón
- * @param onImageSelected Callback con la Uri seleccionada
- */
-@Composable
-fun ButtonImage(
-    text: String,
-    onImageSelected: (Uri?) -> Unit
-) {
-    val launcher = rememberLauncherForActivityResult(
-        ActivityResultContracts.GetContent()
-    ) { uri ->
-        onImageSelected(uri)
-    }
 
-    BaseButton(
-        text = text,
-        onClick = { launcher.launch("image/*") }
-    )
-}
 
 
 

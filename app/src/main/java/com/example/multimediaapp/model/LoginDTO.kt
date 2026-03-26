@@ -8,7 +8,6 @@ package com.example.multimediaapp.model
  */
 //usar val para evitar mutabilidad
 data class LoginDTO(
-    val id: String,
     val email: String,
     val pass: String
 )

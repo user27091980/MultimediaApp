@@ -20,9 +20,9 @@ data class UsersEntity(
 
 //mapper para convertir en LoginDTO
 fun UsersEntity.toDTO(): LoginDTO = LoginDTO(
-    id = id,
+
     email = email,
-    pass = pass
+    pass = ""
 
 )
 
