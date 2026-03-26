@@ -1,10 +1,13 @@
 package com.example.multimediaapp.viewmodel.vm
 
 import androidx.lifecycle.ViewModel
-import com.example.multimediaapp.viewmodel.uistate.SettingsUiState
+import androidx.lifecycle.ViewModelProvider
+import androidx.lifecycle.viewModelScope
+import com.example.multimediaapp.data.datastore.DataStoreManager
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
-import kotlinx.coroutines.flow.asStateFlow
+import kotlinx.coroutines.flow.update
+import kotlinx.coroutines.launch
 
 /**
  * ViewModel encargado de gestionar la configuración de la aplicación.
@@ -15,29 +18,41 @@ import kotlinx.coroutines.flow.asStateFlow
  * Ejemplo de configuración:
  * - Modo oscuro
  */
-class SettingsVM : ViewModel() {
+open class SettingsVM(private val dataStore: DataStoreManager) : ViewModel() {
 
-    /**
-     * Estado interno mutable de la configuración.
-     */
-    private val _uiState = MutableStateFlow(SettingsUiState(darkMode = false))
+    private val _uiState = MutableStateFlow(SettingsState())
+    val uiState: StateFlow<SettingsState> = _uiState
 
-    /**
-     * Estado observable expuesto a la UI.
-     */
-    val uiState: StateFlow<SettingsUiState> = _uiState.asStateFlow()
+    init {
+        // Cargar modo oscuro al iniciar
+        viewModelScope.launch {
+            dataStore.getDarkMode.collect { darkMode ->
+                _uiState.update { it.copy(darkMode = darkMode) }
+            }
+        }
+    }
 
-    /**
-     * Actualiza el estado del modo oscuro.
-     *
-     * @param enabled Indica si el modo oscuro está activado.
-     * - true: modo oscuro activado
-     * - false: modo oscuro desactivado
-     */
-    fun onDarkModeChange(enabled: Boolean) {
-        _uiState.value = _uiState.value.copy(darkMode = enabled)
+    fun onDarkModeChange(value: Boolean) {
+        _uiState.update { it.copy(darkMode = value) }
+        viewModelScope.launch {
+            dataStore.saveDarkMode(value)
+        }
     }
 }
+
+class SettingsVMFactory(private val dataStore: DataStoreManager) : ViewModelProvider.Factory {
+    override fun <T : ViewModel> create(modelClass: Class<T>): T {
+        if (modelClass.isAssignableFrom(SettingsVM::class.java)) {
+            @Suppress("UNCHECKED_CAST")
+            return SettingsVM(dataStore) as T
+        }
+        throw IllegalArgumentException("Unknown ViewModel class")
+    }
+}
+
+data class SettingsState(
+    val darkMode: Boolean = false
+)
 /**
  * SettingsVM (ViewModel de configuración):
  *

@@ -22,6 +22,7 @@ import com.example.multimediaapp.ui.theme.MultimediaAppTheme
 import com.example.multimediaapp.view.components.BottomBar
 import com.example.multimediaapp.view.components.TopBar
 import com.example.multimediaapp.viewmodel.vm.SettingsVM
+import com.example.multimediaapp.viewmodel.vm.SettingsVMFactory
 
 /**
  * Main activity of the application.
@@ -50,12 +51,16 @@ class MainActivity : ComponentActivity() {
         enableEdgeToEdge()
 
         setContent {
-            val settingsVM: SettingsVM = viewModel()
-            val uiState by settingsVM.uiState.collectAsState()
-            val navController = rememberNavController()
-
             // Crear DataStoreManager
             val dataStore = DataStoreManager(this)
+
+            // Usar Factory para instanciar SettingsVM con parámetros
+            val settingsVM: SettingsVM = viewModel(
+                factory = SettingsVMFactory(dataStore)
+            )
+
+            val uiState by settingsVM.uiState.collectAsState()
+            val navController = rememberNavController()
 
             MultimediaAppTheme(darkTheme = uiState.darkMode) {
                 val currentBackStackEntry = navController.currentBackStackEntryAsState()
