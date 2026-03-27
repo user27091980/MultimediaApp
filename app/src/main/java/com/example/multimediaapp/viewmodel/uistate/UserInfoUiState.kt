@@ -21,6 +21,7 @@ data class UserInfoListUiState(
  */
 data class UserInfoUiState(
     val id: String = "",
+    val user:String="",
     val email: String = "",
     val name: String = "",
     val lastName: String = "",

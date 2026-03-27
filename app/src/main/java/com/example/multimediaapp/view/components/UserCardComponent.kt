@@ -12,16 +12,23 @@ import com.example.multimediaapp.ui.theme.boxModifier
 import com.example.multimediaapp.ui.theme.cardModifier
 
 /**
- * Composable que representa una tarjeta (Card) de usuario.
+ * UserCardComponent:
  *
- * Muestra información del usuario en diferentes filas dentro de Cards.
+ * Composable que representa una tarjeta de usuario mostrando su información.
+ * Cada dato (ID, email, país, nombre y apellido) se organiza dentro de Cards
+ * para que tengan estilo uniforme y resalten visualmente.
  *
- * @param id Identificador del usuario
- * @param email Correo electrónico del usuario
- * @param country País del usuario
- * @param user Nombre de usuario (nickname)
- * @param name Nombre real del usuario
- * @param surname Apellido del usuario
+ * @param id Identificador único del usuario.
+ * @param email Correo electrónico del usuario.
+ * @param country País de residencia del usuario.
+ * @param name Nombre real del usuario.
+ * @param surname Apellido del usuario.
+ *
+ * Organización visual:
+ * - Box: contenedor principal que permite centrar la tarjeta y aplicar estilo global.
+ * - Column: organiza los elementos de información de forma vertical.
+ * - Text: muestra la información del usuario con tipografía y color definidos por MaterialTheme.
+ * - Card: encapsula cada dato (email, país, nombre, apellido) para resaltarlos visualmente.
  */
 @Composable
 fun UserCardComponent(
@@ -31,23 +38,21 @@ fun UserCardComponent(
     name: String,
     surname: String
 ) {
-    // Box que funciona como contenedor principal de la tarjeta
-    // `boxModifier` define estilo global (padding, tamaño, etc.)
+    // Box como contenedor principal
     Box(boxModifier) {
-        // Columna para organizar la información verticalmente
-        // `Modifier.align(Alignment.Center)` centra la columna dentro del Box
+        // Columna centrada que organiza la información verticalmente
         Column(
             modifier = Modifier.align(Alignment.Center),
             horizontalAlignment = Alignment.CenterHorizontally
         ) {
-// Texto del ID del usuario
+            // Texto del ID del usuario (fuera de Cards para diferenciar)
             Text(
                 text = id,
                 style = MaterialTheme.typography.titleMedium,
                 color = MaterialTheme.colorScheme.primary
             )
 
-            // Card para el email
+            // Card para el email del usuario
             Card(cardModifier) {
                 Text(
                     text = email,
@@ -55,28 +60,27 @@ fun UserCardComponent(
                     color = MaterialTheme.colorScheme.primary
                 )
             }
-            // Card para el país
-            Card(cardModifier) {
 
+            // Card para el país del usuario
+            Card(cardModifier) {
                 Text(
                     text = country,
                     style = MaterialTheme.typography.titleMedium,
                     color = MaterialTheme.colorScheme.primary
                 )
-
             }
-            //card para el nombre
-            Card(cardModifier) {
 
+            // Card para el nombre del usuario
+            Card(cardModifier) {
                 Text(
                     text = name,
                     style = MaterialTheme.typography.titleMedium,
                     color = MaterialTheme.colorScheme.primary
                 )
             }
-            //card para el apellido
-            Card(cardModifier) {
 
+            // Card para el apellido del usuario
+            Card(cardModifier) {
                 Text(
                     text = surname,
                     style = MaterialTheme.typography.titleMedium,
@@ -86,3 +90,25 @@ fun UserCardComponent(
         }
     }
 }
+
+/*
+Notas importantes:
+
+1. Box:
+   - Contenedor que permite centrar la Column y aplicar `boxModifier` (padding, tamaño, fondo, etc.)
+
+2. Column:
+   - Organiza los elementos verticalmente y centra horizontalmente con Alignment.CenterHorizontally.
+
+3. Card:
+   - Permite encapsular cada dato dentro de un contenedor con estilo, elevación y borde opcional.
+   - Mejora la legibilidad y el diseño visual.
+
+4. Text:
+   - Muestra la información de usuario con estilo definido por MaterialTheme.
+   - Color y tipografía se toman del tema global de la app.
+
+5. boxModifier y cardModifier:
+   - Modificadores definidos en el tema de UI para aplicar padding, bordes redondeados, sombras, etc.
+   - Facilita mantener consistencia de diseño en toda la app.
+*/

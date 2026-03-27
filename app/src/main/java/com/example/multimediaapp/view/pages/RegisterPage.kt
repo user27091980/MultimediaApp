@@ -67,10 +67,12 @@ fun RegisterScreen(
             ) {
                 TextFieldsComponent(// Pasamos los valores y callbacks al ViewModel
                     email = uiState.email,
+                    user = uiState.user,
                     pass = uiState.pass,
                     country = uiState.country,
                     name = uiState.name,
                     lastName = uiState.lastName,
+                    onUserChange = vm::onUserChange,
                     onEmailChange = vm::onEmailChange,
                     onPassChange = vm::onPassChange,
                     onCountryChange = vm::onCountryChange,

@@ -19,64 +19,67 @@ import androidx.core.net.toUri
 import coil.compose.rememberAsyncImagePainter
 import com.example.multimediaapp.model.BandDTO
 
-// Componente Jetpack Compose que muestra la cabecera (banner) de una banda.
-// Recibe un objeto BandUiState con la información de la banda.
-
 /**
- * @param band recibe un objeto con la info de la banda incluyendo la url de la imagen del banner
+ * BandHeader:
+ *
+ * Composable que muestra la cabecera (banner) de una banda en una tarjeta visual.
+ * Permite:
+ * - Mostrar la imagen de banner de la banda desde una URL.
+ * - Hacer clic en el banner para abrir un enlace externo (band.headerLink).
+ * - Ajustar automáticamente tamaño y recorte de la imagen.
+ *
+ * @param band Objeto BandDTO que contiene:
+ *  - banner: URL de la imagen del banner
+ *  - name: nombre de la banda (para contentDescription)
+ *  - headerLink: enlace externo que se abre al hacer clic
  */
 @Composable
 fun BandHeader(band: BandDTO) {
 
     val headerHeight = 100.dp
     val context = LocalContext.current
+
     Box(
         modifier = Modifier
-            .fillMaxWidth()
-            .height(100.dp) // altura más pequeña
-            .padding(horizontal = 1.dp) // margenes laterales
-            .clip(RoundedCornerShape(8.dp)),
+            .fillMaxWidth() // ocupa todo el ancho del contenedor padre
+            .height(headerHeight) // altura del banner
+            .padding(horizontal = 1.dp) // pequeño margen lateral
+            .clip(RoundedCornerShape(8.dp)), // bordes redondeados
         contentAlignment = Alignment.Center
     ) {
         Image(
-            // 'painter' define la fuente de la imagen.
-            // `rememberAsyncImagePainter` de Coil permite cargar imágenes desde URLs de forma asíncrona.
+            // Carga de imagen asíncrona desde URL usando Coil
             painter = rememberAsyncImagePainter(band.banner),
-            // Descripción de la imagen para accesibilidad (lectores de pantalla).
+            // Descripción de accesibilidad (lectores de pantalla)
             contentDescription = band.name,
-            // Modificadores para definir el tamaño y comportamiento de la imagen.
+            // Modificadores para tamaño y clic
             modifier = Modifier
                 .height(headerHeight * 0.9f)
                 .clickable {
+                    // Abre enlace externo si existe
                     if (band.headerLink.isNotEmpty()) {
                         val intent = Intent(Intent.ACTION_VIEW, band.headerLink.toUri())
                         context.startActivity(intent)
                     }
                 },
-            // Escala de la imagen dentro del espacio definido:
-            // 'Crop' recorta la imagen si no coincide exactamente con el tamaño del contenedor.
+            // Escala la imagen para llenar el contenedor y recorta excedentes
             contentScale = ContentScale.Crop
         )
     }
 }
 
 /**
- * Teoría.
+ * ===Notas de implementación===
  *
- * @Composable: Permite usar esta función dentro de otros componentes de Compose y renderizar UI declarativa.
+ * 1. @Composable: Permite que esta función sea parte de la UI declarativa de Jetpack Compose.
+ * 2. Box: Contenedor que permite centrar la imagen y aplicar clipping y padding.
+ * 3. Modifier.fillMaxWidth() / height(): Define tamaño de la cabecera.
+ * 4. Modifier.clip(): Aplica bordes redondeados a la imagen.
+ * 5. rememberAsyncImagePainter: Optimiza carga de imágenes desde URL y evita recargas innecesarias.
+ * 6. ContentScale.Crop: Recorta la imagen si no coincide con las proporciones del contenedor.
+ * 7. contentDescription: Esencial para accesibilidad (usuarios con lectores de pantalla).
+ * 8. click en la imagen: Permite abrir un navegador con un enlace externo usando Intent.ACTION_VIEW.
  *
- * rememberAsyncImagePainter: Carga imágenes desde URLs y recuerda el resultado para optimizar rendimiento y evitar recargas innecesarias.
- *
- * Modifier.fillMaxWidth(): Hace que la imagen se extienda a lo ancho de la pantalla o contenedor padre.
- *
- * Modifier.height(200.dp): Define la altura del banner de la banda.
- *
- * ContentScale.Crop: Ajusta la imagen para llenar el espacio disponible, recortando lo que sobresalga si es necesario.
- *
- * contentDescription: Muy importante para accesibilidad, describe la imagen para lectores de pantalla.
+ * Este Composable es ideal para mostrar de forma atractiva el banner de la banda
+ * en pantallas como MainScreen o BandScreen.
  */
-
-
-
-
-

@@ -16,56 +16,71 @@ import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.text.input.PasswordVisualTransformation
 import androidx.compose.ui.text.input.VisualTransformation
+import com.example.multimediaapp.R
 
 /**
- * Composable principal que agrupa todos los TextFields de login/registro.
+ * TextFieldsLoginComponent:
  *
- * Contiene:
- * -
- * - TextFieldLoginPassComponent:para ingresar la contraseña con toggle de visibilidad
- * - TextFieldEmailLoginComponent: para ingresar el correo electrónico
+ * Composable principal que agrupa los campos de inicio de sesión o registro:
+ * - Campo de usuario/correo
+ * - Campo de contraseña con toggle de visibilidad
+ *
+ * @param user Texto actual del campo de usuario
+ * @param pass Texto actual del campo de contraseña
+ * @param onUserChange Callback para actualizar el valor del usuario
+ * @param onPassChange Callback para actualizar el valor de la contraseña
+ * @param passwordVisible Boolean opcional para indicar si la contraseña es visible
+ * @param togglePasswordVisibility Callback opcional para alternar visibilidad
+ *
+ * Funcionalidad:
+ * - Organiza los campos en una columna
+ * - Reutiliza TextFieldLoginUserComponent y TextFieldLoginPassComponent
  */
 @Composable
 fun TextFieldsLoginComponent(
-    email: String,
+    user: String,
     pass: String,
-    onEmailChange: (String) -> Unit,
+    onUserChange: (String) -> Unit,
     onPassChange: (String) -> Unit,
     passwordVisible: Boolean = false,
     togglePasswordVisibility: () -> Unit = {}
 ) {
-    // Columna que organiza los campos verticalmente
     Column {
-        TextFieldLoginEmailComponent(
-            email = email,
-            onEmailChange = onEmailChange
+        TextFieldLoginUserComponent(
+            user = user,
+            onUserChange = onUserChange
         )
         TextFieldLoginPassComponent(
             pass = pass,
             onPassChange = onPassChange
         )
-
     }
 }
 
 
 /**
+ * TextFieldLoginPassComponent:
+ *
  * Campo de texto para introducir la contraseña.
+ * Incluye un icono que alterna visibilidad entre texto normal y oculto.
  *
- * Incluye un icono que permite alternar entre mostrar u ocultar
- * el contenido del campo.
+ * @param pass Texto actual de la contraseña
+ * @param onPassChange Callback que se ejecuta al cambiar el texto
  *
- * @param pass texto actual de la contraseña
- * @param onPassChange callback que se ejecuta al modificar la contraseña
+ * Detalles de implementación:
+ * - PasswordVisualTransformation oculta el texto
+ * - VisualTransformation.None muestra el texto
+ * - trailingIcon con IconButton permite alternar visibilidad
+ * - KeyboardOptions ajusta el teclado al tipo Password
  */
 @Composable
 fun TextFieldLoginPassComponent(pass: String, onPassChange: (String) -> Unit) {
-    // Estado local que controla si la contraseña se muestra o se oculta
     var passwordVisible by remember { mutableStateOf(false) }
-    // Cambia la forma en que se muestra el texto
+
     OutlinedTextField(
         value = pass,
         onValueChange = onPassChange,
@@ -78,9 +93,7 @@ fun TextFieldLoginPassComponent(pass: String, onPassChange: (String) -> Unit) {
         ),
         visualTransformation = if (passwordVisible) VisualTransformation.None
         else PasswordVisualTransformation(),
-        // Cambia el tipo de teclado mostrado
         keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Password),
-        // Icono al final del campo para mostrar/ocultar la contraseña
         trailingIcon = {
             val image = if (passwordVisible) Icons.Filled.Visibility else Icons.Filled.VisibilityOff
             val desc = if (passwordVisible) "Hide password" else "Show password"
@@ -91,57 +104,61 @@ fun TextFieldLoginPassComponent(pass: String, onPassChange: (String) -> Unit) {
     )
 }
 
+
 /**
- * Campo de texto para introducir el correo electrónico.
+ * TextFieldLoginUserComponent:
  *
- * Configura el teclado en modo email para facilitar la escritura.
+ * Campo de texto para introducir el usuario o correo electrónico.
  *
- * @param email texto actual del campo
- * @param onEmailChange callback que se ejecuta al modificar el email
+ * @param user Texto actual del campo
+ * @param onUserChange Callback que se ejecuta al modificar el campo
+ *
+ * Detalles:
+ * - singleLine limita a una sola línea
+ * - keyboardOptions puede configurarse para tipo Email si se desea
+ * - supportingText muestra mensaje de error si el campo está vacío
+ * - stringResource permite internacionalización del label
  */
 @Composable
-fun TextFieldLoginEmailComponent(email: String, onEmailChange: (String) -> Unit) {
-
-    // Comprueba si el email es válido
-    val isValidEmail = Patterns.EMAIL_ADDRESS.matcher(email).matches()
-
+fun TextFieldLoginUserComponent(user: String, onUserChange: (String) -> Unit) {
     OutlinedTextField(
-        value = email,
-        onValueChange = onEmailChange,
+        value = user,
+        onValueChange = onUserChange,
         singleLine = true,
         label = {
-            Text("Email", color = MaterialTheme.colorScheme.secondary)
-
+            Text(stringResource(R.string.usuario), color = MaterialTheme.colorScheme.secondary)
         },
         colors = androidx.compose.material3.OutlinedTextFieldDefaults.colors(
             focusedTextColor = MaterialTheme.colorScheme.secondary,
             unfocusedTextColor = MaterialTheme.colorScheme.secondary,
             cursorColor = MaterialTheme.colorScheme.secondary
         ),
-        // Muestra teclado optimizado para escribir correos
-        keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Email),
-
-        // Mensaje de error debajo del campo
         supportingText = {
-            if (email.isNotEmpty() && !isValidEmail) {
-                Text("Email no válido")
+            if (user.isEmpty()) {
+                Text("usuario vacío")
             }
         }
     )
 }
 
-
 /*
-remember { mutableStateOf("") } nos guarda el estado local de cada TextField, Compose lo recuerda entre recomposiciones.
+Notas adicionales:
 
-TextField campo de texto editable con propiedades para controlar estilo, teclado, visualización de texto, etc.
+1. remember { mutableStateOf("") }:
+   - Guarda el estado local de cada TextField y lo recuerda entre recomposiciones de Compose.
 
-VisualTransformation  transforma cómo se muestra el texto; útil para ocultar contraseñas.
+2. VisualTransformation:
+   - Permite mostrar u ocultar contraseñas de manera segura.
 
-trailingIcon permite colocar un icono dentro del TextField.
+3. trailingIcon:
+   - Icono interactivo dentro del TextField para alternar visibilidad.
 
-IconButton + Icon es el botón interactivo dentro del TextField que alterna visibilidad.
+4. stringResource:
+   - Permite usar textos desde res/values/strings.xml para internacionalización.
 
-stringResource nos permite usar strings desde res/values/strings.xml, útil para internacionalización.
+5. singleLine:
+   - Limita la entrada a una sola línea y mejora la usabilidad.
 
- */
+6. supportingText:
+   - Permite mostrar mensajes de error o indicaciones debajo del TextField.
+*/

@@ -1,46 +1,76 @@
 package com.example.multimediaapp.data.repository
 
-import com.example.multimediaapp.model.LoginDTO
+import com.example.multimediaapp.data.entity.LoginEntity
+import com.example.multimediaapp.data.entity.toEntity
 import com.example.multimediaapp.model.LoginRequestDTO
 import com.example.multimediaapp.network.LoginApiService
 import java.io.IOException
 
-class LoginRepo(private val api: LoginApiService = LoginApiService.create()) {
+/**
+ * Interfaz que define el contrato del repositorio de login.
+ *
+ * Permite desacoplar la implementación de la lógica de autenticación
+ * de la capa de presentación y facilita la creación de pruebas unitarias.
+ */
+interface ILoginRepo {
 
     /**
-     * Obtiene un usuario específico por su ID desde el servidor.
+     * Realiza el login de un usuario mediante su nombre de usuario/email y contraseña.
+     *
+     * @param user Nombre de usuario o correo electrónico
+     * @param pass Contraseña
+     * @return [LoginEntity] con la información del usuario autenticado
+     * @throws Exception si ocurre un error de red o credenciales incorrectas
      */
-    suspend fun getUserById(id: String): Result<LoginDTO> {
-        return try {
-            val response = api.getUser(id)
-            if (response.isSuccessful && response.body() != null) {
-                Result.success(response.body()!!)
-            } else {
-                Result.failure(Exception("Usuario no encontrado: ${response.code()}"))
-            }
-        } catch (e: IOException) {
-            Result.failure(Exception("Error de red: Verifica tu conexión"))
-        } catch (e: Exception) {
-            Result.failure(e)
-        }
-    }
+    suspend fun login(user: String, pass: String): LoginEntity
+}
+
+/**
+ * Implementación del repositorio de login usando Retrofit.
+ *
+ * Este repositorio se encarga de:
+ * 1. Enviar las credenciales al servidor mediante [LoginApiService].
+ * 2. Procesar la respuesta del servidor.
+ * 3. Convertir los datos recibidos en un objeto [LoginEntity] para la capa de presentación.
+ *
+ * @property api Servicio Retrofit para realizar peticiones de login.
+ */
+class LoginRepo(
+    private val api: LoginApiService
+) {
 
     /**
-     * Intenta realizar el login enviando email y contraseña.
-     * Devuelve el perfil completo del usuario si es exitoso.
+     * Ejecuta la operación de login.
+     *
+     * Lanza excepciones si ocurre un error de red o si las credenciales son incorrectas.
+     *
+     * @param user Nombre de usuario o correo electrónico
+     * @param pass Contraseña
+     * @return [LoginEntity] con los datos del usuario autenticado
+     * @throws Exception en caso de error de red o credenciales incorrectas
      */
-    suspend fun login(email: String, pass: String): LoginDTO {
-        return try {
-            val response = api.loginUser(LoginRequestDTO(email, pass))
-            if (response.isSuccessful && response.body() != null) {
-                response.body()!!
+    suspend fun login(user: String, pass: String): LoginEntity {
+        try {
+            // Construye el DTO de request con las credenciales
+            val response = api.loginUser(LoginRequestDTO(user, pass))
+
+            // Verifica si la respuesta fue exitosa
+            if (response.isSuccessful) {
+                val body = response.body()
+                    ?: throw Exception("Respuesta vacía del servidor")
+
+                // Convierte el DTO recibido a la entidad del dominio
+                return body.toEntity()
             } else {
                 throw Exception("Usuario o contraseña incorrecta")
             }
+
         } catch (e: IOException) {
-            throw Exception("Error de red: Verifica tu conexión")
+            // Captura errores de red
+            throw Exception("Error de red", e)
         } catch (e: Exception) {
-            throw Exception(e.message ?: "Error al iniciar sesión")
+            // Captura cualquier otro error
+            throw Exception(e.message ?: "Error desconocido", e)
         }
     }
 }

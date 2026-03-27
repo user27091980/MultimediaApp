@@ -1,6 +1,7 @@
 package com.example.multimediaapp.network
 
 import com.example.multimediaapp.data.entity.UsersInfoEntity
+import com.example.multimediaapp.model.RegisterRequestDTO
 import com.example.multimediaapp.model.UsersInfoDTO
 import retrofit2.Response
 import retrofit2.http.Body
@@ -10,27 +11,61 @@ import retrofit2.http.PUT
 import retrofit2.http.Path
 
 /**
- * API para gestionar la información de los usuarios.
- * Mantiene coherencia de rutas y usa DTOs en el body para seguridad.
+ * UserInfoApiService:
+ *
+ * Interfaz que define los endpoints relacionados con la gestión de usuarios.
+ *
+ * Responsabilidades:
+ * - Obtener información de todos los usuarios o de un usuario específico.
+ * - Registrar nuevos usuarios en el backend.
+ * - Actualizar datos de usuarios existentes.
+ *
+ * Notas:
+ * - Usamos `Response<UsersInfoEntity>` porque Retrofit devuelve el body completo.
+ * - Los métodos usan DTOs o Entities según convenga para separar capas de dominio y datos.
+ * - Las rutas son consistentes con el prefijo `json/userInfo`.
+ *
+ * ===Endpoints===
+ *
+ * 1. getUsersInfo()
+ *    - Método GET
+ *    - Devuelve la lista completa de usuarios
+ *    - Response<List<UsersInfoEntity>>
+ *
+ * 2. getUser(id: String)
+ *    - Método GET con parámetro path
+ *    - Devuelve un usuario específico por su ID
+ *    - Response<UsersInfoEntity>
+ *
+ * 3. registerUser(request: RegisterRequestDTO)
+ *    - Método POST
+ *    - Recibe DTO con los datos de registro
+ *    - Devuelve la entidad registrada
+ *
+ * 4. updateUserInfo(id: String, user: UsersInfoDTO)
+ *    - Método PUT
+ *    - Actualiza un usuario existente mediante su ID
+ *    - Devuelve la entidad actualizada
+ *
+ * ===Notas adicionales===
+ * - `@Body` se usa para enviar el objeto JSON en el cuerpo del request.
+ * - `@Path` indica que el parámetro se inserta directamente en la URL.
+ * - Retrofit maneja automáticamente la serialización/deserialización.
  */
 interface UserInfoApiService {
 
-    // Obtener lista completa de usuarios
-    @GET("json/auth/userInfo") // Quitamos la barra final innecesaria
+    @GET("json/auth/userInfo")
     suspend fun getUsersInfo(): Response<List<UsersInfoEntity>>
 
-    // Obtener un usuario específico por ID
     @GET("json/userInfo/{id}")
-    suspend fun getUserInfoById(@Path("id") id: String): Response<UsersInfoEntity>
+    suspend fun getUser(@Path("id") id: String): Response<UsersInfoEntity>
 
-    // Registrar un nuevo usuario
     @POST("json/userInfo/register")
     suspend fun registerUser(
-        @Body user: UsersInfoDTO
+        @Body request: RegisterRequestDTO
     ): Response<UsersInfoEntity>
 
-    // Actualizar un usuario existente por ID
-    @PUT("json/userInfo/{id}") // Unificamos el prefijo para que sea consistente
+    @PUT("json/userInfo/{id}")
     suspend fun updateUserInfo(
         @Path("id") id: String,
         @Body user: UsersInfoDTO

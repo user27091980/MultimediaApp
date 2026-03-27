@@ -18,13 +18,29 @@ import com.example.multimediaapp.model.BandDTO
 import com.example.multimediaapp.ui.theme.cardColumnModifier
 
 /**
- * Componente de UI para mostrar información de la banda en una tarjeta (Card).
- * Esta columna puede contener múltiples cards si se quisiera expandir.
+ * CardRowComponent:
  *
- * @param band Objeto BandUiState con toda la información de la banda
+ * Composable que muestra la información de una banda dentro de una tarjeta (Card).
+ * Es útil para mostrar descripciones, estilo, discográfica, o cualquier detalle de la banda.
+ *
+ * ===Estructura===
+ * - Box: contenedor principal que permite fondo y alineación de elementos.
+ * - FlowRow: organiza las tarjetas horizontalmente y permite que se ajusten automáticamente
+ *   si hay más de una.
+ * - Card: componente Material que contiene la información de la banda.
+ * - Text: muestra el contenido dentro de la Card (por ejemplo, la descripción).
+ *
+ * ===Parámetros===
+ * @param band Objeto BandDTO que contiene toda la información relevante de la banda
+ *             (nombre, descripción, estilo, componentes, etc.).
+ *
+ * ===Propiedades de UI===
+ * - `cardColumnModifier`: Modifier personalizado que puede incluir padding, tamaño, elevación u otras propiedades.
+ * - `RoundedCornerShape(10)`: esquinas redondeadas de la tarjeta (no más de 50dp).
+ * - `MaterialTheme.colorScheme.primary`: fondo de la tarjeta adaptado al tema.
+ * - `MaterialTheme.colorScheme.background`: fondo del contenedor Box.
  */
 @Composable
-
 fun CardRowComponent(
     band: BandDTO
 ) {
@@ -38,7 +54,7 @@ fun CardRowComponent(
         ) {
             Card(
                 modifier = cardColumnModifier,
-                shape = RoundedCornerShape(10),//no más de 50
+                shape = RoundedCornerShape(10),
                 colors = CardDefaults.cardColors(
                     containerColor = MaterialTheme.colorScheme.primary
                 )
@@ -52,17 +68,11 @@ fun CardRowComponent(
     }
 }
 
-/*
-Box: contenedor principal que permite superponer o alinear elementos fácilmente.
-
-FlowRow: organiza múltiples tarjetas horizontalmente y permite wrapping si hay muchas.
-
-Card: tarjeta material que contiene la información de la banda.
-
-cardColumnModifier: Modifier personalizado, puede incluir padding, elevación, shape u otras propiedades de UI.
-
-MaterialTheme.colorScheme.background: el fondo de la tarjeta se adapta al tema de la app.
-
-Text muestra la descripción o información de la banda.
+/**
+ * ===Notas===
+ * - Box permite superponer elementos y establecer un fondo consistente.
+ * - FlowRow organiza tarjetas horizontalmente, ajustándose si hay varias.
+ * - Card aplica estilo Material y eleva visualmente la información.
+ * - cardColumnModifier se puede reutilizar y ajustar para consistencia visual en toda la app.
+ * - Text dentro de la Card muestra la información principal de la banda.
  */
-

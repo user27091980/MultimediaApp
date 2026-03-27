@@ -15,7 +15,7 @@ sealed class LoginEvent {
     data class ShowError(val message: String) : LoginEvent()
 }
 class LoginVM(
-    private val dataStore: DataStoreManager,
+    val dataStore: DataStoreManager,
     private val repo: LoginRepo
 ) : ViewModel() {
 
@@ -25,8 +25,8 @@ class LoginVM(
     private val _events = Channel<LoginEvent>(Channel.BUFFERED)
     val events = _events.receiveAsFlow()
 
-    fun onEmailChange(email: String) {
-        _uiState.update { it.copy(email = email) }
+    fun onUserChange(user: String) {
+        _uiState.update { it.copy(user = user) }
     }
 
     fun onPasswordChange(pass: String) {
@@ -39,9 +39,9 @@ class LoginVM(
 
     fun validateFieldsLogin(): Boolean {
         val state = _uiState.value
-        return if (state.email.isBlank() || state.password.isBlank()) {
+        return if (state.user.isBlank() || state.password.isBlank()) {
             viewModelScope.launch {
-                _events.send(LoginEvent.ShowError("Email y contraseña son requeridos"))
+                _events.send(LoginEvent.ShowError("Usuario/Email y contraseña son requeridos"))
             }
             false
         } else true
@@ -51,9 +51,9 @@ class LoginVM(
         val state = _uiState.value
         viewModelScope.launch {
             try {
-                val user = repo.login(state.email, state.password)
+                val userEntity = repo.login(state.user, state.password)
                 // Guardar email en DataStore
-                dataStore.saveUserEmail(user.email)
+                dataStore.saveUserEmail(userEntity.user)
                 _events.send(LoginEvent.NavigateToHome)
             } catch (e: Exception) {
                 _events.send(LoginEvent.ShowError(e.message ?: "Error desconocido"))
@@ -61,7 +61,6 @@ class LoginVM(
         }
     }
 }
-
 
 class LoginVMFactory(
     private val dataStore: DataStoreManager,

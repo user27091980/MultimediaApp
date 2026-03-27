@@ -4,7 +4,6 @@ import android.R.attr.description
 import android.R.attr.name
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.shape.RoundedCornerShape
-import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.FilledTonalButton
 import androidx.compose.material3.MaterialTheme
@@ -16,127 +15,93 @@ import com.example.multimediaapp.model.BandDTO
 import java.util.UUID
 
 /**
- * Composable base para todos los botones de la aplicación.
+ * BaseButton:
  *
- * Permite reutilizar un estilo consistente:
- * - Ancho completo por defecto
- * - Bordes redondeados
- * - Colores del tema
- * - Estado habilitado / deshabilitado
+ * Composable genérico para crear botones con estilo consistente en toda la app.
  *
- * @param text Texto que se mostrará en el botón
+ * ===Características===
+ * - Ocupa todo el ancho disponible por defecto (`fillMaxWidth`)
+ * - Bordes redondeados (`RoundedCornerShape(20.dp)`)
+ * - Colores del tema Material3:
+ *   - Fondo → `primary`
+ *   - Texto → `onPrimary`
+ * - Soporta estado habilitado/deshabilitado (`enabled`)
+ * - Permite personalización externa mediante `modifier`
+ *
+ * ===Parámetros===
+ * @param text Texto a mostrar en el botón
  * @param onClick Acción que se ejecuta al pulsar el botón
- * @param modifier Modifier opcional para personalizar tamaño, padding u otras propiedades
+ * @param modifier Modifier opcional para ajustar tamaño, padding u otras propiedades
  * @param enabled Boolean que indica si el botón está habilitado (true) o deshabilitado (false)
+ *
+ * ===Uso típico===
+ * ```
+ * BaseButton(
+ *     text = "Aceptar",
+ *     onClick = { /* acción */ },
+ *     modifier = Modifier.padding(16.dp)
+ * )
+ * ```
  */
 @Composable
 fun BaseButton(
-    text: String,   // Texto que se mostrará en el botón
-    onClick: () -> Unit,// Acción al pulsar el botón
-    modifier: Modifier = Modifier, // Modifier opcional para composición externa
-    enabled: Boolean = true // Modifier opcional para composición externa
+    text: String,
+    onClick: () -> Unit,
+    modifier: Modifier = Modifier,
+    enabled: Boolean = true
 ) {
-
     FilledTonalButton(
         onClick = onClick,
-        modifier = modifier.fillMaxWidth(),// Siempre ocupa todo el ancho disponible
-        shape = RoundedCornerShape(20.dp),// Bordes redondeados de 20dp
-        enabled = enabled,// Estado habilitado/deshabilitado
+        modifier = modifier.fillMaxWidth(),
+        shape = RoundedCornerShape(20.dp),
+        enabled = enabled,
         colors = ButtonDefaults.filledTonalButtonColors(
-            containerColor = MaterialTheme.colorScheme.primary, // Fondo del botón
-            contentColor = MaterialTheme.colorScheme.onPrimary// Color del texto
+            containerColor = MaterialTheme.colorScheme.primary,
+            contentColor = MaterialTheme.colorScheme.onPrimary
         )
     ) {
-        Text(
-            text = text,
-
-            )
+        Text(text = text)
     }
 }
 
-
 /**
- * Botón de Login.
+ * Botones específicos reutilizando BaseButton
  *
- * Reutiliza BaseButton con texto fijo "Login".
+ * Cada función define un botón con texto fijo para casos comunes:
+ * - ButtonLogin → "Login"
+ * - ButtonAccept → "Aceptar"
+ * - ButtonCancel → "Cancelar"
+ * - ButtonRegister → "Registrar"
+ *
+ * Ventajas:
+ * 1. Evita duplicar código de estilos
+ * 2. Mantiene coherencia visual en la app
+ * 3. Permite modificar el comportamiento del botón sin tocar los estilos
  */
 @Composable
-fun ButtonLogin(
-    onClick: () -> Unit,
-    modifier: Modifier = Modifier
-) {
-    /**
-     * Botón específico para Aceptar
-     *
-     * Reutiliza BaseButton con texto predefinido "Aceptar"
-     */
-    BaseButton(
-        text = "Login",
-        onClick = onClick,
-        modifier = modifier
-    )
+fun ButtonLogin(onClick: () -> Unit, modifier: Modifier = Modifier) {
+    BaseButton(text = "Login", onClick = onClick, modifier = modifier)
+}
+
+@Composable
+fun ButtonAccept(onClick: () -> Unit, modifier: Modifier = Modifier) {
+    BaseButton(text = "Aceptar", onClick = onClick, modifier = modifier)
+}
+
+@Composable
+fun ButtonCancel(onClick: () -> Unit, modifier: Modifier = Modifier) {
+    BaseButton(text = "Cancelar", onClick = onClick, modifier = modifier)
+}
+
+@Composable
+fun ButtonRegister(onClick: () -> Unit, modifier: Modifier = Modifier) {
+    BaseButton(text = "Registrar", onClick = onClick, modifier = modifier)
 }
 
 /**
- * Botón específico para Aceptar
- *
- * Reutiliza BaseButton con texto predefinido "Aceptar"
- */
-@Composable
-fun ButtonAccept(
-    onClick: () -> Unit,
-    modifier: Modifier = Modifier
-) {
-    BaseButton(
-        text = "Aceptar",
-        onClick = onClick,
-        modifier = modifier
-    )
-}
-
-/**
- * Botón específico para cancelar
- *
- * Reutiliza BaseButton con texto predefinido "Cancelar"
- */
-@Composable
-fun ButtonCancel(
-    onClick: () -> Unit,
-    modifier: Modifier = Modifier
-) {
-    BaseButton(
-        text = "Cancelar",
-        onClick = onClick,
-        modifier = modifier
-    )
-}
-
-/**
- * Botón específico para Registar
- *
- * Reutiliza BaseButton con texto predefinido "Registrar"
- */
-@Composable
-fun ButtonRegister(
-    onClick: () -> Unit,
-    modifier: Modifier = Modifier
-) {
-    BaseButton(
-        text = "Registrar",
-        onClick = onClick,
-        modifier = modifier
-    )
-}
-
-
-
-/*
-BaseButton: botón genérico reutilizable con estilo consistente (colores, bordes, ancho completo).
-
-Botones específicos (ButtonLogin, ButtonAcept, etc.) → reutilizan BaseButton con texto fijo,
- lo que evita repetir código y mantiene coherencia visual.
-
-modifier  permite añadir padding, peso o cualquier otra modificación externa en Compose.
-
-enabled se puede desactivar el botón si es necesario (por ejemplo, mientras se hace login).
+ * ===Resumen===
+ * - BaseButton: botón genérico con estilo uniforme.
+ * - Botones específicos: reutilizan BaseButton con texto fijo para acciones frecuentes.
+ * - `modifier` permite ajustes externos sin romper consistencia visual.
+ * - `enabled` permite desactivar botones en casos como loading o validaciones de formulario.
  */
