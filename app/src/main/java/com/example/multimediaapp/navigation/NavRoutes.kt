@@ -3,76 +3,75 @@ package com.example.multimediaapp.navigation
 import kotlinx.serialization.Serializable
 
 /**
- * Interfaz sellada que representa TODAS las rutas posibles
- * de la aplicación.
+ * NavRoute:
  *
- * sealed → obliga a que todas las implementaciones estén
- * en este mismo archivo (más seguro y controlado).
+ * Interfaz sellada que representa **todas las rutas posibles** de la aplicación.
  *
- * Serializable → permite que la ruta pueda convertirse
- * a String para usarla en Navigation Compose.
+ * Características:
+ * - `sealed interface` → garantiza que todas las rutas estén definidas en este archivo.
+ *   Esto permite control total sobre la navegación y evita rutas "desconocidas".
+ * - `@Serializable` → permite serializar/deserializar la ruta a String o JSON,
+ *   útil para pasar parámetros entre pantallas con Navigation Compose.
  */
 @Serializable
 sealed interface NavRoute
 
 /**
- * Ruta hacia Login que recibe parámetros.
+ * Rutas con parámetros:
  *
- * Se usa data class porque contiene datos (email).
+ * Usamos `data class` porque contienen información variable.
+ * Kotlin genera automáticamente:
+ * - equals()        → para comparar rutas
+ * - hashCode()      → útil en colecciones
+ * - toString()      → depuración
+ * - copy()          → clonar con cambios
+ * - componentN()    → destructuring
  *
- * data class genera automáticamente:
- * - equals()
- * - hashCode()
- * - toString()
- * - copy()
- * - componentN()
- *
- * Esto es importante porque Navigation compara rutas.
+ * Esto asegura que la navegación funcione correctamente cuando se comparan rutas.
  */
 
-
+/** Ruta de login que recibe un email como parámetro */
 @Serializable
 data class LoginRoute(val email: String) : NavRoute
 
-/**
- * Ruta hacia Register con parámetros.
- *
- * Como tiene datos (email y user),
- * usamos data class.
- */
+/** Ruta de registro que recibe email y nombre de usuario */
 @Serializable
 data class RegisterRoute(val email: String, val user: String) : NavRoute
-data class BandRoute (val bandId: String) : NavRoute {
+
+/** Ruta de detalles de banda con ID dinámico */
+data class BandRoute(val bandId: String) : NavRoute {
+    /** Función auxiliar para construir la ruta como String para Navigation */
     fun route() = "band/$bandId"
 }
-data class AddBandRoute(val id: String,
-                        val name: String,
-                        val description: String,
-                        val banner: String,
-                        val albumImages: List<String>,
-                        val style: String,
-                        val recordLabel: String,
-                        val components: String,
-                        val albumLinks: List<String>,
-                        val headerLink: String ): NavRoute
-/**
- * Ruta estática (sin parámetros).
- *
- * Se usa object porque:
- * - No contiene datos
- * - Solo existe una instancia
- * - Es más eficiente
- */
 
+/** Ruta para agregar una banda con todos sus campos como parámetros */
+data class AddBandRoute(
+    val id: String,
+    val name: String,
+    val description: String,
+    val banner: String,
+    val albumImages: List<String>,
+    val style: String,
+    val recordLabel: String,
+    val components: String,
+    val albumLinks: List<String>,
+    val headerLink: String
+) : NavRoute
+
+/**
+ * Rutas estáticas (sin parámetros):
+ *
+ * Usamos `object` porque:
+ * - No contienen datos dinámicos
+ * - Solo necesitamos una instancia única
+ * - Son más eficientes que clases vacías
+ */
 @Serializable
 object LoginRegRoute : NavRoute
 
 @Serializable
 object MainRoute : NavRoute
 
-/*@Serializable
-object BandRoute : NavRoute
-*/
 @Serializable
 object UserInfoRoute : NavRoute
 
@@ -83,25 +82,13 @@ object DialogRoute : NavRoute
 object SettingsRoute : NavRoute
 
 /**
- * ===APUNTES====
- * /*emplear data class para rutas con parámetros:
- * Kotlin NO genera automáticamente:
- * equals()
- * hashCode()
- * toString()
- * copy()
- * destructuring (component1())
- * Eso significa que dos rutas con el mismo contenido NO son iguales
- * en Resumen:
+ * ===APUNTES ADICIONALES====
  *
- * class → algo con lógica, identidad propia
- * data class → solo datos
- *
- * En navegación:
- * Rutas con parámetros → data class
- * Rutas sin parámetros → object
- *
- * object lo ponemos si es estático
- * no tiene sentido que tengamos clases vacias, es algo innecesario
- *
+ * 1. Rutas con parámetros → `data class`
+ *    - Permite comparar correctamente rutas con diferentes contenidos.
+ * 2. Rutas sin parámetros → `object`
+ *    - Evita crear instancias innecesarias
+ *    - Representa rutas estáticas únicas
+ * 3. Evitar `class` vacías para rutas:
+ *    - No tiene sentido, genera instancias innecesarias y no aporta ventajas
  */

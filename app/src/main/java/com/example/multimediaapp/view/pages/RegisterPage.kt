@@ -28,104 +28,121 @@ import com.example.multimediaapp.view.components.TextFieldsComponent
 import com.example.multimediaapp.viewmodel.vm.RegisterVM
 
 /**
- * Pantalla de registro de usuario.
+ * RegisterScreen:
  *
- * @param navController Controlador de navegación para moverse entre pantallas.
+ * Pantalla de registro de usuario en la aplicación.
+ *
+ * Funcionalidades principales:
+ * - Muestra campos de texto para email, usuario, contraseña, país, nombre y apellido.
+ * - Permite ingresar datos que se guardan en el estado del ViewModel.
+ * - Valida los campos antes de navegar al diálogo de confirmación.
+ * - Permite cancelar y volver a la pantalla de login/registro.
+ *
+ * @param navController Controlador de navegación para cambiar de pantalla.
  * @param vm ViewModel que maneja el estado de la pantalla de registro.
  */
 @Composable
 fun RegisterScreen(
     navController: NavController,
-    // obtiene automáticamente el ViewModel asociado al ciclo de vida
-    vm: RegisterVM = viewModel()
+    vm: RegisterVM = viewModel() // Obtiene automáticamente el ViewModel asociado al ciclo de vida
 ) {
-    // Obtenemos el estado actual del ViewModel
+    // Estado observable del ViewModel
     val uiState by vm.uiState.collectAsState()
 
-    // Caja principal que ocupa toda la pantalla
-    // Se aplica un fondo degradado vertical de gris oscuro a negro
+    // Caja principal que ocupa toda la pantalla con fondo del tema
     Box(
         modifier = boxModifier
             .fillMaxSize()
-            .background(
-
-                MaterialTheme.colorScheme.background
-            ), contentAlignment = Alignment.Center
-
+            .background(MaterialTheme.colorScheme.background),
+        contentAlignment = Alignment.Center
     ) {
-        // Columna principal que contiene los campos de texto y botones
+
+        // Columna principal que contiene campos de texto y botones
         Column(
-            Modifier
+            modifier = Modifier
                 .fillMaxWidth()
                 .padding(40.dp),
             verticalArrangement = Arrangement.Center,
             horizontalAlignment = Alignment.CenterHorizontally
-
         ) {
+
+            // Subcolumna para los campos de texto
             Column(
-                modifier = Modifier.weight(1f), verticalArrangement = Arrangement.Center
+                modifier = Modifier.weight(1f),
+                verticalArrangement = Arrangement.Center
             ) {
-                TextFieldsComponent(// Pasamos los valores y callbacks al ViewModel
+                // Componente que agrupa todos los TextFields
+                TextFieldsComponent(
                     email = uiState.email,
+                    user = uiState.user,
                     pass = uiState.pass,
                     country = uiState.country,
                     name = uiState.name,
                     lastName = uiState.lastName,
+                    onUserChange = vm::onUserChange,
                     onEmailChange = vm::onEmailChange,
                     onPassChange = vm::onPassChange,
                     onCountryChange = vm::onCountryChange,
                     onNameChange = vm::onNameChange,
                     onLastNameChange = vm::onLastNameChange
                 )
-                // Mostramos error si existe
+
+                // Mostrar mensaje de error si existe
                 uiState.errorMessage?.let { error ->
                     Text(
-                        text = error, color = Color.Red, modifier = Modifier.padding(top = 8.dp)
+                        text = error,
+                        color = Color.Red,
+                        modifier = Modifier.padding(top = 8.dp)
                     )
                 }
             }
-            // Botón "Aceptar" que navega al dialog de confirmación
-            ButtonAccept(
 
+            // Botón "Aceptar" que valida los campos y navega al diálogo
+            ButtonAccept(
                 onClick = {
                     vm.validateFields {
-                        // Navegar al diálogo  si el registro fue exitoso
+                        // Navega a DialogRegisterScreen si los campos son válidos
                         navController.navigate(ObjRoutes.DIALOG)
                     }
-                })
+                }
+            )
 
-            // Botón "Cancelar" que regresa a la pantalla de login y registro
+            // Botón "Cancelar" que regresa a LoginRegScreen
             ButtonCancel(
-                onClick = { navController.navigate(ObjRoutes.LOGINREG) })
+                onClick = { navController.navigate(ObjRoutes.LOGINREG) }
+            )
         }
     }
 }
 
 /**
- * Preview para mostrar la pantalla de registro en Android Studio sin ejecutar la app.
+ * Vista previa de la pantalla de registro.
+ *
+ * Permite visualizar la UI en Android Studio sin ejecutar la app.
  */
 @Preview
 @Composable
 fun RegisterScreenPreview() {
-
     val navController = rememberNavController()
 
     RegisterScreen(
         navController = navController
     )
 }
-/**
- * notas:
- *
- * - Box: Contenedor que permite centrar y superponer elementos.
- * - Column: Organiza los hijos verticalmente.
- * - Modifier.fillMaxSize(): La UI ocupa todo el espacio disponible.
- * - Modifier.padding(): Aplica márgenes internos para separar los elementos de los bordes.
- * - TextFieldsComponent(): Contiene los campos de entrada de usuario, email y contraseña.
- * - ButtonAcept / ButtonCancel: Botones reutilizables para aceptar o cancelar la acción.
- * - navController.navigate(route): Navega a la ruta definida dentro de la navegación de Compose.
- * - @Preview: Permite previsualizar la UI en el IDE sin ejecutar la app.
- *
- * Nota: Se puede conectar con el ViewModel para validar campos antes de navegar.
- */
 
+/**
+ * Notas / teoría:
+ *
+ * 1. **Box**: Contenedor que permite centrar y superponer elementos en la pantalla.
+ * 2. **Column**: Organiza los elementos hijos verticalmente.
+ * 3. **Modifier.fillMaxSize() / fillMaxWidth()**: Hace que la UI ocupe todo el espacio disponible.
+ * 4. **Modifier.padding()**: Aplica márgenes internos para separar elementos de los bordes.
+ * 5. **TextFieldsComponent**: Componente que agrupa todos los campos de entrada de usuario.
+ * 6. **ButtonAccept / ButtonCancel**: Botones reutilizables para confirmar o cancelar la acción.
+ * 7. **navController.navigate(route)**: Permite cambiar de pantalla usando la navegación de Compose.
+ * 8. **collectAsState()**: Convierte un StateFlow del ViewModel en un estado observable por Compose.
+ * 9. **@Preview**: Permite previsualizar la UI en el IDE sin ejecutar la app.
+ *
+ * Nota adicional:
+ * - Se conecta con RegisterVM para validar campos y mostrar errores antes de navegar.
+ */

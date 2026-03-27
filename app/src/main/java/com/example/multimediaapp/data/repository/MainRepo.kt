@@ -7,61 +7,82 @@ import com.example.multimediaapp.network.MainApiService
 import com.example.multimediaapp.retrofit.RetrofitModule.bandApi
 
 /**
- * Interfaz de repositorio para la entidad Principal (Main).
- * Define las operaciones CRUD y de obtención de recursos multimedia.
+ * Interfaz de repositorio para la entidad principal (Main).
+ *
+ * Define las operaciones CRUD y métodos de obtención de recursos multimedia,
+ * permitiendo desacoplar la capa de datos de la capa de presentación
+ * y facilitando pruebas unitarias.
  */
 interface IMainRepo {
-    suspend fun getBands(): List<MainDTO>
-    suspend fun getBandById(id: String): MainDTO?
-    suspend fun createBand(band: MainDTO): MainDTO?
-    suspend fun updateBand(id: String, band: MainDTO): MainDTO?
-    suspend fun deleteBand(id: String): Boolean
-    // Método específico para recuperar imágenes/galería por ID
-    suspend fun getImages(id: String): List<String>
 
+    /** Obtiene la lista completa de bandas. */
+    suspend fun getBands(): List<MainDTO>
+
+    /** Obtiene una banda específica por su ID. */
+    suspend fun getBandById(id: String): MainDTO?
+
+    /** Crea una nueva banda en el servidor y devuelve el objeto creado. */
+    suspend fun createBand(band: MainDTO): MainDTO?
+
+    /** Actualiza una banda existente mediante su ID. */
+    suspend fun updateBand(id: String, band: MainDTO): MainDTO?
+
+    /** Elimina una banda por su ID. Retorna true si la operación fue exitosa. */
+    suspend fun deleteBand(id: String): Boolean
+
+    /** Obtiene la lista de URLs de imágenes asociadas a una banda/álbum. */
+    suspend fun getImages(id: String): List<String>
 }
+
 /**
- * Implementación de IMainRepo que utiliza MainApiService (Retrofit)
- * para la comunicación con el servidor.
+ * Implementación de [IMainRepo] usando [MainApiService] (Retrofit).
+ *
+ * Cada método se encarga de:
+ * 1. Llamar al endpoint correspondiente del servidor.
+ * 2. Convertir las entidades recibidas a DTOs para la capa de presentación.
+ * 3. Manejar respuestas vacías o fallidas de manera segura.
+ *
+ * @property mainApi Servicio Retrofit que proporciona los endpoints.
  */
 class MainRepo(private val mainApi: MainApiService) : IMainRepo {
-    // Obtiene todas las bandas y las transforma a DTO (Data Transfer Object)
+
+    /** Obtiene todas las bandas y las transforma a DTOs. */
     override suspend fun getBands(): List<MainDTO> {
-        val response = mainApi.getMainBands() //Endpoint de la pantalla principal
+        val response = mainApi.getMainBands()
         return if (response.isSuccessful) {
-            // Mapea la lista de entidades recibidas a una lista de objetos DTO
             response.body()?.map { it.toDTO() } ?: emptyList()
         } else {
-            emptyList()
+            emptyList() // En caso de error, retorna lista vacía
         }
     }
-    // Obtiene una banda específica buscando por su identificador único
+
+    /** Obtiene una banda específica por su ID y la transforma a DTO. */
     override suspend fun getBandById(id: String): MainDTO? {
         val response = mainApi.getMainBandById(id)
         return if (response.isSuccessful) response.body()?.toDTO() else null
     }
-    // Crea una nueva banda convirtiendo primero el DTO a Entity para la API
+
+    /** Crea una nueva banda convirtiendo el DTO a Entity antes de enviarlo. */
     override suspend fun createBand(band: MainDTO): MainDTO? {
         val response = mainApi.createMainBand(band.toEntity())
         return if (response.isSuccessful) response.body()?.toDTO() else null
     }
-    // Actualiza una banda existente enviando el ID y el objeto convertido a Entity
+
+    /** Actualiza una banda existente enviando el ID y la banda convertida a Entity. */
     override suspend fun updateBand(id: String, band: MainDTO): MainDTO? {
         val response = mainApi.updateMainBand(id, band.toEntity())
         return if (response.isSuccessful) response.body()?.toDTO() else null
     }
-    // Elimina un registro y retorna un booleano indicando el éxito de la operación
+
+    /** Elimina una banda y devuelve true si la operación fue exitosa en el servidor. */
     override suspend fun deleteBand(id: String): Boolean {
         val response = mainApi.deleteMainBand(id)
         return response.isSuccessful
     }
-    // Obtiene información de imágenes específica.
-    // Nota: Lanza excepciones manualmente si la respuesta falla o el cuerpo es nulo.
+
+    /** Obtiene las imágenes asociadas a una banda/álbum. */
     override suspend fun getImages(id: String): List<String> {
         val response = bandApi.getAlbumImages(id)
-        return if (response.isSuccessful) response.body() ?: emptyList()
-        else emptyList()
-
+        return if (response.isSuccessful) response.body() ?: emptyList() else emptyList()
     }
-
 }

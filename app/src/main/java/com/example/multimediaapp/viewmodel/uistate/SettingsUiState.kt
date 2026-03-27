@@ -1,14 +1,30 @@
 package com.example.multimediaapp.viewmodel.uistate
 
-/*
- * Representa el estado de la pantalla de configuración (Settings).
+/**
+ * Representa el estado de la interfaz de usuario de la pantalla de configuración (Settings).
  *
- * - Contiene información que la UI necesita para renderizar la pantalla de ajustes.
- * - Se utiliza dentro de un ViewModel, siguiendo el patrón MVVM.
+ * Esta data class almacena los valores que la UI necesita para mostrarse correctamente,
+ * y sirve como fuente única de verdad para la pantalla de ajustes, siguiendo el patrón MVVM.
+ *
+ * Propiedades:
+ * @property darkMode Indica si el modo oscuro está activado. La UI puede observar este valor
+ * y actualizar los elementos visuales en consecuencia.
+ * @property appVersion Versión actual de la aplicación. Útil para mostrar en la pantalla de
+ * configuración o para fines de registro y depuración.
+ *
+ * Uso típico:
+ * - Se utiliza dentro del ViewModel de Settings para mantener la consistencia del estado.
+ * - La UI observa este estado y se vuelve a componer automáticamente cuando alguno de los
+ * valores cambia.
+ *
+ * Ejemplo:
+ * ```
+ * val uiState by settingsViewModel.uiState.collectAsState()
+ * Text("Versión: ${uiState.appVersion}")
+ * Switch(checked = uiState.darkMode, onCheckedChange = { settingsViewModel.toggleDarkMode() })
+ * ```
  */
 data class SettingsUiState(
-    // Indica si el modo oscuro está activado o no
     val darkMode: Boolean = false,
-    //Versión de la aplicación, útil para mostrar en la UI o para registro
     val appVersion: String = "1.0"
 )

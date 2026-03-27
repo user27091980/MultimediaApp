@@ -9,30 +9,33 @@ import kotlinx.coroutines.flow.asStateFlow
 /**
  * ViewModel encargado de gestionar la configuración de la aplicación.
  *
- * Gestiona el estado de las preferencias del usuario y las expone mediante
- * [StateFlow] para que la UI pueda observar cambios de forma reactiva.
+ * Funciones principales:
+ * - Mantener el estado reactivo de las preferencias de usuario.
+ * - Exponer cambios a la UI mediante [StateFlow] para recomposición automática en Compose.
  *
- * Ejemplo de configuración:
+ * Ejemplo de preferencias gestionadas:
  * - Modo oscuro
+ *
+ * Patrón MVVM:
+ * - La UI observa [uiState] y se actualiza automáticamente al cambiar las preferencias.
+ * - Toda la lógica de cambios de configuración queda encapsulada en el ViewModel.
  */
 class SettingsVM : ViewModel() {
 
-    /**
-     * Estado interno mutable de la configuración.
-     */
+    /** Estado interno mutable de la configuración */
     private val _uiState = MutableStateFlow(SettingsUiState(darkMode = false))
 
-    /**
-     * Estado observable expuesto a la UI.
-     */
+    /** Estado observable que la UI puede observar */
     val uiState: StateFlow<SettingsUiState> = _uiState.asStateFlow()
 
     /**
-     * Actualiza el estado del modo oscuro.
+     * Cambia el estado del modo oscuro.
      *
-     * @param enabled Indica si el modo oscuro está activado.
+     * @param enabled Indica si el modo oscuro está activado:
      * - true: modo oscuro activado
      * - false: modo oscuro desactivado
+     *
+     * Este cambio actualiza [_uiState], lo que provoca que la UI se recomponda automáticamente.
      */
     fun onDarkModeChange(enabled: Boolean) {
         _uiState.value = _uiState.value.copy(darkMode = enabled)

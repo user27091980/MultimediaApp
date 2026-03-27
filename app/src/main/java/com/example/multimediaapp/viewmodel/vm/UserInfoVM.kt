@@ -4,7 +4,8 @@ import android.app.Application
 import android.util.Log
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.viewModelScope
-import com.example.multimediaapp.data.repository.UsersInfoRepo
+import com.example.multimediaapp.data.repository.UserInfoRepo
+import com.example.multimediaapp.retrofit.RetrofitModule
 import com.example.multimediaapp.viewmodel.uistate.UserInfoListUiState
 import com.example.multimediaapp.viewmodel.uistate.UserInfoUiState
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -14,73 +15,73 @@ import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 
 /**
- * ViewModel encargado de gestionar la información del usuario.
- *
- * Expone el estado de la UI mediante [StateFlow] y actúa como intermediario
- * entre la capa de datos ([UsersInfoRepo]) y la interfaz de usuario.
+ * ViewModel encargado de gestionar la información de usuarios.
  *
  * Funciones principales:
- * - Cargar información de usuario
- * - Transformar datos (DTO → UI State)
- * - Gestionar el estado reactivo
+ * - Cargar datos de un usuario específico desde el repositorio ([UserInfoRepo]).
+ * - Mantener un estado reactivo de la lista de usuarios ([UserInfoListUiState]).
+ * - Actualizar la UI automáticamente cuando cambian los datos.
  *
- * @property application Contexto de la aplicación necesario para el repositorio.
+ * Patrón MVVM:
+ * - La UI observa [uiState] y se recompondrá automáticamente al recibir nuevos datos.
+ * - La lógica de obtención y transformación de datos queda encapsulada en este ViewModel.
+ *
+ * Uso:
+ * - Llamar [loadUser] pasando el ID de un usuario para obtener su información.
+ * - La lista de usuarios en [uiState.userInfo] se actualiza de forma incremental.
  */
 class UserInfoVM(application: Application) : AndroidViewModel(application) {
 
-    /**
-     * Repositorio encargado de obtener la información de usuarios.
-     */
-    private val repo = UsersInfoRepo(application.applicationContext)
+    /** Repositorio que maneja la comunicación con la API de usuarios */
+    private val repo = UserInfoRepo(RetrofitModule.userInfoApi)
 
-    /**
-     * Estado interno mutable de la lista de usuarios.
-     */
+    /** Estado interno mutable que almacena la lista de usuarios */
     private val _uiState = MutableStateFlow(UserInfoListUiState())
 
-    /**
-     * Estado observable expuesto a la UI.
-     */
+    /** Estado observable por la UI */
     val uiState: StateFlow<UserInfoListUiState> = _uiState.asStateFlow()
 
     /**
-     * Function that loads user information by its identifier.
+     * Carga la información de un usuario por su ID.
      *
-     * Evita llamadas redundantes si el usuario ya está cargado en el estado.
+     * - Verifica si el usuario ya existe en el estado para evitar recargas innecesarias.
+     * - Llama al repositorio para obtener los datos del usuario.
+     * - Transforma los datos a [UserInfoUiState].
+     * - Actualiza [_uiState] agregando o reemplazando el usuario en la lista.
+     * - En caso de error, registra el error en Logcat.
      *
-     * @param userId Identificador del usuario a cargar.
+     * @param userId ID del usuario que se desea cargar.
      */
     fun loadUser(userId: String) {
+        // Evita recargar si ya existe
         if (_uiState.value.userInfo.any { it.id == userId }) return
 
         viewModelScope.launch {
             try {
-                val result = repo.read(userId)
+                // Llamada al repositorio para obtener datos del usuario
+                val userDto = repo.getUser(userId)
 
-                result.fold(
-                    onSuccess = { dto ->
-                        dto?.let {
-                            val mapped = UserInfoUiState(
-                                id = it.id,
-                                email = it.email,
-                                name = it.name,
-                                lastName = it.lastName,
-                                country = it.country
-                            )
-
-                            _uiState.update { state ->
-                                state.copy(userInfo = listOf(mapped))
-                            }
-                        }
-                    },
-                    onFailure = { error ->
-                        Log.e("DEBUG_API", "Error al cargar usuario: ${error.message}")
-                    }
+                // Mapeo a UI State
+                val mapped = UserInfoUiState(
+                    id = userDto.id,
+                    user = userDto.user,
+                    email = userDto.email,
+                    name = userDto.name,
+                    lastName = userDto.lastName,
+                    country = userDto.country
                 )
+
+                // Actualiza la lista de usuarios en el estado
+                _uiState.update { state ->
+                    state.copy(
+                        userInfo = state.userInfo.filter { it.id != userId } + mapped
+                    )
+                }
+
             } catch (e: Exception) {
-                Log.e("DEBUG_API", "Fallo de red: ${e.message}", e)
+                // Log del error para depuración
+                Log.e("DEBUG_API", "Error al cargar usuario: ${e.message}", e)
             }
         }
     }
 }
-

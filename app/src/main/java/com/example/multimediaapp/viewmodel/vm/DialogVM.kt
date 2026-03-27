@@ -4,14 +4,18 @@ import androidx.lifecycle.ViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
+
 /**
- * ViewModel que gestiona el estado de un diálogo de confirmación.
+ * ViewModel que gestiona el estado de un diálogo de confirmación en la UI.
  *
- * Se encarga de controlar la visibilidad del diálogo y las acciones
- * asociadas a su confirmación o cancelación.
+ * Funciones principales:
+ * - Controla la visibilidad del diálogo.
+ * - Permite acciones de confirmación o cancelación.
+ * - Expone el estado mediante [StateFlow] para que la UI reaccione de forma reactiva.
  *
- * El estado se expone mediante [StateFlow] para que la UI pueda observar
- * los cambios de forma reactiva.
+ * Arquitectura:
+ * - Sigue el patrón MVVM: la UI observa [uiState] y reacciona a cambios.
+ * - La lógica de mostrar/ocultar el diálogo se mantiene centralizada aquí.
  */
 class DialogVM : ViewModel() {
 
@@ -25,13 +29,16 @@ class DialogVM : ViewModel() {
 
     /**
      * Estado observable del diálogo expuesto a la UI.
+     *
+     * La UI puede usar `collectAsState()` para renderizar dinámicamente
+     * el diálogo cuando cambie este valor.
      */
     val uiState: StateFlow<Boolean> = _uiState.asStateFlow()
 
     /**
      * Muestra el diálogo.
      *
-     * Cambia el estado a `true`, lo que provoca que la UI renderice el diálogo.
+     * Cambia el estado a `true`, provocando que la UI renderice el diálogo.
      */
     fun showDialog() {
         _uiState.value = true
@@ -40,17 +47,17 @@ class DialogVM : ViewModel() {
     /**
      * Oculta el diálogo.
      *
-     * Cambia el estado a `false`, ocultando el diálogo en la UI.
+     * Cambia el estado a `false`, haciendo que la UI deje de mostrar el diálogo.
      */
     fun hideDialog() {
         _uiState.value = false
     }
 
     /**
-     * Ejecuta la acción de confirmación del diálogo.
+     * Acción de confirmación del diálogo.
      *
-     * Actualmente solo oculta el diálogo, pero puede ampliarse
-     * para ejecutar lógica adicional como confirmar acciones del usuario.
+     * Actualmente solo oculta el diálogo, pero se puede ampliar
+     * para ejecutar lógica adicional (como confirmar datos o enviar información).
      */
     fun confirmAction() {
         _uiState.value = false

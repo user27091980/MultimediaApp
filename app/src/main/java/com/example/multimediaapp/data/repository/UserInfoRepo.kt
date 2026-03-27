@@ -1,96 +1,124 @@
 package com.example.multimediaapp.data.repository
 
-import android.content.Context
+import com.example.multimediaapp.data.entity.UsersInfoEntity
 import com.example.multimediaapp.data.entity.toDTO
+import com.example.multimediaapp.model.RegisterRequestDTO
 import com.example.multimediaapp.model.UsersInfoDTO
-import com.example.multimediaapp.retrofit.RetrofitModule
-import com.example.multimediaapp.session.DataStoreManager
+import com.example.multimediaapp.network.UserInfoApiService
 import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.withContext
-import java.util.UUID
+import java.io.IOException
 
-class UsersInfoRepo(context: Context) {
+/**
+ * Interfaz que define el contrato del repositorio de información de usuarios.
+ *
+ * Permite desacoplar la implementación de la capa de datos de la capa de presentación,
+ * facilitando pruebas unitarias y cambios futuros en la implementación (por ejemplo, cambiar la fuente de datos).
+ */
+interface IUserInfoRepo {
 
-    private val session = DataStoreManager(context)
-    private val api = RetrofitModule.userInfoApi
+    /**
+     * Obtiene información completa de un usuario por su ID.
+     *
+     * @param userId ID del usuario.
+     * @return DTO con la información del usuario.
+     * @throws Exception si ocurre error de red o el servidor devuelve una respuesta inválida.
+     */
+    suspend fun getUserInfo(userId: String): UsersInfoDTO
 
-    // Flujo que emite el usuario guardado en DataStore
-    val loggedUserFlow: Flow<UsersInfoDTO?> = session.userFlow
-
-    // Obtener usuario por ID desde la API
-    suspend fun read(id: String): Result<UsersInfoDTO?> {
-        return try {
-            val response = api.getUserInfoById(id)
-            if (response.isSuccessful) {
-                Result.success(response.body()?.toDTO())
-            } else {
-                Result.failure(Exception("Error: ${response.code()}"))
-            }
-        } catch (e: Exception) {
-            Result.failure(e)
-        }
-    }
-
-    // Registro de usuario y guardado en DataStore
+    /**
+     * Registra un nuevo usuario en el servidor.
+     *
+     * @param user Nombre de usuario.
+     * @param email Email del usuario.
+     * @param name Nombre.
+     * @param pass Contraseña.
+     * @param country País.
+     * @param lastName Apellido.
+     * @return [Result] con los datos del usuario registrado en caso de éxito,
+     *         o con una excepción en caso de fallo.
+     */
     suspend fun register(
+        user: String,
         email: String,
         name: String,
         pass: String,
-        lastName: String,
-        country: String
+        country: String,
+        lastName: String
+    ): Result<UsersInfoDTO>
+}
+
+/**
+ * Implementación de [IUserInfoRepo] usando Retrofit para comunicarse con [UserInfoApiService].
+ *
+ * Cada método se ejecuta en un contexto de I/O mediante corutinas,
+ * maneja errores de red y convierte las entidades recibidas a DTOs
+ * para ser usados en la capa de presentación.
+ *
+ * @property api Servicio Retrofit que proporciona los endpoints de usuario.
+ */
+class UserInfoRepo(private val api: UserInfoApiService) {
+
+    /**
+     * Registra un nuevo usuario en el servidor.
+     *
+     * Se crea un [RegisterRequestDTO] con los datos del usuario,
+     * se envía a la API y se convierte la respuesta a [UsersInfoDTO].
+     *
+     * Maneja:
+     * - Errores de red (IOException)
+     * - Respuestas vacías del servidor
+     * - Otros errores desconocidos
+     */
+    suspend fun register(
+        user: String,
+        email: String,
+        name: String,
+        pass: String,
+        country: String,
+        lastName: String
     ): Result<UsersInfoDTO> = withContext(Dispatchers.IO) {
         try {
-            val dto = UsersInfoDTO(
-                id = "",
-                email = email,
-                name = name,
-                pass = pass,
-                lastName = lastName,
-                country = country
-            )
+            val request = RegisterRequestDTO(user, email, name, pass, country, lastName)
+            val response = api.registerUser(request)
 
-            val response = api.registerUser(dto)
-
-            if (response.isSuccessful && response.body() != null) {
-                var registeredUser = response.body()!!.toDTO()
-
-                // Generar ID temporal si API no devuelve
-                if (registeredUser.id.isEmpty()) {
-                    registeredUser = registeredUser.copy(id = UUID.randomUUID().toString())
-                }
-
-                // Guardar usuario en DataStore
-                session.saveUser(registeredUser)
-
-                Result.success(registeredUser)
+            if (response.isSuccessful) {
+                val body = response.body() ?: throw Exception("Respuesta vacía del servidor")
+                Result.success(body.toDTO())
             } else {
-                val errorMsg = response.errorBody()?.string() ?: "Error en el registro"
-                Result.failure(Exception(errorMsg))
+                Result.failure(Exception("Error al registrar usuario: ${response.code()}"))
             }
+
+        } catch (e: IOException) {
+            Result.failure(Exception("Error de red", e))
         } catch (e: Exception) {
-            Result.failure(e)
+            Result.failure(Exception(e.message ?: "Error desconocido", e))
         }
     }
 
-    // Actualizar usuario en API y DataStore
-    suspend fun update(dto: UsersInfoDTO): Result<UsersInfoDTO> = withContext(Dispatchers.IO) {
+    /**
+     * Obtiene la información completa de un usuario por su ID.
+     *
+     * Llama al endpoint correspondiente, verifica si la respuesta fue exitosa
+     * y convierte la entidad recibida a [UsersInfoDTO].
+     *
+     * @param userId ID del usuario a obtener.
+     * @return [UsersInfoDTO] con la información del usuario.
+     * @throws Exception si ocurre un error de red o la respuesta del servidor es inválida.
+     */
+    suspend fun getUser(userId: String): UsersInfoDTO = withContext(Dispatchers.IO) {
         try {
-            val response = api.updateUserInfo(dto.email, dto)
-            if (response.isSuccessful && response.body() != null) {
-                val updated = response.body()!!.toDTO()
-                session.saveUser(updated)
-                Result.success(updated)
+            val response = api.getUser(userId)
+            if (response.isSuccessful) {
+                val body: UsersInfoEntity? = response.body()
+                body?.toDTO() ?: throw Exception("Respuesta vacía del servidor")
             } else {
-                Result.failure(Exception("No se pudo actualizar el perfil"))
+                throw Exception("Error al obtener información del usuario: ${response.code()}")
             }
+        } catch (e: IOException) {
+            throw Exception("Error de red: Verifica tu conexión", e)
         } catch (e: Exception) {
-            Result.failure(e)
+            throw Exception(e.message ?: "Error desconocido", e)
         }
-    }
-
-    // Cerrar sesión
-    suspend fun logout() = withContext(Dispatchers.IO) {
-        session.logout()
     }
 }

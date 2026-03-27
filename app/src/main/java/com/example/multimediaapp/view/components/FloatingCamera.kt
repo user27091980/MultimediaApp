@@ -9,41 +9,55 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 
 /**
- * Clase vacía heredada de ComponentActivity.
+ * PicCatcher:
  *
- * Se puede usar como placeholder para futuras funcionalidades relacionadas
- * con captura de imágenes o integración con cámara.
+ * Clase vacía que hereda de ComponentActivity.
+ * Se puede utilizar como placeholder para futuras funcionalidades relacionadas con
+ * la captura de imágenes o la integración con la cámara.
+ *
+ * Actualmente no contiene lógica, pero se puede extender para:
+ * - Abrir cámara
+ * - Tomar fotos
+ * - Guardar imágenes en almacenamiento interno o remoto
  */
 class PicCatcher : ComponentActivity() {
-
-    //TODO()
+    // TODO: implementar lógica de cámara
 }
 
 /**
- * Composable que muestra un FloatingActionButton para tomar fotos.
+ * FloatCamera:
  *
- * @param modifier Modificador opcional para ajustar tamaño, posición, padding, etc.
+ * Composable que muestra un FloatingActionButton (FAB) con un icono de cámara.
+ * Se puede colocar en cualquier pantalla para permitir al usuario tomar fotos.
+ *
+ * @param modifier Modificador opcional para ajustar tamaño, posición, padding u otras propiedades de Compose.
  * @param onClick Callback que se ejecuta al pulsar el botón.
+ *
+ * ===Detalles de implementación===
+ * - FloatingActionButton: botón flotante que sigue el Material Design.
+ * - Icon: usa Icons.Filled.AddAPhoto para representar la acción de capturar foto.
+ * - onClick: permite ejecutar cualquier acción (abrir cámara, abrir galería, etc.).
  */
 @Composable
-fun FloatCamera(modifier: Modifier = Modifier, onClick: () -> Unit) {
+fun FloatCamera(
+    modifier: Modifier = Modifier,
+    onClick: () -> Unit
+) {
     FloatingActionButton(
-        onClick = { onClick() }, // Llama al callback pasado
-        modifier = modifier// Aplica modificaciones externas
+        onClick = { onClick() }, // Llama al callback proporcionado
+        modifier = modifier // Aplica modificaciones externas
     ) {
-        // Icono de cámara dentro del botón flotante
-        Icon(Icons.Filled.AddAPhoto, "Sacar foto")
+        Icon(
+            imageVector = Icons.Filled.AddAPhoto,
+            contentDescription = "Sacar foto" // Para accesibilidad
+        )
     }
 }
 
-/*
-PicCatcher: placeholder para futuras actividades relacionadas con la cámara. Actualmente está vacío.
-
-FloatCamera: Composable que crea un FloatingActionButton con un icono de cámara.
-
-modifier_ permite ajustar posición, tamaño o animaciones externas.
-
-onClick: callback para abrir la cámara o ejecutar cualquier acción al presionar el botón.
-
-Icon: usa un icono del paquete Material Icons (AddAPhoto) y proporciona descripción para accesibilidad.
+/**
+ * ===Notas adicionales===
+ * - PicCatcher sirve como clase base o actividad de cámara futura.
+ * - FloatCamera es reutilizable y flexible; se puede colocar en cualquier parte de la UI.
+ * - contentDescription en Icon es importante para accesibilidad (lectores de pantalla).
+ * - modifier permite integrar animaciones, padding, tamaño y ubicación según el diseño de la pantalla.
  */

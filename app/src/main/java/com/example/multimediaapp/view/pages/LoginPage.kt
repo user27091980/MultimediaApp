@@ -23,55 +23,76 @@ import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.flow.combine
 import kotlinx.coroutines.launch
 
+/**
+ * LoginScreen:
+ *
+ * Pantalla de inicio de sesión que permite al usuario ingresar su correo y contraseña.
+ * Integra:
+ * - Campos de texto para email y contraseña (TextFieldsLoginComponent)
+ * - Checkbox para "Recordarme" que guarda email en DataStore
+ * - Botones de aceptar y cancelar (ButtonAccept, ButtonCancel)
+ * - Manejo de errores y eventos de navegación mediante LoginVM
+ *
+ * @param navController Controlador de navegación para cambiar de pantalla
+ * @param loginVM ViewModel que maneja la lógica de login, estado de campos y eventos
+ */
 @Composable
 fun LoginScreen(
     navController: NavController,
-    dataStore: DataStoreManager,
-    repository: LoginRepo,
+    loginVM: LoginVM
 ) {
-    val factory = LoginVMFactory(dataStore, repository)
-    val vm: LoginVM = viewModel(factory = factory)
-    val uiState by vm.uiState.collectAsState()
+    // Observa el estado de la UI desde el ViewModel
+    val uiState by loginVM.uiState.collectAsState()
     val scope = rememberCoroutineScope()
 
+    // Estado local para el checkbox "Recordarme"
     var rememberUser by remember { mutableStateOf(false) }
 
-    // Inicializar checkbox y email desde DataStore
+    /**
+     * Inicialización:
+     * Obtiene el valor de "Recordarme" y el email del usuario desde DataStore
+     * y actualiza el estado del ViewModel si corresponde.
+     */
     LaunchedEffect(Unit) {
-        dataStore.rememberUserFlow
-            .combine(dataStore.userFlow) { remember, user -> remember to user }
+        loginVM.dataStore.rememberUserFlow
+            .combine(loginVM.dataStore.userFlow) { remember, user -> remember to user }
             .collectLatest { (remember, user) ->
                 rememberUser = remember
                 if (remember && user != null) {
-                    vm.onEmailChange(user.email)
+                    loginVM.onUserChange(user.email)
                 }
             }
     }
 
-    // Recolectar eventos de navegación o errores
-    LaunchedEffect(vm) {
-        vm.events.collect { event ->
+    /**
+     * Recolecta eventos del ViewModel:
+     * - NavigateToHome: navega a la pantalla principal
+     * - ShowError: muestra un mensaje de error (aquí se imprime en consola, se puede usar Snackbar)
+     */
+    LaunchedEffect(loginVM) {
+        loginVM.events.collect { event ->
             when (event) {
                 is LoginEvent.NavigateToHome -> {
                     navController.navigate(ObjRoutes.MAIN) {
                         popUpTo(ObjRoutes.LOGINREG) { inclusive = true }
                     }
                 }
-
                 is LoginEvent.ShowError -> {
-                    println("Error: ${event.message}") // aquí podrías mostrar un Snackbar
+                    println("Error: ${event.message}") // Aquí se podría mostrar un Snackbar
                 }
-
             }
         }
     }
 
+    // Contenedor principal centrado
     Box(
         modifier = Modifier
             .fillMaxSize()
             .background(MaterialTheme.colorScheme.background),
         contentAlignment = Alignment.Center
     ) {
+
+        // Columna principal con padding
         Column(
             modifier = Modifier
                 .fillMaxWidth()
@@ -79,21 +100,24 @@ fun LoginScreen(
             verticalArrangement = Arrangement.Center,
             horizontalAlignment = Alignment.CenterHorizontally
         ) {
+
+            // Sección de campos de login
             Column(
                 modifier = Modifier.weight(1f),
                 verticalArrangement = Arrangement.Center
             ) {
                 TextFieldsLoginComponent(
-                    email = uiState.email,
+                    user = uiState.user,
                     pass = uiState.password,
-                    onEmailChange = vm::onEmailChange,
-                    onPassChange = vm::onPasswordChange,
+                    onUserChange = loginVM::onUserChange,
+                    onPassChange = loginVM::onPasswordChange,
                     passwordVisible = uiState.passwordVisible,
-                    togglePasswordVisibility = vm::togglePasswordVisibility
+                    togglePasswordVisibility = loginVM::togglePasswordVisibility
                 )
 
                 Spacer(modifier = Modifier.height(8.dp))
 
+                // Checkbox "Recordarme"
                 Row(verticalAlignment = Alignment.CenterVertically) {
                     Checkbox(
                         checked = rememberUser,
@@ -102,6 +126,7 @@ fun LoginScreen(
                     Text(text = "Recordarme")
                 }
 
+                // Mensaje de error (si existe)
                 uiState.errorMessage?.let { error ->
                     Text(
                         text = error,
@@ -111,25 +136,38 @@ fun LoginScreen(
                 }
             }
 
+            // Botón aceptar: valida campos y ejecuta login
             ButtonAccept(
                 onClick = {
-
-                    if (vm.validateFieldsLogin()) {
+                    if (loginVM.validateFieldsLogin()) {
                         scope.launch {
-                            // Guardar preferencias
-                            dataStore.saveRememberUser(rememberUser)
-                            if (rememberUser) dataStore.saveUserEmail(uiState.email)
+                            // Guardar preferencias en DataStore
+                            loginVM.dataStore.saveRememberUser(rememberUser)
+                            if (rememberUser) loginVM.dataStore.saveUserEmail(uiState.user)
 
-                            // Llamada al ViewModel, NO pasamos rememberUser
-                            vm.login()
+                            // Ejecutar login desde ViewModel
+                            loginVM.login()
                         }
                     }
                 }
             )
 
+            // Botón cancelar: vuelve a pantalla login/registro
             ButtonCancel(
                 onClick = { navController.navigate(ObjRoutes.LOGINREG) }
             )
         }
     }
 }
+
+/**
+ * Notas explicativas:
+ *
+ * 1. **TextFieldsLoginComponent**: Composable que contiene los campos de correo y contraseña.
+ * 2. **Checkbox "Recordarme"**: Permite guardar el email en DataStore para la próxima sesión.
+ * 3. **ButtonAccept / ButtonCancel**: Composables personalizados para acciones de login o cancelar.
+ * 4. **LaunchedEffect**: Maneja efectos secundarios, como cargar preferencias o recolectar eventos del ViewModel.
+ * 5. **collectAsState()**: Convierte un StateFlow del ViewModel en un estado observable por Compose.
+ * 6. **rememberCoroutineScope**: Permite lanzar corutinas dentro del Composable.
+ * 7. **DataStoreManager**: Clase encargada de persistir datos locales (email y "Recordarme").
+ */

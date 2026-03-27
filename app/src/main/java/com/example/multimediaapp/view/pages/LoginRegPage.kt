@@ -22,72 +22,77 @@ import com.example.multimediaapp.view.components.ButtonRegister
 import com.example.multimediaapp.viewmodel.vm.LoginRegVM
 
 /**
- * Pantalla inicial que ofrece opciones de Login o Registro.
+ * LoginRegScreen:
  *
- * @param navController Controlador de navegación para moverse entre pantallas.
- * @param vm ViewModel que maneja el estado de la pantalla Login/Registro.
+ * Pantalla inicial de la aplicación que ofrece al usuario dos opciones principales:
+ * - Iniciar sesión (Login)
+ * - Registrarse (Register)
+ *
+ * Utiliza Jetpack Compose para la construcción de la interfaz y Navigation para moverse
+ * entre pantallas.
+ *
+ * @param navController Controlador de navegación que permite ir a otras pantallas.
+ * @param vm ViewModel que maneja el estado y la lógica de la pantalla Login/Registro.
  */
 @Composable
 fun LoginRegScreen(
     navController: NavController,
-    vm: LoginRegVM = viewModel()// obtiene automáticamente el ViewModel asociado al ciclo de vida
+    vm: LoginRegVM = viewModel() // Obtiene automáticamente el ViewModel asociado al ciclo de vida
 ) {
-    // Caja principal que ocupa toda la pantalla
-    // Se aplica un fondo degradado de oscuro a negro
+    // Contenedor principal que ocupa toda la pantalla
+    // Se centra el contenido y se aplica un fondo
     Box(
         modifier = boxModifier
             .fillMaxSize()
             .background(
-
-                MaterialTheme.colorScheme.background
+                MaterialTheme.colorScheme.background // fondo basado en el tema actual
             ),
-        contentAlignment = Alignment.Center
+        contentAlignment = Alignment.Center // centra los hijos dentro del Box
     ) {
-        // Columna que contiene los botones de login y registro
+        // Columna que contiene los botones de acción
         Column(
-            horizontalAlignment = Alignment.CenterHorizontally,
-            verticalArrangement = Arrangement.spacedBy(20.dp),
+            horizontalAlignment = Alignment.CenterHorizontally, // centra horizontalmente
+            verticalArrangement = Arrangement.spacedBy(20.dp), // espacio entre botones
             modifier = Modifier
-                .padding(horizontal = 32.dp)
-
+                .padding(horizontal = 32.dp) // padding lateral
         ) {
-            //boton de Login
+            // Botón para navegar a la pantalla de Login
             ButtonLogin(
                 onClick = { navController.navigate(ObjRoutes.LOGIN) }
             )
-            // Botón Registro
+
+            // Botón para navegar a la pantalla de Registro
             ButtonRegister(
-
                 onClick = { navController.navigate(ObjRoutes.REGISTER) }
-
             )
         }
     }
 }
 
 /**
- * Preview para mostrar cómo se ve la pantalla en Android Studio sin ejecutar la app.
+ * Vista previa de la pantalla LoginRegScreen.
+ *
+ * Permite ver cómo se renderiza la UI en Android Studio sin ejecutar la aplicación.
  */
 @Preview()
 @Composable
 fun LoginRegScreenPreview() {
-
     val navController = rememberNavController()
 
     LoginRegScreen(
         navController = navController,
-        vm = LoginRegVM() //solo si tu VM tiene constructor vacío
+        vm = LoginRegVM() // Solo si el ViewModel tiene constructor vacío
     )
 }
 
 /**
- * notas:
+ * Notas explicativas:
  *
- * - Box Contenedor que permite posicionar elementos con alineación y superposición.
- * - Column: Organiza elementos de manera vertical.
- * - horizontalAlignment / verticalArrangement: Controlan alineación y separación de los hijos.
- * - Modifier.padding / fillMaxSize / background: Permiten ajustar tamaño, márgenes y fondo.
- * - ButtonLogin / ButtonRegister: Componentes reutilizables para acciones principales.
- * - navController.navigate(route): Permite cambiar de pantalla dentro de la navegación de Compose.
- * - @Preview: Permite ver la UI en el IDE sin ejecutar la app.
+ * 1. **Box**: Contenedor que permite posicionar elementos con alineación y superposición.
+ * 2. **Column**: Organiza elementos de manera vertical.
+ * 3. **horizontalAlignment / verticalArrangement**: Controlan alineación y separación de los hijos.
+ * 4. **Modifier.padding / fillMaxSize / background**: Ajustan tamaño, márgenes y fondo.
+ * 5. **ButtonLogin / ButtonRegister**: Componentes reutilizables que ejecutan navegación.
+ * 6. **navController.navigate(route)**: Permite cambiar de pantalla dentro del sistema de navegación de Compose.
+ * 7. **@Preview**: Permite visualizar la UI en el IDE sin ejecutar la app.
  */

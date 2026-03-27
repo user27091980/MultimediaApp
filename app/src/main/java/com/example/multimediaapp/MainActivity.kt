@@ -23,53 +23,55 @@ import com.example.multimediaapp.view.components.TopBar
 import com.example.multimediaapp.viewmodel.vm.SettingsVM
 
 /**
- * Main activity of the application.
+ * MainActivity:
  *
- * Acts as the entry point of the app and is responsible for:
- * - Setting up the navigation graph
- * - Applying the global theme
- * - Managing the top and bottom bars
- * - Observing application settings
+ * Actividad principal de la aplicación que sirve como punto de entrada.
  *
- * Uses Jetpack Compose as the UI framework and follows an MVVM architecture.
+ * Funciones principales:
+ * 1. Configura la interfaz con Jetpack Compose.
+ * 2. Aplica un tema global, adaptándose al modo oscuro según la configuración.
+ * 3. Maneja la navegación entre pantallas usando [NavController] y [NavGraph].
+ * 4. Controla la visibilidad de la [TopBar] y [BottomBar] dependiendo de la ruta actual.
+ * 5. Observa de manera reactiva el estado de [SettingsVM] para cambios en preferencias de usuario.
+ *
+ * Arquitectura:
+ * - MVVM: La UI observa cambios en el estado de SettingsVM.
+ * - Material3: Uso de [Scaffold] para layout estructurado con top bar, bottom bar y contenido.
  */
 class MainActivity : ComponentActivity() {
 
     /**
-     * Initializes the activity and sets up the Compose UI.
+     * Inicializa la actividad y establece la UI con Compose.
      *
-     * Enables edge-to-edge rendering and configures the main scaffold
-     * with navigation and UI components.
+     * Habilita renderizado edge-to-edge para dibujar detrás de barras del sistema.
+     * Configura Scaffold con top bar, bottom bar y contenedor de contenido.
      */
     @SuppressLint("UnusedMaterial3ScaffoldPaddingParameter")
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-        // Enable edge-to-edge layout (draw behind system bars)
+        // Permite que la UI se dibuje detrás de la barra de estado y navegación
         enableEdgeToEdge()
 
         setContent {
-
-            // ViewModel responsible for app settings
+            // ViewModel que gestiona preferencias de la app (modo oscuro, etc.)
             val settingsVM: SettingsVM = viewModel()
-
-            // Observe UI state reactively
             val uiState by settingsVM.uiState.collectAsState()
 
-            // Apply global theme based on user settings
+            // Aplica el tema global, con modo oscuro según settingsVM
             MultimediaAppTheme(darkTheme = uiState.darkMode) {
 
-                // Navigation controller
+                // Controlador de navegación de Compose
                 val navController = rememberNavController()
 
-                // Current route from navigation stack
+                // Observa la ruta actual de la navegación
                 val currentBackStackEntry = navController.currentBackStackEntryAsState()
                 val currentRoute = currentBackStackEntry.value?.destination?.route ?: ""
 
                 Scaffold(
                     modifier = Modifier.fillMaxSize(),
 
-                    // Top bar visible only in specific screens
+                    // Top bar visible solo en pantallas que no sean login o registro
                     topBar = {
                         if (currentRoute !in listOf(
                                 ObjRoutes.LOGINREG,
@@ -81,7 +83,7 @@ class MainActivity : ComponentActivity() {
                         }
                     },
 
-                    // Bottom bar visible only in specific screens
+                    // Bottom bar visible solo en pantallas que no sean login o registro
                     bottomBar = {
                         if (currentRoute !in listOf(
                                 ObjRoutes.LOGINREG,
@@ -92,15 +94,15 @@ class MainActivity : ComponentActivity() {
                             BottomBar(navController)
                         }
                     }
-                ) { innerPadding ->
 
-                    // Container for the main content
+                ) { innerPadding ->
+                    // Contenedor principal del contenido de la app
                     Box(
                         modifier = Modifier
                             .fillMaxSize()
                             .padding(innerPadding)
                     ) {
-                        // Navigation graph of the application
+                        // Grafo de navegación que maneja todas las rutas
                         NavGraph(
                             navController = navController,
                             settingsVM
@@ -113,19 +115,13 @@ class MainActivity : ComponentActivity() {
 }
 
 /*
-Notas:
+Notas importantes:
 
-enableEdgeToEdge() nos permite que la UI se dibuje detrás de la barra de estado y navegación.
-
-SettingsVM: Controla temas, modo oscuro y otras preferencias globales.
-
-MultimediaAppTheme aplica los colores, tipografías y tema oscuro/claro.
-
-NavController maneja la navegación entre pantallas.
-
-currentRoute determina la pantalla actual para mostrar u ocultar top/bottom bars.
-
-Scaffold es un componente de Material3 que facilita layout con top bar, bottom bar y contenido.
-
-NavGraph ontiene todas las rutas y pantallas de la aplicación
- */
+- enableEdgeToEdge(): Permite que la UI se dibuje detrás de las barras de sistema.
+- SettingsVM: Gestiona preferencias globales (ej. modo oscuro) y expone el estado a la UI.
+- MultimediaAppTheme: Aplica colores, tipografía y modo oscuro/claro.
+- NavController: Controla la navegación entre pantallas.
+- currentRoute: Determina la pantalla actual para mostrar u ocultar top/bottom bars.
+- Scaffold: Layout de Material3 que permite top bar, bottom bar y contenido principal.
+- NavGraph: Contiene todas las rutas y composables de la aplicación.
+*/

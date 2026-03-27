@@ -26,71 +26,96 @@ import coil.compose.AsyncImage
 import com.example.multimediaapp.model.MainDTO
 
 /**
- * Composable que muestra una lista vertical de tarjetas con imagen y nombre de banda.
+ * CardList:
  *
- * @param main Lista de objetos MainDTO que contienen la información de cada banda.
+ * Composable que muestra una lista vertical de tarjetas, cada una con:
+ * - Imagen de la banda (main.imageBand)
+ * - Nombre de la banda (main.bandName)
+ *
+ * Proporciona interactividad al permitir clics sobre la imagen que llaman a un lambda externo.
+ *
+ * @param main Lista de objetos MainDTO que contienen los datos de cada banda.
  * @param onImageClick Lambda que se ejecuta al hacer clic en la imagen de una banda.
  */
 @Composable
 fun CardList(
-    main: List<MainDTO>, onImageClick: (MainDTO) -> Unit // Lambda que recibe la banda clicada
+    main: List<MainDTO>,
+    onImageClick: (MainDTO) -> Unit
 ) {
-    // LazyColumn permite crear listas verticales, cargando solo los elementos visibles.
-    // Es útil para listas grandes, para optimizar rendimiento.
+    // LazyColumn: lista vertical optimizada que renderiza solo los elementos visibles
     LazyColumn(
         modifier = Modifier
             .fillMaxSize()
             .background(MaterialTheme.colorScheme.background)
             .padding(vertical = 8.dp),
-
-        verticalArrangement = Arrangement.spacedBy(16.dp)
+        verticalArrangement = Arrangement.spacedBy(16.dp) // espacio entre tarjetas
     ) {
-        // Itera sobre la lista de URLs de imágenes de los álbumes.
-        // 'imageBand' es cada URL de la lista.
-        // Mostramos un log aquí para confirmar que Compose está recibiendo los items
+        // Log para depuración, muestra cuántas bandas se están dibujando
         Log.d("CARD_LIST", "Dibujando ${main.size} bandas")
+
+        // items: itera sobre la lista de bandas
         items(main) { main ->
             Column(
                 modifier = Modifier.fillMaxWidth(),
-                horizontalAlignment = Alignment.CenterHorizontally // Centra horizontalmente todo dentro de la columna
+                horizontalAlignment = Alignment.CenterHorizontally // centra el contenido horizontalmente
             ) {
+                // AsyncImage: carga imagen de URL de manera asíncrona usando Coil
                 AsyncImage(
                     model = main.imageBand,
-                    contentDescription = main.bandName,
+                    contentDescription = main.bandName, // accesibilidad
                     modifier = Modifier
                         .fillMaxWidth()
                         .height(300.dp)
-                        .clickable { onImageClick(main) },
-                    contentScale = ContentScale.Crop,
-                    placeholder = ColorPainter(Color.LightGray),
-                    error = ColorPainter(Color.Red)
+                        .clickable { onImageClick(main) }, // callback al hacer click
+                    contentScale = ContentScale.Crop, // recorta la imagen si no coincide con la proporción
+                    placeholder = ColorPainter(Color.LightGray), // color de carga mientras se descarga la imagen
+                    error = ColorPainter(Color.Red) // color de error si no se carga la imagen
                 )
+                // Nombre de la banda
                 Text(
                     text = main.bandName,
                     color = MaterialTheme.colorScheme.primary,
                     style = MaterialTheme.typography.headlineMedium,
                     fontWeight = FontWeight.Bold
                 )
-                Spacer(modifier = Modifier.height(6.dp))
+                Spacer(modifier = Modifier.height(6.dp)) // separación visual entre elementos
             }
         }
     }
 }
 
-
-
 /*
-LazyColumn: lista vertical optimizada, renderiza solo lo visible, mejora rendimiento.
+Notas de implementación:
 
-items(bands): itera sobre la lista de bandas. Cada mainBand representa un elemento.
+1. LazyColumn:
+   - Lista vertical optimizada para grandes cantidades de elementos.
+   - Renderiza solo los elementos visibles, mejorando rendimiento.
 
-Column: organiza la imagen y el nombre verticalmente, centrado horizontalmente.
+2. items(main):
+   - Itera sobre la lista de bandas (MainDTO).
+   - Cada elemento representa una tarjeta con imagen y nombre.
 
-Image + rememberAsyncImagePainter: carga imágenes desde URLs de forma asíncrona usando Coil.
+3. Column:
+   - Organiza la imagen y el nombre verticalmente.
+   - Contenido centrado horizontalmente.
 
-clickable: permite que la imagen responda a clicks y ejecute un callback.
+4. AsyncImage (Coil):
+   - Carga imágenes desde URL de manera asíncrona.
+   - placeholder: color gris mientras se carga.
+   - error: color rojo si la imagen falla al cargar.
+   - contentScale: Crop para ajustar proporciones.
 
-Spacer: agrega separación visual entre elementos.
+5. clickable:
+   - Permite que la imagen responda a clicks y ejecute el callback `onImageClick`.
 
-@Preview: permite ver un ejemplo visual de la lista sin ejecutar la app.
- */
+6. Spacer:
+   - Añade separación visual entre tarjetas.
+
+7. Log:
+   - Útil para depuración, confirma que Compose está recibiendo los elementos.
+
+8. MaterialTheme:
+   - Usa esquema de colores y tipografía consistente con el tema de la app.
+
+Este Composable es ideal para pantallas que muestran listas de bandas o álbumes, como MainScreen.
+*/

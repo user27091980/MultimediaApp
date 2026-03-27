@@ -23,15 +23,22 @@ import com.example.multimediaapp.view.components.CardRowComponent
 import com.example.multimediaapp.view.components.ImagesRowList
 
 /**
- * Pantalla que muestra los detalles de una banda.
+ * BandScreen:
  *
- * Esta pantalla obtiene los datos desde el ViewModel, busca una banda
- * por su identificador y muestra su información en diferentes secciones.
+ * Pantalla principal que muestra los detalles completos de una banda.
+ * Se obtiene la información desde un ViewModel ([BandVM]) y se filtra la banda
+ * por su identificador [bandId]. La pantalla está dividida en secciones:
  *
- * Si la banda no existe, se muestra un mensaje informativo.
+ * - Cabecera con imagen y nombre de la banda.
+ * - Información principal en formato de tarjetas.
+ * - Texto informativo.
+ * - Etiquetas/categorías de la banda.
+ * - Discografía (lista de álbumes con imágenes).
+ *
+ * Si la banda no se encuentra, se muestra un mensaje de información.
  *
  * @param bandId Identificador de la banda a mostrar.
- * @param vm ViewModel que contiene y gestiona la lista de bandas.
+ * @param vm ViewModel que maneja la lista de bandas. Se obtiene por defecto usando `viewModel()`.
  */
 @Composable
 fun BandScreen(
@@ -39,28 +46,19 @@ fun BandScreen(
     vm: BandVM = viewModel()
 ) {
 
-    /**
-     * Lista de bandas observada desde el ViewModel.
-     */
+    // Observa la lista de bandas desde el estado del ViewModel
     val bands by vm.bandsState.collectAsState(initial = emptyList())
 
-    /**
-     * Carga inicial de datos cuando se crea la pantalla.
-     */
+    // Carga inicial de los datos al crear la pantalla
     LaunchedEffect(Unit) {
         vm.loadAllBands()
     }
 
-    /**
-     * Banda seleccionada a partir del identificador recibido.
-     */
+    // Busca la banda seleccionada por su id
     val band = bands.find { it.id == bandId }
 
     if (band == null) {
-
-        /**
-         * Pantalla mostrada cuando no se encuentra la banda.
-         */
+        // Pantalla de "no encontrada"
         Box(
             modifier = Modifier
                 .fillMaxSize()
@@ -71,10 +69,7 @@ fun BandScreen(
         }
 
     } else {
-
-        /**
-         * Pantalla principal con los datos de la banda.
-         */
+        // Pantalla principal con la información de la banda
         Box(
             modifier = Modifier
                 .fillMaxSize()
@@ -83,49 +78,37 @@ fun BandScreen(
 
             Column(
                 modifier = bandColumnModifier
-                    .verticalScroll(rememberScrollState())
+                    .verticalScroll(rememberScrollState()) // Permite scroll vertical
                     .padding(16.dp),
-                verticalArrangement = Arrangement.spacedBy(10.dp)
+                verticalArrangement = Arrangement.spacedBy(10.dp) // Espaciado entre secciones
             ) {
 
-                /**
-                 * Cabecera con imagen y nombre de la banda.
-                 */
+                // Cabecera con imagen y nombre
                 BandHeader(band = band)
 
                 Spacer(modifier = Modifier.height(8.dp))
 
-                /**
-                 * Información principal en formato tarjeta.
-                 */
+                // Información principal en formato tarjeta
                 CardRowComponent(band = band)
 
                 Spacer(modifier = Modifier.height(8.dp))
 
-                /**
-                 * Texto de sección informativa.
-                 */
+                // Texto de información general
                 Text(text = stringResource(R.string.info))
 
                 Spacer(modifier = Modifier.height(8.dp))
 
-                /**
-                 * Etiquetas o categorías de la banda.
-                 */
+                // Etiquetas de estilo, componentes, o categoría de la banda
                 BandTags(band = band)
 
                 Spacer(modifier = Modifier.height(8.dp))
 
-                /**
-                 * Sección de discografía.
-                 */
+                // Sección de discografía
                 Text(text = stringResource(R.string.discografia))
 
                 Spacer(modifier = Modifier.height(8.dp))
 
-                /**
-                 * Lista de imágenes del álbum de la banda.
-                 */
+                // Lista horizontal de imágenes de álbumes
                 ImagesRowList(
                     band = band,
                     modifier = Modifier.fillMaxWidth()
@@ -138,18 +121,17 @@ fun BandScreen(
 }
 
 /**
- * Vista previa de la pantalla BandScreen.
+ * BandScreenPreview:
  *
- * Se utiliza una instancia de [BandDTO] de ejemplo para mostrar
- * la interfaz sin necesidad de ViewModel ni datos reales.
+ * Permite previsualizar la UI de BandScreen sin necesidad de ViewModel ni datos reales.
+ * Se crea una instancia de [BandDTO] con información de ejemplo.
+ *
+ * Esto facilita el diseño y pruebas visuales dentro de Android Studio.
  */
 @Preview(showBackground = true)
 @Composable
 fun BandScreenPreview() {
 
-    /**
-     * Datos de ejemplo para la previsualización.
-     */
     val defaultBand = BandDTO(
         id = "1",
         name = "Coldplay",
@@ -169,42 +151,27 @@ fun BandScreenPreview() {
         headerLink = "https://example.com"
     )
 
-    /**
-     * UI de previsualización sin ViewModel.
-     */
     Box(
         modifier = Modifier
             .fillMaxSize()
             .background(MaterialTheme.colorScheme.background)
     ) {
-
         Column(
             modifier = bandColumnModifier
                 .verticalScroll(rememberScrollState())
                 .padding(16.dp),
             verticalArrangement = Arrangement.spacedBy(10.dp)
         ) {
-
             BandHeader(band = defaultBand)
-
             Spacer(modifier = Modifier.height(8.dp))
-
             CardRowComponent(band = defaultBand)
-
             Spacer(modifier = Modifier.height(8.dp))
-
             Text(text = "Info")
-
             Spacer(modifier = Modifier.height(8.dp))
-
             BandTags(band = defaultBand)
-
             Spacer(modifier = Modifier.height(8.dp))
-
             Text(text = "Discografía")
-
             Spacer(modifier = Modifier.height(8.dp))
-
             ImagesRowList(
                 band = defaultBand,
                 modifier = Modifier.fillMaxWidth()
@@ -212,3 +179,27 @@ fun BandScreenPreview() {
         }
     }
 }
+
+/*
+Notas importantes:
+
+1. bandColumnModifier:
+   - Modificador de columna definido en el tema de UI.
+   - Controla padding, tamaño y estilo de toda la columna principal.
+
+2. verticalScroll + rememberScrollState:
+   - Permite que la pantalla sea scrollable verticalmente.
+   - Importante para dispositivos con pantallas pequeñas.
+
+3. LaunchedEffect(Unit):
+   - Se ejecuta al crear la pantalla para cargar datos iniciales desde el ViewModel.
+
+4. Uso de Composables modulares:
+   - BandHeader: muestra imagen y nombre.
+   - CardRowComponent: muestra información principal en tarjetas.
+   - BandTags: muestra etiquetas o categorías.
+   - ImagesRowList: lista horizontal de imágenes de álbumes.
+
+5. Previsualización:
+   - BandScreenPreview permite ver cómo se verá la UI con datos de ejemplo sin ejecutar la app.
+*/

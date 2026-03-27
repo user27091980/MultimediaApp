@@ -1,30 +1,67 @@
 package com.example.multimediaapp.model
 
 /**
- * Data class que representa la información detallada de un usuario.
+ * Data class que representa la información necesaria para registrar un usuario.
  *
- * Esta información se puede usar en la pantalla de perfil o configuración de usuario.
- * Todos los campos son inmutables (`val`) para evitar modificaciones accidentales.
+ * Usada al enviar datos desde la UI hacia la API para crear un nuevo usuario.
+ * Todos los campos son inmutables (`val`) para garantizar consistencia.
+ */
+data class RegisterRequestDTO(
+    // Nombre de usuario único
+    val user: String,
+
+    // Correo electrónico del usuario
+    val email: String,
+
+    // Nombre real del usuario
+    val name: String,
+
+    // Contraseña del usuario
+    val pass: String,
+
+    // País de residencia
+    val country: String,
+
+    // Apellido del usuario
+    val lastName: String
+)
+
+/**
+ * Data class que representa la información completa de un usuario.
+ *
+ * Usada por la UI y ViewModel para mostrar información de perfil o
+ * gestionar sesiones de usuario.
+ * Todos los campos son inmutables (`val`) para seguridad y consistencia.
  */
 data class UsersInfoDTO(
-    val id : String,
+    // Identificador único de usuario, usado en listas y rutas
+    val id: String,
+
+    // Nombre de usuario que se mostrará en la UI
+    val user: String,
+
+    // Correo electrónico del usuario, usado también para login
     val email: String,
+
+    // Contraseña (en producción debe almacenarse de forma segura, nunca en texto plano)
     val pass: String,
+
+    // Nombre real del usuario
     val name: String,
+
+    // Apellido del usuario
     val lastName: String,
+
+    // País de residencia del usuario
     val country: String
 )
 
-/*====APUNTES====
-
-
-Todos los campos son val:inmutabilidad, seguridad y consistencia.
-
-id: usado para identificar usuarios en listas, repositorios o rutas.
-
-email: clave para login o contacto.
-
-user: nombre que se mostrará en la UI.
-
-pass: contraseña (en producción nunca guardes texto plano, siempre hashea).
+/**
+ * APUNTES:
+ *
+ * - Todos los campos son `val` para inmutabilidad, seguridad y consistencia.
+ * - `id` sirve para identificar usuarios en listas, repositorios o rutas de API.
+ * - `email` es clave para login o contacto.
+ * - `user` es el nombre que se mostrará en la UI.
+ * - `pass` no debe guardarse en texto plano en producción, siempre usar hashing.
  */
