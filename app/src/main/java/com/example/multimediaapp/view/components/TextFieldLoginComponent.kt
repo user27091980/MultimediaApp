@@ -85,7 +85,7 @@ fun TextFieldLoginPassComponent(pass: String, onPassChange: (String) -> Unit) {
         value = pass,
         onValueChange = onPassChange,
         singleLine = true,
-        label = { Text("Password", color = MaterialTheme.colorScheme.secondary) },
+        label = { Text(stringResource(R.string.contraseña), color = MaterialTheme.colorScheme.secondary) },
         colors = androidx.compose.material3.OutlinedTextFieldDefaults.colors(
             focusedTextColor = MaterialTheme.colorScheme.secondary,
             unfocusedTextColor = MaterialTheme.colorScheme.secondary,

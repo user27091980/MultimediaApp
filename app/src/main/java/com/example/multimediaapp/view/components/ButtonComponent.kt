@@ -10,7 +10,9 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
+import com.example.multimediaapp.R
 import com.example.multimediaapp.model.BandDTO
 import java.util.UUID
 
@@ -80,22 +82,22 @@ fun BaseButton(
  */
 @Composable
 fun ButtonLogin(onClick: () -> Unit, modifier: Modifier = Modifier) {
-    BaseButton(text = "Login", onClick = onClick, modifier = modifier)
+    BaseButton(text = stringResource(R.string.login), onClick = onClick, modifier = modifier)
 }
 
 @Composable
 fun ButtonAccept(onClick: () -> Unit, modifier: Modifier = Modifier) {
-    BaseButton(text = "Aceptar", onClick = onClick, modifier = modifier)
+    BaseButton(text = stringResource(R.string.aceptar), onClick = onClick, modifier = modifier)
 }
 
 @Composable
 fun ButtonCancel(onClick: () -> Unit, modifier: Modifier = Modifier) {
-    BaseButton(text = "Cancelar", onClick = onClick, modifier = modifier)
+    BaseButton(text = stringResource(R.string.cancelar), onClick = onClick, modifier = modifier)
 }
 
 @Composable
 fun ButtonRegister(onClick: () -> Unit, modifier: Modifier = Modifier) {
-    BaseButton(text = "Registrar", onClick = onClick, modifier = modifier)
+    BaseButton(text = stringResource(R.string.registro), onClick = onClick, modifier = modifier)
 }
 
 /**

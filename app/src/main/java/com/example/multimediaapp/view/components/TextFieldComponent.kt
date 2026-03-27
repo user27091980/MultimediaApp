@@ -20,6 +20,7 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.text.input.PasswordVisualTransformation
 import androidx.compose.ui.text.input.VisualTransformation
+import androidx.datastore.preferences.core.stringPreferencesKey
 import com.example.multimediaapp.R
 
 /**
@@ -121,7 +122,7 @@ fun TextFieldEmailComponent(email: String, onEmailChange: (String) -> Unit) {
         value = email,
         onValueChange = onEmailChange,
         singleLine = true,
-        label = { Text("Email", color = MaterialTheme.colorScheme.secondary) },
+        label = { Text(stringResource(R.string.correo), color = MaterialTheme.colorScheme.secondary) },
         colors = androidx.compose.material3.OutlinedTextFieldDefaults.colors(
             focusedTextColor = MaterialTheme.colorScheme.secondary,
             unfocusedTextColor = MaterialTheme.colorScheme.secondary,
@@ -152,7 +153,7 @@ fun TextFieldPassComponent(pass: String, onPassChange: (String) -> Unit) {
         value = pass,
         onValueChange = onPassChange,
         singleLine = true,
-        label = { Text("Password", color = MaterialTheme.colorScheme.secondary) },
+        label = { Text(stringResource(R.string.contraseña), color = MaterialTheme.colorScheme.secondary) },
         colors = androidx.compose.material3.OutlinedTextFieldDefaults.colors(
             focusedTextColor = MaterialTheme.colorScheme.secondary,
             unfocusedTextColor = MaterialTheme.colorScheme.secondary,
@@ -179,7 +180,7 @@ fun TextFieldNameComponent(name: String, onNameChange: (String) -> Unit) {
         value = name,
         onValueChange = onNameChange,
         singleLine = true,
-        label = { Text("Nombre", color = MaterialTheme.colorScheme.secondary) },
+        label = { Text(stringResource(R.string.nombrePropio), color = MaterialTheme.colorScheme.secondary) },
         colors = androidx.compose.material3.OutlinedTextFieldDefaults.colors(
             focusedTextColor = MaterialTheme.colorScheme.secondary,
             unfocusedTextColor = MaterialTheme.colorScheme.secondary,
@@ -197,7 +198,7 @@ fun TextFieldLastNameComponent(lastName: String, onLastNameChange: (String) -> U
         value = lastName,
         onValueChange = onLastNameChange,
         singleLine = true,
-        label = { Text("Apellido", color = MaterialTheme.colorScheme.secondary) },
+        label = { Text(stringResource(R.string.apellido), color = MaterialTheme.colorScheme.secondary) },
         colors = androidx.compose.material3.OutlinedTextFieldDefaults.colors(
             focusedTextColor = MaterialTheme.colorScheme.secondary,
             unfocusedTextColor = MaterialTheme.colorScheme.secondary,
@@ -215,7 +216,7 @@ fun TextFieldCountryComponent(country: String, onCountryChange: (String) -> Unit
         value = country,
         onValueChange = onCountryChange,
         singleLine = true,
-        label = { Text("País", color = MaterialTheme.colorScheme.secondary) },
+        label = { Text(stringResource(R.string.pais), color = MaterialTheme.colorScheme.secondary) },
         colors = androidx.compose.material3.OutlinedTextFieldDefaults.colors(
             focusedTextColor = MaterialTheme.colorScheme.secondary,
             unfocusedTextColor = MaterialTheme.colorScheme.secondary,

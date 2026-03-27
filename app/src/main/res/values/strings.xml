@@ -30,4 +30,5 @@
     <string name="selAlbum">Seleccionar albums</string>
     <string name="selBand">Seleccionar banda</string>
     <string name="bandRegister">Registro de Banda</string>
+    <string name="busquedaUsuario">Buscando información del usuario...</string>
 </resources>

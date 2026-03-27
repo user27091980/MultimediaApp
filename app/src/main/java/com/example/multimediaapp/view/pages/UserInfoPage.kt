@@ -11,9 +11,11 @@ import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.lifecycle.viewmodel.compose.viewModel
+import com.example.multimediaapp.R
 import com.example.multimediaapp.view.components.FloatCamera
 import com.example.multimediaapp.view.components.UserCardComponent
 import com.example.multimediaapp.viewmodel.vm.UserInfoVM
@@ -66,7 +68,7 @@ fun UserInfoScreen(
             } else {
                 // Estado de carga o mensaje temporal si no se encuentra el usuario
                 Text(
-                    text = "Buscando información del usuario...",
+                    text = stringResource(R.string.busquedaUsuario),
                     style = MaterialTheme.typography.bodyLarge,
                     color = MaterialTheme.colorScheme.secondary
                 )
