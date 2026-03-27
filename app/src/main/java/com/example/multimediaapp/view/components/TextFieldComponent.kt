@@ -53,13 +53,12 @@ import com.example.multimediaapp.R
  */
 @Composable
 fun TextFieldsComponent(
-    user: String,
+
     email: String,
-    pass: String,
+    passwd: String,
     country: String,
     name: String,
     lastName: String,
-    onUserChange: (String) -> Unit,
     onEmailChange: (String) -> Unit,
     onPassChange: (String) -> Unit,
     onCountryChange: (String) -> Unit,
@@ -67,12 +66,13 @@ fun TextFieldsComponent(
     onLastNameChange: (String) -> Unit
 ) {
     Column {
-        TextFieldUserComponent(user = user, onUserChange = onUserChange)
+
         TextFieldEmailComponent(email = email, onEmailChange = onEmailChange)
-        TextFieldPassComponent(pass = pass, onPassChange = onPassChange)
-        TextFieldCountryComponent(country = country, onCountryChange = onCountryChange)
+        TextFieldPassComponent(passwd = passwd,onPassChange = onPassChange)
         TextFieldNameComponent(name = name, onNameChange = onNameChange)
         TextFieldLastNameComponent(lastName = lastName, onLastNameChange = onLastNameChange)
+        TextFieldCountryComponent(country = country, onCountryChange = onCountryChange)
+
     }
 }
 
@@ -87,10 +87,10 @@ fun TextFieldsComponent(
  * - Usa stringResource para internacionalización
  */
 @Composable
-fun TextFieldUserComponent(user: String, onUserChange: (String) -> Unit) {
+fun TextFieldUserComponent(name: String, onNameChange: (String) -> Unit) {
     OutlinedTextField(
-        value = user,
-        onValueChange = onUserChange,
+        value = name,
+        onValueChange = onNameChange,
         singleLine = true,
         label = { Text(stringResource(R.string.usuario), color = MaterialTheme.colorScheme.secondary) },
         colors = androidx.compose.material3.OutlinedTextFieldDefaults.colors(
@@ -99,7 +99,7 @@ fun TextFieldUserComponent(user: String, onUserChange: (String) -> Unit) {
             cursorColor = MaterialTheme.colorScheme.secondary
         ),
         supportingText = {
-            if (user.isEmpty()) Text("usuario sin rellenar")
+            if (name.isEmpty()) Text("usuario sin rellenar")
         }
     )
 }
@@ -147,10 +147,10 @@ fun TextFieldEmailComponent(email: String, onEmailChange: (String) -> Unit) {
  * - Teclado optimizado para contraseña
  */
 @Composable
-fun TextFieldPassComponent(pass: String, onPassChange: (String) -> Unit) {
+fun TextFieldPassComponent(passwd: String, onPassChange: (String) -> Unit) {
     var passwordVisible by remember { mutableStateOf(false) }
     OutlinedTextField(
-        value = pass,
+        value = passwd,
         onValueChange = onPassChange,
         singleLine = true,
         label = { Text(stringResource(R.string.contraseña), color = MaterialTheme.colorScheme.secondary) },

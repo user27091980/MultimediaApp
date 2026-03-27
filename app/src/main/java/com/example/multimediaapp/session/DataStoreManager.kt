@@ -70,7 +70,7 @@ val Context.dataStore by preferencesDataStore(name = "user_session")
 class DataStoreManager(private val context: Context) {
 
     private val ID = stringPreferencesKey("id")
-    private val USER = stringPreferencesKey("user")
+
     private val EMAIL = stringPreferencesKey("email")
     private val NAME = stringPreferencesKey("name")
     private val LASTNAME = stringPreferencesKey("lastName")
@@ -82,12 +82,12 @@ class DataStoreManager(private val context: Context) {
         val id = prefs[ID] ?: return@map null
         UsersInfoDTO(
             id = id,
-            user = prefs[USER] ?: "",
             email = prefs[EMAIL] ?: "",
-            pass = "", // nunca guardamos contraseña
+            passwd = "", // nunca guardamos contraseña
             name = prefs[NAME] ?: "",
             lastName = prefs[LASTNAME] ?: "",
-            country = prefs[COUNTRY] ?: ""
+            country = prefs[COUNTRY] ?: "",
+
         )
     }
 
@@ -100,7 +100,6 @@ class DataStoreManager(private val context: Context) {
     suspend fun saveUser(user: UsersInfoDTO) {
         context.dataStore.edit { prefs ->
             prefs[ID] = user.id
-            prefs[USER] = user.user
             prefs[EMAIL] = user.email
             prefs[NAME] = user.name
             prefs[LASTNAME] = user.lastName

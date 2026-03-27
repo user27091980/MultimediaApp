@@ -55,11 +55,11 @@ fun LoginScreen(
      */
     LaunchedEffect(Unit) {
         loginVM.dataStore.rememberUserFlow
-            .combine(loginVM.dataStore.userFlow) { remember, user -> remember to user }
-            .collectLatest { (remember, user) ->
+            .combine(loginVM.dataStore.userFlow) { remember, name -> remember to name }
+            .collectLatest { (remember, name) ->
                 rememberUser = remember
-                if (remember && user != null) {
-                    loginVM.onUserChange(user.email)
+                if (remember && name != null) {
+                    loginVM.onUserChange(name.email)
                 }
             }
     }

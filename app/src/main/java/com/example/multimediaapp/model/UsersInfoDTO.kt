@@ -7,8 +7,6 @@ package com.example.multimediaapp.model
  * Todos los campos son inmutables (`val`) para garantizar consistencia.
  */
 data class RegisterRequestDTO(
-    // Nombre de usuario único
-    val user: String,
 
     // Correo electrónico del usuario
     val email: String,
@@ -37,14 +35,11 @@ data class UsersInfoDTO(
     // Identificador único de usuario, usado en listas y rutas
     val id: String,
 
-    // Nombre de usuario que se mostrará en la UI
-    val user: String,
-
     // Correo electrónico del usuario, usado también para login
     val email: String,
 
     // Contraseña (en producción debe almacenarse de forma segura, nunca en texto plano)
-    val pass: String,
+    val passwd: String,
 
     // Nombre real del usuario
     val name: String,
@@ -63,5 +58,5 @@ data class UsersInfoDTO(
  * - `id` sirve para identificar usuarios en listas, repositorios o rutas de API.
  * - `email` es clave para login o contacto.
  * - `user` es el nombre que se mostrará en la UI.
- * - `pass` no debe guardarse en texto plano en producción, siempre usar hashing.
+ * - `passwd` no debe guardarse en texto plano en producción, siempre usar hashing.
  */

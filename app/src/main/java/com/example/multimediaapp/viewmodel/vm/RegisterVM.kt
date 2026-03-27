@@ -38,10 +38,10 @@ class RegisterVM(application: Application) : AndroidViewModel(application) {
     /** Estado interno mutable del formulario */
     private val _uiState = MutableStateFlow(
         RegisterFormUiState(
-            user = "",
+
             lastName = "",
             email = "",
-            pass = "",
+            passwd = "",
             name = "",
             country = "",
             errorMessage = null,
@@ -55,14 +55,12 @@ class RegisterVM(application: Application) : AndroidViewModel(application) {
     // -------------------------
     // Funciones de actualización de campos
     // -------------------------
-    /** Actualiza el campo de usuario y borra el mensaje de error */
-    fun onUserChange(newUser: String) = _uiState.update { it.copy(user = newUser, errorMessage = null) }
 
     /** Actualiza el campo de email y borra el mensaje de error */
     fun onEmailChange(newEmail: String) = _uiState.update { it.copy(email = newEmail, errorMessage = null) }
 
     /** Actualiza el campo de contraseña y borra el mensaje de error */
-    fun onPassChange(newPass: String) = _uiState.update { it.copy(pass = newPass, errorMessage = null) }
+    fun onPassChange(newPass: String) = _uiState.update { it.copy(passwd = newPass, errorMessage = null) }
 
     /** Actualiza el campo de nombre y borra el mensaje de error */
     fun onNameChange(newName: String) = _uiState.update { it.copy(name = newName, errorMessage = null) }
@@ -90,8 +88,8 @@ class RegisterVM(application: Application) : AndroidViewModel(application) {
         val state = _uiState.value
 
         val error = when {
-            state.pass.length < 4 -> "La contraseña debe tener al menos 4 caracteres"
-            state.user.isBlank() || state.name.isBlank() || state.lastName.isBlank() ->
+            state.passwd.length < 4 -> "La contraseña debe tener al menos 4 caracteres"
+            state.name.isBlank() || state.lastName.isBlank() ->
                 "Usuario, nombre y apellido son obligatorios"
             else -> null
         }
@@ -100,9 +98,9 @@ class RegisterVM(application: Application) : AndroidViewModel(application) {
             _uiState.update { it.copy(errorMessage = error) }
         } else {
             registerUser(
-                user = state.user,
+
                 email = state.email,
-                pass = state.pass,
+                passwd = state.passwd,
                 name = state.name,
                 lastName = state.lastName,
                 country = state.country,
@@ -122,9 +120,9 @@ class RegisterVM(application: Application) : AndroidViewModel(application) {
      * - En caso de fallo, almacena el mensaje de error en [errorMessage].
      */
     private fun registerUser(
-        user: String,
+
         email: String,
-        pass: String,
+        passwd: String,
         name: String,
         lastName: String,
         country: String,
@@ -134,9 +132,9 @@ class RegisterVM(application: Application) : AndroidViewModel(application) {
             _uiState.update { it.copy(isLoading = true, errorMessage = null) }
 
             repo.register(
-                user = user,
+
                 email = email,
-                pass = pass,
+                passwd = passwd,
                 name = name,
                 lastName = lastName,
                 country = country

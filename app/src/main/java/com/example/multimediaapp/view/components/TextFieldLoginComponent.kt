@@ -55,7 +55,7 @@ fun TextFieldsLoginComponent(
             onUserChange = onUserChange
         )
         TextFieldLoginPassComponent(
-            pass = pass,
+            passwd = pass,
             onPassChange = onPassChange
         )
     }
@@ -78,11 +78,11 @@ fun TextFieldsLoginComponent(
  * - KeyboardOptions ajusta el teclado al tipo Password
  */
 @Composable
-fun TextFieldLoginPassComponent(pass: String, onPassChange: (String) -> Unit) {
+fun TextFieldLoginPassComponent(passwd: String, onPassChange: (String) -> Unit) {
     var passwordVisible by remember { mutableStateOf(false) }
 
     OutlinedTextField(
-        value = pass,
+        value = passwd,
         onValueChange = onPassChange,
         singleLine = true,
         label = { Text(stringResource(R.string.contraseña), color = MaterialTheme.colorScheme.secondary) },

@@ -44,21 +44,20 @@ class LoginRepo(
      *
      * Lanza excepciones si ocurre un error de red o si las credenciales son incorrectas.
      *
-     * @param user Nombre de usuario o correo electrónico
-     * @param pass Contraseña
+     * @param name Nombre de usuario o correo electrónico
+     * @param passwd Contraseña
      * @return [LoginEntity] con los datos del usuario autenticado
      * @throws Exception en caso de error de red o credenciales incorrectas
      */
-    suspend fun login(user: String, pass: String): LoginEntity {
+    suspend fun login(name: String, passwd: String): LoginEntity {
         try {
             // Construye el DTO de request con las credenciales
-            val response = api.loginUser(LoginRequestDTO(user, pass))
+            val response = api.loginUser(LoginRequestDTO(name, passwd))
 
             // Verifica si la respuesta fue exitosa
             if (response.isSuccessful) {
                 val body = response.body()
                     ?: throw Exception("Respuesta vacía del servidor")
-
                 // Convierte el DTO recibido a la entidad del dominio
                 return body.toEntity()
             } else {

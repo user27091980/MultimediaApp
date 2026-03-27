@@ -76,7 +76,7 @@ object ObjRoutes {
     /**
      * 1. Para navegar con parámetros:
      *    - Reemplazar los placeholders con los valores reales.
-     *    - Ejemplo: ObjRoutes.LOGIN.replace("{email}", email).replace("{passwd}", pass)
+     *    - Ejemplo: ObjRoutes.LOGIN.replace("{email}", email).replace("{passwd}", passwd)
      *
      * 2. Rutas sin parámetros:
      *    - Se usan directamente como constantes.

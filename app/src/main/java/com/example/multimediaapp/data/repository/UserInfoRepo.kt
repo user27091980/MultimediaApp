@@ -39,7 +39,7 @@ interface IUserInfoRepo {
      *         o con una excepción en caso de fallo.
      */
     suspend fun register(
-        user: String,
+
         email: String,
         name: String,
         pass: String,
@@ -71,15 +71,15 @@ class UserInfoRepo(private val api: UserInfoApiService) {
      * - Otros errores desconocidos
      */
     suspend fun register(
-        user: String,
+
         email: String,
         name: String,
-        pass: String,
+        passwd: String,
         country: String,
         lastName: String
     ): Result<UsersInfoDTO> = withContext(Dispatchers.IO) {
         try {
-            val request = RegisterRequestDTO(user, email, name, pass, country, lastName)
+            val request = RegisterRequestDTO(email, name, passwd, country, lastName)
             val response = api.registerUser(request)
 
             if (response.isSuccessful) {

@@ -98,7 +98,7 @@ class LoginVM(
         viewModelScope.launch {
             try {
                 val userEntity = repo.login(state.user, state.password)
-                dataStore.saveUserEmail(userEntity.user)
+                dataStore.saveUserEmail(userEntity.name)
                 _events.send(LoginEvent.NavigateToHome)
             } catch (e: Exception) {
                 _events.send(LoginEvent.ShowError(e.message ?: "Error desconocido"))

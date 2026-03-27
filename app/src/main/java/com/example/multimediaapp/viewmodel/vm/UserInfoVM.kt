@@ -64,7 +64,6 @@ class UserInfoVM(application: Application) : AndroidViewModel(application) {
                 // Mapeo a UI State
                 val mapped = UserInfoUiState(
                     id = userDto.id,
-                    user = userDto.user,
                     email = userDto.email,
                     name = userDto.name,
                     lastName = userDto.lastName,

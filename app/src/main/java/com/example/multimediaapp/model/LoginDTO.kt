@@ -9,8 +9,7 @@ package com.example.multimediaapp.model
  */
 data class LoginRequestDTO(
     // Nombre de usuario o email
-    val user: String,
-
+    val name: String,
     // Contraseña
     val pass: String
 )
@@ -29,13 +28,13 @@ data class LoginDTO(
     val id: String,
 
     // Nombre de usuario
-    val user: String,
+    val name: String,
 
     // Correo electrónico
     val email: String,
 
     // Contraseña (en aplicaciones reales se recomienda no exponerla)
-    val pass: String
+    val passwd: String
 )
 
 /**

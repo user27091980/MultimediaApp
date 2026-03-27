@@ -13,9 +13,9 @@ import kotlin.String
  */
 data class UsersInfoEntity(
     val id: String,
-    @SerializedName("user") val user: String,
+
     @SerializedName("email") val email: String,
-    @SerializedName("pass") val pass: String,
+    @SerializedName("passwd") val pass: String,
     @SerializedName("name") val name: String,
     @SerializedName("lastName") val lastName: String,
     @SerializedName("country") val country: String
@@ -27,9 +27,9 @@ data class UsersInfoEntity(
  */
 fun UsersInfoEntity.toDTO() = UsersInfoDTO(
     id =this.id,
-    user =this.user,
+
     email = this.email,
-    pass = this.pass,
+    passwd = this.pass,
     name = this.name,
     lastName = this.lastName,
     country = this.country
@@ -42,9 +42,9 @@ fun UsersInfoEntity.toDTO() = UsersInfoDTO(
  */
 fun UsersInfoDTO.toEntity() = UsersInfoEntity(
     id =this.id,
-    user =this.user,
+
     email = this.email,
-    pass = this.pass,
+    pass = this.passwd,
     name = this.name,
     lastName = this.lastName,
     country = this.country
@@ -75,6 +75,6 @@ fun UsersInfoDTO.toEntity() = UsersInfoEntity(
 * Este enfoque permite separar la capa de datos de la lógica de la aplicación,
 * facilitando el mantenimiento, la organización y la escalabilidad del código.
 *
-* Nota: aunque se incluye el campo pass, no es recomendable almacenar
+* Nota: aunque se incluye el campo passwd, no es recomendable almacenar
 * contraseñas en texto plano por motivos de seguridad.
   */

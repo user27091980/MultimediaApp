@@ -32,7 +32,7 @@ interface LoginApiService {
     suspend fun getUser(@Path("id") id: String): Response<LoginDTO>
 
     /** Realiza login enviando usuario/email y contraseña */
-    @POST("json/auth/login")
+    @POST("auth/login")
     suspend fun loginUser(@Body loginRequest: LoginRequestDTO): Response<LoginDTO>
 
     companion object {

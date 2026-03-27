@@ -21,9 +21,9 @@ package com.example.multimediaapp.viewmodel.uistate
  * - La UI observa este estado para mostrar los valores actuales, errores y estado de carga.
  */
 data class RegisterFormUiState(
-    val user: String = "",
+
     val email: String = "",
-    val pass: String = "",
+    val passwd: String = "",
     val name: String = "",
     val lastName: String = "",
     val country: String = "",

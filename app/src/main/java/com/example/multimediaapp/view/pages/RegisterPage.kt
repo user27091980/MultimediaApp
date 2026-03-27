@@ -74,17 +74,16 @@ fun RegisterScreen(
                 // Componente que agrupa todos los TextFields
                 TextFieldsComponent(
                     email = uiState.email,
-                    user = uiState.user,
-                    pass = uiState.pass,
+                    passwd = uiState.passwd,
                     country = uiState.country,
                     name = uiState.name,
                     lastName = uiState.lastName,
-                    onUserChange = vm::onUserChange,
                     onEmailChange = vm::onEmailChange,
                     onPassChange = vm::onPassChange,
                     onCountryChange = vm::onCountryChange,
                     onNameChange = vm::onNameChange,
-                    onLastNameChange = vm::onLastNameChange
+                    onLastNameChange = vm::onLastNameChange,
+
                 )
 
                 // Mostrar mensaje de error si existe
