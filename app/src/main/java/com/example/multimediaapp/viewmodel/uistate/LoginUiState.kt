@@ -26,7 +26,7 @@ package com.example.multimediaapp.viewmodel.uistate
  * state.errorMessage?.let { Text(it, color = Color.Red) }
  */
 data class LoginUiState(
-    val user: String = "",
+    val name: String = "",
     val email: String = "",
     val password: String = "",
     val passwordVisible: Boolean = false,
@@ -41,5 +41,5 @@ data class LoginUiState(
      * - No hay un proceso de login en curso
      */
     val isLoginButtonEnabled: Boolean
-        get() = email.isNotBlank() && password.isNotBlank() && !isLoading
+        get() = name.isNotBlank() && password.isNotBlank() && !isLoading
 }

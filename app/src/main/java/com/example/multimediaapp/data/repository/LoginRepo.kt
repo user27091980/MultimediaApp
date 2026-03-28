@@ -17,12 +17,12 @@ interface ILoginRepo {
     /**
      * Realiza el login de un usuario mediante su nombre de usuario/email y contraseña.
      *
-     * @param user Nombre de usuario o correo electrónico
-     * @param pass Contraseña
+     * @param name Nombre de usuario o correo electrónico
+     * @param passwd Contraseña
      * @return [LoginEntity] con la información del usuario autenticado
      * @throws Exception si ocurre un error de red o credenciales incorrectas
      */
-    suspend fun login(user: String, pass: String): LoginEntity
+    suspend fun login(name: String, passwd: String): LoginEntity
 }
 
 /**

@@ -29,7 +29,6 @@ interface IUserInfoRepo {
     /**
      * Registra un nuevo usuario en el servidor.
      *
-     * @param user Nombre de usuario.
      * @param email Email del usuario.
      * @param name Nombre.
      * @param pass Contraseña.
@@ -39,7 +38,6 @@ interface IUserInfoRepo {
      *         o con una excepción en caso de fallo.
      */
     suspend fun register(
-
         email: String,
         name: String,
         pass: String,
@@ -71,7 +69,6 @@ class UserInfoRepo(private val api: UserInfoApiService) {
      * - Otros errores desconocidos
      */
     suspend fun register(
-
         email: String,
         name: String,
         passwd: String,

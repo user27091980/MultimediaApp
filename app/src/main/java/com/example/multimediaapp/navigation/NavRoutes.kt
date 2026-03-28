@@ -36,7 +36,7 @@ data class LoginRoute(val email: String) : NavRoute
 
 /** Ruta de registro que recibe email y nombre de usuario */
 @Serializable
-data class RegisterRoute(val email: String, val user: String) : NavRoute
+data class RegisterRoute(val email: String, val name: String) : NavRoute
 
 /** Ruta de detalles de banda con ID dinámico */
 data class BandRoute(val bandId: String) : NavRoute {

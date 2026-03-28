@@ -107,7 +107,7 @@ fun LoginScreen(
                 verticalArrangement = Arrangement.Center
             ) {
                 TextFieldsLoginComponent(
-                    user = uiState.user,
+                    name = uiState.name,
                     pass = uiState.password,
                     onUserChange = loginVM::onUserChange,
                     onPassChange = loginVM::onPasswordChange,
@@ -143,7 +143,7 @@ fun LoginScreen(
                         scope.launch {
                             // Guardar preferencias en DataStore
                             loginVM.dataStore.saveRememberUser(rememberUser)
-                            if (rememberUser) loginVM.dataStore.saveUserEmail(uiState.user)
+                            if (rememberUser) loginVM.dataStore.saveUserEmail(uiState.name)
 
                             // Ejecutar login desde ViewModel
                             loginVM.login()

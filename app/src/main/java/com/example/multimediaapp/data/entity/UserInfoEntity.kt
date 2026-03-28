@@ -15,7 +15,7 @@ data class UsersInfoEntity(
     val id: String,
 
     @SerializedName("email") val email: String,
-    @SerializedName("passwd") val pass: String,
+    @SerializedName("passwd") val passwd: String,
     @SerializedName("name") val name: String,
     @SerializedName("lastName") val lastName: String,
     @SerializedName("country") val country: String
@@ -29,7 +29,7 @@ fun UsersInfoEntity.toDTO() = UsersInfoDTO(
     id =this.id,
 
     email = this.email,
-    passwd = this.pass,
+    passwd = this.passwd,
     name = this.name,
     lastName = this.lastName,
     country = this.country
@@ -42,9 +42,8 @@ fun UsersInfoEntity.toDTO() = UsersInfoDTO(
  */
 fun UsersInfoDTO.toEntity() = UsersInfoEntity(
     id =this.id,
-
     email = this.email,
-    pass = this.passwd,
+    passwd = this.passwd,
     name = this.name,
     lastName = this.lastName,
     country = this.country

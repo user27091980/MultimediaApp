@@ -138,7 +138,7 @@ fun TextFieldEmailComponent(email: String, onEmailChange: (String) -> Unit) {
 /**
  * Campo de contraseña con toggle de visibilidad.
  *
- * @param pass Contraseña actual
+ * @param passwd Contraseña actual
  * @param onPassChange Callback al modificar la contraseña
  *
  * Funcionalidad:

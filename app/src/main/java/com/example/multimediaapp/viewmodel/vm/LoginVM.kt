@@ -54,8 +54,8 @@ class LoginVM(
     val events = _events.receiveAsFlow()
 
     /** Actualiza el valor del usuario/email en el estado */
-    fun onUserChange(user: String) {
-        _uiState.update { it.copy(user = user) }
+    fun onUserChange(name: String) {
+        _uiState.update { it.copy(name = name) }
     }
 
     /** Actualiza el valor de la contraseña en el estado */
@@ -76,7 +76,7 @@ class LoginVM(
      */
     fun validateFieldsLogin(): Boolean {
         val state = _uiState.value
-        return if (state.user.isBlank() || state.password.isBlank()) {
+        return if (state.name.isBlank() || state.password.isBlank()) {
             viewModelScope.launch {
                 _events.send(LoginEvent.ShowError("Usuario/Email y contraseña son requeridos"))
             }
@@ -97,7 +97,7 @@ class LoginVM(
         val state = _uiState.value
         viewModelScope.launch {
             try {
-                val userEntity = repo.login(state.user, state.password)
+                val userEntity = repo.login(state.name, state.password)
                 dataStore.saveUserEmail(userEntity.name)
                 _events.send(LoginEvent.NavigateToHome)
             } catch (e: Exception) {

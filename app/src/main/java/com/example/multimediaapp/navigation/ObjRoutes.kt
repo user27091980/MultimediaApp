@@ -38,9 +38,6 @@ object ObjRoutes {
     /** Diálogo de registro */
     const val DIALOG = "DialogRoute"
 
-    /** Pantalla para agregar una nueva banda */
-    const val ADDBAND = "AddBandRoute"
-
 
     // ================================
     // RUTAS CON PARÁMETROS

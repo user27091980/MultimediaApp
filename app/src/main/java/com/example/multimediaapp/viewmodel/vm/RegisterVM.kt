@@ -57,19 +57,24 @@ class RegisterVM(application: Application) : AndroidViewModel(application) {
     // -------------------------
 
     /** Actualiza el campo de email y borra el mensaje de error */
-    fun onEmailChange(newEmail: String) = _uiState.update { it.copy(email = newEmail, errorMessage = null) }
+    fun onEmailChange(newEmail: String) =
+        _uiState.update { it.copy(email = newEmail, errorMessage = null) }
 
     /** Actualiza el campo de contraseña y borra el mensaje de error */
-    fun onPassChange(newPass: String) = _uiState.update { it.copy(passwd = newPass, errorMessage = null) }
+    fun onPassChange(newPass: String) =
+        _uiState.update { it.copy(passwd = newPass, errorMessage = null) }
 
     /** Actualiza el campo de nombre y borra el mensaje de error */
-    fun onNameChange(newName: String) = _uiState.update { it.copy(name = newName, errorMessage = null) }
+    fun onNameChange(newName: String) =
+        _uiState.update { it.copy(name = newName, errorMessage = null) }
 
     /** Actualiza el campo de apellido y borra el mensaje de error */
-    fun onLastNameChange(newLastname: String) = _uiState.update { it.copy(lastName = newLastname, errorMessage = null) }
+    fun onLastNameChange(newLastname: String) =
+        _uiState.update { it.copy(lastName = newLastname, errorMessage = null) }
 
     /** Actualiza el campo de país y borra el mensaje de error */
-    fun onCountryChange(newCountry: String) = _uiState.update { it.copy(country = newCountry, errorMessage = null) }
+    fun onCountryChange(newCountry: String) =
+        _uiState.update { it.copy(country = newCountry, errorMessage = null) }
 
     // -------------------------
     // Función de validación de campos
@@ -91,6 +96,7 @@ class RegisterVM(application: Application) : AndroidViewModel(application) {
             state.passwd.length < 4 -> "La contraseña debe tener al menos 4 caracteres"
             state.name.isBlank() || state.lastName.isBlank() ->
                 "Usuario, nombre y apellido son obligatorios"
+
             else -> null
         }
 
