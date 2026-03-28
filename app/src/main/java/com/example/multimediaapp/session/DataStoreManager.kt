@@ -5,6 +5,7 @@ import androidx.datastore.preferences.core.edit
 import androidx.datastore.preferences.core.stringPreferencesKey
 import androidx.datastore.preferences.core.booleanPreferencesKey
 import androidx.datastore.preferences.preferencesDataStore
+import com.example.multimediaapp.model.LoginDTO
 import com.example.multimediaapp.model.UsersInfoDTO
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.map
@@ -76,6 +77,7 @@ class DataStoreManager(private val context: Context) {
     private val LASTNAME = stringPreferencesKey("lastName")
     private val COUNTRY = stringPreferencesKey("country")
     private val REMEMBER = booleanPreferencesKey("remember")
+    private val DARK_MODE = booleanPreferencesKey("dark_mode")
 
     // Flujo reactivo que emite los datos del usuario
     val userFlow: Flow<UsersInfoDTO?> = context.dataStore.data.map { prefs ->
@@ -97,32 +99,57 @@ class DataStoreManager(private val context: Context) {
     }
 
     // Guardar información completa del usuario
-    suspend fun saveUser(user: UsersInfoDTO) {
+    suspend fun saveUser(user: LoginDTO) {
         context.dataStore.edit { prefs ->
             prefs[ID] = user.id
             prefs[EMAIL] = user.email
             prefs[NAME] = user.name
-            prefs[LASTNAME] = user.lastName
-            prefs[COUNTRY] = user.country
+            // Opcional: limpiar apellidos/país si venían de un registro previo
+            prefs[LASTNAME] = ""
+            prefs[COUNTRY] = ""
         }
     }
 
+
     // Guardar solo email
+    // Solo guarda el email para la pantalla de Login
     suspend fun saveUserEmail(email: String) {
         context.dataStore.edit { prefs ->
             prefs[EMAIL] = email
         }
     }
 
-    // Guardar preferencia de "recordar usuario"
+    // Guarda si el checkbox estaba marcado
     suspend fun saveRememberUser(remember: Boolean) {
         context.dataStore.edit { prefs ->
             prefs[REMEMBER] = remember
         }
     }
 
-    // Cerrar sesión y limpiar todos los datos
+    // Cerrar sesión
     suspend fun logout() {
-        context.dataStore.edit { it.clear() }
+        context.dataStore.edit { prefs ->
+            prefs.remove(ID)
+            prefs.remove(EMAIL)
+            prefs.remove(NAME)
+            prefs[REMEMBER] = false // <--- Al cerrar sesión, ya no recordamos
+        }
     }
+
+
+
+    private fun darkModeKey(userId: String) = booleanPreferencesKey("dark_mode_$userId")
+
+    // Flujo que observa el modo oscuro del usuario actual
+    fun getDarkModeFlow(userId: String): Flow<Boolean> = context.dataStore.data.map { prefs ->
+        prefs[darkModeKey(userId)] ?: false
+    }
+
+    // Guarda el modo oscuro para el usuario actual
+    suspend fun saveDarkMode(userId: String, enabled: Boolean) {
+        context.dataStore.edit { prefs ->
+            prefs[darkModeKey(userId)] = enabled
+        }
+    }
+
 }

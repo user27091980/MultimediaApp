@@ -68,21 +68,16 @@ class LoginVM(
             _uiState.update { it.copy(isLoading = true, errorMessage = null) }
             try {
                 val state = _uiState.value
-                // El repo devuelve el LoginDTO tras el mapeo exitoso
+                // 1. Llamada al repo
                 val userDto = repo.login(state.name, state.password)
 
-                // Guardamos en sesión
-                dataStore.saveUserEmail(userDto.email)
+                // 2. Guardamos los datos recibidos (ID, Name, Email) en el DataStore
+                dataStore.saveUser(userDto)
 
-                // DISPARAMOS NAVEGACIÓN
+                // 3. Éxito
                 _events.send(LoginEvent.NavigateToHome)
-
             } catch (e: Exception) {
-                val msg = e.message ?: "Error desconocido"
-                _uiState.update { it.copy(errorMessage = msg) }
-                _events.send(LoginEvent.ShowError(msg))
-            } finally {
-                _uiState.update { it.copy(isLoading = false) }
+                _uiState.update { it.copy(errorMessage = e.message, isLoading = false) }
             }
         }
     }

@@ -1,6 +1,8 @@
 package com.example.multimediaapp.navigation
 
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.collectAsState
+import androidx.compose.runtime.getValue
 import androidx.compose.runtime.remember
 import androidx.compose.ui.platform.LocalContext
 import androidx.lifecycle.viewmodel.compose.viewModel
@@ -47,15 +49,20 @@ import com.example.multimediaapp.viewmodel.vm.*
  * - Los diálogos se manejan con `dialog` de Compose Navigation.
  */
 @Composable
-fun NavGraph(
-    navController: NavHostController,
-    settingsVM: SettingsVM
-) {
+fun NavGraph(navController: NavHostController, settingsVM: SettingsVM) {
     val context = LocalContext.current
+    val dataStore = remember { DataStoreManager(context) }
+
+    // Observamos si hay un usuario y si la opción 'Recordar' está marcada
+    val userSession by dataStore.userFlow.collectAsState(initial = null)
+    val rememberMe by dataStore.rememberUserFlow.collectAsState(initial = false)
+
+    // Decidimos el destino inicial: si recordamos y hay datos, vamos a MAIN
+    val startDest = if (rememberMe && userSession != null) ObjRoutes.MAIN else ObjRoutes.LOGINREG
 
     NavHost(
         navController = navController,
-        startDestination = ObjRoutes.LOGINREG
+        startDestination = startDest // <--- Destino dinámico
     ) {
 
         // Pantalla inicial Login / Register

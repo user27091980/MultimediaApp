@@ -137,20 +137,29 @@ fun LoginScreen(
             }
 
             // Botón aceptar: valida campos y ejecuta login
+            // Botón aceptar corregido
             ButtonAccept(
                 onClick = {
                     if (loginVM.validateFieldsLogin()) {
-                        // Guardamos preferencias (esto sí necesita scope si el DataStore es suspend)
                         scope.launch {
+                            // 1. Guardamos la preferencia del checkbox (true/false)
                             loginVM.dataStore.saveRememberUser(rememberUser)
-                            if (rememberUser) loginVM.dataStore.saveUserEmail(uiState.name)
 
-                            // Llamamos directamente al login
+                            if (rememberUser) {
+                                // 2. Si el usuario marcó 'Recordarme', guardamos el email actual
+                                loginVM.dataStore.saveUserEmail(uiState.name)
+                            } else {
+                                // 3. Si no, limpiamos el email guardado
+                                loginVM.dataStore.saveUserEmail("")
+                            }
+
+                            // 4. Ejecutamos el login normal
                             loginVM.login()
                         }
                     }
                 }
             )
+
 
             // Botón cancelar: vuelve a pantalla login/registro
             ButtonCancel(
