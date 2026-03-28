@@ -15,7 +15,7 @@ data class LoginRequestDTO(
 
     // Cambiamos "pass" por "passwd" para que el servidor lo reconozca
     @SerializedName("passwd")
-    val pass: String
+    val passwd: String
 )
 
 /**
