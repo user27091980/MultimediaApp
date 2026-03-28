@@ -66,8 +66,11 @@ fun NavGraph(
 
         // Pantalla de login
         composable(ObjRoutes.LOGIN) {
-            val dataStore = remember { DataStoreManager(context) }
-            val repository = remember { LoginRepo(RetrofitModule.loginApi) }
+            // Usamos el context del LocalContext
+            val dataStore = DataStoreManager(LocalContext.current)
+            val repository = LoginRepo(RetrofitModule.loginApi)
+
+            // El ViewModel se encarga de mantener estas instancias vivas
             val loginViewModel: LoginVM = viewModel(
                 factory = LoginVMFactory(dataStore, repository)
             )

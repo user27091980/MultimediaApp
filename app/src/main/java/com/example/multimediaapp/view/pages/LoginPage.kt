@@ -69,7 +69,7 @@ fun LoginScreen(
      * - NavigateToHome: navega a la pantalla principal
      * - ShowError: muestra un mensaje de error (aquí se imprime en consola, se puede usar Snackbar)
      */
-    LaunchedEffect(loginVM) {
+    LaunchedEffect(Unit) {
         loginVM.events.collect { event ->
             when (event) {
                 is LoginEvent.NavigateToHome -> {
@@ -140,12 +140,12 @@ fun LoginScreen(
             ButtonAccept(
                 onClick = {
                     if (loginVM.validateFieldsLogin()) {
+                        // Guardamos preferencias (esto sí necesita scope si el DataStore es suspend)
                         scope.launch {
-                            // Guardar preferencias en DataStore
                             loginVM.dataStore.saveRememberUser(rememberUser)
                             if (rememberUser) loginVM.dataStore.saveUserEmail(uiState.name)
 
-                            // Ejecutar login desde ViewModel
+                            // Llamamos directamente al login
                             loginVM.login()
                         }
                     }

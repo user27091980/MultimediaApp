@@ -11,10 +11,10 @@ import com.google.gson.annotations.SerializedName
  * a LoginDTO para ser usado en la aplicación.
  */
 data class LoginEntity(
-    val id: String,
-    // Campos recibidos desde el JSON de la API
+    @SerializedName("id") val id: String,
     @SerializedName("name") val name: String,
-    @SerializedName("passwd") val passwd: String
+    @SerializedName("email") val email: String, // Añadido para que coincida con LoginDTO
+
 )
 /*
 
@@ -37,11 +37,21 @@ data class LoginEntity(
   */
 
 //mapper para convertir en LoginDTO
+fun LoginEntity.toDTO(): LoginDTO {
+    return LoginDTO(
+        id = this.id,
+        name = this.name,
+        email = this.email,
+
+
+    )
+}
 fun LoginDTO.toEntity(): LoginEntity {
     return LoginEntity(
-        id = id,
-        name = name,
-        passwd=passwd
+        id = this.id,
+        name = this.name,
+        email = this.email,
+
     )
 }
 /*

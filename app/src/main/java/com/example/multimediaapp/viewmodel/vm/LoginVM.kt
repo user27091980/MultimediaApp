@@ -43,65 +43,46 @@ class LoginVM(
     private val repo: LoginRepo
 ) : ViewModel() {
 
-    /** Estado interno mutable del formulario */
     private val _uiState = MutableStateFlow(LoginUiState())
-
-    /** Estado observable del formulario expuesto a la UI */
     val uiState: StateFlow<LoginUiState> = _uiState.asStateFlow()
 
-    /** Canal de eventos hacia la UI (navegación y errores) */
     private val _events = Channel<LoginEvent>(Channel.BUFFERED)
     val events = _events.receiveAsFlow()
 
-    /** Actualiza el valor del usuario/email en el estado */
-    fun onUserChange(name: String) {
-        _uiState.update { it.copy(name = name) }
-    }
+    fun onUserChange(name: String) = _uiState.update { it.copy(name = name) }
+    fun onPasswordChange(pass: String) = _uiState.update { it.copy(password = pass) }
+    fun togglePasswordVisibility() = _uiState.update { it.copy(passwordVisible = !it.passwordVisible) }
 
-    /** Actualiza el valor de la contraseña en el estado */
-    fun onPasswordChange(pass: String) {
-        _uiState.update { it.copy(password = pass) }
-    }
-
-    /** Alterna la visibilidad de la contraseña en el campo de texto */
-    fun togglePasswordVisibility() {
-        _uiState.update { it.copy(passwordVisible = !it.passwordVisible) }
-    }
-
-    /**
-     * Valida los campos del login.
-     *
-     * - Retorna true si usuario/email y contraseña no están vacíos.
-     * - Si algún campo está vacío, envía un evento [ShowError].
-     */
     fun validateFieldsLogin(): Boolean {
         val state = _uiState.value
         return if (state.name.isBlank() || state.password.isBlank()) {
             viewModelScope.launch {
-                _events.send(LoginEvent.ShowError("Usuario/Email y contraseña son requeridos"))
+                _events.send(LoginEvent.ShowError("Campos obligatorios vacíos"))
             }
             false
         } else true
     }
 
-    /**
-     * Ejecuta el login.
-     *
-     * Flujo:
-     * 1. Llama al repositorio para autenticar al usuario.
-     * 2. Si es exitoso, guarda el email en [DataStoreManager].
-     * 3. Envía [NavigateToHome] para indicar que la UI debe cambiar de pantalla.
-     * 4. Si ocurre un error, envía [ShowError] con el mensaje correspondiente.
-     */
     fun login() {
-        val state = _uiState.value
         viewModelScope.launch {
+            _uiState.update { it.copy(isLoading = true, errorMessage = null) }
             try {
-                val userEntity = repo.login(state.name, state.password)
-                dataStore.saveUserEmail(userEntity.name)
+                val state = _uiState.value
+                // El repo devuelve el LoginDTO tras el mapeo exitoso
+                val userDto = repo.login(state.name, state.password)
+
+                // Guardamos en sesión
+                dataStore.saveUserEmail(userDto.email)
+
+                // DISPARAMOS NAVEGACIÓN
                 _events.send(LoginEvent.NavigateToHome)
+
             } catch (e: Exception) {
-                _events.send(LoginEvent.ShowError(e.message ?: "Error desconocido"))
+                val msg = e.message ?: "Error desconocido"
+                _uiState.update { it.copy(errorMessage = msg) }
+                _events.send(LoginEvent.ShowError(msg))
+            } finally {
+                _uiState.update { it.copy(isLoading = false) }
             }
         }
     }
