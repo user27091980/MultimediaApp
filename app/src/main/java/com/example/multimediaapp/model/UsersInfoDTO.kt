@@ -1,5 +1,7 @@
 package com.example.multimediaapp.model
 
+import com.google.gson.annotations.SerializedName
+
 /**
  * Data class que representa la información necesaria para registrar un usuario.
  *
@@ -15,7 +17,7 @@ data class RegisterRequestDTO(
     val name: String,
 
     // Contraseña del usuario
-    val pass: String,
+    val passwd: String,
 
     // País de residencia
     val country: String,
@@ -32,23 +34,13 @@ data class RegisterRequestDTO(
  * Todos los campos son inmutables (`val`) para seguridad y consistencia.
  */
 data class UsersInfoDTO(
-    // Identificador único de usuario, usado en listas y rutas
     val id: String,
-
-    // Correo electrónico del usuario, usado también para login
-    val email: String,
-
-    // Contraseña (en producción debe almacenarse de forma segura, nunca en texto plano)
-    val passwd: String,
-
-    // Nombre real del usuario
     val name: String,
-
-    // Apellido del usuario
-    val lastName: String,
-
-    // País de residencia del usuario
-    val country: String
+    val email: String,
+    val lastName: String = "",
+    val country: String = "",
+    // Al poner = "", evitamos el error "parameter specified as non-null is null"
+    val passwd: String = ""
 )
 
 /**

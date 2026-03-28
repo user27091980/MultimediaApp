@@ -60,7 +60,7 @@ interface UserInfoApiService {
     @GET("json/userInfo/{id}")
     suspend fun getUser(@Path("id") id: String): Response<UsersInfoEntity>
 
-    @POST("json/userInfo/register")
+    @POST("auth/register")
     suspend fun registerUser(
         @Body request: RegisterRequestDTO
     ): Response<UsersInfoEntity>

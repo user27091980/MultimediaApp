@@ -10,6 +10,7 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
@@ -25,6 +26,7 @@ import com.example.multimediaapp.ui.theme.boxModifier
 import com.example.multimediaapp.view.components.ButtonAccept
 import com.example.multimediaapp.view.components.ButtonCancel
 import com.example.multimediaapp.view.components.TextFieldsComponent
+import com.example.multimediaapp.viewmodel.vm.RegisterEvent
 import com.example.multimediaapp.viewmodel.vm.RegisterVM
 
 /**
@@ -42,12 +44,18 @@ import com.example.multimediaapp.viewmodel.vm.RegisterVM
  * @param vm ViewModel que maneja el estado de la pantalla de registro.
  */
 @Composable
-fun RegisterScreen(
-    navController: NavController,
-    vm: RegisterVM = viewModel() // Obtiene automáticamente el ViewModel asociado al ciclo de vida
-) {
-    // Estado observable del ViewModel
+fun RegisterScreen(navController: NavController, vm: RegisterVM) {
     val uiState by vm.uiState.collectAsState()
+
+    LaunchedEffect(Unit) {
+        vm.events.collect { event ->
+            if (event is RegisterEvent.NavigateToLogin) {
+                navController.navigate(ObjRoutes.LOGIN) {
+                    popUpTo(ObjRoutes.REGISTER) { inclusive = true }
+                }
+            }
+        }
+    }
 
     // Caja principal que ocupa toda la pantalla con fondo del tema
     Box(
@@ -99,10 +107,7 @@ fun RegisterScreen(
             // Botón "Aceptar" que valida los campos y navega al diálogo
             ButtonAccept(
                 onClick = {
-                    vm.validateFields {
-                        // Navega a DialogRegisterScreen si los campos son válidos
-                        navController.navigate(ObjRoutes.DIALOG)
-                    }
+                    vm.validateAndRegister()
                 }
             )
 
@@ -119,15 +124,7 @@ fun RegisterScreen(
  *
  * Permite visualizar la UI en Android Studio sin ejecutar la app.
  */
-@Preview
-@Composable
-fun RegisterScreenPreview() {
-    val navController = rememberNavController()
 
-    RegisterScreen(
-        navController = navController
-    )
-}
 
 /**
  * Notas / teoría:

@@ -12,6 +12,7 @@ import androidx.navigation.compose.composable
 import androidx.navigation.compose.dialog
 import com.example.multimediaapp.session.DataStoreManager
 import com.example.multimediaapp.data.repository.LoginRepo
+import com.example.multimediaapp.data.repository.UserInfoRepo
 import com.example.multimediaapp.retrofit.RetrofitModule
 import com.example.multimediaapp.ui.viewmodel.BandVM
 import com.example.multimediaapp.view.pages.*
@@ -89,10 +90,26 @@ fun NavGraph(navController: NavHostController, settingsVM: SettingsVM) {
         }
 
         // Pantalla de registro
+        // NavGraph.kt
+
         composable(ObjRoutes.REGISTER) {
-            val vm: RegisterVM = viewModel()
-            RegisterScreen(navController = navController, vm = vm)
+            // 1. Obtenemos la API de la red
+            val api = RetrofitModule.userInfoApi
+
+            // 2. Creamos el repositorio (asegúrate de que implemente IUserInfoRepo)
+            val repository = remember { UserInfoRepo(api) }
+
+            // 3. IMPORTANTE: Usamos la Factory para que el sistema sepa cómo crear el VM
+            val registerVM: RegisterVM = viewModel(
+                factory = RegisterVMFactory(repository)
+            )
+
+            RegisterScreen(
+                navController = navController,
+                vm = registerVM
+            )
         }
+
 
         // Pantalla principal
         composable(ObjRoutes.MAIN) {

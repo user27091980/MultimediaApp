@@ -26,14 +26,14 @@ data class UsersInfoEntity(
  * Convierte la entidad de datos en un modelo usado por la aplicación.
  */
 fun UsersInfoEntity.toDTO() = UsersInfoDTO(
-    id =this.id,
-
-    email = this.email,
-    passwd = this.passwd,
+    id = this.id,
     name = this.name,
-    lastName = this.lastName,
-    country = this.country
+    email = this.email,
+    lastName = this.lastName ?: "",
+    country = this.country ?: "",
+    passwd = this.passwd ?: "" // Si el server no lo envía, ponemos vacío
 )
+
 
 /**
  * Mapper inverso: UsersInfoDTO a UsersInfoEntity
