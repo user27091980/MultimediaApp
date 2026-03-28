@@ -42,7 +42,7 @@ import com.example.multimediaapp.R
  */
 @Composable
 fun TextFieldsLoginComponent(
-    user: String,
+    name: String,
     pass: String,
     onUserChange: (String) -> Unit,
     onPassChange: (String) -> Unit,
@@ -51,11 +51,11 @@ fun TextFieldsLoginComponent(
 ) {
     Column {
         TextFieldLoginUserComponent(
-            user = user,
+            name = name,
             onUserChange = onUserChange
         )
         TextFieldLoginPassComponent(
-            pass = pass,
+            passwd = pass,
             onPassChange = onPassChange
         )
     }
@@ -78,11 +78,11 @@ fun TextFieldsLoginComponent(
  * - KeyboardOptions ajusta el teclado al tipo Password
  */
 @Composable
-fun TextFieldLoginPassComponent(pass: String, onPassChange: (String) -> Unit) {
+fun TextFieldLoginPassComponent(passwd: String, onPassChange: (String) -> Unit) {
     var passwordVisible by remember { mutableStateOf(false) }
 
     OutlinedTextField(
-        value = pass,
+        value = passwd,
         onValueChange = onPassChange,
         singleLine = true,
         label = { Text(stringResource(R.string.contraseña), color = MaterialTheme.colorScheme.secondary) },
@@ -110,7 +110,7 @@ fun TextFieldLoginPassComponent(pass: String, onPassChange: (String) -> Unit) {
  *
  * Campo de texto para introducir el usuario o correo electrónico.
  *
- * @param user Texto actual del campo
+ * @param name Texto actual del campo
  * @param onUserChange Callback que se ejecuta al modificar el campo
  *
  * Detalles:
@@ -120,9 +120,9 @@ fun TextFieldLoginPassComponent(pass: String, onPassChange: (String) -> Unit) {
  * - stringResource permite internacionalización del label
  */
 @Composable
-fun TextFieldLoginUserComponent(user: String, onUserChange: (String) -> Unit) {
+fun TextFieldLoginUserComponent(name: String, onUserChange: (String) -> Unit) {
     OutlinedTextField(
-        value = user,
+        value = name,
         onValueChange = onUserChange,
         singleLine = true,
         label = {
@@ -134,7 +134,7 @@ fun TextFieldLoginUserComponent(user: String, onUserChange: (String) -> Unit) {
             cursorColor = MaterialTheme.colorScheme.secondary
         ),
         supportingText = {
-            if (user.isEmpty()) {
+            if (name.isEmpty()) {
                 Text("usuario vacío")
             }
         }

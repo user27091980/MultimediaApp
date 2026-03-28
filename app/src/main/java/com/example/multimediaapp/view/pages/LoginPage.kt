@@ -55,11 +55,11 @@ fun LoginScreen(
      */
     LaunchedEffect(Unit) {
         loginVM.dataStore.rememberUserFlow
-            .combine(loginVM.dataStore.userFlow) { remember, user -> remember to user }
-            .collectLatest { (remember, user) ->
+            .combine(loginVM.dataStore.userFlow) { remember, name -> remember to name }
+            .collectLatest { (remember, name) ->
                 rememberUser = remember
-                if (remember && user != null) {
-                    loginVM.onUserChange(user.email)
+                if (remember && name != null) {
+                    loginVM.onUserChange(name.email)
                 }
             }
     }
@@ -69,7 +69,7 @@ fun LoginScreen(
      * - NavigateToHome: navega a la pantalla principal
      * - ShowError: muestra un mensaje de error (aquí se imprime en consola, se puede usar Snackbar)
      */
-    LaunchedEffect(loginVM) {
+    LaunchedEffect(Unit) {
         loginVM.events.collect { event ->
             when (event) {
                 is LoginEvent.NavigateToHome -> {
@@ -107,7 +107,7 @@ fun LoginScreen(
                 verticalArrangement = Arrangement.Center
             ) {
                 TextFieldsLoginComponent(
-                    user = uiState.user,
+                    name = uiState.name,
                     pass = uiState.password,
                     onUserChange = loginVM::onUserChange,
                     onPassChange = loginVM::onPasswordChange,
@@ -137,20 +137,29 @@ fun LoginScreen(
             }
 
             // Botón aceptar: valida campos y ejecuta login
+            // Botón aceptar corregido
             ButtonAccept(
                 onClick = {
                     if (loginVM.validateFieldsLogin()) {
                         scope.launch {
-                            // Guardar preferencias en DataStore
+                            // 1. Guardamos la preferencia del checkbox (true/false)
                             loginVM.dataStore.saveRememberUser(rememberUser)
-                            if (rememberUser) loginVM.dataStore.saveUserEmail(uiState.user)
 
-                            // Ejecutar login desde ViewModel
+                            if (rememberUser) {
+                                // 2. Si el usuario marcó 'Recordarme', guardamos el email actual
+                                loginVM.dataStore.saveUserEmail(uiState.name)
+                            } else {
+                                // 3. Si no, limpiamos el email guardado
+                                loginVM.dataStore.saveUserEmail("")
+                            }
+
+                            // 4. Ejecutamos el login normal
                             loginVM.login()
                         }
                     }
                 }
             )
+
 
             // Botón cancelar: vuelve a pantalla login/registro
             ButtonCancel(

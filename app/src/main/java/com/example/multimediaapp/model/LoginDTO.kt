@@ -1,5 +1,7 @@
 package com.example.multimediaapp.model
 
+import com.google.gson.annotations.SerializedName
+
 /**
  * Data class que representa la información de login que envía la UI
  * al servidor para autenticarse.
@@ -8,10 +10,11 @@ package com.example.multimediaapp.model
  * Se usa `val` para mantener la inmutabilidad y evitar cambios accidentales.
  */
 data class LoginRequestDTO(
-    // Nombre de usuario o email
-    val user: String,
+    @SerializedName("name")
+    val name: String,
 
-    // Contraseña
+    // Cambiamos "pass" por "passwd" para que el servidor lo reconozca
+    @SerializedName("passwd")
     val pass: String
 )
 
@@ -29,13 +32,11 @@ data class LoginDTO(
     val id: String,
 
     // Nombre de usuario
-    val user: String,
+    val name: String,
 
     // Correo electrónico
     val email: String,
 
-    // Contraseña (en aplicaciones reales se recomienda no exponerla)
-    val pass: String
 )
 
 /**

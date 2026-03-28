@@ -4,52 +4,61 @@ import com.example.multimediaapp.network.BandApiService
 import com.example.multimediaapp.network.LoginApiService
 import com.example.multimediaapp.network.MainApiService
 import com.example.multimediaapp.network.UserInfoApiService
+import okhttp3.OkHttpClient
+import okhttp3.logging.HttpLoggingInterceptor
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
+import java.util.concurrent.TimeUnit
 
 /**
  * RetrofitModule:
  *
- * Objeto singleton que centraliza la configuración de Retrofit
- * y la creación de los servicios API.
+ * Singleton que centraliza la configuración de red de la app.
  *
- * Responsabilidades:
- * 1. Mantener una única instancia de Retrofit en toda la aplicación.
- * 2. Crear instancias perezosas (lazy) de los servicios de API:
- *    - mainApi
- *    - bandApi
- *    - loginApi
- *    - userInfoApi
- *
- * Notas de implementación:
- * - `BASE_URL` apunta al backend. En Android Emulator se usa 10.0.2.2 para localhost.
- * - `GsonConverterFactory` se usa para serializar/deserializar JSON automáticamente.
- * - `by lazy` asegura que Retrofit y los servicios se inicialicen solo cuando se usen.
- * - Cada API service se crea a partir de la misma instancia de Retrofit,
- *   garantizando consistencia y ahorro de recursos.
- *
- * ===Ventajas===
- * - Singleton: evita múltiples instancias de Retrofit.
- * - Centralización: todas las APIs usan la misma configuración.
- * - Escalabilidad: fácil agregar nuevos servicios de API sin duplicar código.
- *
- * Ejemplo de uso:
- * val bandRepo = BandsRepo(RetrofitModule.bandApi)
- * val loginRepo = LoginRepo(RetrofitModule.loginApi)
+ * Incluye:
+ * - Configuración de Retrofit
+ * - Cliente HTTP con logging
+ * - Timeouts para evitar bloqueos
+ * - Creación de APIs
  */
 object RetrofitModule {
 
+    /** URL base de la API */
     private const val BASE_URL = "http://10.0.2.2:5131/"
 
-    // Instancia única de Retrofit para toda la app
+    /**
+     * Interceptor para ver logs en Logcat
+     * MUY útil para debug (peticiones, respuestas, errores)
+     */
+    private val loggingInterceptor = HttpLoggingInterceptor().apply {
+        level = HttpLoggingInterceptor.Level.BODY
+    }
+
+    /**
+     * Cliente HTTP personalizado
+     */
+    private val client: OkHttpClient by lazy {
+        OkHttpClient.Builder()
+            .addInterceptor(loggingInterceptor)
+            .connectTimeout(15, TimeUnit.SECONDS)
+            .readTimeout(15, TimeUnit.SECONDS)
+            .writeTimeout(15, TimeUnit.SECONDS)
+            .build()
+    }
+
+    /**
+     * Instancia única de Retrofit
+     */
     private val retrofit: Retrofit by lazy {
         Retrofit.Builder()
             .baseUrl(BASE_URL)
+            .client(client)
             .addConverterFactory(GsonConverterFactory.create())
             .build()
     }
 
-    // Servicios de API creados con la misma instancia de Retrofit
+    /** APIs */
+
     val mainApi: MainApiService by lazy {
         retrofit.create(MainApiService::class.java)
     }

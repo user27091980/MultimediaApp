@@ -1,5 +1,6 @@
 package com.example.multimediaapp.network
 
+import com.example.multimediaapp.data.entity.LoginEntity
 import com.example.multimediaapp.model.LoginDTO
 import com.example.multimediaapp.model.LoginRequestDTO
 import retrofit2.Response
@@ -29,11 +30,11 @@ interface LoginApiService {
 
     /** Obtiene la información de un usuario por su ID */
     @GET("json/user/{id}")
-    suspend fun getUser(@Path("id") id: String): Response<LoginDTO>
+    suspend fun getUser(@Path("id") id: String): Response<LoginEntity>
 
     /** Realiza login enviando usuario/email y contraseña */
-    @POST("json/auth/login")
-    suspend fun loginUser(@Body loginRequest: LoginRequestDTO): Response<LoginDTO>
+    @POST("auth/login")
+    suspend fun loginUser(@Body loginRequest: LoginRequestDTO): Response<LoginEntity>
 
     companion object {
         /** URL base de la API (para emulador de Android usar 10.0.2.2) */
@@ -46,12 +47,11 @@ interface LoginApiService {
          * - Se puede reemplazar por Moshi o Kotlinx.serialization si se desea
          */
         fun create(): LoginApiService {
-            val retrofit = Retrofit.Builder()
+            return Retrofit.Builder()
                 .baseUrl(BASE_URL)
                 .addConverterFactory(GsonConverterFactory.create())
                 .build()
-
-            return retrofit.create(LoginApiService::class.java)
+                .create(LoginApiService::class.java)
         }
     }
 }

@@ -1,7 +1,9 @@
 package com.example.multimediaapp.data.repository
 
 import com.example.multimediaapp.data.entity.LoginEntity
+import com.example.multimediaapp.data.entity.toDTO
 import com.example.multimediaapp.data.entity.toEntity
+import com.example.multimediaapp.model.LoginDTO
 import com.example.multimediaapp.model.LoginRequestDTO
 import com.example.multimediaapp.network.LoginApiService
 import java.io.IOException
@@ -17,12 +19,12 @@ interface ILoginRepo {
     /**
      * Realiza el login de un usuario mediante su nombre de usuario/email y contraseña.
      *
-     * @param user Nombre de usuario o correo electrónico
-     * @param pass Contraseña
+     * @param name Nombre de usuario o correo electrónico
+     * @param passwd Contraseña
      * @return [LoginEntity] con la información del usuario autenticado
      * @throws Exception si ocurre un error de red o credenciales incorrectas
      */
-    suspend fun login(user: String, pass: String): LoginEntity
+    suspend fun login(name: String, passwd: String): LoginDTO
 }
 
 /**
@@ -37,30 +39,29 @@ interface ILoginRepo {
  */
 class LoginRepo(
     private val api: LoginApiService
-) {
+): ILoginRepo {
 
     /**
      * Ejecuta la operación de login.
      *
      * Lanza excepciones si ocurre un error de red o si las credenciales son incorrectas.
      *
-     * @param user Nombre de usuario o correo electrónico
-     * @param pass Contraseña
+     * @param name Nombre de usuario o correo electrónico
+     * @param passwd Contraseña
      * @return [LoginEntity] con los datos del usuario autenticado
      * @throws Exception en caso de error de red o credenciales incorrectas
      */
-    suspend fun login(user: String, pass: String): LoginEntity {
+    override suspend fun login(name: String, passwd: String): LoginDTO {
         try {
             // Construye el DTO de request con las credenciales
-            val response = api.loginUser(LoginRequestDTO(user, pass))
+            val response = api.loginUser(LoginRequestDTO(name, passwd))
 
             // Verifica si la respuesta fue exitosa
             if (response.isSuccessful) {
                 val body = response.body()
                     ?: throw Exception("Respuesta vacía del servidor")
-
                 // Convierte el DTO recibido a la entidad del dominio
-                return body.toEntity()
+                return body.toDTO()
             } else {
                 throw Exception("Usuario o contraseña incorrecta")
             }

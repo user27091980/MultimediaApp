@@ -11,16 +11,19 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.Scaffold
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
 import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.rememberNavController
 import com.example.multimediaapp.navigation.NavGraph
 import com.example.multimediaapp.navigation.ObjRoutes
+import com.example.multimediaapp.session.DataStoreManager
 import com.example.multimediaapp.ui.theme.MultimediaAppTheme
 import com.example.multimediaapp.view.components.BottomBar
 import com.example.multimediaapp.view.components.TopBar
 import com.example.multimediaapp.viewmodel.vm.SettingsVM
+import com.example.multimediaapp.viewmodel.vm.SettingsVMFactory
 
 /**
  * MainActivity:
@@ -40,38 +43,35 @@ import com.example.multimediaapp.viewmodel.vm.SettingsVM
  */
 class MainActivity : ComponentActivity() {
 
-    /**
-     * Inicializa la actividad y establece la UI con Compose.
-     *
-     * Habilita renderizado edge-to-edge para dibujar detrás de barras del sistema.
-     * Configura Scaffold con top bar, bottom bar y contenedor de contenido.
-     */
     @SuppressLint("UnusedMaterial3ScaffoldPaddingParameter")
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-
-        // Permite que la UI se dibuje detrás de la barra de estado y navegación
         enableEdgeToEdge()
 
         setContent {
-            // ViewModel que gestiona preferencias de la app (modo oscuro, etc.)
-            val settingsVM: SettingsVM = viewModel()
+            // 1. Inicializamos el DataStoreManager aquí para poder pasárselo al ViewModel
+            // En MainActivity.kt
+            val context = androidx.compose.ui.platform.LocalContext.current
+            val dataStore = remember { DataStoreManager(context) }
+
+// Ahora ya puedes usar la Factory sin errores
+            val settingsVM: SettingsVM = viewModel(
+                factory = SettingsVMFactory(dataStore)
+            )
+
+
+            // 3. Observamos el estado (que ahora estará conectado al DataStore)
             val uiState by settingsVM.uiState.collectAsState()
 
-            // Aplica el tema global, con modo oscuro según settingsVM
+            // Aplica el tema global usando el valor persistente
             MultimediaAppTheme(darkTheme = uiState.darkMode) {
 
-                // Controlador de navegación de Compose
                 val navController = rememberNavController()
-
-                // Observa la ruta actual de la navegación
                 val currentBackStackEntry = navController.currentBackStackEntryAsState()
                 val currentRoute = currentBackStackEntry.value?.destination?.route ?: ""
 
                 Scaffold(
                     modifier = Modifier.fillMaxSize(),
-
-                    // Top bar visible solo en pantallas que no sean login o registro
                     topBar = {
                         if (currentRoute !in listOf(
                                 ObjRoutes.LOGINREG,
@@ -82,8 +82,6 @@ class MainActivity : ComponentActivity() {
                             TopBar(navController)
                         }
                     },
-
-                    // Bottom bar visible solo en pantallas que no sean login o registro
                     bottomBar = {
                         if (currentRoute !in listOf(
                                 ObjRoutes.LOGINREG,
@@ -94,18 +92,15 @@ class MainActivity : ComponentActivity() {
                             BottomBar(navController)
                         }
                     }
-
                 ) { innerPadding ->
-                    // Contenedor principal del contenido de la app
                     Box(
                         modifier = Modifier
                             .fillMaxSize()
                             .padding(innerPadding)
                     ) {
-                        // Grafo de navegación que maneja todas las rutas
                         NavGraph(
                             navController = navController,
-                            settingsVM
+                            settingsVM = settingsVM
                         )
                     }
                 }

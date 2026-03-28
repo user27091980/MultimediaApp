@@ -1,5 +1,7 @@
 package com.example.multimediaapp.model
 
+import com.google.gson.annotations.SerializedName
+
 /**
  * Data class que representa la información necesaria para registrar un usuario.
  *
@@ -7,8 +9,6 @@ package com.example.multimediaapp.model
  * Todos los campos son inmutables (`val`) para garantizar consistencia.
  */
 data class RegisterRequestDTO(
-    // Nombre de usuario único
-    val user: String,
 
     // Correo electrónico del usuario
     val email: String,
@@ -17,7 +17,7 @@ data class RegisterRequestDTO(
     val name: String,
 
     // Contraseña del usuario
-    val pass: String,
+    val passwd: String,
 
     // País de residencia
     val country: String,
@@ -34,26 +34,13 @@ data class RegisterRequestDTO(
  * Todos los campos son inmutables (`val`) para seguridad y consistencia.
  */
 data class UsersInfoDTO(
-    // Identificador único de usuario, usado en listas y rutas
     val id: String,
-
-    // Nombre de usuario que se mostrará en la UI
-    val user: String,
-
-    // Correo electrónico del usuario, usado también para login
-    val email: String,
-
-    // Contraseña (en producción debe almacenarse de forma segura, nunca en texto plano)
-    val pass: String,
-
-    // Nombre real del usuario
     val name: String,
-
-    // Apellido del usuario
-    val lastName: String,
-
-    // País de residencia del usuario
-    val country: String
+    val email: String,
+    val lastName: String = "",
+    val country: String = "",
+    // Al poner = "", evitamos el error "parameter specified as non-null is null"
+    val passwd: String = ""
 )
 
 /**
@@ -63,5 +50,5 @@ data class UsersInfoDTO(
  * - `id` sirve para identificar usuarios en listas, repositorios o rutas de API.
  * - `email` es clave para login o contacto.
  * - `user` es el nombre que se mostrará en la UI.
- * - `pass` no debe guardarse en texto plano en producción, siempre usar hashing.
+ * - `passwd` no debe guardarse en texto plano en producción, siempre usar hashing.
  */

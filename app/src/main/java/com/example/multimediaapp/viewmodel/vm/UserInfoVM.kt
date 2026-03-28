@@ -59,12 +59,11 @@ class UserInfoVM(application: Application) : AndroidViewModel(application) {
         viewModelScope.launch {
             try {
                 // Llamada al repositorio para obtener datos del usuario
-                val userDto = repo.getUser(userId)
+                val userDto = repo.getUserInfo(userId)
 
                 // Mapeo a UI State
                 val mapped = UserInfoUiState(
                     id = userDto.id,
-                    user = userDto.user,
                     email = userDto.email,
                     name = userDto.name,
                     lastName = userDto.lastName,

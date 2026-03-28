@@ -1,6 +1,8 @@
 package com.example.multimediaapp.navigation
 
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.collectAsState
+import androidx.compose.runtime.getValue
 import androidx.compose.runtime.remember
 import androidx.compose.ui.platform.LocalContext
 import androidx.lifecycle.viewmodel.compose.viewModel
@@ -10,6 +12,7 @@ import androidx.navigation.compose.composable
 import androidx.navigation.compose.dialog
 import com.example.multimediaapp.session.DataStoreManager
 import com.example.multimediaapp.data.repository.LoginRepo
+import com.example.multimediaapp.data.repository.UserInfoRepo
 import com.example.multimediaapp.retrofit.RetrofitModule
 import com.example.multimediaapp.ui.viewmodel.BandVM
 import com.example.multimediaapp.view.pages.*
@@ -47,15 +50,20 @@ import com.example.multimediaapp.viewmodel.vm.*
  * - Los diálogos se manejan con `dialog` de Compose Navigation.
  */
 @Composable
-fun NavGraph(
-    navController: NavHostController,
-    settingsVM: SettingsVM
-) {
+fun NavGraph(navController: NavHostController, settingsVM: SettingsVM) {
     val context = LocalContext.current
+    val dataStore = remember { DataStoreManager(context) }
+
+    // Observamos si hay un usuario y si la opción 'Recordar' está marcada
+    val userSession by dataStore.userFlow.collectAsState(initial = null)
+    val rememberMe by dataStore.rememberUserFlow.collectAsState(initial = false)
+
+    // Decidimos el destino inicial: si recordamos y hay datos, vamos a MAIN
+    val startDest = if (rememberMe && userSession != null) ObjRoutes.MAIN else ObjRoutes.LOGINREG
 
     NavHost(
         navController = navController,
-        startDestination = ObjRoutes.LOGINREG
+        startDestination = startDest // <--- Destino dinámico
     ) {
 
         // Pantalla inicial Login / Register
@@ -66,8 +74,11 @@ fun NavGraph(
 
         // Pantalla de login
         composable(ObjRoutes.LOGIN) {
-            val dataStore = remember { DataStoreManager(context) }
-            val repository = remember { LoginRepo(RetrofitModule.loginApi) }
+            // Usamos el context del LocalContext
+            val dataStore = DataStoreManager(LocalContext.current)
+            val repository = LoginRepo(RetrofitModule.loginApi)
+
+            // El ViewModel se encarga de mantener estas instancias vivas
             val loginViewModel: LoginVM = viewModel(
                 factory = LoginVMFactory(dataStore, repository)
             )
@@ -79,10 +90,26 @@ fun NavGraph(
         }
 
         // Pantalla de registro
+        // NavGraph.kt
+
         composable(ObjRoutes.REGISTER) {
-            val vm: RegisterVM = viewModel()
-            RegisterScreen(navController = navController, vm = vm)
+            // 1. Obtenemos la API de la red
+            val api = RetrofitModule.userInfoApi
+
+            // 2. Creamos el repositorio (asegúrate de que implemente IUserInfoRepo)
+            val repository = remember { UserInfoRepo(api) }
+
+            // 3. IMPORTANTE: Usamos la Factory para que el sistema sepa cómo crear el VM
+            val registerVM: RegisterVM = viewModel(
+                factory = RegisterVMFactory(repository)
+            )
+
+            RegisterScreen(
+                navController = navController,
+                vm = registerVM
+            )
         }
+
 
         // Pantalla principal
         composable(ObjRoutes.MAIN) {
