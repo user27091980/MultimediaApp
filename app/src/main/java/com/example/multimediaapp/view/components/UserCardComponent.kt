@@ -32,7 +32,7 @@ import com.example.multimediaapp.ui.theme.cardModifier
  */
 @Composable
 fun UserCardComponent(
-    id: String,
+
     email: String,
     country: String,
     name: String,
@@ -45,12 +45,6 @@ fun UserCardComponent(
             modifier = Modifier.align(Alignment.Center),
             horizontalAlignment = Alignment.CenterHorizontally
         ) {
-            // Texto del ID del usuario (fuera de Cards para diferenciar)
-            Text(
-                text = id,
-                style = MaterialTheme.typography.titleMedium,
-                color = MaterialTheme.colorScheme.primary
-            )
 
             // Card para el email del usuario
             Card(cardModifier) {

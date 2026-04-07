@@ -6,6 +6,7 @@ import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.multimediaapp.data.repository.UserInfoRepo
 import com.example.multimediaapp.retrofit.RetrofitModule
+import com.example.multimediaapp.session.DataStoreManager
 import com.example.multimediaapp.viewmodel.uistate.UserInfoListUiState
 import com.example.multimediaapp.viewmodel.uistate.UserInfoUiState
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -30,7 +31,10 @@ import kotlinx.coroutines.launch
  * - Llamar [loadUser] pasando el ID de un usuario para obtener su información.
  * - La lista de usuarios en [uiState.userInfo] se actualiza de forma incremental.
  */
-class UserInfoVM(application: Application) : AndroidViewModel(application) {
+class UserInfoVM(
+    application: Application,
+    private val dataStore: DataStoreManager
+) : AndroidViewModel(application) {
 
     /** Repositorio que maneja la comunicación con la API de usuarios */
     private val repo = UserInfoRepo(RetrofitModule.userInfoApi)
@@ -41,6 +45,16 @@ class UserInfoVM(application: Application) : AndroidViewModel(application) {
     /** Estado observable por la UI */
     val uiState: StateFlow<UserInfoListUiState> = _uiState.asStateFlow()
 
+    init {
+        // Al iniciar, buscamos si hay un usuario en sesión y cargamos sus datos reales del repo
+        viewModelScope.launch {
+            dataStore.userFlow.collect { userSession ->
+                userSession?.id?.let { id ->
+                    loadUser(id)
+                }
+            }
+        }
+    }
     /**
      * Carga la información de un usuario por su ID.
      *
@@ -81,6 +95,11 @@ class UserInfoVM(application: Application) : AndroidViewModel(application) {
                 // Log del error para depuración
                 Log.e("DEBUG_API", "Error al cargar usuario: ${e.message}", e)
             }
+        }
+    }
+    fun logout() {
+        viewModelScope.launch {
+            dataStore.logout()
         }
     }
 }

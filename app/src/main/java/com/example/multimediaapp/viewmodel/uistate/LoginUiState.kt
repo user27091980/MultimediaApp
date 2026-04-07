@@ -31,7 +31,8 @@ data class LoginUiState(
     val password: String = "",
     val passwordVisible: Boolean = false,
     val isLoading: Boolean = false,
-    val errorMessage: String? = null
+    val errorMessage: String? = null,
+    val rememberMe: Boolean = false
 ) {
     /**
      * Computed property para habilitar/deshabilitar el botón de login.

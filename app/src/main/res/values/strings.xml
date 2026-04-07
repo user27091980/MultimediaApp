@@ -31,4 +31,5 @@
     <string name="selBand">Seleccionar banda</string>
     <string name="bandRegister">Registro de Banda</string>
     <string name="busquedaUsuario">Buscando información del usuario...</string>
+    <string name="infoUsuario">"Detalles del Usuario"</string>
 </resources>

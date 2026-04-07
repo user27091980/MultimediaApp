@@ -10,34 +10,11 @@ import kotlinx.coroutines.channels.Channel
 import kotlinx.coroutines.flow.*
 import kotlinx.coroutines.launch
 
-/**
- * Eventos que el ViewModel puede enviar a la UI.
- *
- * - NavigateToHome: El login fue exitoso y la UI debe navegar a la pantalla principal.
- * - ShowError: Ocurrió un error durante el login, la UI debe mostrar un mensaje.
- */
 sealed class LoginEvent {
     object NavigateToHome : LoginEvent()
     data class ShowError(val message: String) : LoginEvent()
 }
 
-/**
- * ViewModel de la pantalla de login.
- *
- * Responsabilidades:
- * - Mantener el estado actual del formulario ([LoginUiState]).
- * - Validar los campos de usuario/email y contraseña.
- * - Ejecutar el login mediante el repositorio ([LoginRepo]).
- * - Guardar preferencias locales con [DataStoreManager].
- * - Emitir eventos hacia la UI usando un [Channel].
- *
- * Patrón MVVM:
- * - La UI observa [uiState] para actualizarse automáticamente.
- * - Los eventos de un solo uso se envían a través de [_events].
- *
- * @param dataStore Manager para guardar datos persistentes del usuario.
- * @param repo Repositorio para manejar la autenticación.
- */
 class LoginVM(
     val dataStore: DataStoreManager,
     private val repo: LoginRepo
@@ -49,9 +26,51 @@ class LoginVM(
     private val _events = Channel<LoginEvent>(Channel.BUFFERED)
     val events = _events.receiveAsFlow()
 
+    init {
+        // Cargar estado de "Recordar usuario" y el email guardado al iniciar
+        observeSavedSession()
+    }
+
+    private fun observeSavedSession() {
+        viewModelScope.launch {
+            // Combinamos los flujos de "recordar" y el "email" para inicializar la UI
+            combine(dataStore.rememberUserFlow, dataStore.userFlow) { remember, user ->
+                if (remember && user != null) {
+                    _uiState.update { it.copy(name = user.email, rememberMe = true) }
+                } else if (remember) {
+                    // Si solo tenemos el flag de recordar pero no el objeto user completo
+                    _uiState.update { it.copy(rememberMe = true) }
+                }
+            }.first() // Solo nos interesa la primera emisión al cargar la pantalla
+        }
+    }
+
     fun onUserChange(name: String) = _uiState.update { it.copy(name = name) }
     fun onPasswordChange(pass: String) = _uiState.update { it.copy(password = pass) }
     fun togglePasswordVisibility() = _uiState.update { it.copy(passwordVisible = !it.passwordVisible) }
+
+    // Nueva función para el Checkbox en la UI
+    fun onRememberMeChange(checked: Boolean) = _uiState.update { it.copy(rememberMe = checked) }
+
+    fun login() {
+        viewModelScope.launch {
+            _uiState.update { it.copy(isLoading = true, errorMessage = null) }
+            try {
+                val state = _uiState.value
+                val userDto = repo.login(state.name, state.password)
+
+                // 1. Guardar preferencia de "Recordar"
+                dataStore.saveRememberUser(state.rememberMe)
+
+                // 2. Guardar datos del usuario
+                dataStore.saveUser(userDto)
+
+                _events.send(LoginEvent.NavigateToHome)
+            } catch (e: Exception) {
+                _uiState.update { it.copy(errorMessage = e.message, isLoading = false) }
+            }
+        }
+    }
 
     fun validateFieldsLogin(): Boolean {
         val state = _uiState.value
@@ -62,41 +81,12 @@ class LoginVM(
             false
         } else true
     }
-
-    fun login() {
-        viewModelScope.launch {
-            _uiState.update { it.copy(isLoading = true, errorMessage = null) }
-            try {
-                val state = _uiState.value
-                // 1. Llamada al repo
-                val userDto = repo.login(state.name, state.password)
-
-                // 2. Guardamos los datos recibidos (ID, Name, Email) en el DataStore
-                dataStore.saveUser(userDto)
-
-                // 3. Éxito
-                _events.send(LoginEvent.NavigateToHome)
-            } catch (e: Exception) {
-                _uiState.update { it.copy(errorMessage = e.message, isLoading = false) }
-            }
-        }
-    }
 }
 
-/**
- * Factory para crear instancias de [LoginVM] con parámetros personalizados.
- *
- * Necesario porque [LoginVM] no tiene constructor vacío.
- * Se utiliza en conjunto con ViewModelProvider para inyectar dependencias.
- *
- * @param dataStore DataStoreManager para guardar preferencias.
- * @param repo Repositorio de autenticación de usuarios.
- */
 class LoginVMFactory(
     private val dataStore: DataStoreManager,
     private val repo: LoginRepo
 ) : ViewModelProvider.Factory {
-
     override fun <T : ViewModel> create(modelClass: Class<T>): T {
         if (modelClass.isAssignableFrom(LoginVM::class.java)) {
             @Suppress("UNCHECKED_CAST")

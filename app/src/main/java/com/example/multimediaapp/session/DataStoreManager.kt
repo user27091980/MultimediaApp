@@ -127,16 +127,35 @@ class DataStoreManager(private val context: Context) {
     }
 
     // Cerrar sesión
-    suspend fun logout() {
-        context.dataStore.edit { prefs ->
-            prefs.remove(ID)
-            prefs.remove(EMAIL)
-            prefs.remove(NAME)
-            prefs[REMEMBER] = false // <--- Al cerrar sesión, ya no recordamos
-        }
+    val savedEmailFlow: Flow<String> = context.dataStore.data.map { prefs ->
+        prefs[EMAIL] ?: ""
     }
 
+    suspend fun logout() {
+        context.dataStore.edit { prefs ->
+            val shouldRemember = prefs[REMEMBER] ?: false
 
+            prefs.remove(ID)
+            prefs.remove(NAME)
+            prefs.remove(LASTNAME)
+            prefs.remove(COUNTRY)
+
+            // Si NO quiere ser recordado, borramos todo
+            if (!shouldRemember) {
+                prefs.remove(EMAIL)
+                prefs.remove(REMEMBER)
+            }
+            // Si quiere ser recordado, mantenemos EMAIL y REMEMBER intactos
+        }
+    }
+    // Función para limpiar solo los datos de sesión pero mantener el "Remember" si fuera necesario
+// (Opcional, dependiendo de si quieres que al cerrar sesión se borre el nombre recordado)
+    suspend fun clearSession() {
+        context.dataStore.edit { prefs ->
+            prefs.remove(ID)
+            // Si quieres que el nombre permanezca para el próximo login, NO borres NAME aquí
+        }
+    }
 
     private fun darkModeKey(userId: String) = booleanPreferencesKey("dark_mode_$userId")
 
