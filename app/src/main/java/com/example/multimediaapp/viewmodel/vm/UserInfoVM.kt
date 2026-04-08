@@ -66,8 +66,7 @@ class UserInfoVM(application: Application) : AndroidViewModel(application) {
                     id = userDto.id,
                     email = userDto.email,
                     name = userDto.name,
-                    lastName = userDto.lastName,
-                    country = userDto.country
+
                 )
 
                 // Actualiza la lista de usuarios en el estado
