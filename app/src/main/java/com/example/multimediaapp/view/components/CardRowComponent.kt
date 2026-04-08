@@ -1,78 +1,66 @@
 package com.example.multimediaapp.view.components
 
+import androidx.compose.animation.animateContentSize
 import androidx.compose.foundation.background
-import androidx.compose.foundation.layout.Box
-import androidx.compose.foundation.layout.FlowRow
-import androidx.compose.foundation.layout.fillMaxHeight
-import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.clickable
+import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.RoundedCornerShape
-import androidx.compose.material3.Card
-import androidx.compose.material3.CardDefaults
-import androidx.compose.material3.MaterialTheme
-import androidx.compose.material3.Text
-import androidx.compose.runtime.Composable
+import androidx.compose.material3.*
+import androidx.compose.runtime.*
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.sp
 import com.example.multimediaapp.model.BandDTO
 import com.example.multimediaapp.ui.theme.cardColumnModifier
 
-/**
- * CardRowComponent:
- *
- * Composable que muestra la información de una banda dentro de una tarjeta (Card).
- * Es útil para mostrar descripciones, estilo, discográfica, o cualquier detalle de la banda.
- *
- * ===Estructura===
- * - Box: contenedor principal que permite fondo y alineación de elementos.
- * - FlowRow: organiza las tarjetas horizontalmente y permite que se ajusten automáticamente
- *   si hay más de una.
- * - Card: componente Material que contiene la información de la banda.
- * - Text: muestra el contenido dentro de la Card (por ejemplo, la descripción).
- *
- * ===Parámetros===
- * @param band Objeto BandDTO que contiene toda la información relevante de la banda
- *             (nombre, descripción, estilo, componentes, etc.).
- *
- * ===Propiedades de UI===
- * - `cardColumnModifier`: Modifier personalizado que puede incluir padding, tamaño, elevación u otras propiedades.
- * - `RoundedCornerShape(10)`: esquinas redondeadas de la tarjeta (no más de 50dp).
- * - `MaterialTheme.colorScheme.primary`: fondo de la tarjeta adaptado al tema.
- * - `MaterialTheme.colorScheme.background`: fondo del contenedor Box.
- */
 @Composable
 fun CardRowComponent(
     band: BandDTO
 ) {
+    // Estado para controlar si el texto está expandido o no
+    var isExpanded by remember { mutableStateOf(false) }
+
     Box(
         modifier = Modifier.background(MaterialTheme.colorScheme.background)
     ) {
         FlowRow(
-            modifier = Modifier
-                .fillMaxWidth()
-                .fillMaxHeight()
+            modifier = Modifier.fillMaxWidth()
         ) {
             Card(
-                modifier = cardColumnModifier,
-                shape = RoundedCornerShape(10),
+                modifier = cardColumnModifier
+                    .animateContentSize(), // Animación suave al cambiar de tamaño
+                shape = RoundedCornerShape(10.dp),
                 colors = CardDefaults.cardColors(
                     containerColor = MaterialTheme.colorScheme.primary
-                )
+                ),
+                onClick = { isExpanded = !isExpanded } // Permite expandir al tocar la tarjeta
             ) {
-                Text(
-                    text = band.description,
-                    modifier = Modifier.padding(16.dp)
-                )
+                Column(modifier = Modifier.padding(16.dp)) {
+                    Text(
+                        text = band.description,
+                        // Si no está expandido, corta el texto en la línea 3
+                        maxLines = if (isExpanded) Int.MAX_VALUE else 3,
+                        overflow = TextOverflow.Ellipsis,
+                        style = MaterialTheme.typography.bodyMedium
+                    )
+
+                    // "Botón" de Seguir leyendo / Ver menos
+                    Text(
+                        text = if (isExpanded) "Ver menos" else "Seguir leyendo...",
+                        style = MaterialTheme.typography.labelLarge.copy(
+                            fontWeight = FontWeight.Bold,
+                            fontSize = 12.sp
+                        ),
+                        color = MaterialTheme.colorScheme.onPrimary,
+                        modifier = Modifier
+                            .align(Alignment.End)
+                            .padding(top = 8.dp)
+                    )
+                }
             }
         }
     }
 }
-
-/**
- * ===Notas===
- * - Box permite superponer elementos y establecer un fondo consistente.
- * - FlowRow organiza tarjetas horizontalmente, ajustándose si hay varias.
- * - Card aplica estilo Material y eleva visualmente la información.
- * - cardColumnModifier se puede reutilizar y ajustar para consistencia visual en toda la app.
- * - Text dentro de la Card muestra la información principal de la banda.
- */
