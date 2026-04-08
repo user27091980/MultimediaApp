@@ -16,10 +16,10 @@ import androidx.compose.ui.Modifier
 import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.rememberNavController
+import com.example.compose.MultimediaAppTheme
 import com.example.multimediaapp.navigation.NavGraph
 import com.example.multimediaapp.navigation.ObjRoutes
 import com.example.multimediaapp.session.DataStoreManager
-import com.example.multimediaapp.ui.theme.MultimediaAppTheme
 import com.example.multimediaapp.view.components.BottomBar
 import com.example.multimediaapp.view.components.TopBar
 import com.example.multimediaapp.viewmodel.vm.SettingsVM
