@@ -61,9 +61,8 @@ fun UserInfoScreen(
                 UserCardComponent(
                     id = user.id,
                     email = user.email,
-                    name = user.name,
-                    surname = user.lastName,
-                    country = user.country,
+                    name = user.name
+
                 )
             } else {
                 // Estado de carga o mensaje temporal si no se encuentra el usuario
