@@ -65,6 +65,7 @@ fun ImagesRowList(
                         },
                     contentScale = ContentScale.Crop // recorta para llenar el contenedor
                 )
+
             }
         }
     }

@@ -51,13 +51,11 @@ class RegisterVM(private val repo: IUserInfoRepo) : ViewModel() {
     fun onEmailChange(email: String) = _uiState.update { it.copy(email = email) }
     fun onPassChange(pass: String) = _uiState.update { it.copy(passwd = pass) }
     fun onNameChange(name: String) = _uiState.update { it.copy(name = name) }
-    fun onLastNameChange(lastName: String) = _uiState.update { it.copy(lastName = lastName) }
-    fun onCountryChange(country: String) = _uiState.update { it.copy(country = country) }
 
     fun validateAndRegister() {
         val state = _uiState.value
         // Validación básica: Email, Pass, Nombre y Apellido no vacíos
-        if (state.email.isBlank() || state.passwd.length < 4 || state.name.isBlank() || state.lastName.isBlank()) {
+        if (state.email.isBlank() || state.passwd.length < 4 || state.name.isBlank()) {
             _uiState.update { it.copy(errorMessage = "Por favor, rellena todos los campos correctamente") }
             return
         }
@@ -72,8 +70,7 @@ class RegisterVM(private val repo: IUserInfoRepo) : ViewModel() {
                 email = state.email,
                 name = state.name,
                 passwd = state.passwd,
-                country = state.country,
-                lastName = state.lastName
+
             ).fold(
                 onSuccess = {
                     _uiState.update { it.copy(isLoading = false) }

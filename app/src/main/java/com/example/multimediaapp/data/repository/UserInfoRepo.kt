@@ -18,7 +18,7 @@ import java.io.IOException
 interface IUserInfoRepo {
     suspend fun getUserInfo(userId: String): UsersInfoDTO
     suspend fun register(
-        email: String, name: String, passwd: String, country: String, lastName: String
+        email: String, name: String, passwd: String
     ): Result<UsersInfoDTO>
 }
 
@@ -27,11 +27,10 @@ class UserInfoRepo(private val api: UserInfoApiService) : IUserInfoRepo {
         email: String,
         name: String,
         passwd: String, // <--- Coincide con la interfaz
-        country: String,
-        lastName: String
+
     ): Result<UsersInfoDTO> = withContext(Dispatchers.IO) {
         try {
-            val request = RegisterRequestDTO(email, name, passwd, country, lastName)
+            val request = RegisterRequestDTO(email, name, passwd)
             val response = api.registerUser(request) // IMPORTANTE: @POST("auth/register")
 
             if (response.isSuccessful) {

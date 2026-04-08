@@ -34,9 +34,8 @@ import com.example.multimediaapp.ui.theme.cardModifier
 fun UserCardComponent(
     id: String,
     email: String,
-    country: String,
     name: String,
-    surname: String
+
 ) {
     // Box como contenedor principal
     Box(boxModifier) {
@@ -60,29 +59,10 @@ fun UserCardComponent(
                     color = MaterialTheme.colorScheme.primary
                 )
             }
-
-            // Card para el país del usuario
-            Card(cardModifier) {
-                Text(
-                    text = country,
-                    style = MaterialTheme.typography.titleMedium,
-                    color = MaterialTheme.colorScheme.primary
-                )
-            }
-
             // Card para el nombre del usuario
             Card(cardModifier) {
                 Text(
                     text = name,
-                    style = MaterialTheme.typography.titleMedium,
-                    color = MaterialTheme.colorScheme.primary
-                )
-            }
-
-            // Card para el apellido del usuario
-            Card(cardModifier) {
-                Text(
-                    text = surname,
                     style = MaterialTheme.typography.titleMedium,
                     color = MaterialTheme.colorScheme.primary
                 )

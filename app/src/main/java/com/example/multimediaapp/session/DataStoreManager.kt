@@ -74,8 +74,7 @@ class DataStoreManager(private val context: Context) {
 
     private val EMAIL = stringPreferencesKey("email")
     private val NAME = stringPreferencesKey("name")
-    private val LASTNAME = stringPreferencesKey("lastName")
-    private val COUNTRY = stringPreferencesKey("country")
+
     private val REMEMBER = booleanPreferencesKey("remember")
     private val DARK_MODE = booleanPreferencesKey("dark_mode")
 
@@ -87,8 +86,7 @@ class DataStoreManager(private val context: Context) {
             email = prefs[EMAIL] ?: "",
             passwd = "", // nunca guardamos contraseña
             name = prefs[NAME] ?: "",
-            lastName = prefs[LASTNAME] ?: "",
-            country = prefs[COUNTRY] ?: "",
+
 
         )
     }
@@ -105,8 +103,7 @@ class DataStoreManager(private val context: Context) {
             prefs[EMAIL] = user.email
             prefs[NAME] = user.name
             // Opcional: limpiar apellidos/país si venían de un registro previo
-            prefs[LASTNAME] = ""
-            prefs[COUNTRY] = ""
+
         }
     }
 

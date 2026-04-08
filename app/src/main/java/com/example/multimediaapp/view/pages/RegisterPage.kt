@@ -83,14 +83,14 @@ fun RegisterScreen(navController: NavController, vm: RegisterVM) {
                 TextFieldsComponent(
                     email = uiState.email,
                     passwd = uiState.passwd,
-                    country = uiState.country,
+
                     name = uiState.name,
-                    lastName = uiState.lastName,
+
                     onEmailChange = vm::onEmailChange,
                     onPassChange = vm::onPassChange,
-                    onCountryChange = vm::onCountryChange,
+
                     onNameChange = vm::onNameChange,
-                    onLastNameChange = vm::onLastNameChange,
+
 
                 )
 

@@ -95,7 +95,8 @@ fun BandDTO.toEntity(): BandEntity {
         recordLabel = recordLabel,
         components = components,
         albumLinks = albumLinks,
-        headerLink = headerLink
+        headerLink = headerLink,
+
     )
 }
 
