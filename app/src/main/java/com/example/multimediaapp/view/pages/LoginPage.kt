@@ -7,9 +7,11 @@ import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavController
+import androidx.navigation.compose.rememberNavController
 import com.example.multimediaapp.data.repository.LoginRepo
 import com.example.multimediaapp.navigation.ObjRoutes
 import com.example.multimediaapp.session.DataStoreManager
@@ -17,6 +19,7 @@ import com.example.multimediaapp.view.components.ButtonAccept
 import com.example.multimediaapp.view.components.ButtonCancel
 import com.example.multimediaapp.view.components.TextFieldsLoginComponent
 import com.example.multimediaapp.viewmodel.vm.LoginEvent
+import com.example.multimediaapp.viewmodel.vm.LoginRegVM
 import com.example.multimediaapp.viewmodel.vm.LoginVM
 import com.example.multimediaapp.viewmodel.vm.LoginVMFactory
 import kotlinx.coroutines.flow.collectLatest

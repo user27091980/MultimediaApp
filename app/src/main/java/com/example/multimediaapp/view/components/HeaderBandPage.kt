@@ -63,7 +63,7 @@ fun BandHeader(band: BandDTO) {
                     imageVector = Icons.Default.Link,
                     contentDescription = "Abrir enlace",
                     tint = Color.White,
-                    modifier = Modifier.size(24.dp) // Icono un poco más grande acorde al banner
+                    modifier = Modifier.size(30.dp) // Icono un poco más grande acorde al banner
                 )
             }
         }
