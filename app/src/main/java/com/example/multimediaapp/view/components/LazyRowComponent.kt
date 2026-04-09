@@ -52,8 +52,8 @@ fun ImagesRowList(
                     model = albumImage, // URL de la imagen
                     contentDescription = "album image", // accesibilidad
                     modifier = Modifier
-                        .height(120.dp) // altura fija de la imagen
-                        .width(120.dp)  // ancho fijo de la imagen
+                        .height(200.dp) // altura fija de la imagen
+                        .width(200.dp)  // ancho fijo de la imagen
                         .padding(end = 8.dp) // separación horizontal entre imágenes
                         .clickable {
                             // Si existe enlace correspondiente, abre navegador
