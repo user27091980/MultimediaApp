@@ -2,74 +2,71 @@ package com.example.multimediaapp.view.components
 
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.Card
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.unit.dp
 import com.example.multimediaapp.ui.theme.boxModifier
 import com.example.multimediaapp.ui.theme.cardModifier
 
 /**
  * UserCardComponent:
  *
- * Composable que representa una tarjeta de usuario mostrando su información.
- * Cada dato (ID, email, país, nombre y apellido) se organiza dentro de Cards
- * para que tengan estilo uniforme y resalten visualmente.
- *
- * @param id Identificador único del usuario.
- * @param email Correo electrónico del usuario.
- * @param country País de residencia del usuario.
- * @param name Nombre real del usuario.
- * @param surname Apellido del usuario.
- *
- * Organización visual:
- * - Box: contenedor principal que permite centrar la tarjeta y aplicar estilo global.
- * - Column: organiza los elementos de información de forma vertical.
- * - Text: muestra la información del usuario con tipografía y color definidos por MaterialTheme.
- * - Card: encapsula cada dato (email, país, nombre, apellido) para resaltarlos visualmente.
+ * Muestra la información del perfil del usuario (ID, Email y Nombre)
+ * utilizando los estilos predefinidos del tema.
  */
 @Composable
 fun UserCardComponent(
-    id: String,
+
     email: String,
     name: String,
-
 ) {
-    // Box como contenedor principal
+    // Contenedor principal con el modificador de caja del tema
     Box(boxModifier) {
-        // Columna centrada que organiza la información verticalmente
         Column(
             modifier = Modifier.align(Alignment.Center),
             horizontalAlignment = Alignment.CenterHorizontally
         ) {
-            // Texto del ID del usuario (fuera de Cards para diferenciar)
-            Text(
-                text = id,
-                style = MaterialTheme.typography.titleMedium,
-                color = MaterialTheme.colorScheme.primary
-            )
 
-            // Card para el email del usuario
+            // Tarjeta para el Nombre
             Card(cardModifier) {
-                Text(
-                    text = email,
-                    style = MaterialTheme.typography.titleMedium,
-                    color = MaterialTheme.colorScheme.primary
-                )
+                Column(modifier = Modifier.padding(16.dp)) {
+                    Text(
+                        text = "Nombre:",
+                        style = MaterialTheme.typography.labelSmall,
+                        color = MaterialTheme.colorScheme.outline
+                    )
+                    Text(
+                        text = name,
+                        style = MaterialTheme.typography.titleMedium,
+                        color = MaterialTheme.colorScheme.primary
+                    )
+                }
             }
-            // Card para el nombre del usuario
+
+            // Tarjeta para el Email
             Card(cardModifier) {
-                Text(
-                    text = name,
-                    style = MaterialTheme.typography.titleMedium,
-                    color = MaterialTheme.colorScheme.primary
-                )
+                Column(modifier = Modifier.padding(16.dp)) {
+                    Text(
+                        text = "Email",
+                        style = MaterialTheme.typography.labelSmall,
+                        color = MaterialTheme.colorScheme.outline
+                    )
+                    Text(
+                        text = email,
+                        style = MaterialTheme.typography.titleMedium,
+                        color = MaterialTheme.colorScheme.primary
+                    )
+                }
             }
         }
     }
 }
+
 
 /*
 Notas importantes:

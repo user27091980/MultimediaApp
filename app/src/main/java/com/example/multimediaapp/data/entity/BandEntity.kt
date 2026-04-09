@@ -71,6 +71,7 @@ fun BandEntity.toDTO(): BandDTO {
         albumLinks = albumLinks,
         headerLink = buildUrl(baseUrl, headerLink),
 
+
     )
 }
 
@@ -96,6 +97,7 @@ fun BandDTO.toEntity(): BandEntity {
         components = components,
         albumLinks = albumLinks,
         headerLink = headerLink,
+
 
     )
 }

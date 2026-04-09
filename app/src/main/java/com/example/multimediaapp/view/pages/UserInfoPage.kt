@@ -36,7 +36,7 @@ import com.example.multimediaapp.viewmodel.vm.UserInfoVM
 @Composable
 fun UserInfoScreen(
     userInfoId: String,
-    vm: UserInfoVM = viewModel()
+    vm: UserInfoVM
 ) {
     // Estado observable de la UI del ViewModel con manejo de ciclo de vida
     val uiState by vm.uiState.collectAsStateWithLifecycle()
@@ -59,7 +59,7 @@ fun UserInfoScreen(
             if (user != null) {
                 // Muestra la información del usuario en un componente de tarjeta
                 UserCardComponent(
-                    id = user.id,
+
                     email = user.email,
                     name = user.name
 

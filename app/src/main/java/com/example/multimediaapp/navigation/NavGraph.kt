@@ -1,5 +1,6 @@
 package com.example.multimediaapp.navigation
 
+import android.app.Application
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
@@ -9,7 +10,6 @@ import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
-import androidx.navigation.compose.dialog
 import com.example.multimediaapp.session.DataStoreManager
 import com.example.multimediaapp.data.repository.LoginRepo
 import com.example.multimediaapp.data.repository.UserInfoRepo
@@ -127,8 +127,17 @@ fun NavGraph(navController: NavHostController, settingsVM: SettingsVM) {
 
         // Información del usuario
         composable(ObjRoutes.INFOUSER) {
-            val vm: UserInfoVM = viewModel()
-            UserInfoScreen(userInfoId = "defaultUser", vm = vm)
+            // 1. Obtener la sesión activa
+            val session by dataStore.userFlow.collectAsState(initial = null)
+
+            // 2. Crear el VM con la Factory
+            val application = LocalContext.current.applicationContext as Application
+            val vm: UserInfoVM = viewModel(factory = UserInfoVMFactory(application, dataStore))
+
+            // 3. Pasar el ID real de la sesión
+            val userId = session?.id ?: ""
+
+            UserInfoScreen(userInfoId = userId, vm = vm)
         }
 
         // Pantalla de configuración
@@ -136,9 +145,6 @@ fun NavGraph(navController: NavHostController, settingsVM: SettingsVM) {
             SettingsScreen(settingsVM)
         }
 
-        // Diálogo de registro
-        dialog(ObjRoutes.DIALOG) {
-            DialogRegisterScreen(navController = navController)
-        }
+
     }
 }
