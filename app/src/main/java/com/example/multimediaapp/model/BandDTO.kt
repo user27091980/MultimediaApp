@@ -39,7 +39,9 @@ data class BandDTO(
     val albumLinks: List<String>,
 
     // Link a la cabecera o página principal de la banda
-    val headerLink: String
+    val headerLink: String,
+
+
 )
 
 /**

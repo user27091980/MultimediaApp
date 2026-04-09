@@ -39,24 +39,12 @@ data class LoginRoute(val email: String) : NavRoute
 data class RegisterRoute(val email: String, val name: String) : NavRoute
 
 /** Ruta de detalles de banda con ID dinámico */
+@Serializable
 data class BandRoute(val bandId: String) : NavRoute {
     /** Función auxiliar para construir la ruta como String para Navigation */
     fun route() = "band/$bandId"
 }
 
-/** Ruta para agregar una banda con todos sus campos como parámetros */
-data class AddBandRoute(
-    val id: String,
-    val name: String,
-    val description: String,
-    val banner: String,
-    val albumImages: List<String>,
-    val style: String,
-    val recordLabel: String,
-    val components: String,
-    val albumLinks: List<String>,
-    val headerLink: String
-) : NavRoute
 
 /**
  * Rutas estáticas (sin parámetros):
@@ -75,8 +63,7 @@ object MainRoute : NavRoute
 @Serializable
 object UserInfoRoute : NavRoute
 
-@Serializable
-object DialogRoute : NavRoute
+
 
 @Serializable
 object SettingsRoute : NavRoute

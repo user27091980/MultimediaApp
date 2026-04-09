@@ -3,9 +3,12 @@ package com.example.multimediaapp.viewmodel.vm
 import android.app.Application
 import android.util.Log
 import androidx.lifecycle.AndroidViewModel
+import androidx.lifecycle.ViewModel
+import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.viewModelScope
 import com.example.multimediaapp.data.repository.UserInfoRepo
 import com.example.multimediaapp.retrofit.RetrofitModule
+import com.example.multimediaapp.session.DataStoreManager
 import com.example.multimediaapp.viewmodel.uistate.UserInfoListUiState
 import com.example.multimediaapp.viewmodel.uistate.UserInfoUiState
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -81,5 +84,20 @@ class UserInfoVM(application: Application) : AndroidViewModel(application) {
                 Log.e("DEBUG_API", "Error al cargar usuario: ${e.message}", e)
             }
         }
+    }
+}
+/**
+ * Factory para crear instancias de [UserInfoVM].
+ *
+ * Necesaria para inyectar el parámetro [Application] requerido por el AndroidViewModel.
+ */
+class UserInfoVMFactory(private val application: Application, dataStore: DataStoreManager) : ViewModelProvider.Factory {
+
+    override fun <T : ViewModel> create(modelClass: Class<T>): T {
+        if (modelClass.isAssignableFrom(UserInfoVM::class.java)) {
+            @Suppress("UNCHECKED_CAST")
+            return UserInfoVM(application) as T
+        }
+        throw IllegalArgumentException("Clase ViewModel desconocida")
     }
 }

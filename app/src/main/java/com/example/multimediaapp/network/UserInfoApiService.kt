@@ -54,10 +54,7 @@ import retrofit2.http.Path
  */
 interface UserInfoApiService {
 
-    @GET("json/auth/userInfo")
-    suspend fun getUsersInfo(): Response<List<UsersInfoEntity>>
-
-    @GET("json/userInfo/{id}")
+    @GET("json/user/{id}")
     suspend fun getUser(@Path("id") id: String): Response<UsersInfoEntity>
 
     @POST("auth/register")
@@ -65,9 +62,4 @@ interface UserInfoApiService {
         @Body request: RegisterRequestDTO
     ): Response<UsersInfoEntity>
 
-    @PUT("json/userInfo/{id}")
-    suspend fun updateUserInfo(
-        @Path("id") id: String,
-        @Body user: UsersInfoDTO
-    ): Response<UsersInfoEntity>
 }
