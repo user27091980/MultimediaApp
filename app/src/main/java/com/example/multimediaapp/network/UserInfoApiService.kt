@@ -13,44 +13,29 @@ import retrofit2.http.Path
 /**
  * UserInfoApiService:
  *
- * Interfaz que define los endpoints relacionados con la gestión de usuarios.
+ * Interfaz de Retrofit que define los contratos de comunicación con el backend
+ * para la gestión de datos de usuario y procesos de autenticación.
  *
  * Responsabilidades:
- * - Obtener información de todos los usuarios o de un usuario específico.
- * - Registrar nuevos usuarios en el backend.
- * - Actualizar datos de usuarios existentes.
+ * - Recuperar el perfil detallado de un usuario mediante su identificador único.
+ * - Gestionar el alta de nuevos usuarios en el sistema a través del endpoint de registro.
  *
- * Notas:
- * - Usamos `Response<UsersInfoEntity>` porque Retrofit devuelve el body completo.
- * - Los métodos usan DTOs o Entities según convenga para separar capas de dominio y datos.
- * - Las rutas son consistentes con el prefijo `json/userInfo`.
+ * Métodos:
+ * 1. getUser(id: String):
+ *    - Realiza una petición GET a "json/user/{id}".
+ *    - Se utiliza para cargar la información del perfil en la UI tras el login o registro.
+ *    - Devuelve una [Response] que envuelve la entidad [UsersInfoEntity].
  *
- * ===Endpoints===
+ * 2. registerUser(request: RegisterRequestDTO):
+ *    - Realiza una petición POST a "auth/register".
+ *    - Envía los datos básicos (email, nombre, contraseña) encapsulados en [RegisterRequestDTO].
+ *    - Tras el éxito, el servidor devuelve la entidad creada incluyendo su nuevo ID.
  *
- * 1. getUsersInfo()
- *    - Método GET
- *    - Devuelve la lista completa de usuarios
- *    - Response<List<UsersInfoEntity>>
- *
- * 2. getUser(id: String)
- *    - Método GET con parámetro path
- *    - Devuelve un usuario específico por su ID
- *    - Response<UsersInfoEntity>
- *
- * 3. registerUser(request: RegisterRequestDTO)
- *    - Método POST
- *    - Recibe DTO con los datos de registro
- *    - Devuelve la entidad registrada
- *
- * 4. updateUserInfo(id: String, user: UsersInfoDTO)
- *    - Método PUT
- *    - Actualiza un usuario existente mediante su ID
- *    - Devuelve la entidad actualizada
- *
- * ===Notas adicionales===
- * - `@Body` se usa para enviar el objeto JSON en el cuerpo del request.
- * - `@Path` indica que el parámetro se inserta directamente en la URL.
- * - Retrofit maneja automáticamente la serialización/deserialización.
+ * Notas técnicas:
+ * - Implementa el uso de 'suspend' para integrarse con Corrutinas de Kotlin,
+ *   asegurando que las peticiones de red no bloqueen el hilo principal (UI).
+ * - Utiliza anotaciones de Retrofit (@GET, @POST, @Path, @Body) para la
+ *   configuración dinámica de las rutas y el cuerpo de las peticiones.
  */
 interface UserInfoApiService {
 
